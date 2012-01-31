@@ -1,0 +1,77 @@
+Authentication
+==============
+
+NuCentral provides common authentication function, so that all modules
+can use the same user base.
+
+Authentication types
+--------------------
+
+Supported authentication types are:
+
+ - `alwaysok`: All login/passwords are accepted
+ - `alwaysno`: All logins/pass are rejected
+ - `basicdict`: Use login/passwords given in NuCentral configuration
+ - `file`: Use a file containing login/passwords couples
+ - `ldap`: Use a LDAP directory
+
+Configuration
+-------------
+
+In the `CORE` section from configuration, the `auth` variable
+is the name of a section where all authentication parameters are defined.
+
+Example::
+
+  [CORE]
+  auth = my_auth
+
+  [my_auth]
+  type = file
+  authfile = /var/lib/nucentral/users
+
+Passwords format
+----------------
+
+A password is registered as following::
+
+  {METHOD}HASH
+
+`METHOD` est the method used to store the password (or authentication token):
+ - `PLAIN` if the password is stored in clear text
+ - `SHA1` to use the hash algorithm SHA-1
+ - ...
+
+`HASH` is the password hash using the method previously configured.
+
+Plain text file
+---------------
+
+Each line of the file must use the following format::
+
+  user:{METHOD}HASH
+
+LDAP Configuration
+------------------
+
+The following options are mandatory:
+ - `uri`: connection string, in the standard LDAP format. For example:
+
+   - _`ldap://ldap.domain.com:389/`
+   - _`ldaps://ldap.domain.com/`
+
+ - `basedn`: directory root
+ - `login`: attribute used for login
+
+If a login is needed to be able to run searches, it must be provided
+using bind options:
+
+ - `binddn`: complete DN of the user which will run the search
+ - `bindpw`: corresponding password
+
+The search of a user is done using the following steps:
+ #. Bind (login) using binddn and bindpw user if provided, anonymous login otherwise
+ #. Search using filter and attribute, recursively (subtree) under the directory root. This search will return
+    the DN for the user.
+ #. Bind using this DN, and the given password
+

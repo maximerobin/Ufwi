@@ -1,0 +1,297 @@
+*********
+NuCentral
+*********
+
+Sommaire::
+
+  I.  De l'asynchrone
+  |- 1. Introduction
+  |- 2. Le problème
+  `- 3. La solution
+
+  II. NuCentral-to-NuCentral
+  |- 1. Design
+  |- 2. Avant propos
+  |- 3. Protocole
+  `- 4. Problèmes
+     |- a. Déconnexions
+     |- b. Sécurité
+     `- c. Réseau
+
+I. De l'asynchrone
+==================
+
+1. Introduction
+---------------
+
+NuCentral a un fonctionnement décrit par le schéma suivant::
+
+    +-------+              +-------+
+    | comp3 |  +-------+   | comp5 |    +-------+
+    +-------+  | comp4 |   +-------+    | comp6 |
+    | serv1 |  +-------+   | serv1 |    +-------+
+    | serv2 |  | serv1 |   | serv2 |    | serv1 |
+    | serv3 |  '-------'   '-------'    | serv2 |
+    '-------'       \          /        | serv3 |
+         \           \        /         '-------'
+          \           \      /             /
+           \_________+--------------+     /
+                     |  NuCentral1  |____/
+     .---------.     +-------+------+      .--------.
+     | browser |=====| Nevow | SOAP |======| client |
+     '---------'     '-------'------'      '--------'
+                                ||
+                                ||
+                                ||
+                                ||
+      .--------.     .-------.------.
+      | client |=====|XML-RPC| SOAP |
+      '--------'     +-------+------+
+                     |  NuCentral2  |
+                     +--------------+
+                          /     \
+                         /       \
+                   +-------+   +-------+
+                   | comp1 |   | comp2 |
+                   +-------+   +-------+
+                   | serv1 |   | serv1 |
+                   | serv2 |   '-------'
+                   | serv3 |
+                   '-------'
+
+    Légende:
+     _ : Liaison modulaire
+     = : Liaison HTTP (SOAP/XML-RPC/etc)
+
+Vocabulaire:
+
+  * **NuCentral**: Application modulaire ayant pour but de mettre
+    en relation les différents **composants** qui sont attachées à elle.
+  * **Composant**: Module de **NuCentral** qui peut proposer des **services**
+    ou en appeler. Il peut également proposer des **sites**.
+  * **Service**: Méthode appartenant à un **composant**, pouvant être
+    appelé par un autre composant.
+  * **Site**: Basé sur **Nevow**, un composant peut demander à **NuCentral**
+    de rendre disponible une ressource web.
+  * **Client**: Application indépendante qui appelle par SOAP ou XML-RPC des
+    **services**.
+
+
+Techniquement, un appel se déroule comme suit::
+
+   Supposons un composant compA attaché à NuCentral2 et cherchant à appeler
+   compB.serv1.
+
+   * En premier lieu, le composant fait un appel à callService(), fonction
+     de NuCentral2, avec le nom du composant compB, du service serv1, et
+     les arguments passés.
+   * NuCentral2 vérifie si le composant est un module local...
+     Si ce n'est pas le cas :
+       * NuCentral2 localise que le composant est attaché à NuCentral1, fait
+         un appel par SOAP à celui-ci.
+       * NuCentral1 appelle la fonction compB.serv1 et retourne le résultat.
+       * Si le résultat est un Deferred, c'est à dire que si une exécution
+         _asynchrone_ est requise, la lib SOAPpy va se charger d'y attacher
+         le callback qui renverra le résultat directement.
+       * NuCentral2 reçoit le résultat et le renvoie à compA qui aura été
+         bloqué pendant le temps de la demande.
+     Si jamais compB est attaché à NuCentral2 :
+       * NuCentral2 appele la fonction directement compB.serv1, puis retourne
+         tout de suite le résultat.
+       * Si ce dernier est Deferred, il ne sera *pas* exécuté, et compA se
+         retrouvera avec un objet de ce type...
+
+Note: le fonctionnement du dialogue entre les serveurs **NuCentral**, notamment
+pour la synchronisation des données, sera décrit dans le chapitre **II. NuCentral-to-NuCentral**.
+
+2. Le problème
+--------------
+
+Ainsi que vu dans le paragraphe précédent, si jamais la fonction possède
+un mode de fonctionnement asynchrone, c'est à dire si elle retourne un
+objet de type **Deferred**, le comportement du côté du composant appelant
+sera différent que ça soit en *local* ou à *distance*.
+
+Lorsque l'appel se fait directement, la procédure qui appelle la fonction
+et qui attends un résultat **bloque** directement, et ne peut attendre
+l'exécution du Deferred, puisque pour cela il serait nécessaire de rendre
+la main à **Twisted** !
+
+Le problème que l'on rencontre ici est qu'on cherche à avoir un
+fonctionnement de type **synchrone** avec une application basée
+sur **Twisted** qui a un fonctionnement **asynchrone**.
+
+3. La solution
+--------------
+
+La solution serait de rendre asynchrone le fonctionnement de NuCentral.
+
+Cependant, comme toute fonction n'a pas un modèle asynchrone, il serait
+intéressant de garder les deux modes de fonctionnement.
+
+Une solution à envisager serait la suivante :
+
+Un service est *taggable*. C'est à dire que l'on pourrait déterminer, lors
+de la déclaration de ces fonctions, si celle-ci a un mode de fonctionnement
+synchrone ou non.
+
+Un service taggée **synchrone** fonctionnerait ainsi :
+  * Elle renverra obligatoirement le résultat tout de suite.
+
+Un service taggé **asynchrone** aurait le comportement suivant :
+  * Si elle retourne un objet de type Deferred, il sera transmis tel quel
+    à la procédure appelante.
+  * Si elle retourne le résultat directement, NuCentral assure la
+    création d'un **Deferred**.
+  * La procédure appelante sera donc forcée de traiter le Deferred elle même,
+    et donc soit de le passer à une couche plus basse telle que **Nevow**, soit
+    d'ajouter un callback pour récupérer le résultat une fois l'exécution déroulée.
+
+On est ainsi assuré que le comportement d'un appel à un service sera le même
+pour le composant, que ce service soit *local* ou *distant*.
+
+Le déroulement d'un appel à une fonction asynchrone serait le suivant::
+
+   Un composant compA attaché à NuCentral2 veut appeller compB.serv1,
+   qui est une fonction taggée asynchrone.
+
+   * La procédure de compA fait son appel à la fonction callService()
+     de NuCentral2.
+   * NuCentral2 détermine la localisation du composant. Deux cas se
+     distingues alors.
+     Si compB est local:
+       * NuCentral2 fait appel à la fonction du service directement.
+       * Si le résultat renvoyé est un Deferred, il le transmet directement
+         tel quel à l'appelant.
+       * Si le résultat n'est pas un Deferred, NuCentral2 en crée un
+         et met le résultat dedans.
+       * La procédure appelante ajoute un callback au Deferred afin de
+         récupérer le résultat.
+     Si compB est distant:
+       * NuCentral2 fait un appel SOAP à NuCentral1.
+       * NuCentral1 appelle le service.
+       * Si le résultat renvoyé est un Deferred, il va attendre que l'exécution
+         se fasse, puis renvoie à NuCentral2 le résultat.
+       * Si le résultat n'est pas un Deferred, il va renvoyer le résultat
+         directement. En effet, l'appel étant distant, il n'y a pas
+         d'intérêt d'exécuter un Deferred car le résultat à renvoyer
+         par SOAP se doit d'être le retour.
+       * NuCentral2 reçoit le résultat. Cependant, pour assurer une
+         transparence de fonctionnement à compA, il crée un Deferred
+         et met le résultat dedans.
+       * Ainsi compA n'a plus qu'à ajouter un callback afin de récupérer
+         le résultat.
+
+II. NuCentral-to-NuCentral
+==========================
+
+L'intérêt principal de NuCentral réside dans la transparence qu'il apporte
+pour l'appel de fonctions d'un composant à un autre, quelque soit la
+localisation physique de celui-ci (en local ou à distance).
+
+La réalisation de ceci passe par une mise en relation de différents **NuCentral**,
+afin que lorsqu'un composant présent sur un NuCentral souhaite appeler un service,
+NuCentral sache où il se trouve et y fasse la requête.
+
+1. Design
+---------
+
+La mise en réseau des différents NuCentral devrait être faite en étoile.
+
+En effet, un **NuCentral Master** serait désigné, et les **NuCentral esclaves**
+s'y connecteraient au lancement et à chaque mise à jour de leur liste de composants.
+
+Voici à quoi devrait ressembler le schéma::
+
+    .-----------.
+    |  Slave 1  |---------                    .-----------.
+    +-------+---'        |        ------------|  Slave 2  |
+    | comp1 |           \|/      \|/          +-------+---'
+    | comp2 |           .-------------.       | comp3 |
+    '-------'           |             |       | comp4 |
+                        |   Master    |       | comp5 |
+                        |             |       '-------'
+                        '-----+-------+
+                         /|\  | comp7 |
+                          |   | comp8 |
+                          |   '-------'
+                          |
+                  .-----------.
+                  |  Slave 3  |
+                  +-------+---'
+                  | comp6 |
+                  '-------'
+
+2. Avant-propos
+---------------
+
+La détermination du statut de **Master** ou **Slave** se fait par
+le simple fait qu'un serveur possède ou non dans sa configuration
+un serveur SOAP auquel se connecter afin de s'annoncer.
+
+L'esclave ne pourra pas accepter de requêtes d'annonce.
+
+En revanche, on peut supposer qu'un *réseau* de NuCentral pourra
+être lui même déporté à un autre. C'est à dire qu'un NuCentral Master
+pourrait se connecter à un autre NuCentral, comme esclave cette fois,
+afin d'annoncer tous les composants qu'il possède. Le problème dans ce
+schéma là est qu'un autre NuCentral Client serait susceptible de se connecter
+à ce Master alors qu'il voulait accéder au Slave 3.
+
+En bref ce cas est peut être compliqué à gérer alors qu'il peut paraître inutile.
+
+Le serveur défini dans sa configuration son mot de passe, et les clients doivent
+annoncer dans l'appel de fonction le mot de passe (ou un autre moyen d'authentification,
+un certificat par exemple).
+
+On passe uniquement la liste des composants et pas des services.
+
+3. Protocole
+------------
+
+Le déroulement d'une annonce se fait dans les grandes lignes ainsi ::
+
+  -> Connexion de Slave2 à Master1 par SOAP, appelle une fonction
+     en passant le mot de passe et la liste des composants
+  <- Réponse de Master1
+
+L'esclave n'a pas besoin de connaître la liste des composants de Master1: si un appel
+de fonction est fait a Slave2 et que celui-ci n'a pas le composant, il transfère
+la requête à Master1.
+
+4. Problèmes
+------------
+
+a. Déconnexions
+^^^^^^^^^^^^^^^
+
+Le gros problème réside dans les déconnexions qui peuvent survenir sans préavis.
+
+En effet, bien qu'à la fermeture *propre* de **NuCentral**, celui-ci devrait
+avoir l'amabilité d'informer le Master de son indisponibilité, il est probablement
+possible qu'il disparaisse subitement en cas de crash, de coupure de courant, de
+réseau, etc.
+
+Une première solution est que l'appel à un service distant gère proprement le fait
+que le NuCentral distant ne réponde pas (ce qui déclenchera de toute façon une erreur
+SOAP).
+
+Une autre solution serait d'avoir un système de **HeartBeats** entre les serveurs NuCentral,
+gérés par un thread séparé. Si un de serveurs ne répond pas à un HeartBeat, une procédure
+est lancée pour se reconnecter, avec un système semblable à SMTP: délai de rééssai
+exponentiel (1s, 2s, 4s, 8s etc.) avec une limite (par ex 1 heure).
+
+
+b. Sécurité
+^^^^^^^^^^^
+
+Quelques questions de sécurité se posent. Tout d'abord du point de vue de l'authentification
+des esclaves. Le choix d'utiliser un mot de passe est plus correct, surtout que celui-ci
+passera en crypté par SSL.
+
+Enfin, les composants doivent être empêchés d'appeler une fonction de synchronisation
+entre les NuCentral.
+
+Il devrait être trivial de régler ces problèmes, mais la discussion s'impose afin
+de prendre dans chaque cas la meilleurs solution.
+

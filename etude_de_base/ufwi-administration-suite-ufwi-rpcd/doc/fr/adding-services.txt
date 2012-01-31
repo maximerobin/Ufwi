@@ -1,0 +1,109 @@
+Ajout de modules
+================
+
+Création du module
+------------------
+
+Un module est contenu dans un répertoire, qui n'est pas forcément situé dans
+nucentral. On crée, par exemple, l'arborescence suivante:
+::
+
+  monmodule/
+    __init__.py
+    monmodule.py
+
+Dans la configuration de nucentral, on ajoute la ligne suivante dans la section
+``[modules]``::
+
+  [modules]
+  monmodule = yes
+
+La valeur ``yes`` permet de contrôler si un module est activé.
+
+Le fichier d'initialisation est très simple:
+``__init__.py``::
+
+  from monmodule import *
+
+Initialisation du module
+------------------------
+
+Lorsque nucentral charge le module, il importe le module (fichier ``__init__.py``).
+Dans le module, deux fonctions sont obligatoires:
+
+1. la fonction ``getServiceList``, qui doit renvoyer un dictionnaire d'entrées de la forme ``'nom_service' : fonction``.
+2. la fonction ``getSyncServiceList``, qui doit renvoyer un dictionnaire d'entrées de la même forme que ``getServiceList``, à la différence que cette fonction déclare des services **synchrones**, c'est à dire s'exécutant tout de suite.
+3. la fonction ``getComponentName`` qui retourne le nom du composant.
+
+NuCentral se charge ensuite d'enregistrer le composant, et tous les services.
+
+Par exemple::
+
+  message = "Hello, world"
+
+  def getComponentName():
+  	return "foo"
+
+  def getSyncServiceList():
+
+	services_list = dict()
+	services_list['print'] = disp;
+	services_list['error'] = error;
+
+	return services_list
+
+  def disp(*args):
+  	return message
+
+En utilisant les fonctions d'introspection de nucentral (``soap_explore.py`` dans
+le répertoire scripts), on obtient la sortie suivante::
+
+  [+] foo
+  	print
+	error
+
+Appel du service depuis un client
+---------------------------------
+
+Le composant défini précédemment dispose d'un service ``print``, qui retourne
+simplement le message (en ignorant les arguments).
+
+On utilise l'objet `NuCentralServer` pour appeler le service::
+
+  import sys
+
+  # path to nucentral installation, if needed
+  sys.path.append("../")
+
+  from nucentral import client
+  from nucentral.client import NuCentralServer
+  from nucentral.client import methods
+
+  url = "https://localhost:8443/SOAP"
+
+  _server = NuCentralServer()
+
+  _server.connect(url,methods.METHOD_SOAP)
+
+  print _server.call("foo","print")
+
+Avec la sortie suivante::
+
+  Hello, world
+
+Appel de services entre modules
+-------------------------------
+
+Lorsqu'un module souhaite appeler un service d'un autre module, il doit
+passer par une fonction, qui fera le travail nécessaire (soit un appel
+local, soit un appel SOAP ou XMLRPC si la procédure est présente sur un
+autre serveur NuCentral.
+
+Par exemple::
+
+  from nucentral import client
+
+  def myservice(*args):
+  	result = client.Service.callService(component2,service2)
+	return result
+

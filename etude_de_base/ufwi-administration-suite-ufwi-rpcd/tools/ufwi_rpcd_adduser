@@ -1,0 +1,34 @@
+#!/usr/bin/env python
+#
+# Add a user to ufwi_rpcd
+#
+
+import sqlite3
+from getpass import getpass
+
+nucentral_users_file = "/var/lib/ufwi-rpcd/users"
+nucentral_groups_file = "/var/lib/ufwi-rpcd/groups"
+nucentral_acl_db = "/var/lib/ufwi-rpcd/acl.db"
+
+login = raw_input("login: ")
+password = getpass("password: ")
+
+fp = open(nucentral_users_file, "a")
+fp.write("%s:{PLAIN}%s\n" % (login, password))
+fp.close()
+
+fp = open(nucentral_groups_file, "a")
+fp.write("%s:%s\n" % (login, login))
+fp.close()
+
+conn = sqlite3.connect(nucentral_acl_db)
+cursor = conn.cursor()
+
+role = "nucentral_admin"
+
+request = "INSERT INTO acl(_group, _role) VALUES (%s, %s)" % (login, role)
+cursor.execute(request)
+conn.commit()
+
+cursor.close()
+

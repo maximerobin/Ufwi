@@ -1,0 +1,11 @@
+Document: NuCentral
+Title: NuCentral
+Author: Pierre Chifflier <chifflier@inl.fr>
+Abstract: NuCentral is a component server, allowing registration of
+ services for local or remote calls.
+Section: Apps/System
+
+Format: HTML
+Index: /usr/share/doc/nucentral/fr/html/nucentral.html
+Files: /usr/share/doc/nucentral/fr/html/*.html
+

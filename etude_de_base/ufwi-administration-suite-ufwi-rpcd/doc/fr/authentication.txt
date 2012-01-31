@@ -1,0 +1,79 @@
+Authentification
+================
+
+NuCentral fournit des fonctions d'identifications pour que tous les modules
+puissent utiliser la même base d'utilisateurs.
+
+Types d'authentification
+------------------------
+
+Les différents types d'authentification supportés sont:
+
+ - `alwaysok`: Tous les logins/pass sont acceptés
+ - `alwaysno`: Tous les logins/pass sont rejetés
+ - `basicdict`: Utilise les logins/pass qui sont écrits dans la configuration
+   de NuCentral
+ - `file`: Utilise un fichier contenant des couples login/mot de passe
+ - `ldap`: Utilise un annuaire LDAP
+
+Configuration
+-------------
+
+Dans la section `CORE` de la configuration, on renseigne la variable `auth`
+en lui donnant le nom d'une section qui défini tous les paramètres
+d'authentification.
+
+Exemple::
+
+  [CORE]
+  auth = my_auth
+
+  [my_auth]
+  type = file
+  authfile = /var/lib/nucentral/users
+
+Format des mots de passe
+------------------------
+
+Un mot de passe est enregistré sous la forme::
+
+  {METHOD}HASH
+
+`METHOD` est la méthode utilisée pour enregistrer le mot de passe:
+ - `PLAIN` si le mot de passe est en clair
+ - `SHA1` pour utiliser l'algorithme de hashage SHA-1
+ - ...
+
+`HASH` qui suit est le hash du mot de passe en utilisant la méthode précisée.
+
+Fichier simple
+--------------
+
+Chaque ligne du fichier doit être organisée de la forme::
+
+  user:{METHOD}HASH
+
+Configuration LDAP
+------------------
+
+Les options suivantes sont obligatoires:
+ - `uri`: chaîne de connexion, au format standard LDAP. Par exemple:
+
+   - _`ldap://ldap.domain.com:389/`
+   - _`ldaps://ldap.domain.com/`
+
+ - `basedn`: racine de l'annuaire
+ - `login`: attribut utilisé comme nom d'utilisateur
+
+Si un login est nécessaire pour pouvoir rechercher l'utilisateur, il faut le préciser
+en utilisant les options de bind:
+
+ - `binddn`: DN complet de l'utilisateur pour effectuer la recherche
+ - `bindpw`: mot de passe associé à cet utilisateur
+
+La recherche d'un utilisateur se fait en plusieurs étapes:
+ #. Bind (login) en utilisateur binddn et bindpw si fournis, login anonyme sinon
+ #. Recherche en utilisant le filtre et l'attribut, de manière récursive (subtree) sous la racine. Cette recherche retourne
+    le DN de l'utilisateur
+ #. Bind en utilisant ce DN, et le mot de passe fourni
+

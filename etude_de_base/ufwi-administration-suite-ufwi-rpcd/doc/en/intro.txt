@@ -1,0 +1,43 @@
+Introduction
+============
+
+Modules
+-------
+
+A module is equivalent to a project, for example NuFace or Nulog.
+
+Components
+----------
+
+A component is a logical part, containing services (functions).
+
+Module NuLog, for example, contains two components: NuLog-web (web interface) and NuLog-backend. Generally speaking,
+it is always a good thing to split the interface from the implementation,
+so that each project can be split in several components.
+
+Services
+--------
+
+Each component is made from objects and functions. Functions which are exported are called services.
+
+The Application Programming Interface (API) for services must be defined very strictly, because API changes
+are likely to cause problems in other components using this service.
+
+Inside a component, functions and their signatures (name, parameters and return value) can change without problems,
+as only the component should use them.
+
+A service can be tagged to be asynchronous or synchronous, if it is returning the result immediately, or if
+it is returned an object of type **Deferred** containing a callback to execute the service.
+
+Read **Specifications** for more information.
+
+Objects and language
+--------------------
+
+Exported services must return **simple** types: string, integer, ...
+and **never** python objects. NuCentral is not restricted to python code,
+and must not impose the choice of the client (for XML-RPC and SOAP, in particular).
+
+Private functions of a module (non-exported, or restricted to a private use between two modules)
+are not subject to this restriction.
+

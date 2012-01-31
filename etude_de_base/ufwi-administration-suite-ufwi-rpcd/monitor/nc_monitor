@@ -1,0 +1,261 @@
+#!/usr/bin/python
+#
+# nc_monitor: watchdog for nucentral
+#
+# example:
+#     ./monitor/nc_monitor
+#   will start nucentral (see variables below) and check is the server is running
+#   regularly. It will also restart the server if needed
+#
+# 3 threads:
+# Main thread (doing nothing)
+#  + server_check
+#  + control_socket
+
+
+NUCENTRAL_TAC = "./nucentral.tac"
+
+
+# the file containing the pid
+PID_FILE = "./nucentral.pid"
+
+
+# the command line to run the daemon
+RUN_NUCENTRAL = ['twistd', '-y', NUCENTRAL_TAC, '--pidfile', PID_FILE]
+
+
+
+# interval, in seconds, between server checks
+MONITOR_INTERVAL = 3
+
+# maximum number of times the watchdog will try to start the server
+# XXX could be improved in changing the value to 'n times per day/hours/minutes ?', for ex
+MAX_RESTART = 20
+
+# name of the control socket
+SOCKET_NAME = "/tmp/nucentral.sock"
+
+# log file for the script
+WATCHDOG_LOG = "/tmp/nucentral_wd.log"
+
+
+pid = None
+real_pid = None
+
+global_vars = {
+    'exit' : 0,
+    'start_count' : 0,
+    'start_time' : 0,
+    'global_start_time' : 0,
+}
+
+
+import os
+import signal
+import socket
+import subprocess
+import sys
+import time
+import thread
+
+from daemon import daemonize
+
+def kill(pid, signal=0):
+    """sends a signal to a process
+    returns True if the pid is dead
+    with no signal argument, sends no signal"""
+    #if 'ps --no-headers' returns no lines, the pid is dead
+    from os import kill
+    try: return kill(pid, signal)
+    except OSError, e:
+        #process is dead
+        if e.errno == 3: return True
+        #no permissions
+        elif e.errno == 1: return False
+        else: raise
+
+def process_is_dead(pid):
+    if kill(pid): return True
+
+    #maybe the pid is a zombie that needs us to wait4 it
+    from os import waitpid, WNOHANG
+    try: dead = waitpid(pid, WNOHANG)[0]
+    except OSError, e:
+        #pid is not a child
+        if e.errno == 10: return False
+        else: raise
+    return dead
+
+def goodkill(pid, interval=1, hung=20):
+    "let process die gracefully, gradually send harsher signals if necessary"
+    from signal import SIGTERM, SIGINT, SIGHUP, SIGKILL
+    from time import sleep
+
+    for signal in [SIGTERM, SIGINT, SIGHUP]:
+        if kill(pid, signal): return
+        if process_is_dead(pid): return
+        time.sleep(interval)
+
+    i = 0
+    while True:
+        #infinite-loop protection
+        if i < hung: i += 1
+        else:
+            print "Process %s is hung. Giving up kill." % pid
+            return
+        if kill(pid, SIGKILL): return
+        if process_is_dead(pid): return
+        time.sleep(interval)
+
+def thread_server_check(*args):
+    global real_pid, pid, global_vars
+    while global_vars['exit'] == 0:
+        if process_is_dead(real_pid):
+            if (global_vars['start_count'] >= MAX_RESTART):
+                print "Start count exceeded - aborting"
+                global_vars['exit'] = 1
+                thread.interrupt_main()
+                # XXX restart in failsafe mode ? reboot ? reinstall ?
+                return -1
+            print "Server is dead - trying to restart"
+            start_nucentral()
+        time.sleep(MONITOR_INTERVAL)
+
+def get_real_server_pid():
+    file = open(PID_FILE,"r")
+    real_pid = int(file.read())
+    return real_pid
+
+def start_nucentral():
+    global subp, real_pid, pid, global_vars
+    #pid = os.spawnlp(os.P_NOWAIT, 'twistd', 'twistd', '-ny', NUCENTRAL_TAC)
+    subp = subprocess.Popen(RUN_NUCENTRAL, stdout=logfile, stderr=errfile)
+    # give server enough time to start (creating the pid file)
+    time.sleep(1)
+    pid = subp.pid
+    real_pid = get_real_server_pid()
+    print "pid: %d, real_pid: %d" % (pid,real_pid)
+    global_vars['start_time'] = time.time()
+    global_vars['start_count'] += 1
+    # since we are starting twistd without the -n switch, the main process will exit
+    subp.wait()
+
+def kill_nucentral():
+    global real_pid, pid, global_vars
+    print "Terminating server %d" % real_pid
+    goodkill(real_pid)
+    print "Server uptime: %d seconds" % (time.time() - global_vars['start_time'])
+
+def create_control_socket(name):
+    s = socket.socket(socket.AF_UNIX, socket.SOCK_STREAM)
+    try:
+        os.remove(name)
+    except OSError:
+        pass
+    s.bind(name)
+    s.listen(1)
+    return s
+
+def control_handle_client(sock):
+    msg = ''
+    sock.send("NuCentral control socket\n")
+    while True:
+        msg = sock.recv(4096)
+        if msg == '':
+            raise RuntimeError, "Socket connection broken"
+        msg = msg.strip()
+
+        if msg == 'help':
+            sock.send("Supported commands:\n")
+            sock.send("    help, stop, restart, status, uptime\n")
+        elif msg == 'stop':
+            sock.send("stopping server\n")
+            global_vars['exit'] = 1
+            kill_nucentral()
+            #thread.interrupt_main()
+        elif msg == 'restart':
+            sock.send("restarting server\n")
+            # kill server, it will be restarted automatically
+            kill_nucentral()
+        elif msg == 'status':
+            ret =  process_is_dead(real_pid)
+            status = "Server status: %s, pid is %s\n"
+            if ret is False:
+                status = status % ("running",real_pid)
+            else:
+                status = status % ("problem: poll result is %s" % ret,real_pid)
+            sock.send(status)
+        elif msg == 'uptime':
+            sock.send( "Server uptime: %d seconds\n" % (time.time() - global_vars['start_time']) )
+            sock.send( "Watchdog uptime: %d seconds\n" % (time.time() - global_vars['global_start_time']) )
+        else:
+            sock.send("unknown command\n")
+    sock.close()
+
+""" To test:
+socat - UNIX-CONNECT:/tmp/nucentral.sock
+status
+stop
+"""
+def thread_control_socket(*args):
+    serversocket = create_control_socket(SOCKET_NAME)
+    while True:
+        (clientsocket, address) = serversocket.accept()
+        print "Control connection accepted"
+        try:
+            ret = control_handle_client(clientsocket)
+        except Exception, e:
+            print "Exception: %s" % e
+
+
+
+def cleanup(*args):
+    global_vars['exit'] = 1
+    kill_nucentral()
+
+    try:
+        os.remove(SOCKET_NAME)
+    except OSError:
+        pass
+
+    print "Global server uptime: %d seconds" % (time.time() - global_vars['global_start_time'])
+
+    sys.exit(0)
+
+
+def main():
+    global logfile, errfile
+
+    # check if .tac is present
+    if not os.path.exists(NUCENTRAL_TAC):
+        print "tac file %s does not exist, aborting" % NUCENTRAL_TAC
+        sys.exit(-1)
+
+
+    logfile = open(WATCHDOG_LOG,"a")
+    #errfile = open(WATCHDOG_LOG,"a")
+    errfile = logfile
+
+    global_vars['global_start_time'] = time.time()
+    start_nucentral()
+
+    t = thread.start_new_thread(thread_server_check,(None,))
+    t_socket = thread.start_new_thread(thread_control_socket,(None,))
+
+
+    try:
+        while True:
+            if global_vars['exit']: raise KeyboardInterrupt()
+            time.sleep(5)
+    except KeyboardInterrupt,e:
+        pass
+
+    cleanup()
+
+
+
+if __name__ == "__main__":
+    daemonize()
+    signal.signal(signal.SIGTERM,cleanup)
+    main()
+    sys.exit(0)

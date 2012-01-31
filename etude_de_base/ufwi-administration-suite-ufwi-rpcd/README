@@ -1,0 +1,93 @@
+*********
+ufwi-rpcd
+*********
+
+Introduction
+------------
+
+ufwi-rpcd is a framework based on Python and Twisted.
+
+Each ufwi-rpcd component registers to a server a component name and a list of
+services. These services can be called through XMLRPC calls.
+
+It is used to manage modules and web services, and allow components to call
+functions from other components in a network-transparent way (it does not
+matter if the service is located on the local ufwi-rpcd server, or part of
+another ufwi-rpcd server).
+
+Website: http://www.ufwi.org/
+
+
+Installation
+============
+
+See INSTALL file.
+
+
+Start/stop ufwi-rpcd
+====================
+
+ufw-rpcd listen on tcp/8080 on 127.0.0.1 and tcp/8443 on 0.0.0.0 by default.
+
+If you don't bother to security, you can open the HTTP for anyone (not just
+127.0.0.1) and disable SSL, with the following configuration in
+/etc/ufwi-rpcd/ufwi-rpcd.conf:
+
+--------- 8< -----------
+[CORE]
+bind_address = 0.0.0.0
+enable_ssl = no
+--------- 8< -----------
+
+Background
+----------
+
+Start ufwi-rpcd in background with the following command (as root):
+
+   twistd -y /usr/sbin/ufwi-rpcd.tac --pidfile=/var/run/ufwi-rpcd.pid -l /var/log/ufwi-rpcd-twisted.log
+
+Stop ufwi-rpcd running background with the following command (as root):
+
+   kill $(cat /var/run/ufwi-rpcd.pid)
+
+Foreground
+----------
+
+For the development, you can run ufwi-rpcd in foreground. First, enable output to stdout
+by editing /etc/ufwi-rpcd/ufwi-rpcd.log with the following config:
+
+--------- 8< -----------
+[log]
+use_stdout = True
+--------- 8< -----------
+
+Then run ufwi-rpcd in foreground with the following command (as root):
+
+   twistd -n -y /usr/sbin/ufwi-rpcd.tac -l /var/log/ufwi-rpcd-twisted.log
+
+Stop ufwi-rpcd with CTRL+c.
+
+Try your server with ufwi_rpcd_client
+-------------------------------------
+
+If your server is running, use the command line utility, ufwi_rpcd_client, to
+test your server. To test it on HTTP (tcp/8080), use:
+
+    ufwi_rpcd_client --host 127.0.0.1 --cleartext -u admin -p admin
+
+By default, ufwi_rpcd_client uses HTTPS (tcp/8443):
+
+    ufwi_rpcd_client --host 127.0.0.1 -u admin -p admin
+
+Use --help to get more options, eg. --debug displays service calls.
+
+Warning: If you use -p option, your password will be stored in your shell
+history (eg. ~/.bash_history).
+
+You can display all components:
+    ufwi-rpcd> components()
+
+In order to display help and services of one component:
+    ufwi-rpcd> help(component_name)
+    ufwi-rpcd> help(component_name.service)
+

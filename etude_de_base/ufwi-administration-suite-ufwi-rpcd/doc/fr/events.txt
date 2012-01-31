@@ -1,0 +1,58 @@
+Événements, signaux
+===================
+
+NuCentral dispose d'un système de gestion d'événements et d'émission de signaux,
+semblable à un système de callbacks.
+
+::
+
+  from nucentral.core import events
+
+Définition
+----------
+
+Le modèle des fonctions n'est pas fixé (le nombre et le type des arguments sont variables).
+
+Connexion
+----------
+
+La connexion permet d'associer une fonction à un événement. Il n'est pas nécéssaire de déclarer
+l'événement.
+
+On peut connecter autant de fonctions que l'on veut à un événement. Il n'est pas possible de
+connecter plusieurs fois la même fonction au même événement, par contre on peut connecter une
+fonction à plusieurs événements.
+
+::
+
+  events.connect("event",theCallback)
+
+Déconnexion
+-----------
+
+La déconnexion permet de supprimer une association entre un événement et une fonction. Les
+autres connexions ne sont pas modifiées.
+
+::
+
+  events.disconnect("event",theCallback)
+
+La fonction `disconnectAll` permet de supprimer toutes les associations pour un événement.
+
+::
+
+  events.disconnectAll("event")
+
+Emission d'événements
+---------------------
+
+La fonction `emit` permet d'emmettre un événement.
+On peut spécifier une liste d'arguments qui seront passés à toutes les fonctions appelées.
+
+Note: les appels sont synchrones, c'est-à-dire que la fonction `emit` ne retourne que quand
+toutes les fonctions sont terminées.
+
+::
+
+  events.emit("event",arg1,arg2)
+

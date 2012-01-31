@@ -1,0 +1,64 @@
+Installation
+============
+
+Prérequis
+---------
+
+Les paquets suivants sont requis:
+ - python-twisted-web
+ - python-configobj
+ - python-pyopenssl
+
+Installation de NuCentral
+-------------------------
+
+Pour le moment, aucune installation particulière n'est nécessaire. Copier le répertoire
+`nucentral` dans le répertoire d'installation.
+
+Génération de certificats
+-------------------------
+
+Pour fonctionner en mode SSL, NuCentral doit disposer de certificats.
+Si une autorité de certification est en place, l'utiliser, et configurer
+les valeurs suivantes dans le fichier de configuration::
+
+  [ssl]
+  ca = ca.pem
+  cert_chain = cert_chain.pem
+  cert = cert.pem
+  key = key.pem
+
+Les valeurs obligatoires sont le certificat (`cert.pem`) et la clé (`key.pem`).
+Si présente, l'autorité de certification doit être donnée (`ca.pem`), et la chaîne
+de certificat doit être créée.
+
+La chaîne de certificats (`cert_chain`) est un fichier constitué de tous les
+certificats, dans l'ordre, depuis celui du serveur jusqu'à son autorité de
+certification.
+Dans le cas simple (un certificat + une autorité), on le crée comme suit::
+
+  cat cert.pem ca.pem > cert_chain.pem
+
+Création de certificats auto-signés
+-----------------------------------
+
+On utilise l'outil `cert-tool`, du paquet `gnutls-bin`::
+
+  certtool --generate-privkey --bits 1024 --outfile key.pem
+  chmod 400 key.pem
+  certtool --generate-self-signed --load-privkey key.pem --outfile cert.pem
+  cp cert.pem ca.pem
+
+Les options permettant le mode serveur et la signature / encryption doivent être activées.
+
+Commandes SSL utiles
+++++++++++++++++++++
+
+Afficher le contenu d'un certificat::
+
+  openssl x509 -text -in cert.pem
+
+Tester la connexion, et afficher le certificat serveur::
+
+  openssl s_client -connect server:port
+

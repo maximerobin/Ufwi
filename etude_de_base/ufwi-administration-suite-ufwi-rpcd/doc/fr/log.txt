@@ -1,0 +1,74 @@
+Fonctions de Log
+================
+
+Pour logguer des événements (message d'information, erreur, etc.), NuCentral
+utilise une couche d'abstraction au dessus de twisted. Cela permet de filtrer
+les événements (par un système de seuil), de modifier la sortie, etc.
+
+::
+
+  from nucentral.core import log
+
+Pour enregistrer un message, il suffit d'appeler la fonction `msg` avec comme
+argument un niveau de log, et le message::
+
+  log.msg(log.NORMAL, "hello, world")
+
+Niveaux de log
+--------------
+
+Lorsqu'un message est émis, il est associé à un niveau représentant l'importance
+du message, suivant un niveau allant de 0 à 10.
+
+Les différents niveaux reconnus sont (voir `nucentral/core/log.py`)::
+
+  # standard levels
+  DEBUG = 1
+  INFO = 4
+  NORMAL = 5
+  WARNING = 7
+  HIGH = 8
+  CRITICAL = 9
+
+  # aliases
+  ERROR = HIGH
+
+Le seuil par défaut est `NORMAL`, ce qui veut dire que tous les messages de niveau
+5 ou plus seront enregistrés, et les autres ignorés.
+
+Il est possible de changer le seuil::
+
+  log.set_threshold(log.DEBUG)
+
+Cette commande permet d'afficher tous les messages (puisque `DEBUG` est le niveau le plus
+faible).
+
+Le niveau `CRITICAL` est un peu spécial, puisqu'il force la sortie de NuCentral.
+
+Fonction de log
+---------------
+
+La fonction de log par défaut est celle de twisted, provenant du module
+`twisted.python.log`.
+
+Pour la remplacer, utiliser `set_log_method`::
+
+  def my_log_function(text):
+    # do something useful with text
+
+  log.set_log_method(my_log_function)
+
+Raccourcis
+----------
+
+Les fonctions avec les niveaux les plus courants peuvent être appelées en utilisant les
+raccourcis suivants::
+
+  log.debug(text)     # same as log.msg(log.DEBUG, text)
+
+  log.warning(text)   # same as log.msg(log.WARNING, text)
+
+  log.error(text)     # same as log.msg(log.ERROR, text)
+
+  log.critical(text)  # same as log.msg(log.CRITICAL, text)
+

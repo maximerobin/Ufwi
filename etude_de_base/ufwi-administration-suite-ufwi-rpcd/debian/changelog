@@ -1,0 +1,13 @@
+nucentral (0.2-1) unstable; urgency=low
+
+  * New upstream release
+  * Split package in multiple binary packages
+
+ -- Pierre Chifflier <pollux@debian.org>  Mon, 02 Jun 2008 15:42:45 +0200
+
+nucentral (0.1-1) unstable; urgency=low
+
+  * Initial release
+
+ -- Pierre Chifflier <pollux@debian.org>  Mon, 03 Sep 2007 15:55:42 +0200
+

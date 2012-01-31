@@ -1,0 +1,4 @@
+MULTISITE_SLAVE = 'slave'
+MULTISITE_MASTER = 'master'
+NO_MULTISITE = 'no'
+

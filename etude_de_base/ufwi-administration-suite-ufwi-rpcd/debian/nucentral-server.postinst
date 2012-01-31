@@ -1,0 +1,80 @@
+#!/bin/sh
+
+set -e
+
+export ACL_DB=/var/lib/nucentral/acl.db
+
+# Functions to avoid depending on make:
+function make_distclean() {
+rm -f *.csr user.cnf server.cnf
+rm -f *.{crt,key} crl.pem openssl.cnf
+rm -rf testCA
+}
+
+function make_nucentral_certs () {
+./gen_config.sh
+mkdir testCA/{,certs,crl,newcerts,private}
+echo '01' > ./testCA/serial
+echo '01' > ./testCA/crlnumber
+touch ./testCA/index.txt
+openssl genrsa -des3 -passout pass:mypassword -out CA.key 1024
+openssl req -new -passin pass:mypassword -passout pass:mypassword -config openssl.cnf -batch -key CA.key -out CA.csr -days 7000
+openssl req -x509 -config openssl.cnf -extensions v3_ca -passin pass:mypassword -passout pass:mypassword -key CA.key -in CA.csr -out CA.crt -days 7000
+[ "xnucentral" != "x" ] || exit 1; \
+        openssl genrsa -out nucentral.key
+[ "xnucentral" != "x" ] || exit 1; \
+        ./gen_server_cnf.sh "nucentral"; \
+        openssl req -new -config server.cnf -batch -key nucentral.key -out nucentral.csr -days 3650 ; \
+        rm -f server.cnf
+[ "xnucentral" != "x" ] || exit 1; \
+        openssl ca -passin pass:mypassword -batch -notext -config openssl.cnf -cert CA.crt -keyfile CA.key -extensions usr_cert -policy policy_anything -days 3650 -out nucentral.crt -infiles nucentral.csr
+}
+
+function generate_nucentral_certs () {
+    echo "Generating certificates for nucentral-server..."
+    cd /usr/share/nucentral/pki/
+    make_distclean >/dev/null
+    make_nucentral_certs
+    chmod 600 nucentral.key
+    mv nucentral.crt /etc/nucentral/cert.pem
+    mv nucentral.key /etc/nucentral/key.pem
+    cp -p CA.crt /etc/nucentral/ca.pem
+    cat /etc/nucentral/cert.pem /etc/nucentral/ca.pem > /etc/nucentral/cert_chain.pem
+    make_distclean >/dev/null
+}
+
+function no_cert_file () {
+    for f in ca.pem cert.pem cert_chain.pem key.pem; do
+        if [ -f "/etc/nucentral/$f" ]; then
+            echo "Found /etc/nucentral/$f. Not generating new certificates."
+            return 1  # False.
+        fi
+    done
+    return 0  # True.
+}
+
+case "$1" in
+    configure|upgrade)
+        # Make certificate:
+        no_cert_file && generate_nucentral_certs && update-nucentral-server -r
+        ;;
+    triggered)
+        update-nucentral-server -r
+        exit 0
+        ;;
+esac
+
+chmod 700 /var/lib/nucentral/sessions
+
+if [ ! -s $ACL_DB ] ; then
+    sqlite3 $ACL_DB < /usr/share/nucentral/acl_sqlite_debug.sql
+fi
+
+if [ -x "/etc/init.d/nucentral-server" ]; then
+	update-rc.d nucentral-server defaults >/dev/null
+fi
+
+#DEBHELPER#
+
+exit 0
+

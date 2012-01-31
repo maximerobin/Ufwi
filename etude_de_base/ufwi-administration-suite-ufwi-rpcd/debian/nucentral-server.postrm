@@ -1,0 +1,21 @@
+#! /bin/sh
+
+set -e
+
+if [ "$1" = "purge" ]; then
+
+    # remove old permissions DB
+    if [ -f /var/lib/nucentral/acl.db ]; then
+      rm -f /var/lib/nucentral/acl.db
+    fi
+
+    if [ -d /var/lib/nucentral/mods-available ]; then
+        find /var/lib/nucentral/mods-available -maxdepth 1 -type l -delete
+    fi
+    if [ -d /var/lib/nucentral/mods-enabled ]; then
+        find /var/lib/nucentral/mods-enabled -maxdepth 1 -type l -delete
+    fi
+
+fi
+
+#DEBHELPER#

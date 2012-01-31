@@ -1,0 +1,15 @@
+etc/nucentral
+usr/sbin
+usr/share/nucentral
+usr/share/nucentral/audit_db_configuration
+usr/share/nucentral/templates
+var/lib/nucentral
+var/lib/nucentral/locks
+var/lib/nucentral/mods-enabled
+var/lib/nucentral/mods-available
+var/lib/nucentral/sessions
+var/lib/nucentral/user_configurations
+var/lib/nucentral/templates
+var/lib/nucentral/versionned
+var/lib/nucentral/repositories
+var/cache/nucentral

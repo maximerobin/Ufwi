@@ -1,0 +1,44 @@
+Tâches planifiées
+=================
+
+NuCentral dispose d'un système de planification d'événements, semblable à Cron,
+mais utilisé pour appeler des callbacks Python.
+
+::
+
+  from nucentral.core import cron
+
+Définition
+----------
+
+Le modèle des fonctions de callback est libre (le nombre et le type des arguments sont variables).
+Par contre, les arguments sont fixés au moment de l'enregistrement de la fonction
+
+Appel de fonction avec délai
+----------------------------
+
+Pour appeler une fonction, une seule fois, après un certain délai, utiliser la fonction
+`scheduleOnce`.
+
+::
+
+  delay = 10  # wait 10 seconds
+  cron.scheduleOnce(delay, callback, args)
+
+Appel régulier de fonction
+--------------------------
+
+Pour appeler une fonction,régulièrement, utiliser la fonction `scheduleRepeat`.
+
+::
+
+  period = 10  # every 10 seconds
+  cron.scheduleRepeat(period, callback, args)
+
+La fonction de callback sera appelée immédiatement, puis toutes les `period` secondes.
+
+Annulation de planification
+---------------------------
+
+Pour le moment, il est impossible d'annuler une tâche planifiée.
+

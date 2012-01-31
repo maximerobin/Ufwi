@@ -1,0 +1,44 @@
+Scheduled tasks
+===============
+
+NuCentral offers a set of functions to schedule events, similar to cron,
+though it is used to call python functions.
+
+::
+
+  from nucentral.core import cron
+
+Definition
+----------
+
+The signature of callback functions is not imposed (number and type of arguments are variable).
+However, arguments are fixed at the moment the function is registered.
+
+Delaying a function call
+------------------------
+
+Calling a function once, after some delay, can be done using function
+`scheduleOnce`.
+
+::
+
+  delay = 10  # wait 10 seconds
+  cron.scheduleOnce(delay, callback, args)
+
+regular call of a function
+--------------------------
+
+To call a function regularly, use method `scheduleRepeat`.
+
+::
+
+  period = 10  # every 10 seconds
+  cron.scheduleRepeat(period, callback, args)
+
+The callback function will be called immediately, and then every `period` seconds.
+
+Cancelling a scheduled task
+---------------------------
+
+At the moment, it is not possible to cancel a scheduled task.
+

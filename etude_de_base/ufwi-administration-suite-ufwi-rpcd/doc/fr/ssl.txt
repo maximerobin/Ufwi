@@ -1,0 +1,22 @@
+***
+SSL
+***
+
+Fonctionnement interne
+**********************
+
+Un système de vérification des certificats est mis en place
+dans le fichier **nucentral/core/ssl.py**.
+
+Un callback peut être appellé lorsqu'une connexion SSL est
+effectuée.
+
+Pour la définir, passer une fonction à l'argument verifyCallback
+de la classe core.ChainingOpenSSLContextFactory.
+
+Le callback sera appellé à chaque connexion SSL, et devra retourner
+True si la connexion est acceptée.
+
+L'objet passé en paramètre est de type crypto.X509.
+
+Utiliser le module ``crypto`` pour s'en servir.

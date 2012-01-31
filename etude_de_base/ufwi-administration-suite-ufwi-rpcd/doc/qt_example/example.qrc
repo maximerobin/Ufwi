@@ -1,0 +1,5 @@
+<RCC>
+    <qresource prefix="/locale" >
+        <file>example.fr.qm</file>
+    </qresource>
+</RCC>

@@ -1,0 +1,511 @@
+#!/usr/bin/python
+from code import InteractiveConsole
+from optparse import OptionParser
+from sys import exit, exc_info
+from threading import Thread, Lock, Event
+from getpass import getpass
+import sys
+from os.path import expanduser
+import rlcompleter
+import readline
+import atexit
+from pprint import pprint
+from time import time
+from logging import getLogger, StreamHandler, DEBUG, ERROR, INFO
+
+
+from ufwi_rpcd.common import tr
+from ufwi_rpcd.common.logger import createColoredFormatter
+from ufwi_rpcd.common.error import exceptionAsUnicode, writeError as _writeError
+from ufwi_rpcd.common.tools import readDocumentation
+from ufwi_rpcd.client.text_ssl_config import TextClientSSLConfig
+from ufwi_rpcd.client import (RpcdClientBase, KEEP_ALIVE_SECONDS,
+    RpcdError, SessionError, Cookie)
+
+# Readline doesn't work correctly with UnicodeStdout
+from ufwi_rpcd.common.unicode_stdout import uninstallUnicodeStdout, getTerminalCharset
+uninstallUnicodeStdout()
+
+VERSION = '1.0'
+
+PROMPT1 = "ufwi_rpcd> "
+PROMPT2 = "      ...> "
+
+def writeError(err, title, traceback=None, logger=None):
+    if isinstance(err, RpcdError):
+        message = u"[%s] %s" % (
+            err.type,
+            exceptionAsUnicode(err))
+    else:
+        message = None
+    _writeError(err, title, message=message, traceback=traceback, logger=logger)
+
+# unauthenticated user: recheck each 30 seconds if the user is authenticated
+UNAUTHENTICATED_DELAY = 30.0
+
+class KeepAlive(Thread):
+    def __init__(self, client):
+        Thread.__init__(self)
+        # FIXME: Don't use the same client in two threads,
+        # RpcdBaseClient is not thread safe
+        self.client = client
+        self._running = Lock()
+        self._stop = Event()
+        if self.client.login:
+            self.next_call = time() + KEEP_ALIVE_SECONDS
+        else:
+            self.next_call = time() + UNAUTHENTICATED_DELAY
+
+    def run(self):
+        self._running.acquire()
+        try:
+            while True:
+                self._stop.wait(0.250)
+                if self._stop.isSet():
+                    break
+                if time() < self.next_call:
+                    continue
+                if self.client.login:
+                    self.next_call = time() + KEEP_ALIVE_SECONDS
+                    try:
+                        self.client.call('session', 'keepAlive')
+                    except Exception, err:
+                        writeError(err, "Keep alive error")
+                else:
+                    # unauthenticated user: recheck each 30 seconds
+                    # if the user is authenticated
+                    self.next_call = time() + UNAUTHENTICATED_DELAY
+        finally:
+            self._running.release()
+
+    def stop(self):
+        self._stop.set()
+        self._running.acquire()
+        self._running.release()
+
+class ClientError(RpcdError):
+    def __init__(self, message):
+        RpcdError.__init__(self, "ClientError", message)
+
+def oneLinerHelp(prefix, doc):
+    if not doc:
+        return prefix
+    if 1 < len(doc):
+        return prefix + ': "%s (...)"' % doc[0]
+    else:
+        return prefix +': "%s"' % doc[0]
+
+class DocProxy(object):
+    def __init__(self, client, *help_arguments):
+        self._nucentral_doc = None
+        self._client = client
+        self._help_arguments = help_arguments
+
+    def _getDoc(self):
+        if self._nucentral_doc is None:
+            try:
+                doc = self._client('CORE', 'help', *self._help_arguments)
+                doc = tuple(doc)
+            except RpcdError:
+                doc = tuple()
+            self._nucentral_doc = doc
+            self.__doc__ = '\n'.join(doc)
+        return tuple(self._nucentral_doc)
+
+class ServiceProxy(DocProxy):
+    def __init__(self, component, service):
+        DocProxy.__init__(self, component._client, component._name, service)
+        self._component = component
+        self._service = service
+
+    def __call__(self, *arguments):
+        return self._client(self._component._name, self._service, *arguments)
+
+    def __repr__(self):
+        return "<ServiceProxy %r>" % str(self)
+
+    def __str__(self):
+        return "%s.%s" % (self._component._name, self._service)
+
+    def _printHelp(self):
+        for line in self._getDoc():
+            print line
+        print
+
+class ComponentProxy(DocProxy):
+    def __init__(self, client, component):
+        DocProxy.__init__(self, client, component)
+        self._name = component
+        self._service_proxies = {}
+
+    def _services(self):
+        return self._client('CORE', 'getServiceList', self._name)
+
+    def __dir__(self):
+        # Only works with Python 2.6+
+        return self._services()
+
+    def _getProxy(self, service, check=True):
+        if service in self._service_proxies:
+            return self._service_proxies[service]
+        if check \
+        and (service not in self._services()):
+            raise ClientError(tr("The component %r has not service %r!") % (self._name, service))
+        proxy = ServiceProxy(self, service)
+        self._service_proxies[service] = proxy
+        return proxy
+
+    def __getattr__(self, service):
+        if service.startswith("_"):
+            DocProxy.__getattr__(self, service)
+        return self._getProxy(service)
+
+    def _printHelp(self):
+        doc = self._getDoc()
+        if doc:
+            for line in doc:
+                print line
+        else:
+            print self._name
+        print
+        print "Services:"
+        for service in self._services():
+            proxy = self._getProxy(service, check=False)
+            service_doc = proxy._getDoc()
+            if service_doc:
+                service_doc = list(service_doc)
+                service = service_doc[0]
+                if service.endswith(":"):
+                    service = service[:-1]
+                    del service_doc[0:2]
+                else:
+                    del service_doc[0]
+            text = oneLinerHelp(" - %s" % service, service_doc)
+            print text
+
+    def __repr__(self):
+        return "<ComponentProxy %r>" % self._name
+
+    def __str__(self):
+        return self._name
+
+class Client:
+    def __init__(self):
+        self.options = self.parseOptions()
+        self.setupLog()
+
+        options = {
+            'client_name': 'ufwi_rpcd_client',
+            'client_release': VERSION,
+        }
+
+        ssl_config = TextClientSSLConfig()
+
+        version_warning = ssl_config.getM2CryptoVersionWarning()
+        if version_warning:
+            for line in version_warning:
+                self.logger.warning(line)
+
+        if self.options.key or self.options.cert or self.options.ca or self.options.crl:
+            ssl_config.setConfig(self.options.ca, self.options.cert, self.options.key, self.options.crl)
+
+            ssl_config.fqdn_check = not self.options.no_fqdn_check
+            if self.options.ca or self.options.crl:
+                ssl_config.check = True
+            else:
+                ssl_config.fqdn_check = False
+
+            if self.options.key or self.options.cert:
+                ssl_config.send_cert = True
+
+            validity = ssl_config.validate()
+            if validity is not None:
+                writeError(validity, "SSL Error")
+                exit(1)
+
+        options['ssl_config'] = ssl_config
+        if self.options.cleartext:
+            options['protocol'] = 'http'
+        if self.options.host:
+            options['host'] = self.options.host
+        if self.options.port:
+            options['port'] = self.options.port
+        if self.options.cookie:
+            self.logger.warning("Steal a session using the cookie %s" % self.options.cookie)
+            options['cookie'] = Cookie(self.options.cookie)
+        try:
+            self.server = RpcdClientBase(**options)
+        except RpcdError, err:
+            writeError(err, "Connection error")
+            exit(1)
+        except KeyboardInterrupt, err:
+            self.logger.error("Connection interrupted! Exit")
+            exit(1)
+
+        if self.options.username and (not self.options.cookie):
+            if self.options.password is None:
+                self.options.password = getpass("Password for user %s :" % self.options.username)
+
+            charset = 'utf8'
+            username = unicode(self.options.username, charset)
+            password = unicode(self.options.password, charset)
+            if not self.authenticate(username, password):
+                exit(1)
+
+    def setupLog(self):
+        if self.options.debug:
+            level = DEBUG
+        elif self.options.verbose:
+            level = INFO
+        else:
+            level = ERROR
+
+        handler = StreamHandler(sys.stdout)
+        handler.setLevel(level)
+        formatter = createColoredFormatter(sys.stdout, "%(message)s")
+        handler.setFormatter(formatter)
+
+        self.logger = getLogger()
+        self.logger.setLevel(level)
+        self.logger.addHandler(handler)
+
+    def parseOptions(self):
+        parser = OptionParser(usage="%prog [options]")
+        parser.add_option("--host", help='Host name or IP',
+            type="str", default=None)
+        parser.add_option("--cleartext", help="Use HTTP protocol instead of HTTPS",
+            action="store_true", default=False)
+        parser.add_option("--port", help='Server TCP port',
+            type="int", default=None)
+        parser.add_option("-u", "--username", help="Username used with password for authentication",
+            type="str", default=None)
+        parser.add_option("-p", "--password", help="Password used with username for authentication",
+            type="str", default=None)
+        parser.add_option("-v", "--verbose", help="Verbose mode",
+            action="store_true", default=False)
+        parser.add_option("--debug", help="Debug mode (don't call any service at startup)",
+            action="store_true", default=False)
+        parser.add_option("--cookie", help='Steal an existing session using its cookie',
+            type="str", default=None)
+        parser.add_option("--cert", help='PEM certificate to use to connect to ufwi-rpcd',
+            type="str", default=u'')
+        parser.add_option("--key", help='PEM key to use to connect to ufwi-rpcd',
+            type="str", default=u'')
+        parser.add_option("--ca", help='PEM CA to use to verify ufwi-rpcd certificate',
+            type="str", default=u'')
+        parser.add_option("--crl", help='PEM CRL to use to verify ufwi-rpcd certificate',
+            type="str", default=u'')
+        parser.add_option("--no-fqdn-check", help='Disable checking the peers FQDN against its certificate',
+            action="store_true", default=False)
+        options, arguments = parser.parse_args()
+        if options.debug:
+            options.verbose = True
+        if arguments:
+            parser.print_help()
+            exit(1)
+        return options
+
+    def __call__(self, *arguments):
+        return self.server.call(*arguments)
+
+    def call(self, *arguments):
+        """call('component', 'service', ...): call a Rpcd service"""
+        return self(*arguments)
+
+    def authenticate(self, login, password):
+        """authenticate('login', 'password'): authentication, update user session (login and groups)"""
+        try:
+            self.server.authenticate(login, password)
+            return True
+        except RpcdError, err:
+            writeError(err, "Authentication error")
+            return False
+
+    def exit(self):
+        """exit(): quit"""
+        exit(0)
+
+    def quit(self):
+        print("Exit client.")
+        self.server.logout()
+        print
+
+    def components(self):
+        """components(): get the component list"""
+        return self('CORE', 'getComponentList')
+
+    def services(self, component):
+        """services('component'): get the list of services of the component"""
+        return self('CORE', 'getServiceList', component)
+
+    def proxy(self, component):
+        """proxy('component'): create a component proxy which can be used like component.service()"""
+        if component not in self.components():
+            raise ClientError(tr("There is not component %r!") % component)
+        return ComponentProxy(self, component)
+
+    def usage(self):
+        banner = [
+            "Rpcd client",
+            "",
+            "Commands:",
+        ]
+        for command in self.getCommands():
+            for line in readDocumentation(command):
+                banner.append("- %s" % line)
+        banner.append("- pyhelp(object): Python help for the specified object")
+        return banner
+
+    def printUsage(self):
+        for line in self.usage():
+            print line
+
+    def help(self, *arguments):
+        """
+        help('component'): usage of a component
+        help('component', 'service'): usage of a component
+        help(proxy): proxy usage
+        """
+        if not (1 <= len(arguments) <= 2):
+            self.printUsage()
+            return
+        if isinstance(arguments[0], (ComponentProxy, ServiceProxy)):
+            if len(arguments) != 1:
+                print "help(): invalid arguments"
+                print
+                self.printUsage()
+                return
+            arguments[0]._printHelp()
+            return
+        else:
+            lines = self('CORE', 'help', *arguments)
+        if lines is None:
+            return
+        for line in lines:
+            print line
+        print
+
+    def ufwirpcdStatus(self, *arguments):
+        """ufwirpcdStatus(): display server status and session informations"""
+        print "ufwi-rpcd status: %s" % self('CORE', 'getStatus')
+        info = []
+        user = self('session', 'get')['user']
+        if 'login' in user:
+            info.append('login=%r' % user['login'])
+        if 'groups' in user:
+            info.append('groups=%s' % user['groups'])
+        info.append('cookie=%r' % self.server.getCookie())
+        print "Session: %s" % ', '.join(info)
+
+    def getCommands(self):
+        return (self.call, self.authenticate,
+            self.components, self.services, self.proxy, self.ufwirpcdStatus, self.help, self.exit)
+
+    def createProxies(self, locals):
+        proxies = []
+        for component in self.components():
+            if component in locals:
+                # Don't create proxy if a command has the same name
+                continue
+            proxy = ComponentProxy(self, component)
+            locals[component] = proxy
+            proxies.append(proxy)
+        return proxies
+
+class HistoryConsole(InteractiveConsole):
+    def __init__(self, logger, locals=None):
+        InteractiveConsole.__init__(self, locals, "<console>")
+        self.logger = logger
+        filename = expanduser("~/.ufwi_rpcd_client.history")
+        self.completer = rlcompleter.Completer(locals)
+        self.charset = getTerminalCharset()
+        self.init_history(filename)
+
+    def init_history(self, histfile):
+        readline.set_completer(self.completer.complete)
+        readline.parse_and_bind("tab: complete")
+        if hasattr(readline, "read_history_file"):
+            try:
+                readline.read_history_file(histfile)
+            except IOError:
+                pass
+            atexit.register(self.save_history, histfile)
+
+    def save_history(self, histfile):
+        readline.write_history_file(histfile)
+
+    def interact(self, banner=None):
+        old_hook = sys.displayhook
+        sys.displayhook = self.displayHook
+        try:
+            return InteractiveConsole.interact(self, banner)
+        finally:
+            sys.displayhook = old_hook
+
+    def showtraceback(self):
+        info = exc_info()
+        errtype, err, tb = info
+        if isinstance(err, KeyboardInterrupt):
+            self.logger.error("Keyboard interrupt.")
+        else:
+            writeError(err, "Error", logger=self.logger, traceback=info)
+
+    def displayHook(self, value):
+        if value is None:
+            return
+        pprint(value)
+
+    def raw_input(self, prompt=""):
+        text = raw_input(prompt)
+        return unicode(text, self.charset)
+
+def printProxies(proxies):
+    print
+    print "Components: %s" % ", ".join(map(str,proxies))
+
+class Application:
+    def __init__(self):
+        self.client = Client()
+        self.logger = self.client.logger
+        self.interpreter = self.createInterpreter()
+        self.keep_alive = KeepAlive(self.client.server)
+
+    def createInterpreter(self):
+        sys.ps1 = PROMPT1
+        sys.ps2 = PROMPT2
+        readline.parse_and_bind("tab: complete")
+        commands = self.client.getCommands()
+        locals = dict((command.__name__, command) for command in commands)
+        locals['pyhelp'] = help
+        try:
+            proxies = self.client.createProxies(locals)
+        except Exception, err:
+            writeError(err, "Error on getting the component list", logger=self.logger)
+            if isinstance(err, SessionError):
+                exit(1)
+            proxies = None
+        except KeyboardInterrupt:
+            self.logger.error("Getting the component list interrupted.")
+            proxies = None
+        interpreter = HistoryConsole(self.logger, locals)
+        self.client.printUsage()
+        if proxies is not None:
+            printProxies(proxies)
+        return interpreter
+
+    def main(self):
+        try:
+            self.keep_alive.start()
+            self.interpreter.interact('')
+        finally:
+            self.logger.debug("Stop keep alive")
+            self.keep_alive.stop()
+            self.client.quit()
+
+def main():
+    app = Application()
+    app.main()
+
+if __name__ == "__main__":
+    main()
+

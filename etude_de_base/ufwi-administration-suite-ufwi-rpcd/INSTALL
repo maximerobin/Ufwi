@@ -1,0 +1,140 @@
+++++++++++++++++++++++++
+Install ufwi-rpcd server
+++++++++++++++++++++++++
+
+Dependencies
+============
+
+Runtime
+-------
+
+ - Python 2.5
+ - Twisted web
+ - M2Crypto
+ - Jinja
+ - Subversion (svnadmin program)
+ - sudo
+ - pysvn
+ - pytz
+
+Debian: apt-get install python-twisted-web python-svn python-m2crypto sudo python-jinja subversion python-tz
+
+Installation
+------------
+
+To install ufwi-rpcd:
+
+ - (GNU) make
+  - sqlite3
+
+Debian: apt-get install make sqlite3
+
+Optional
+--------
+
+To compile .ts to .qm and update the translation:
+
+ - lrelease4: Qt development tools
+ - pylupdate4, lrelease-qt4: Python Qt development tools
+
+Debian: apt-get install libqt4-dev pyqt4-dev-tools
+
+Others:
+
+ - python-twisted-snmp : for SNMP module
+ - gnutls-bin: certtool program used to generate certificates
+ - py.test (used by unit tests): Debian package python-codespeak-lib
+ - libconfig-inifiles-perl: for tools/ufwi_rpcd_enmod
+ - IPy (python-ipy): to run tests
+
+
+Installation
+============
+
+Run "make install" command as root.
+
+To finish the installation, you should install a certificate to be able to
+use an encrypted connection (HTTPS using TLS) instead of a cleartext
+connection (HTTP).
+
+Don't forget to change admin password using ufwi_rpcd_client and calling
+service:
+    auth.editUser(username, method, password, groups)
+Allowed methods are: PLAIN, SHA1, SHA256, SHA512.
+
+For example:
+    auth.editUser('admin', 'SHA256', 'reZ)o!61gG{', ['admin'])
+
+See README file which explains how to start the NuCentral server and
+how to use the command line client.
+
+
+Configuration
+=============
+
+You'll find configuration file in /etc/ufwi-rpcd.
+
+The file name is *default.ufwi-rpcd.conf*. But do not edit it! Copy this
+file to *ufwi-rpcd.conf*.
+
+Default configuration must be used as example, and will be
+read at first. Next, all values in **ufwi-rpcd.conf** will
+overide default's values.
+
+You can so only put values you want to change from default
+configuration.
+
+Now a view of main items in configuration::
+
+Core
+----
+
+This section contains main features configuration::
+
+    enable_xmlrpc = yes
+	: Enable this feature if you want to have the
+	  XML-RPC support.
+
+    bind_address = 127.0.0.1
+	: IP where you want NuCentral listens.
+	  For all interfaces, put '0.0.0.0'.
+
+    bind_port = 8080
+	: NuCentral's port.
+
+    bind_address_ssl = 127.0.0.1
+	: IP listening for SSL server.
+
+    bind_port_ssl = 8443
+	: SSL port.
+
+    vardir = /var/lib/ufwi-rpcd/
+	: Directory used to save informations.
+
+    sharedir = /usr/share/ufwi-rpcd
+	: Shared files path
+
+SSL
+---
+
+About SSL server.
+
+    ca = ca.pem
+    cert_chain = cert_chain.pem
+    cert = cert.pem
+    key = key.pem
+
+Modules
+-------
+
+Here, you can give all modules you want to load... Just give
+the "path" (it MUST be in modules/ directory) and value must be
+"yes".
+
+Creating certificate chain
+--------------------------
+
+Command to create a chain: ::
+
+    cat cert.pem ca.pem > cert_chain.pem (order matters)
+

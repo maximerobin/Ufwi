@@ -1,0 +1,17 @@
+HTML_FILES = $(patsubst %.txt,html/%.html,$(TXT_FILES))
+
+all: html
+
+html: $(HTML_FILES)
+
+nucentral.tex: $(TXT_FR_FILES)
+	cat $^ | rst2latex > $@
+
+html/%.html: %.txt
+	rst2html < $< > $@
+
+clean:
+	rm -f nucentral.tex $(HTML_FILES)
+
+.PHONY: all clean html
+

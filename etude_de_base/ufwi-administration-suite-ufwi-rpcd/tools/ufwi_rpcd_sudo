@@ -1,0 +1,52 @@
+#!/usr/bin/env python
+from ufwi_rpcd.common.process import createProcess, waitProcess, ProcessError
+from sys import argv
+from optparse import OptionParser
+from sys import stderr
+from logging import getLogger, CRITICAL
+
+SIGNAL_EXITCODE = 1
+ERROR_EXITCODE = 1
+
+DEFAULT_TIMEOUT = 60.0
+
+def parseOptions():
+    parser = OptionParser(usage="%prog [options] command [arg1 arg2 ...]")
+    parser.add_option("--timeout",
+        help="Maximum execution time in seconds (default: %.1f sec)" % DEFAULT_TIMEOUT,
+        type="float", default=DEFAULT_TIMEOUT)
+    parser.add_option("--stdin-filename",
+        help="Name of the file used as stdin",
+        type="str")
+    options, arguments = parser.parse_args()
+    return (options, arguments)
+
+def setupLogging():
+    logger = getLogger()
+    logger.setLevel(CRITICAL)
+    return logger
+
+def main():
+    logger = setupLogging()
+    options, arguments = parseOptions()
+    try:
+        if options.stdin_filename:
+            stdin = open(options.stdin_filename, 'rb')
+        else:
+            stdin = None
+        try:
+            process = createProcess(logger, arguments, stdin=stdin)
+        finally:
+            if stdin:
+                stdin.close()
+        code = waitProcess(logger, process, options.timeout)
+    except ProcessError, err:
+        print >>stderr, unicode(err)
+        exit(ERROR_EXITCODE)
+    if code < 0:
+        exit(SIGNAL_EXITCODE)
+    exit(code)
+
+if __name__ == "__main__":
+    main()
+

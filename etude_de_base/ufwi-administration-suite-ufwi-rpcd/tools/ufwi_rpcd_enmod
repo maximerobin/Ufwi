@@ -1,0 +1,95 @@
+#!/usr/bin/perl -w
+
+use strict;
+use Config::IniFiles;
+use Cwd 'abs_path';
+use File::Basename;
+
+
+sub usage()
+{
+	return "usage: ufwi_rpcd_enmod module_dir [module_name]\n";
+}
+
+
+
+sub find_modules_dir()
+{
+	my @config_files = (
+		'ufwi-rpcd.conf',
+		'/etc/ufwi-rpcd/ufwi-rpcd.conf',
+		'default.ufwi-rpcd.conf',
+		'/etc/ufwi-rpcd/default.ufwi-rpcd.conf',
+	);
+
+	my ($vardir,$modules_dir);
+
+	# find modules_dir
+	foreach my $file (@config_files) {
+		if (-r $file) {
+			my $conf = new Config::IniFiles( -file => $file );
+			$modules_dir = $conf->val('modules','dir');
+			last if $modules_dir;
+		}
+	}
+
+	$modules_dir or die "Could not find modules_dir in config\n";
+
+	if (not $modules_dir =~ /^\//) {
+		# find vardir
+		foreach my $file (@config_files) {
+			if (-r $file) {
+				my $conf = new Config::IniFiles( -file => $file );
+				$vardir = $conf->val('CORE','vardir');
+				last if $vardir;
+			}
+		}
+
+		$vardir or die "Could not find vardir in config\n";
+
+		$modules_dir = $vardir . "/" . "$modules_dir";
+	}
+
+	return $modules_dir;
+}
+
+
+
+my $modules_dir = find_modules_dir();
+
+# find module to enable
+my $module_name = shift or die usage();
+my $dest_module_name = shift;
+
+if (not -e "$module_name") {
+	if (not $module_name =~ /\//) {
+		my $available_dir = $modules_dir;
+		$available_dir =~ s/\/([^\/]*)$/\/mods-available/;
+		$module_name = $available_dir . "/" . "$module_name";
+	}
+	(-e "$module_name") or die "module [$module_name] does not exist\n";
+}
+
+
+if (not $module_name =~ /^\//) {
+	# convert to absolute path
+	$module_name = abs_path($module_name);
+}
+
+if (not defined $dest_module_name) {
+	$dest_module_name = basename($module_name);
+}
+
+
+# create symlink
+
+my $link = "$modules_dir/$dest_module_name";
+
+(-s "$link") or ( ! -e "$link" ) or die "[$link] exists and is not a symlink !\n";
+(-s "$link") and unlink "$link";
+
+symlink("$module_name","$link") or die "can't create symlink [$link] -> [$module_name]: $!\n";
+
+print "Created link [$link] -> [$module_name]\n";
+print "Restart ufwi-rpcd to apply changes.\n";
+

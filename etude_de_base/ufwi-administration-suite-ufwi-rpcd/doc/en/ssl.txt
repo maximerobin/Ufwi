@@ -1,0 +1,21 @@
+***
+SSL
+***
+
+Internals
+*********
+
+A certificate check method is provided in file
+**nucentral/core/ssl.py**.
+
+A callback can be registered and called when a SSL connection is done.
+
+To define it, give a function to the verifyCallback argument, in the
+core.ChainingOpenSSLContextFactory class.
+
+The callback will be called at every SSL connection, and should return
+True if the connection is accepted.
+
+The object passed in parameter is of type crypto.X509.
+
+Use the ``crypto`` module to access it.

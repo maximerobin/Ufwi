@@ -1,0 +1,40 @@
+XML-RPC and SOAP internals
+==========================
+
+It's hard to understand how NuCentral functions are called. This document
+explain the call tree of XML-RPC and SOAP requests.
+
+ # nucentral.tac: Server listen on TCP 8080 (TCPServer),
+   and maybe TCP 8443 if SSL is enabled (SSLServer)
+ # nucentral/core/core.py: Twisted uses a publisher (RPCPublisher,
+   SOAPPublisher), a service (DaemonService or NevowService) and
+   a site (NuCentralSite)
+
+    # Publisher: RPCPublisher (XML-RPC) listen on "/RPC2"
+      and SOAPPublisher (SOAP) listen on "/SOAP" (both are optionals)
+    # Service: DaemonService (pure Twisted) or NevowService (Nevow)
+    # Site: NuCentralSite (Twisted / Nevow)
+
+ # XML-RPC call tree (in NuCentral):
+
+    RPCPublisher.render()
+    -> RPCPublisher.xmlrpc_callService()
+    -> Service.callService()
+    -> Service.core_callService()
+       -> Core.callService()
+       -> Core.callServiceSync()
+       -> (... call the service ...)
+    -> Service.formatResult()
+
+ # Construction of a web page:
+
+    [Twisted] HTTPChannel.allContentReceived()
+    -> [Twisted] Request.requestReceived()
+    -> [Twisted] Request.process()
+    -> [Nevow] NevowRequest.process()
+      -> [Nevow] NevowSite.getPageContextForRequestContext()
+        -> [Nevow] ChildLookupMixin.locateChild()
+        -> [NuCentral] NevowService.childFactory()
+      -> [Nevow] NevowRequest.gotPageContext()
+        -> [NuCentral] NevowService.renderHTTP()
+

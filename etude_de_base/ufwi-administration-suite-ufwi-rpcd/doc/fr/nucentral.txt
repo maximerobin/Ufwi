@@ -1,0 +1,26 @@
+=========
+NuCentral
+=========
+
+:intro.txt_: Introduction
+:installation.txt_: Installation
+:authentication.txt_: Authentification
+:adding-services.txt_: Ajouter des services
+:events.txt_: Événements, signaux
+:specs.txt_: Spécifications
+:log.txt_: Log
+:cron.txt_: Planification d'événements
+:ssl.txt_: SSL
+
+Documentation écrite au format reStructuredText_
+
+.. _intro.txt: intro.html
+.. _installation.txt: installation.html
+.. _authentication.txt: authentication.html
+.. _adding-services.txt: adding-services.html
+.. _events.txt: events.html
+.. _specs.txt: specs.html
+.. _cron.txt: cron.html
+.. _ssl.txt: ssl.html
+.. _log.txt: log.html
+.. _reStructuredText: http://docutils.sourceforge.net/docs/ref/rst/restructuredtext.html

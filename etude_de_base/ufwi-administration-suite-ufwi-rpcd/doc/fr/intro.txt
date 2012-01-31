@@ -1,0 +1,44 @@
+Introduction
+============
+
+Modules
+-------
+
+Un module correspond à un projet, par exemple NuFace ou Nulog.
+
+Composants
+----------
+
+Un composant est une entité logique complète, disposant de fonctions.
+
+Le module NuLog, par exemple, est séparé en deux composants: NuLog-web (l'interface) et NuLog-backend. De manière générale,
+il est toujours bon de séparer l'interface de l'implémentation, donc chaque projet pourra être séparé
+en plusieurs composants.
+
+Services
+--------
+
+Chaque composant est fait d'objets et de fonctions. Les fonctions qui sont exposées à l'extérieur sont appelées
+services.
+
+L'interface des services (API) doit être définie de manière stricte, car tout changement d'API est
+susceptible de provoquer des problèmes dans tout autre composant utilisant ce service.
+
+A l'intérieur d'un composant, les fonctions et leur signature (nom, paramètres et retour) peuvent changer sans aucun
+problème, car seul le composant est censé les utiliser.
+
+Un service peut être taggé de manière synchrone ou asynchrone, suivant qu'il retourne le résultat tout de suite
+ou qu'il retourne un objet **Deferred** contenant le callback exécutant le service.
+
+Lire les **Spécifications** pour plus d'informations
+
+Objets et langage
+-----------------
+
+Les services exportés doivent absolument renvoyer des types **simples**: chaîne de caractère, entier, ...
+et **surtout pas** des objets python. En effet, NuCentral n'est absolument pas restreint à du code python,
+et doit donc laisser un libre choix au niveau du client (XML-RPC ou SOAP, en particulier).
+
+Les fonctions privées d'un module (non-exportées, ou restreinte à une utilisation privée entre deux modules)
+ne sont pas soumises à cette restriction.
+

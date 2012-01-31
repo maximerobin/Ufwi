@@ -1,0 +1,3 @@
+nuauth and nuauth_web are components for NuFW firewall:
+   http://software.inl.fr/trac/wiki/EdenWall/NuFW
+

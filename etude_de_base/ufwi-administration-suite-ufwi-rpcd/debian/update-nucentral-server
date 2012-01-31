@@ -1,0 +1,58 @@
+#!/bin/sh
+
+set -e
+
+usage()
+{
+cat >&2 << EOF
+Usage: ${0} [OPTION]...
+
+Options:
+ -u             Update an existing initramfs
+ -r             Really trigger update
+ -h             This message
+
+EOF
+exit 1
+}
+
+update_trigger()
+{
+    if type dpkg-trigger >/dev/null 2>&1 && \
+        dpkg-trigger update-nucentral-server; then
+            exit 0
+    fi
+}
+
+trigger_happy()
+{
+if [ ! -e "/var/lock/nucentral-server-update.lock" ]; then
+    invoke-rc.d nucentral-server restart
+fi
+}
+
+
+while getopts "hru" flag; do
+    case "${flag}" in
+    r)
+            mode="r"
+            ;;
+    u)
+            mode="u"
+            ;;
+    *)
+            usage
+            ;;
+    esac
+done
+
+
+case "${mode}" in
+        r)
+                trigger_happy
+                ;;
+        u)
+                update_trigger
+                ;;
+esac
+

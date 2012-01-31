@@ -1,0 +1,279 @@
+#!/usr/bin/env python2.5
+from __future__ import with_statement
+
+from os import remove
+from tempfile import mkstemp
+
+from nucentral.backend.exceptions import ConfigError
+from nucentral.core.config.states import NotInitializedState, IdleState, DraftState, ApplicableState
+from nucentral.core.config.states_config_manager import StateConfigurationManager
+#from nucentral.core.config.filenames import VersionnedFilenames, Filenames
+
+def testInit(no_set_global=False):
+    if not no_set_global:
+        global xmlfilename
+    xmlfile, xmlfilename = mkstemp(suffix='.xml')
+
+    scm = StateConfigurationManager()
+    assert scm.state is NotInitializedState, "found %s" % scm.state
+    scm.initializeConfig(None, xmlfilename)
+
+    assert scm.state is IdleState, "found %s" % scm.state
+    scm.reset()
+    assert scm.state is IdleState, "found %s" % scm.state
+
+    return scm
+
+def testPutApplyReplaceApplyDict():
+    scm = testInit()
+
+    scm.set("storage", {'section1': {'key11': 'value11'}, 'section2': {'key21': 'value21', 'key22': 'value22'}})
+    scm.commit("dummy message")
+    scm.apply()
+    scm.set("storage", {'section1': {'key11': 'othervalue11'}, 'section2': {'key21': 'value21', 'key22': 'value22'}})
+    scm.commit("dummy message")
+    scm.apply()
+    assert scm.get("storage", 'section1', 'key11') == 'othervalue11'
+
+    old = scm.get("storage")
+    old['section2']['key21'] = "othervalue21"
+    scm.set("storage", old)
+    scm.commit("dummy message")
+    scm.apply()
+    assert scm.get("storage", 'section2', 'key21') == 'othervalue21'
+
+def testPutValue():
+    scm = testInit()
+    scm.set("storage", "section", "key", "value")
+
+    return scm
+
+def testPutGetValue():
+    scm = testPutValue()
+    value = scm.get("storage", "section", "key")
+    assert value == "value", "expected \"value\", got %s (structure: %s)" % (value, scm._draft_configuration)
+
+    return scm
+
+def testDelete1():
+    scm = testPutGetValue()
+    scm.delete("storage", "section", "key")
+    try:
+        value = scm.get("storage", "section", "key")
+    except ConfigError:
+        pass
+    else:
+        assert False
+
+def testDelete2():
+    scm = testPutGetValue()
+    scm.delete("storage")
+    try:
+        value = scm.get("storage", "section", "key")
+    except ConfigError:
+        pass
+    else:
+        assert False
+
+def testReplace():
+    scm = testPutGetValue()
+    scm.set("storage", "section", "key", "value2")
+    value = scm.get("storage", "section", "key")
+    assert value == "value2", "expected \"value\", got %s (structure: %s)" % (value, scm._draft_configuration)
+
+def testDeleteReplace():
+    scm = testPutGetValue()
+    scm.delete("storage", "section")
+    scm.set("storage", "section", "key", "value2")
+    value = scm.get("storage", "section", "key")
+    assert value == "value2", "expected \"value\", got %s (structure: %s)" % (value, scm._draft_configuration)
+
+def testPutGetCommitValue():
+    scm = testPutGetValue()
+    scm.commit("dummy message")
+
+    return scm
+
+def testStatesConfigManager():
+    scm = testPutGetCommitValue()
+    #this one will be retrieved from the draft configuration
+    value = scm.get("storage", "section", "key")
+    assert value == "value", "expected \"value\", got %s (structure: %s)" % (value, scm._modified_configuration)
+    assert scm.state is ApplicableState, "found %s" % scm.state
+    scm.set("storage2", "section", "key", "value")
+    assert scm.state is DraftState, "found %s" % scm.state
+    #this one will be retrieved from the modified configuration
+    value = scm.get("storage", "section", "key")
+    assert value == "value", "expected \"value\", got %s (structure: %s)" % (value, scm._modified_configuration)
+    scm.commit("dummy message")
+    assert scm.state is ApplicableState, "found %s" % scm.state
+    scm.apply()
+    assert scm.state is IdleState, "found %s" % scm.state
+    value = scm.get("storage", "section", "key")
+    assert value == "value", "expected \"value\", got %s (structure: %s)" % (value, scm._running_configuration)
+    scm.set("storage3", "section", "key", "value")
+    assert scm.state is DraftState, "found %s" % scm.state
+    #apply while in draft state mustn't work
+    try:
+        scm.apply()
+    except ConfigError:
+        pass
+    else:
+        assert False
+    scm.commit("dummy message")
+    scm.apply()
+    assert scm.state is IdleState, "found %s" % scm.state
+    scm.set("storage4", "section", "key", "value")
+    scm.revert()
+    assert scm.state is ApplicableState, "found %s" % scm.state
+    try:
+        value = scm.get("storage4", "section", "key")
+    except ConfigError:
+        #There was a revert !
+        pass
+    else:
+        assert False
+    scm.exportXML(xmlfilename)
+    scm.importXML()
+
+    #fixme
+    #remove(xfilename)
+    #deleting
+    scm.set("storage4", "section", "key", "value")
+    scm.commit("dummy message")
+    scm.apply()
+    scm.delete("storage4", "section", "key")
+    scm.commit("dummy message")
+    scm.apply()
+    scm.set("storage", "section", "key2", "value2")
+    scm.set("storage", "section2", "key3", "value")
+    scm.commit("dummy message")
+    scm.apply()
+
+    scm.set('special2', 'section_44', 'subsection_44')
+    scm.commit("dummy message")
+    scm.apply()
+    scm.set('special3', 'section_45', {'subsection_45': "value_45"})
+    scm.commit("dummy message")
+    scm.apply()
+    vals = {"section_42": {"subsection_42": "value_42"}, "section_43": {"subsection_43": "value_43"}}
+    scm.set("special", vals)
+    scm.commit("dummy message")
+    scm.apply()
+
+def testDefaultVal1():
+    scm = testPutGetCommitValue()
+
+    #set key4
+    scm.set(u"storage", u"section", {u"key4": False})
+
+    def readKey4():
+        read = scm.get(u"storage", u"section", {u"key4": True})
+        assert read == {u"key4": False}
+        read = scm.get(u"storage", u"section", {u"key4": False})
+        assert read == {u"key4": False}
+        read = scm.get(u"storage", u"section", u"key4")
+        assert read == False
+
+    readKey4()
+
+    scm.commit("dummy message")
+
+    readKey4()
+
+def testDefaultVal2():
+    scm = testInit()
+
+    def readKey5():
+        #read key5 (non existent)
+        read = scm.get(u"storage", u"section", {u"key5": True})
+        assert read == {u"key5": True}
+        read = scm.get(u"storage", u"section", {u"key5": False})
+        assert read == {u"key5": False}
+
+    readKey5()
+
+
+def testBoolean():
+    xmlfile, xmlfilename = mkstemp(suffix='.xml')
+
+    scm1 = testInit()
+
+    scm1.set("storage", "section", "false", False)
+    scm1.set("storage", "section", "true", True)
+
+    def readBools(config_manager):
+        read = config_manager.get("storage", "section", "false", default=False)
+        assert read == False
+        read = config_manager.get("storage", "section", "true", default=True)
+        assert read == True
+        read = config_manager.get("storage", "section", "false", default=True)
+        assert read == False
+        read = config_manager.get("storage", "section", "true", default=False)
+        assert read == True
+
+    readBools(scm1)
+
+    scm1.commit(xmlfilename)
+    scm1.apply()
+
+    readBools(scm1)
+
+def testEmptyVal():
+    scm = testInit()
+
+    scm.set(u"storage", u"section", "key0", u"")
+    assert scm.get("storage", "section", "key0") == u""
+
+    scm.set(u"storage", u"section", "key1", 0)
+    assert scm.get("storage", "section", "key1") == 0
+
+    scm.set(u"storage", {u"key1": u"", "section2": {"key2": u""}})
+    assert scm.get("storage", "key1") == u""
+    assert scm.get("storage", "section2", "key2") == u""
+
+    scm.set(u"storage", u"section3", "key3", {})
+    print scm.get("storage")
+    assert scm.get("storage", "section3", "key3") == {}
+
+    scm.commit("dummy message")
+
+    assert scm.get("storage", "section", "key0") == u""
+    assert scm.get("storage", "section", "key1") == 0
+    assert scm.get("storage", "key1") == u""
+    assert scm.get("storage", "section2", "key2") == u""
+
+def testBasic():
+    scm = testInit()
+    scm.set(u"storage", u"section", u"value")
+    assert scm.get("storage", "section") == u"value"
+
+def testDeleteWrite():
+    scm = testInit()
+
+    scm.set('network', 'route', '192.168.35.0/24', 'router', '10.8.0.65')
+    scm.set('network', 'route', '192.168.35.0/24', 'iface', 'tun0')
+    scm.set('network', 'route', '192.168.33.0/24', 'router', '10.8.0.65')
+    scm.set('network', 'route', '192.168.33.0/24', 'iface', 'tun0')
+    scm.set('network', 'route', '10.8.0.1', 'router', '10.8.0.65')
+    scm.set('network', 'route', '10.8.0.1', 'iface', 'tun0')
+    scm.set('network', 'route', '0.0.0.0/0', 'router', '192.168.0.254')
+    scm.set('network', 'route', '0.0.0.0/0', 'iface', 'eth0')
+    scm.commit("dummy message")
+    scm.apply()
+
+    scm.delete("network")
+    scm.set('network', 'route', '192.168.35.0/24', 'router', '10.8.0.65')
+    scm.set('network', 'route', '192.168.35.0/24', 'iface', 'tun0')
+    scm.set('network', 'route', '192.168.33.0/24', 'router', '10.8.0.65')
+    scm.set('network', 'route', '192.168.33.0/24', 'iface', 'tun0')
+    scm.set('network', 'route', '10.8.0.1', 'router', '10.8.0.65')
+    scm.set('network', 'route', '10.8.0.1', 'iface', 'tun0')
+    scm.commit("dummy message")
+    scm.apply()
+
+    assert scm.get("network") == {'route':
+        {'10.8.0.1': {'iface': 'tun0', 'router': '10.8.0.65'},
+         '192.168.33.0/24': {'iface': 'tun0', 'router': '10.8.0.65'},
+         '192.168.35.0/24': {'iface': 'tun0', 'router': '10.8.0.65'}}}
+

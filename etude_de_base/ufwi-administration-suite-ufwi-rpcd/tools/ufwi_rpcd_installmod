@@ -1,0 +1,71 @@
+#!/usr/bin/perl -w
+
+use strict;
+use Config::IniFiles;
+use Cwd 'abs_path';
+use File::Basename;
+
+
+sub usage()
+{
+	return "usage: ufwi_rpcd_installmod module_dir [module_name]\n";
+}
+
+
+
+sub find_modules_dir()
+{
+	my @config_files = (
+		'ufwi-rpcd.conf',
+		'/etc/ufwi-rpcd/ufwi-rpcd.conf',
+		'default.ufwi-rpcd.conf',
+		'/etc/ufwi-rpcd/default.ufwi-rpcd.conf',
+	);
+
+	my ($vardir,$modules_dir);
+
+	# find vardir
+	foreach my $file (@config_files) {
+		if (-r $file) {
+			my $conf = new Config::IniFiles( -file => $file );
+			$vardir = $conf->val('CORE','vardir');
+			last if $vardir;
+		}
+	}
+
+	$vardir or die "Could not find vardir in config\n";
+
+	$modules_dir = $vardir . "/" . "mods-available";
+
+	return $modules_dir;
+}
+
+
+
+my $modules_dir = find_modules_dir();
+
+# find module to enable
+my $module_name = shift or die usage();
+my $dest_module_name = shift;
+
+if (not $module_name =~ /^\//) {
+	# convert to absolute path
+	$module_name = abs_path($module_name);
+}
+
+if (not defined $dest_module_name) {
+	$dest_module_name = basename($module_name);
+}
+
+
+# create symlink
+
+my $link = "$modules_dir/$dest_module_name";
+
+(-l "$link") or ( ! -e "$link" ) or die "[$link] exists and is not a symlink !\n";
+(-l "$link") and unlink "$link";
+
+symlink("$module_name","$link") or die "can't create symlink [$link] -> [$module_name]: $!\n";
+
+print "Created link [$link] -> [$module_name]\n";
+

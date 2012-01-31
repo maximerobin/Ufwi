@@ -1,0 +1,57 @@
+Events, signals
+===============
+
+NuCentral offers a system of callbacks, and emission of signals,
+similar to standard callbacks.
+
+::
+
+  from nucentral.core import events
+
+Definition
+----------
+
+The prototype for functions is not fixed (type and number of arguments are variable).
+
+Connection
+----------
+
+The connection is used to associate a function to an event. It is not necessary to declare the
+event.
+
+You can connect as many functions as you want to an event. You cannot connect several times
+the same function to the same event, but you can connect one function to several events.
+
+::
+
+  events.connect("event",theCallback)
+
+Disconnection
+-------------
+
+The disconnection is the suppression of an association between an event and a function.
+Other connections are not affected.
+
+::
+
+  events.disconnect("event",theCallback)
+
+Function `disconnectAll` can be used to remove all associations to an event.
+
+::
+
+  events.disconnectAll("event")
+
+Emitting an event
+-----------------
+
+Function `emit` can be used to send an event.
+A list of arguments can be specified. They will be passed to all connected functions.
+
+Note: calls are synchronous, that is, the `emit` function only returns when all connected
+functions have finished.
+
+::
+
+  events.emit("event",arg1,arg2)
+

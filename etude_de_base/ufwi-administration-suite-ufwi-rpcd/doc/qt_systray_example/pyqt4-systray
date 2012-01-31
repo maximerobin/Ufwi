@@ -1,0 +1,57 @@
+#!/usr/bin/python
+
+from PyQt4.QtCore import *
+from PyQt4.QtGui import *
+
+from sys import argv
+
+class Systray(QSystemTrayIcon):
+
+    def __init__(self, *args):
+        QSystemTrayIcon.__init__(self,*args)
+
+class MainWindow(QMainWindow):
+
+    def __init__(self, *args):
+        QMainWindow.__init__(self,*args)
+        self.init_actions()
+        self.init_systray()
+
+    def init_actions(self):
+        self.quitAction = QAction(self.tr("&Quit"), self)
+        self.quitAction.setShortcut("CTRL+Q")
+        self.connect(self.quitAction,SIGNAL("triggered()"), qApp, SLOT("quit()"))
+        self.addAction(self.quitAction)
+
+        self.testAction = QAction(self.tr("&Action"), self)
+        self.testAction.setShortcut("CTRL+A")
+        self.connect(self.testAction,SIGNAL("triggered()"), self.run_test)
+        self.addAction(self.testAction)
+
+    def init_systray(self):
+        self.trayIconMenu = QMenu(self)
+        self.trayIconMenu.addAction(self.quitAction)
+        self.systray = Systray(self)
+        self.systray.setContextMenu(self.trayIconMenu)
+        self.systray.show()
+
+    def real_quit(self):
+        print "exiting"
+        self.close()
+
+    def run_test(self):
+        w.systray.showMessage("systray","Applet loaded",QSystemTrayIcon.Information,1000)
+        print "blah"
+
+app = QApplication(argv)
+
+if not QSystemTrayIcon.isSystemTrayAvailable():
+    raise Exception("System tray is not supported")
+
+if not QSystemTrayIcon.supportsMessages():
+    raise Exception("System tray messages are not supported")
+
+w = MainWindow()
+w.show()
+
+app.exec_()

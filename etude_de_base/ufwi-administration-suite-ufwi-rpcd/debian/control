@@ -1,0 +1,77 @@
+Source: nucentral
+Section: net
+Priority: extra
+Maintainer: Pierre Chifflier <pollux@debian.org>
+Build-Depends: debhelper (>= 5),
+  python-support (>= 0.4), python-dev,
+  python-docutils,
+  pyqt4-dev-tools,
+  libqt4-dev, python-twisted-core,
+  python-twisted-web
+Standards-Version: 3.7.3
+
+Package: nucentral
+Architecture: all
+Depends: nucentral-server, nucentral-client, nucentral-edenwall
+Recommends: nucentral-doc
+Description: INL components and service broker
+ NuCentral is a component server, allowing registration of
+ services for local or remote calls.
+ .
+ This metapackage provides the server and client packages
+ for nucentral.
+
+Package: nucentral-server
+Architecture: all
+Depends: ${python:Depends},
+        python-twisted-web, python-svn,
+        python-openssl | python-pyopenssl,
+        python (>= 2.5) | python-pysqlite2,
+        libconfig-inifiles-perl, sqlite3,
+        nucentral-common, subversion,
+        sudo,
+        python-jinja,
+        python-m2crypto,
+        python-psycopg2,
+        openssl,
+        python-elixir
+Suggests: python-ldap, python-twisted-snmp
+XB-Python-Version: ${python:Versions}
+Description: INL components and service broker (server)
+ NuCentral is a component server, allowing registration of
+ services for local or remote calls.
+
+Package: nucentral-client
+Architecture: all
+Depends: ${python:Depends},
+        python-openssl | python-pyopenssl,
+        python-m2crypto,
+        nucentral-common
+XB-Python-Version: ${python:Versions}
+Description: INL components and service broker (client)
+ NuCentral is a component server, allowing registration of
+ services for local or remote calls.
+ .
+ This package provides the client part.
+
+Package: nucentral-common
+Architecture: all
+Depends: ${python:Depends},
+        python-openssl | python-pyopenssl,
+        python-tz
+XB-Python-Version: ${python:Versions}
+Description: INL components and service broker (common files)
+ NuCentral is a component server, allowing registration of
+ services for local or remote calls.
+ .
+ This package provides the common files for all NuCentral applications.
+
+Package: nucentral-doc
+Architecture: all
+Section: doc
+Description: INL components and service broker (documentation)
+ NuCentral is a component server, allowing registration of
+ services for local or remote calls.
+ .
+ This package provides the documentation.
+

@@ -1,0 +1,17 @@
+Réunion du 30 janvier 2012
+----------------------------------------------------------------------------
+
+----------------------------------------------------------------------------
+-Mise en place de la plate-forme Github
+	- intégration de tous les membres dans le projet
+----------------------------------------------------------------------------
+
+----------------------------------------------------------------------------
+-Tâches :
+Étude de Ufwi
+	- (Valentin) étude du deamon ufwi-filterd
+	- (Simon) étude du deamon ufwi-authd
+	- (Maxime) étude du deamon ufwi-rpcd
+	- (Cyril) étude du management tools (ufwi-ruleset et ufwi-log)
+----------------------------------------------------------------------------
+	

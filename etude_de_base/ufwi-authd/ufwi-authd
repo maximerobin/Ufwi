@@ -1,0 +1,58 @@
+===============================================================
+
+							ufwi-authd
+
+===============================================================
+
+
+Installation
+============
+
+Pour installer ufwi-authd il faut disposer au minimum de la version
+2.3 de Python.
+L'installation se fait ensuite en tapant la ligne de commande suivante:
+	./setup.py install
+
+
+Introduction
+============
+
+Nuauth_command est uns interface qui permet de contrôler des fonctions importantes
+du daemon authd, comme l'obtention de la liste des utilisateurs connectés par exemple.
+Chaque fois qu'un client envoie un paquet(1) pour commencer une connexion à travers la 
+passerelle, la station cliente envoie un paquet(2) d'identification au daemon authd. Le 
+pare-feu de la passerelle emt en file d'attente le paquet et envoie directement des 
+informations au daemon authd.
+Le travail du daemon va être d'analyser les deux paquets (1) et (2) et de vérifier si 
+le client à les droits d'initiaiser la connexion qu'il demande.
+Si ufwi-authd indique que le paquet(1) est autorisé alors la connexion est initialisé,
+sinon la connexion est annulé. Ufwi-authd peut aussi utiliser un serveur LDAP pour la
+définition des utilisateurs et groupes.
+
+Commandes
+=========
+
+Commandes principales:
+	* quit: déconnexion
+	* refresh cache: rafraichit tous les caches
+	* reload: recharge la configuration du daemon d'authentification
+
+Information:
+	* help: affiche la liste des commandes utilisables
+	* version: affiche la version du daemon
+	* uptime: affiche depuis combien de temp tourne le daemon
+
+Gestion des utilisateurs:
+	* users: affiche els utilisateurs connectés
+	* disconnect all: déconnecte tous les utilisateurs
+	* disconnect ID: déconnecte un utilisateur grâce à son identifiant (ID)
+
+Firewall information:
+	* firewalls: liste els firewalls connectés
+
+Commandes de debug:
+	* display debug_level
+	* display debug_areas
+	* debug_level LEVEL
+	* debug_areas AREAS
+

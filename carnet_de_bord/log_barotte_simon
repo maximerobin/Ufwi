@@ -1,1 +1,4 @@
-[2012-02-02] Ajout du dossier ufwi-authd et commencement de l'étude du daemon
+[2012-02-02] - Ajout du dossier ufwi-authd et commencement de l'étude du daemon
+			 - Installation de ufwi sur ma machine perso. L'installation se passe correctement.
+			   Mais je n'arrive as à lancer le client ufwi_rpcd_client. Même erreur que maxime:
+			2012-02-02 16:44:40,636: Connection error: [socket.error] Unable to connect to https://192.168.1.1:8443/RPC2: No route to host (error #113)

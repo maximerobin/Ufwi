@@ -10,3 +10,9 @@
 #actuellement aucun filtrage sur la passerelle
 #1 utilisateur / membre du projet pour tester les règles de filtrage par utilisateur
 #
+#Ajout du plan réseau au format jpeg
+#
+#
+#
+#mdp : asrallmdp (admin ldap / utilisateurs machines)
+#mdp : rootasrallmdp (root)

@@ -1,0 +1,547 @@
+Version 0.1.0
+
+	* Initial release.
+
+Project nufw renamed to ufwi-filterd
+
+	- NuFW: introduce protocol client version 5 to add authentication
+	  failure message on client side
+	- libnuclient: don't leave when default cafile is not found
+	- Nuauth: add a flag to be able to disable log on a per-rule basis
+	- nuauth: fix ACL order in the plaintext module
+2.2.10 (2007/12/04)
+	- log_mysql: fix log prefix (avoid double ":" when used with nuface)
+	- nuauth: fix crash when nufw is misconfigured and sends improper packet
+	- improved BSD compatibility
+2.2.9 (2007/11/26)
+	- nuauth: leave when a module fails to load
+	- nuauth: correctly fills headers of messages to nufw
+	- plaintext module: parse needed files at start
+	- nufw: ignore return of nfq_unbind_pf() due to change in linux 2.6.23.
+	- nuauth: introduce nuauth_proto_wait_delay to get around a nasty
+	  connection problem on laggy network.
+2.2.8 (2007/11/07)
+	- libnuclient, nuauth: fix protocol 2.2 on big endian.
+	- log_mysql: add documentation file and add a IPv4 and an IPv6 dump
+	- build system: improve autoconf compliance
+	- nufw: fix infinite loop when nufw has no support for conntrack but
+	  when nuauth try to kill connection
+2.2.7 (2007/10/29)
+	- nuaclgen: add support for userid based ACLs.
+	- nuauth: fix SASL rare crash on client authentication failure (sasl_dispose)
+	- nuauth: fix command line parser: -p and -l were limited to 3 characters
+	- nuauth: fix a buffer overflow (3 bytes) in base64 encoding function
+	- nuauth: improve certificate file error handling
+	- nuauth: leaver if socket command file is unavailable
+	- pam_nufw: fix memset usage
+2.2.6 (2007/10/09)
+	- nuauth: fix rare bug causing infinite loop
+	- Add auth_mysql module : authentication and ip authentication against
+	a MySQL database
+	- nuauth: introduces nuauth_single_user_client_limit and nuauth_single_ip_client_limit
+	- nuauth: add capability to bind on multiple addresses
+	- nuauth: can now have user-id based acls
+2.2.5 (2007/09/10)
+	- fix clients' Makefile for compatibility with automake 1.10
+	- bugfix: disallow change of ipauth option on reload to avoid a crash
+	- fix race condition (multi-threading) in system module (PAM)
+2.2.4 (2007/08/20)
+	- plaintext: fix parsing of IPv4 address
+	- log_syslog: log with IPv4 address and not IPv4 in IPv6
+	- nuauth: don't log packet appended to a connection
+	- nuauth: improve some debug areas settings
+	- nuauth: fix period handling
+	- log_mysql, log_pgsql: fix a rare crash related to improper format
+	string for 64 bits counters
+2.2.3 (2007/08/01)
+	- libnuclient: fix compilation when used in external client.
+	- nufw: ask kernel to drop packet when nuauth can't be reached.
+	- nuauth: add some check when dealing with certificate expiration.
+	- NuFW: recover ICMP reject functionnality.
+	- log_mysql: handle reconnect as mysql default as changed with 5.0.
+	- Test system: add test of ICMP reject functionnality.
+	- nuauth: fix closing of user session in database logging modules.
+2.2.2 (2006/06/26)
+	- log_mysql: fix logging of connection closing
+	- NuFW: fix incompatibility between i386 and x86_64 due to alignement
+	  problem. This break compatibility with previous NuFW 2.2.
+	- nufw: for TCP connection, only send message when session switch to
+	  ESTABLISHED and get destroyed.
+	- nuauth: change criticity of some debug message to ease detection of
+	  protocol mistakes.
+	- NuFW: separate version number of client and nufw protocols
+	- NuFW: switch protocol number to v22_2 to be able to warn about
+	incompatibility probem.
+	- nuauth: log IP in IPv4 format when they are IPv4
+	- log_syslog: log authentication failures
+	- nuauth: fix crash when nufw sends non SYN packet
+2.2.1 (2007/06/17)
+	- port change: IANA has assigned 4128 and 4129 to nufw and nuauth
+	- x509_std: code cleaning and fix potential crash
+	- NuFW: fix compilation on some distribution (for AMD64 architecture)
+	- client manager: close the client socket even if shutdown fails
+	- pam_nufw: fix free(home) in _get_runpid()
+	- nutcpc: fix creation of .nufw directory
+	- nuauth: fix memory leak in debug messages
+2.2.0 (2007/05/29)
+	- log_mysql: fix prefix setting in a sub case.
+	- nuauth: improve doxygen documentation.
+2.2.0-rc3 (2007/05/23)
+	- By default, do not compile pam_nufw anymore.
+	- nutcpc does now check presence of certificate authority.
+	- Complete rewrite of debian packaging.
+	- log_nuprelude: Add user info to idmef message when there is
+	authentication failure.
+	- nuauth: implement acl ordering (prio_to_nok=2)
+	- mark_flag: new module used to modify packet mark using acl
+	indication
+2.2.0-rc2 (2007/04/27)
+	- nuauth: add declaration of thread_pool_push
+	- ldap: optimize filter
+	- NuFW is now compatible with automake1.10
+	- nufw: fix problem for host with libnetfilter_queue
+	but without the latest iface related modifications.
+	- nutcpc: add option -a to specify nuauth DN in certificate.
+	- log_mysql: set protocol information in compatibility mode
+	- libnuclient: restore some interesting features of 2.0 API
+	- NuFW: fix certificate authentication
+	- tests: new system for doing unitary tests on NuFW
+	- log_mysql: add mysql_admin_bofh option to destroy user connections
+	when session finished
+	- mark_field: set mark on packet with glob matching on packet fields
+	- nuauth: fix possible problem on nufw disconnect on busy systems
+	- nuauth: can now have mandatory per-certificate authentication
+	- ldap module: add new option ldap_use_ipv4_schema to have compatibility with
+	  IPv4 tools
+	- nuauth: fix crash when nufw send concatenated requests
+	- nuauth: improve debugging messages
+	- nuauth: fix bug when user packet comes first (nufw disconnection).
+2.2.0-rc1 (2007/03/08)
+	- log_mysql: add option to log by default in SQL
+	database with IPV4 schema
+	- libnuclient: add nu_get_home_dir function which is not
+	dependant of HOME environment variable
+	- nufw: fix compilation in ipq mode (workaround ipq.h problem)
+	- nufw: modify interface name fetching code
+	- NuFW: Port of 2.0 modifications (from r2715 to r2728)
+	- implement globbing matching in application filtering
+	- add support for flags on acl
+	- implement async logging following flag setting
+	- cache is now resetted during reload
+	- nuauth: command mode through a unix socket and a python script
+	is given as exemple
+	- nuauth: modify thread pools system (better handling of signals)
+	- nufw: add -A to set debug areas and adjust areas in code
+2.1.1 (2007/01/03)
+	- suppress ldap authentication code
+	- add support for log prefix
+	- add support for guest group
+	- mark_group: new module dedicated to packet marking
+	- NuFW: doxygen documentation improvement
+	- NuFW: support for interface name transmission from kernel to nuauth
+2.1.0 (2006/09/01)
+	- fix period handling (user OR and and AND between period item of a
+	  period)
+	- fix memory leak in ldap module
+	- IPv6 support:
+	  - clients, nufw and nuauth are able to communicate using IPv4 or IPv6
+	  - nuauth store all addresses in IPv6 structure, IPv4 use format
+	    "::ffff:[ipv4]"
+	  - MySQL store IP address in BINARY(16) instead of INTEGER field
+	  - Prelude, MySQL, PostgreSQL, etc. modules support IPv6 addresses
+	  - Plaintext module is able to parse IPv4 and IPv6 addresses
+	  - Rejectting a packet can send ICMP(v4) or ICMPv6 (depending on source
+	    IP address type)
+	  - support ICMPv6 protocol
+	- new client API, main changes:
+	  - don't use callback to get username, password and tls password anymore:
+	    directly send the strings
+	  - don't delete the session when loosing connection: just delete old TLS
+	    session (and socket) using a "reset" function
+	  - keep same Diffie Hellman parameters for the session (don't regenerate
+	    them on each reconnection): that's good because it looks to use lot of
+		CPU (and maybe /dev/random)
+	  - the client send username and password in UTF-8
+	- don't make core dump on fatal errors (in nuauth, nutcpc and pam_nufw)
+	- libnuclient: use gcrypt_malloc_secure() to disallow username and
+	  password to be moved to the swap
+	- protocol v3 compatibility (for client and nufw server)
+	- Introduce two new modules type:
+	 - user_session_modify : called when auth is successfull this module
+	 can modify all params (usefull to set expire or something else)
+	 - finalise_packet: modify packet content just before decision (useful
+	 to set mark and/or expire according to advanced policy)
+	 - Accounting capabilities: conntrack is now dumping accounting
+	 information
+2.0 (2005/05/22)
+	- nuauth : fix period handling
+	- libnuclient : fix crash when specified hostname is unvalid
+	- nutcpc : do not try to reconnect if password has changed, this will
+	  avoid to block user account after multiple retries
+	- pam_nufw : initial release
+2.0-rc2 (2006/05/15)
+	- nuauth : add sanity check on type of field contained in a packet
+	- libnuclient : fix MacOSX port
+	- nuauth SQL user session logging : close opened user session when leaving or when starting
+	- nuauth modules : systematic use of static declared function to avoid conflict
+2.0-rc1 (2006/05/04)
+	- nufw : fix possible problem with connection fixed timeout and NAT
+	- nufw : add -M option to use mark to select conntrack event to be sent to
+	  nuauth
+	- NuFW : fix hello mode authentication
+	- doxygen documentation improvement
+	- nuauth : add antispoofing test to hello mode authentication
+2.0-beta2 (2006/06/27)
+	- nuauth : fix period reloading
+	- nuauth : fix logging as UNAUTHENTICATED DROP of established packet
+	- nuauth: fix bug in policy test
+2.0-beta1 (2006/04/24)
+	- nuauth : bugfix on the PostGreSQL log module thanks to Julian Reich
+	- nuauth :fix bug in max client number test
+	- nuauth|nufw : really close socket in all cases now
+	- nuauth : certificate checking improvement
+	- nuauth : separate sasl and tls code
+	- nufw: cleaning of tls end of session
+	- linuclient : introduce nu_client_global_init to avoid multiple
+	  global initialisation of gnutls and sasl
+	- define protocol version 3 : protocol version 2 with a fix on
+	  endianess
+	- nuauth : fix crash when multiple logging modules are used (if one of
+	  them is mysql)
+	- libnuclient : free connection table
+	- libnuclient : fix multithreaded code
+	- nuauth: store user identifiers in 32 bits (and not 16), but still send
+	  user id. in 16 bits to nufw (with a warning)
+	- new configure option: --with-perf-display, display benchmark of user
+	  authentification
+	- nuauth: fixes about buffer underflow, check that received packet are big
+	  enough before casting them to structure
+	- nufw and nuauth: fix buffer overflow caused: replace strncpy with the
+	  new macro SECURE_STRNCPY which always write '\0' on last position, and
+	  replace call like sscanf(..., "%10s", ...) with SECURE_STRNCPY
+	- nufw: whole code is documented using doxygen syntax
+	- nufw and nuauth: use shorter syntax to display debug messages
+	- nufw and nuauth: fixes to make them compile in strict ANSI mode
+	  with gcc (using -ansi option)
+	- nufw and nuauth: fix memory leaks, some of them detected with the great
+	  tool Valgrind
+	- nuauth: reorganize source code, split big function in small
+	  sub-functions and move some functions in new files
+	- nufw and nuauth: remove dead code and unused variable/macro
+	- nufw and nuauth: use more explicit names for variables and structures,
+	  rename for example 'c' to 'socket'
+	- nuauth, module script: fix a security bug, quote script arguments
+	- small changes to make flawfinder and rats tools happy
+	- replace obsolete usleep() with nanosleep()
+	- Introduce lock in tls code because gnuTLS is NOT really threadsafe (does
+	  NOT support thread sending on the same TLS session)
+	- stronger security in mysql and  postgresql modules: use secure_sprintf()
+	  instead of classic sprintf() and quote all user strings
+	- stronger security in script module: quote all arguments
+	- fix some minor bugs detected by Valgrind
+	- check inet_ntop() and inet_addr() errors
+	- small changes to make nufw and nuauth source code ANSI C compliant
+	- fix gcc compilation flags: use -O0 in bug mode instead of -02, and
+	  detect all warnings with -Wextra (or -W for gcc < 4.0)
+	- use pointer and not object during logging
+	- bugfix:nuauth: don't crash anymore if configuration file doesn't exist
+	- nuauth: fix gnutls problem (multithread writing and reading)
+	- nuauth: multiple modules with separate conf
+	- nuauth: stop threads (and thread pools) before exiting NuAuth. Use a
+	mutex to ask a thread to stop. Each thread use timeout of one second,
+	and don't use any blocking function anymore (use function with timeout
+	instead: eg. use g_async_queue_timed_pop() instead of g_async_queue_pop())
+	- nuauth: port of system_convert_username_to_lowercase option (from 1.0)
+	- NuFW : ICMP reject via decision 3.
+	- xml_defs : new module for periods definition
+	- nuauth : add nuauth_module_certificate_check and
+	nuauth_module_certificate_to_uid configuration variables (work
+	sponsorised by EOLE)
+	- x509_std : new module with standard check and function for
+	nuauth_module_certificate_check and nuauth_module_certificate_to_uid
+	- nuauth : modify config file parsing to avoid memory leak
+	- nuauth : add option nuauth_debug_area to be able to specify logging area
+	- nuauth: add Prelude IDS module which can log packet events and user
+	  session.
+	- nuauth : nuauth_reject_authenticated_drop option is now here to
+	choose if we drop or reject ACL that match IPV4 header but when user
+	is not in the group.
+	- nuauth : period checking is now done in main code (not in module
+	anymore) to avoid problem with cache.
+	- move conffile.h from src/nuauth/include to src/nuauth and suppress
+	  src/nuauth/include
+1.1.3 (2006/01/25)
+	- nutrackd : PostGreSQL support
+	- Fixes in the PostGreSQL log module (removed the useless server_port
+	variable, fixed a very stupid strlen bug on port)
+	- nufw|nuauth : expiration of connection is now possible
+	- nufw : new switch -C to handle conntrack destroy event by sending a
+	  message to nuauth. This is mandatory for connection expiration
+	  system.
+	- nuauth : handle nufw destroy message
+	- nufw : restore compilation of nufw in libipq mode
+	- nuauth : introduce a ppol of thread for user session logging
+	- nuauth : fix a stupid but critical bug on module reloading
+	- nuauth : introduce nuauth_number_session_loggers to specify the
+	  number of threads in the user session logging pool
+	- nuauth : change type of limited_connection_handler to suppress
+	  compilation warning
+	- nuauth : new hook for time period definition
+	- plaintext : add period check
+	- plaintext : add example for time period creation (define '5x8' period)
+	- nutcpc : working on freebsd :-) (but mono user for the moment)
+	- nutcpc : working on Mac OS X :-) (but mono user for the moment)
+	- nuauth : user connect policy (see config file for detail)
+	- libnuclient : fix typo that could cause a hang
+	- nuauth : a user session duration can now be set
+1.1.2 (2005/12/22)
+	- nufw : new threads architecture
+	- libnuclient : fix potential problem with new thread architecture
+	- nuauth : modules reloading
+	- nuauth : config reloading (partial)
+	- nutrackd : config file option added and an example conf is now
+	  provided
+1.1.1 (2005/12/14)
+	- new session logging module system (hook at user connection and
+	  disconnection)
+	- libscript : new session logging module
+	- log_mysql module : now able to log connection event to a dedicated
+	  table
+	- libnuclient : new threads organisation, it should now be thread-safe
+1.1.0 (2005/12/06)
+	- full "a posteriori" IP authentication for mono user system via hello message system
+	- nufw : port to libnetfilter_queue
+	- NuFW : many small fixes in the debian/ subdir : start in correct runlevels,
+	have smoother init scripts.
+	- nutcpc : add -l option to disable use of lock
+	- NuFW : all exchanges between clients and nuauth are now done in
+	UTF-8 by default. Use --with-utf8 at configure time to select this
+	behaviour on client side.
+	- plaintext module : cleaning and icmp support
+	- increase internal message usage instead of sending directly
+	structure to queue.
+	- nufw : get rid of old UDP protocol
+	- nuauth : fix double free problem linked with string_escape function
+	- libnuclient : new algo in push mode
+	- libnuclient : UDP support, need recent kernel
+	- nuauth : multi modules support
+	- nutrackd : brand new connection tracking system based on
+	libconntrack
+1.0.11 (2005/07/26)
+	- NuFW : port to big endian architecture. It has been tested on a
+	powerpc.
+	- nuauth : fix a bug that causes nuauth to crash when launched with an
+	empty nuauth.conf
+	- nufw : better handling of non-IP packet
+	- nufw : added option -n to permit a strict match of the nuauth
+	certificat
+	- nuauth : client certificat check is stricter
+	- nuauth : better handling on incorrect user OS announce
+1.0.10, "Michel Rocard" release (2005/07/13)
+	- libnuclient : ignore SIGPIPE to avoid crash when HELLO packet can
+	not be sent
+1.0.9 (2005/07/04)
+	- NuFW : added a USER_HELLO message to be able to detect broken
+	connnection really fast.
+	- NuFW : Documentation update
+	- nuauth : user packet decoding code cleanup
+1.0.8 (2005/06/10)
+	- nutcpc : suppress useless opening of /dev/random in nu_client_init2
+1.0.7 (2005/06/07)
+	- nuauth : remove a double free in postgresql module
+1.0.6 (2005/06/02)
+	- libnuclient : add copyright in nuclient.h
+	- libnuclient : add code for integration of libnuclient in C++ project
+	- nutcpc : add -V flag to print version
+	- nuauth : build fixes for gcc 3.4 (was checking for the return of some
+	  void functions)
+	- nuauth : solve problem whith pgsql log module in
+	nuauth_log_users_strict mode
+	- libnuclient : add TCP_KEEPALIVE option on socket
+	- nutcpc : add -k option to kill current nutcpc
+1.0.5 (2005/05/16)
+	- added nuauth_log_users_without_realm : remove realm from username
+	before logging
+	- libnuclient : now authenticate packet which are SYN retransmit
+1.0.4 (2005/05/09)
+	- tls_sasl_worker number of threads is set from a variable now.
+	- timeout on authentication negotiation can now be set with
+	nuauth_auth_nego_timeout option
+	- nufw : tls session ending and restart is now treaded correctly
+	- libnuclient : handle an error case as it should be
+1.0.3 (2005/04/29)
+	- cleanly get out of sasl negotiation
+	- suppress useless debug messages
+	- client lib now does not require certificates when nu_client_init is
+	  called (nuapplet case)
+	- add a check of mysql ssl function existence in configure
+	- clean tls and sasl related code
+	- add mutex in pam module because pam_winbind is not thread safe
+	- correct MySQL and Pgsql log modules to log unauthenticated drop
+	- solve restart problem by setting option SO_REUSEADDR on socket
+	- add KEEPALIVE on connection socket to detect dead connections
+	- add system_convert_username_to_uppercase option to have username convert
+	automatically to uppercase if needed
+	- should fix an endianess problem on PPC (for client lib)
+1.0.2 (2005/03/29)
+	- add nuauth_number_loggers in config file
+	- nufw can now verify nuauth server certificates (specify ca file with -a
+	  to do so)
+	- structure.h is now in the nufw directory as it is only used by it
+	- nuauth certificat check is now more strict
+	- libnuclient does not require a certificate and a key, this is now
+	optional
+	- fix crash of nufw in debug mode 7 and over (when running as daemon)
+	- plaintext module fix : now correctly answer when an acl with no
+	group is found
+1.0.1 (2005/03/16)
+	- log strict was not implemented strictly, this is now really strict
+	- small patch applied to cleanly compile on mipsel (thanks to Florian
+	Fainelli)
+1.0.0 (2005/03/08)
+	- add tags DEBUG_ENABLE to speed up things
+	- add configure	option --with-debug
+	- suppress some compilation warnings
+	- remove useless AC_DEFUN in configure.ac
+	- nuaclgen display modified for equality filter
+1.0.0-rc2 (2005/03/01)
+	- works on autoconf to solve excessive linking
+	- nufw answer correctly to -V and -h
+	- nufw compilation is not done if libipq is not present
+	- authentication by certs now fallback to password based
+	authentication to support generic certs
+	- nuauth tls server for nufw now correctly handles violent disconnect
+	- nuauth tls server for client handles better network problem
+1.0.0-rc1  (2005/02/16)
+	- get around bug link with g_message
+	- initial 64bit port
+	- code cleaning
+	- nutcpc : support renegociation
+	- logging : restore user numeric support
+	- pam compilation is now optional
+	- plaintext : 64 bit port
+	- logging : finish app and os logging
+	- nuauth : add support for multiusers client
+	- libnuclient : correct packet generation code
+	- rework cache code and make it optionnal
+0.9.6 (2004/12/14)
+	- mysql and postgresql log module updates  : added username where
+	missing, now supporting the client_os and client_app SQL fields. See
+	doc/MIGRATING-TO-0.9.6 for upgrade instructions.
+	- ident module fix
+	- ldap module : schema change and appname and osname
+	- nuaclgen : switch to use equality schema by default
+	- SQL logging : application name and osname support
+	- TLS : certificat verification support
+	- TLS : complete option management
+	- certificate authentication (SASL EXTERNAL mechanism)
+	- system authentication module (pam+system)
+	- nu_client_init2 : use callbacks with sasl and tls
+0.9.5 (2004/10/20)
+	- infrastructure for ip authentication
+	- ident module for ip authentication (experimental, does not work when
+	nuauth is in daemon mode)
+	- ipq.h problem with redhat solved
+	- fix bugs related to acl check when ready
+	- configure.ac modification for module support
+	- user check module now receive user@domain
+	- plaintext module : use lists of ports (or ports ranges) in the plaintext ACLs
+	- plaintext module : Add multiple IP addresses (or subnet) in a same rule.
+0.9.4 (2004/10/04)
+	- new push system : after having received packet, nuauth warns clients
+	on a concerned computer that they need to check if they have emit a packet.
+	- use private datas in queue system for cache answer
+0.9.3 (2004/09/23)
+	- libnuclient : reconnect is automatic
+	- libnuclient : better error handling via errno
+	- nufw : signal handling for verbosity
+	- nuauth : application filtering support (modules : plaintext)
+	- nuauth : OS filtering support (modules : plaintext)
+0.9.2 (2004/09/08)
+	- change unused field id_gw to a packet_length field in nufw->nuauth
+	packet.
+	- libnuclient works correctly now (nuapplet and nutcpc are ok)
+	- nufw_gw_addr is now a list : first entry is udp server AND all
+	entries are authorized nufw servers
+	- more strict on cache usage accounting (atomic operation)
+	- intercept sigpipe on nufw
+0.9.1 (2004/09/02)
+	- nuauth : now outputs some information (through g_message) when receiving signal POLL
+	- nuauth : signal USR1 increases log level, USR2 decreases it.
+	- client datas are now stored in a hash (this solve a bug on connect)
+	- include necessary Makefile.am in the doc directory
+	- TLS exchange between nufw and nuauth
+	- multiple nufws per nuauth
+0.9.0 (2004/08/26)
+	- protocol 2
+	- use TLS+SASL
+	- cache system for acl
+	- per connection datas for user
+0.8.2 (2004/07/30)
+	- user logging level is finally taken into account
+	- connectio hash code optimisation
+	- some man pages and docs
+0.8.1b (2004/07/20)
+	- correct nuclient.h header
+0.8.1 (2004/07/14)
+	- client library
+	- little code and packaging cleaning
+0.8 (2004/07/02)
+	- username logging in SQL database when log sync is enable
+	- security fix on nufw
+0.7.1 (2004/06/14)
+        - add option for SSO feature : log before granted packet
+        - major code cleaning
+0.7 (2004/03/31)
+        - SSL encryption between client and server
+        - correct handle of a limit case on reemission
+        - optimisation of ldap module
+0.6.5 (2004/03/11)
+        - correct problem with bad packets
+        - optimisation of hash related code
+        - warning suppression
+        - LDAP and mysql with SSL support
+        - nutcpc improved
+0.6.4 (2004/01/09)
+        - correct locking problems
+        - don't exit on socket read problem
+0.6.3 (2004/01/07)
+        - change syslog log module output for established packet
+        - give a nutop.conf example
+0.6.2 (2004/01/05)
+        - correct bug on user packet parsing
+        - "clean" rewrite of search_and_fill function
+        - packet timeout is checked now
+0.6.1 (2003/12/09) :
+        - Correct bug on acl DROP
+        - Clean lock system
+        - NuFW send Control message when needed
+0.6.0 (2003/12/02):
+        - Mysql and PostgreSQL users activity logging fully functionnal and
+          tested
+        - Updated Config file so it suits all possible features
+        - Debugged some problems on ACL checking
+0.5.4 (2003/11/19)
+	- nuauth conntrack modification
+        - config file stuffs
+0.5.3 (2003/10/29)
+	- nuauth conntrack modification
+0.5.2 (2003/10/20)
+	- added capability to mark packet with userid
+0.5.1 (2003/10/02)
+	- new GDBM user check modules
+	- external modules structure fixed
+	- mutex and memory leak problem solved
+0.5 (2003/09/29)
+	- configuration file for nuauth
+	- external auth modules for nuauth
+	- using syslog
+0.4 (2003/09/17)
+	- code cleaning
+	- improvement in protocol security
+0.3 (2003/09/01)
+	- first complete release
+0.1a (2003/07/04)
+	- use of autoconf
+	- a miniserver is provided
+

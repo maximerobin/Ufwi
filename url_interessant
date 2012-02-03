@@ -3,3 +3,6 @@ Dépot git du projet :
 
 Dépot git daemon ufwi-authd:
 	- http://gitorious.ufwi.org/ufwi-daemons/ufwi-authd
+
+Dépot git du demon ufwi-filterd
+	-git://gitorious.ufwi.org/ufwi-daemons/ufwi-filterd.git

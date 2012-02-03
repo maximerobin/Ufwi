@@ -1,0 +1,31 @@
+#!/bin/sh
+CONFIGFILE=/etc/default/nufw
+
+set -e
+#set -x
+. /usr/share/debconf/confmodule
+
+# ssl certificate generation
+if [ -x /usr/bin/openssl ]; then
+  if [ ! -e /etc/nufw/certs/nufw-key.pem ]; then
+
+    make-ssl-cert /usr/share/ssl-cert/ssleay.cnf /etc/nufw/certs/nufw.pem
+
+    if [ -f /etc/nufw/certs/nufw.pem ]; then
+      # split key and certificate data
+      openssl x509 -in /etc/nufw/certs/nufw.pem -out /etc/nufw/certs/nufw-cert.pem
+      openssl rsa  -in /etc/nufw/certs/nufw.pem -out /etc/nufw/certs/nufw-key.pem
+      chmod 0600 /etc/nufw/certs/nufw-key.pem
+      rm -f /etc/nufw/certs/nufw.pem
+      find /etc/nufw/certs -type l -maxdepth 1 -delete
+    fi
+
+  fi
+fi
+
+db_stop
+
+
+#DEBHELPER#
+
+exit 0

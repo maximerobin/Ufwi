@@ -1,0 +1,21 @@
+#Change to "true" for Nufw to be started
+NUFW_START="true"
+
+#Add "v"s so nufw gets more verbose
+NUFW_VERBOSITY="vv"
+
+#Address of the nuauth server
+#NUFW_NUAUTH_ADDRESS="127.0.0.1"
+
+#TCP port the nuauth server listens on
+#NUFW_NUAUTH_PORT=4128
+
+#Timeout to forget about packets when there's no match (seconds)
+#NUFW_TIMEOUT=15
+
+#Track Size
+#NUFW_TRACK_SIZE=1000
+
+#SSL certificates and keys
+NUFW_SSL_CERTIFICATE="/etc/nufw/certs/nufw-cert.pem"
+NUFW_SSL_KEY="/etc/nufw/certs/nufw-key.pem"

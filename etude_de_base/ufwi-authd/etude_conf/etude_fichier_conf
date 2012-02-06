@@ -1,0 +1,16 @@
+=============================================================
+		Etude du fichier authd.conf
+=============================================================
+
+
+Généralités
+=============================================================
+
+Le fichier authd.conf est le ficheir principal de configuration pour le
+daemon ufwi-authd. C'st dans ce fichier que seront indiqué les adresses IP
+du daemon ufwi-filterd par exemple ou encore le niveau de debug, le nombre
+de connexion qu'un utilsateur peut lancer.
+
+=============================================================
+Etude de la configuration de base
+=============================================================

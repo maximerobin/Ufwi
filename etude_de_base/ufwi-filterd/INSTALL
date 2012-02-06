@@ -1,0 +1,50 @@
+=========================
+Installation instructions
+=========================
+
+Prerequisites
+=============
+
+Prerequisites of autogen.sh script:
+
+ * automake1.7 to execute cleanly autogen.sh:
+   http://www.gnu.org/software/automake/
+
+Prerequisites of ufwi-filterd compilation:
+
+ * GNU libtool:
+   http://www.gnu.org/software/libtool/
+ * GNU make:
+   http://www.gnu.org/software/make/
+ * libpam-dev for system authentication module
+
+Prerequisites of ufwi-filterd compilation and runtime:
+
+ * ufwi-base
+ * ufwi-confparser
+ * ufwi-ssl
+
+Kernel
+======
+
+It is recommanded to use a recent kernel to benefit of all latest feature.
+A kernel superior to 2.6.18 is a good choice.
+
+Compilation
+===========
+
+To compile, use the standard ::
+
+  ./autogen.sh
+  ./configure
+  make
+  make install
+
+If it is a first installation, think to copy the configuration file as it ::
+
+  make install-conf
+
+Else look for changes between your current conf file and the new one.
+
+Next, you will have to run (as root) ufwi-filterd.
+ufwi-filterd -h will give you a usage message.

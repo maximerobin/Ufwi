@@ -1,0 +1,2 @@
+CONFIG_FILES = filterd.conf
+EXTRA_DIST = $(CONFIG_FILES)

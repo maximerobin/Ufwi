@@ -1,11 +1,8 @@
-This is pdfTeX, Version 3.1415926-1.40.10 (TeX Live 2009/Debian) (format=pdflatex 2011.11.2)  24 JAN 2012 10:36
+This is pdfTeX, Version 3.1415926-1.40.10 (TeX Live 2009/Debian) (format=pdflatex 2011.11.29)  10 FEB 2012 09:35
 entering extended mode
  %&-line parsing enabled.
-**rapport.tex
-(./rapport.tex
-LaTeX2e <2009/09/24>
-Babel <v3.8l> and hyphenation patterns for english, usenglishmax, dumylang, noh
-yphenation, french, basque, loaded.
+**\nonstopmode \input{"/root/UFWI/Ufwi/rapport/rapport.tex"}
+(/root/UFWI/Ufwi/rapport/rapport.tex
 (/usr/share/texmf-texlive/tex/latex/base/report.cls
 Document Class: report 2007/10/19 v1.4h Standard LaTeX document class
 (/usr/share/texmf-texlive/tex/latex/base/size12.clo
@@ -252,6 +249,12 @@ File: babel.def 2008/07/06 v3.8l Babel common definitions
 \babel@savecnt=\count88
 \U@D=\dimen103
 )
+
+Package babel Warning: No hyphenation patterns were loaded for
+(babel)                the language `French'
+(babel)                I will use the patterns loaded for \language=0 instead.
+
+\l@french = a dialect from \language0
 Package babel Info: Making : an active character on input line 120.
 Package babel Info: Making ; an active character on input line 121.
 Package babel Info: Making ! an active character on input line 122.
@@ -260,7 +263,6 @@ Package babel Info: Making ? an active character on input line 123.
 \std@mcc=\count89
 \dec@mcc=\count90
 \parindentFFN=\dimen105
-
 *************************************
 * Local config file frenchb.cfg used
 *
@@ -346,7 +348,8 @@ Package ifvtex Info: VTeX not detected.
 \f@ncyO@erf=\skip53
 \f@ncyO@olf=\skip54
 \f@ncyO@orf=\skip55
-) (./rapport.aux)
+)
+(/root/UFWI/Ufwi/rapport/rapport.aux)
 \openout1 = `rapport.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 45.
@@ -421,7 +424,8 @@ driver: pdftex
 -----------------------
 [1
 
-{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}] (./rapport.toc)
+{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}]
+(/root/UFWI/Ufwi/rapport/rapport.toc)
 \tf@toc=\write3
 \openout3 = `rapport.toc'.
 
@@ -438,21 +442,25 @@ Package Fancyhdr Warning: \headheight is too small (12.0pt):
  1.
 [3
 
-] (./rapport.aux) ) 
+]
+ 2.
+[4
+
+] (/root/UFWI/Ufwi/rapport/rapport.aux) ) 
 Here is how much of TeX's memory you used:
- 2591 strings out of 495028
- 31727 string characters out of 1181229
- 90274 words of memory out of 3000000
- 5774 multiletter control sequences out of 15000+50000
+ 2597 strings out of 495061
+ 31992 string characters out of 1182620
+ 91352 words of memory out of 3000000
+ 5770 multiletter control sequences out of 15000+50000
  7024 words of font info for 19 fonts, out of 3000000 for 9000
  28 hyphenation exceptions out of 8191
- 25i,10n,43p,184b,281s stack positions out of 5000i,500n,10000p,200000b,50000s
- </home/maxime/.texmf-var/fonts/pk/ljfour/jknappen/ec/ecbx12
-00.600pk> </home/maxime/.texmf-var/fonts/pk/ljfour/jknappen/ec/ecbx2488.600pk> 
-</home/maxime/.texmf-var/fonts/pk/ljfour/jknappen/ec/ecrm1200.600pk>
-Output written on rapport.pdf (3 pages, 25362 bytes).
+ 26i,10n,43p,350b,281s stack positions out of 5000i,500n,10000p,200000b,50000s
+ </root/.texmf-var/fonts/pk/ljfour/jkn
+appen/ec/ecbx1200.600pk> </root/.texmf-var/fonts/pk/ljfour/jknappen/ec/ecbx2488
+.600pk> </root/.texmf-var/fonts/pk/ljfour/jknappen/ec/ecrm1200.600pk>
+Output written on rapport.pdf (4 pages, 40893 bytes).
 PDF statistics:
- 84 PDF objects out of 1000 (max. 8388607)
+ 127 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
  1 words of extra memory for PDF output out of 10000 (max. 10000000)
 

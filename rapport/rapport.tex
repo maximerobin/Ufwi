@@ -80,7 +80,14 @@ Projet tuteuré.
 Début du doc de Ufwi
 
 %-------------------------------------------------------------------------------------------------------------------------------
-
+\chapter{Liste des solutions de pare-feu par identification}
+Les pare-feu par identification les plus connus : 
+  \begin{itemize}
+    \item AuthPF : Fonctionne sous OpenBSD et qui se repose sur SSH pour l'identification des utilisateurs : http://www.openbsd.org/faq/pf/authpf.html
+    \item NuFW : projet ayant donné naissance à UFWI suite à la liquiditation de l'éditeur "EdenWall Technologies"
+    \item Cyberoam : pare-feu entièrement basé sur l'identification, en utilisant une corrélation entre adresse MAC et utilisateur : http://www.cyberoam.com/fr/firewall.html
+    \item CheckPoint (NAC Blade) : utilisation des règles de filtrage en fonction d'une authentifcation basée sur Kerberos, l'identité de son poste et du niveau de sécurité du poste ( mise à jour de sécurité / antivirus ) : http://www.cyberoam.com/fr/firewall.html
+  \end{itemize}
 
 
 \end{document}

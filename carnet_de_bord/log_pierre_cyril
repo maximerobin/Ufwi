@@ -17,7 +17,7 @@
 
 [2012-02-10]
 	Mise en place d'une liste de pare-feu par identification dans le rapport LaTeX
-
+	Mise en place d'une méthode d'externalisation de logs avec Nulog vers une base de données MySQL
 
 
 

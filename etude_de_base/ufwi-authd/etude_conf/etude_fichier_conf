@@ -2,7 +2,7 @@
 		Etude du fichier authd.conf
 =============================================================
 
-
+=============================================================
 Généralités
 =============================================================
 
@@ -12,5 +12,151 @@ du daemon ufwi-filterd par exemple ou encore le niveau de debug, le nombre
 de connexion qu'un utilsateur peut lancer.
 
 =============================================================
-Etude de la configuration de base
+ufwi-authd
 =============================================================
+
+Indique l'adresse du daemon ufwi-filtred.
+filterd_gw_addr="127.0.0.1"
+
+user_check_module="plaintext"
+Module d'authentification pour les utilisateurs est utilisé si uses_fake_sasl est mis à 1.
+Différent choix sont possible:
+	- plaintext: les utilisateurs sont stockés dans un fichier text
+	- system: Les groupes sont des groupes systèmes. 
+	- nnd: utilise le daemon NuFW NSS
+		   Pour utiliser nnd la variable use_groups_name doit être à 1
+
+acl_check_module="plaintext"
+Check des modules ACL. 
+Nous avons le choix entre:
+	- ldap
+	- plaintext
+
+=============================================================
+Choix de la méthode de login utilisateur
+=============================================================
+
+Il est possible de se loguer à MySQL, PostgreSQL, syslog ou Prelude. 
+user_logs_module="syslog"
+
+Avec user_session_logs_module on défini la méthode que l'on veut utiliser pour les connexion et déconnexion de
+l'utilisateur. Cjoix disponibles:
+	- syslog: log message avec syslog
+	- script: exécute un script personnalisé à la connexion de l'utilisateur (CONFDIR/user-up.sh) et à la déconnexion (CONFDIR/user-down.sh)
+	- mysql: log utilisateurs connexion et déconnexion dans une table sql
+	- nuprelude: log avec IDS prelude
+user_session_logs_module="syslog"
+
+Module pour les logs d'eereurs d'authentification. Choix possibles:
+	- nuprelude
+	- syslog
+auth_error_log_module="syslog"
+
+=============================================================
+Autres modules
+=============================================================
+
+Module pour modifier un session utilisateur juste après sa création. Choisir entre:
+	- session_expire
+	- session_authtype
+user_session_modify_module="session_expire"
+
+Module de finalisation de paquets avant l'envoi au daemon ufwi-filtred.
+Modules disponibles:
+	- mark_group
+	- mark_uid
+	- mark_field
+	- mark_flag
+finalize_packet_module="mark_uid"
+
+=============================================================
+Configuration comportementale
+=============================================================
+
+Niveau de debug. Choix allant de 0 à 9.
+debug_level=0
+
+Que doit faire le daemon quand plusieurs acls sont trouvés. Choix possibles:
+	- 0: Accepter le paquet si un acl ACCEPT est trouvé
+	- 1: Suppriemr le paquet si un acl DROP est trouvé
+	- 2: Première décision trouvé
+Valeur par défaut 2.
+prio_to_nok=2
+
+Renseignement du mode de fonctionnement du client. Deux modes sont disponnibles:
+	- POLL: Client verifie à un intervalle de temp régilier si il y a besoin d'envoyer un paquet (économie de trafic pour WAN)
+	- PUSH: ufwi-authd alerte que le client aurait besoin qu'on lui envoie un paquet d'authentification (temp de réponse meilleur en LAN)
+push_to_client=1
+
+Nombre de connexion qu'un utilisateur peut lancer. Valeur par défaut 0 ( nombre de conenxion illimitées)
+single_user_client_limit=0
+
+Nombre de connexion par IP qu'un utilisateur peut lancer. Valeur par défaut 0 ( nombre de conenxion illimitées)
+single_ip_client_limit=0
+
+Rejetter (suppresion immédiate) un paquet lorsqu'il n'est plus à porté
+	- 0: utilise drop (valeur par défaut)
+	- 1: rejetter ( envoie message icmp )
+reject_after_timeout=0
+
+Rejetter (suppresion immédiate) du paquet si l'utilisateur appartient à aucun groupe.
+reject_authenticated_drop=0
+
+Module d'authentification IP. Choix parmis:
+	- ipauth_guest
+	- auth_mysql
+ip_authentication_module="ipauth_guest"
+
+=============================================================
+Paramètres TLS
+=============================================================
+
+include "modules/nuauth_tls.conf"
+
+=============================================================
+Authentification Kerberos 5
+=============================================================
+
+include "modules/nuauth_krb5.conf"
+
+=============================================================
+Pistage des utilisateurs
+=============================================================
+
+Niveau de log des activités des utilisateurs
+	- 0: Aucun log
+	- 1: Log pour les nouveaux utilisateurs seulement
+	- 2: Log seulement les paquets rejetter
+	- 4: Log les paquets accepté
+	- 8: Log session
+Log de la session complete implique des règles iptables spéciales.
+log_users=9
+
+
+Contrôle si le logging des utilisateurs est absolument sans danger: l'accèes est logger avant d'être garantie.
+Cette variable est probablement nécéssaire si backend SQl est utilisé pour SSO
+log_users_sync=1
+
+Mettre à jour les logs pour éviter une double connexion. Ne pas désactiver cette régle en la mettant à 0
+si on veut garder une sécurité maximale quand on utilise les module SSO
+log_users_strict=1
+
+
+=============================================================
+Paramètres sytème
+=============================================================
+
+Ajoute un verrou pour être en mesure de traiter les modules pam. Pour plus de sécurité cette variables est à 1
+par défaut, nécéssaire pour winbind.
+system_pam_module_not_threadsafe=1
+
+=============================================================
+Authentification Ldap externe
+=============================================================
+include "modules/nuauth_ldap.conf"
+
+=============================================================
+Config base de donnée des logs utilisateurs
+=============================================================
+include "modules/nuauth_mysql.conf"
+include "modules/nuauth_pgsql.conf"

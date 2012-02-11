@@ -209,6 +209,12 @@ Si ufwi-authd indique que le paquet(1) est autorisé alors la connexion est init
 sinon la connexion est annulé. Ufwi-authd peut aussi utiliser un serveur LDAP pour la
 définition des utilisateurs et groupes.
 
+Ci-dessous le un schéma montrant le processus d'authentification utilisé par NuFW, resté inchangé avec UFWI:
+
+\begin{center}
+  \includegraphics[width=9cm,height=11cm]{images/auth.png}
+\end{center}
+
 \underline{Intallation}
 
 Pré-requis :
@@ -249,7 +255,25 @@ Lors de la première installation, il faut penser à copier le ficheir de config
 
 cp ./conf/nuauth.conf /usr/local/etc/nuauth.conf
 
-
+\underline{Quelques commandes liées au daemon}
+Commandes principales:
+\begin{itemize}
+  \item quit: déconnexion
+  \item refresh cache: rafraichit tous les caches
+  \item reload: recharge la configuration du daemon d'authentification 
+\end{itemize}
+Information:
+\begin{itemize}
+  \item help: affiche la liste des commandes utilisables
+  \item version: affiche la version du daemon
+  \item uptime: affiche depuis combien de temp tourne le daemon 
+\end{itemize}
+Gestion des utilisateurs:
+\begin{itemize}
+  \item users: affiche els utilisateurs connectés
+  \item disconnect all: déconnecte tous les utilisateurs
+  \item disconnect ID: déconnecte un utilisateur grâce à son identifiant (ID) 
+\end{itemize}
 
 %---------------------------------------------------------------------------------------------------------------------------------
 \end{document}

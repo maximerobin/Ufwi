@@ -245,10 +245,6 @@ La compilation du daemon est relativement simple, elle se déroule en quatre ét
    \item make
    \item Et pour finir make install
   \end{itemize}
-Lors de la première installation, il faut penser à copier le ficheir de configuration avec la commande suivante:
-
-cp ./conf/nuauth.conf /usr/local/etc/nuauth.conf
-
 
 %---------------------------------------------------------------------------------------------------------------------------------
 \end{document}

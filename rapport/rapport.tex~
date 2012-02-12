@@ -194,7 +194,7 @@ On choisit ce que l’on veut loguer avec iptables
 
 %-------------------------------------------------------------------------------------------------------------------------------
 \chapter{Daemon ufwi-authd}
-\underline{Introduction}
+\section{Introduction}
 
 Nuauth command est une interface qui permet de contrôler des fonctions importantes du daemon authd, 
 comme l'obtention de la liste des utilisateurs connectés par exemple.
@@ -212,10 +212,10 @@ définition des utilisateurs et groupes.
 Ci-dessous le un schéma montrant le processus d'authentification utilisé par NuFW, resté inchangé avec UFWI:
 
 \begin{center}
-  \includegraphics[width=9cm,height=11cm]{images/auth.png}
+  \includegraphics[width=8cm,height=10cm]{images/auth.png}
 \end{center}
 
-\underline{Intallation}
+\section{Intallation}
 
 Pré-requis :
 
@@ -255,7 +255,8 @@ Lors de la première installation, il faut penser à copier le ficheir de config
 
 cp ./conf/nuauth.conf /usr/local/etc/nuauth.conf
 
-\underline{Quelques commandes liées au daemon}
+\section{Quelques commandes liées au daemon}
+
 Commandes principales:
 \begin{itemize}
   \item quit: déconnexion
@@ -273,6 +274,76 @@ Gestion des utilisateurs:
   \item users: affiche els utilisateurs connectés
   \item disconnect all: déconnecte tous les utilisateurs
   \item disconnect ID: déconnecte un utilisateur grâce à son identifiant (ID) 
+\end{itemize}
+
+\section{Fichier de configuration}
+
+Le fichier authd.conf est le fichier principal de configuration pour le
+daemon ufwi-authd. C'est dans ce fichier que seront indiqué l'adresse du daemon ufwi-filterd 
+par exemple ou encore le niveau de debug, le nombre de connexion qu'un utilsateur peut lancer.
+Dans ce fichier seront aussi renseigné les différents paramètres qui guide le comportement du 
+daemon, mais aussi les paramètres système.
+
+Il existe aussi d'autres fichiers de configurations liés à ufwi-authd:
+\begin{itemize}
+  \item modules/nuauth-tls.conf qui contiendra les paramètres TLS
+  \item modules/nuauth-krb5.conf configuration authentification Kerberos 5
+  \item modules/nuauth-ldap.conf authentification ldap
+  \item modules/nuauth-mysql.conf configuration de la base de donnée pour les logs utilisateurs (mysql)
+  \item modules/nuauth-pgsql.conf configuration de la base de donnée pour les logs utilisateurs (postgres) 
+\end{itemize}
+ 
+%-------------------------------------------------------------------------------------------------------------------------------
+\chapter{Daemon ufwi-filterd}
+\section{Introduction}
+
+	Le daemon ufwi-filterd (ancienement appelé nufw) n'est d'autre qu'un pare-feu basé sur NFQUEUE netfilter. Il permet d'écrire des règles de filtrage basées sur l'identité des utilisateurs, en plus des critères de réseau classiques. L'authentification effectue de façon transparente en requérant les informations d’identification de l’utilisateur avantqu’une quelconque décision de filtrage ne soit prise. En pratique, cela signifie que les politiques defiltrage peuvent intégrer l’annuaire utilisateur, et amène cette notion d’ID utilisateur au niveau de la couche IP.\\
+Ufwi-filterd est capable de:
+\begin{itemize}
+  \item Filtrer le trafic en fonction du système d’exploitation et des applications utilisées par les utilisateurs
+     distants.
+  \item marquer chaque paquet d'une connexion avec l'identifiant de son utilisateur et donc d'appliquer une politique de qualité de service spécifique à chaque utilisateur. 
+  \item contribue de manière très pointue à la surveillance de l'activité réseau des serveurs.
+  \item dispose de modules de surveillance qui journalisent les événements principaux de l'activité du réseau en indiquant quels sont les utilisateurs à l'origine des flux.
+\end{itemize}
+\section{Intallation}
+Une installation typique de la suite logicielle NuFW comporte 2 démons : nufw (ufwi-filterd) et nuauth (ufwi-authd) et autant de clients que nécessaire.\\
+Pré-requis :
+\begin{itemize}
+  \item automake1.7 pour executer autogen.sh
+  \item GNU libtool
+  \item GNU make
+\end{itemize}
+Pré-requis pour la compilation et l'excution de ufwi-filterd :
+\begin{itemize}
+  \item ufwi-base
+  \item ufwi-confparser
+  \item ufwi-ssl
+\end{itemize}
+Il est recommandé d'utiliser un noyau récent afin de béneficer de toutes les dernières nou-
+veautés implémenter dans ce dernier. Une version de noyau supèrieur à 2.6.18 est un bon choix.
+\newpage
+\section{Compilation}
+La compilation de ufwi-filterd est relativement simple elle se resume a utiliser les commandes suivantes :
+\begin{itemize}
+  \item ./autogen.sh
+  \item ./configure
+  \item make
+  \item makeinstall
+\end{itemize}
+Lors de la première installation, il ne faut pas oublier de copier le fichier de configuration "make install-conf" afin de chercher les changements entre votre fichier de conf actuelle et le nouveau.\\
+Un fichier INSTALL avec toutes les instructions a suivre est fournie dans le dossier de ufwi-filerd disponible a partir de se lien http://ufwi.org/projects/ufwi-filterd/ repository .
+\section{Commandes}
+Tout dabord, vous devez executer en root ufwi-filterd.
+ufwi-filterd -h vous donnera un message d'aide pour l'utilisation de ufwi-filterd.
+\section{Fichier de configuration}
+Le fichier de configuration de ufwi-filterd se nome tout simplement "filterd.conf". On poura le trouver dans /etc/ufwi-filterd/.
+Dans se fichier on trouvera l'adresse ou le nom du serveur d'authentification nuauth (par defaut 127.0.0.1), on trouvera aussi les chemin absolut des fichiers :
+\begin{itemize}
+  \item /etc/ufwi-filterd/key.pem (clé privé du serveur)
+  \item /etc/ufwi-filterd/cert.pem (certificat du serveur)
+  \item /etc/ufwi-filterd/cacert.pem
+  \item /etc/ufwi-filterd/crl.pem (liste de révocation de certificat serveur)
 \end{itemize}
 
 %---------------------------------------------------------------------------------------------------------------------------------

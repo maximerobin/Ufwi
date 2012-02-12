@@ -194,7 +194,7 @@ On choisit ce que l’on veut loguer avec iptables
 
 %-------------------------------------------------------------------------------------------------------------------------------
 \chapter{Daemon ufwi-authd}
-\underline{Introduction}
+\section{Introduction}
 
 Nuauth command est une interface qui permet de contrôler des fonctions importantes du daemon authd, 
 comme l'obtention de la liste des utilisateurs connectés par exemple.
@@ -212,10 +212,10 @@ définition des utilisateurs et groupes.
 Ci-dessous le un schéma montrant le processus d'authentification utilisé par NuFW, resté inchangé avec UFWI:
 
 \begin{center}
-  \includegraphics[width=9cm,height=11cm]{images/auth.png}
+  \includegraphics[width=8cm,height=10cm]{images/auth.png}
 \end{center}
 
-\underline{Intallation}
+\section{Intallation}
 
 Pré-requis :
 
@@ -255,7 +255,7 @@ Lors de la première installation, il faut penser à copier le ficheir de config
 
 cp ./conf/nuauth.conf /usr/local/etc/nuauth.conf
 
-\underline{Quelques commandes liées au daemon}
+\section{Quelques commandes liées au daemon}
 
 Commandes principales:
 \begin{itemize}
@@ -276,6 +276,24 @@ Gestion des utilisateurs:
   \item disconnect ID: déconnecte un utilisateur grâce à son identifiant (ID) 
 \end{itemize}
 
+\section{Fichier de configuration}
+
+Le fichier authd.conf est le fichier principal de configuration pour le
+daemon ufwi-authd. C'est dans ce fichier que seront indiqué l'adresse du daemon ufwi-filterd 
+par exemple ou encore le niveau de debug, le nombre de connexion qu'un utilsateur peut lancer.
+Dans ce fichier seront aussi renseigné les différents paramètres qui guide le comportement du 
+daemon, mais aussi les paramètres système, et pour finir les chemins absolus des autres fichiers
+de configuration.
+
+Il existe aussi d'autres fichiers de configurations liés à ufwi-authd:
+\begin{itemize}
+  \item modules/nuauth-tls.conf qui contiendra les paramètres TLS
+  \item modules/nuauth-krb5.conf configuration authentification Kerberos 5
+  \item modules/nuauth-ldap.conf authentification ldap
+  \item modules/nuauth-mysql.conf configuration de la base de donnée pour les logs utilisateurs (mysql)
+  \item modules/nuauth-pgsql.conf configuration de la base de donnée pour les logs utilisateurs (postgres) 
+\end{itemize}
+ 
 %-------------------------------------------------------------------------------------------------------------------------------
 \chapter{Daemon ufwi-filterd}
 \section{Introduction}

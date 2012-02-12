@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-1.40.10 (TeX Live 2009/Debian) (format=pdflatex 2011.11.20)  11 FEB 2012 22:04
+This is pdfTeX, Version 3.1415926-1.40.10 (TeX Live 2009/Debian) (format=pdflatex 2011.11.22)  12 FEB 2012 17:26
 entering extended mode
  %&-line parsing enabled.
 **rapport.tex
@@ -315,7 +315,7 @@ File: graphics.cfg 2009/08/28 v1.8 graphics configuration of TeX Live
 Package graphics Info: Driver file: pdftex.def on input line 91.
 
 (/usr/share/texmf-texlive/tex/latex/pdftex-def/pdftex.def
-File: pdftex.def 2009/08/25 v0.04m Graphics/color for pdfTeX
+File: pdftex.def 2010/03/12 v0.04p Graphics/color for pdfTeX
 \Gread@gobject=\count96
 ))
 \Gin@req@height=\dimen107
@@ -340,8 +340,7 @@ Package ifvtex Info: VTeX not detected.
 \Gm@odd@mp=\dimen111
 \Gm@even@mp=\dimen112
 \Gm@dimlist=\toks18
-
-(/usr/share/texmf-texlive/tex/xelatex/xetexconfig/geometry.cfg))
+)
 (/usr/share/texmf-texlive/tex/latex/fancyhdr/fancyhdr.sty
 \fancy@headwidth=\skip47
 \f@ncyO@elh=\skip48
@@ -371,7 +370,7 @@ LaTeX Info: Redefining \degres on input line 45.
 LaTeX Info: Redefining \dots on input line 45.
 LaTeX Info: Redefining \up on input line 45.
 
-(/usr/share/texmf/tex/context/base/supp-pdf.mkii
+(/usr/share/texmf-texlive/tex/context/base/supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
 \scratchcounter=\count100
 \scratchdimen=\dimen113
@@ -427,7 +426,14 @@ driver: pdftex
 -----------------------
 [1
 
-{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}] (./rapport.toc)
+{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}] (./rapport.toc
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <12> on input line 7.
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <8> on input line 7.
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <6> on input line 7.
+)
 \tf@toc=\write3
 \openout3 = `rapport.toc'.
 
@@ -450,12 +456,6 @@ Package Fancyhdr Warning: \headheight is too small (12.0pt):
 
 ]
  3.
-LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <12> on input line 93.
-LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <8> on input line 93.
-LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <6> on input line 93.
 
 ! Package inputenc Error: Unicode char \u8:  not set up for use with LaTeX.
 
@@ -465,10 +465,7 @@ Type  H <return>  for immediate help.
                                                   
 l.99 ...erline{Configuration de la passerelle : }
                                                   
-Your command was ignored.
-Type  I <command> <return>  to replace it with another command,
-or  <return>  to continue without it.
-
+? 
 
 ! Package inputenc Error: Unicode char \u8:  not set up for use with LaTeX.
 
@@ -478,10 +475,7 @@ Type  H <return>  for immediate help.
                                                   
 l.101 Configuration IP 
                         :
-Your command was ignored.
-Type  I <command> <return>  to replace it with another command,
-or  <return>  to continue without it.
-
+? 
 
 ! Package inputenc Error: Unicode char \u8:  not set up for use with LaTeX.
 
@@ -491,10 +485,7 @@ Type  H <return>  for immediate help.
                                                   
 l.103 ifconfig eth0 
                      192.168.1.137/24
-Your command was ignored.
-Type  I <command> <return>  to replace it with another command,
-or  <return>  to continue without it.
-
+? 
 
 ! Package inputenc Error: Unicode char \u8:  not set up for use with LaTeX.
 
@@ -504,26 +495,19 @@ Type  H <return>  for immediate help.
                                                   
 l.104 ifconfig eth1 
                      172.20.8.1/24
-Your command was ignored.
-Type  I <command> <return>  to replace it with another command,
-or  <return>  to continue without it.
-
+? 
 ! Missing $ inserted.
 <inserted text> 
                 $
 l.113 export LD_
                 PRELOAD=/usr/lib/libmysqlclient.so.16
-I've inserted a begin-math/end-math symbol since I think
-you left one out. Proceed, with fingers crossed.
-
+? 
 ! Missing $ inserted.
 <inserted text> 
                 $
 l.114 
       
-I've inserted a begin-math/end-math symbol since I think
-you left one out. Proceed, with fingers crossed.
-
+? 
 
 ! Package inputenc Error: Unicode char \u8:  not set up for use with LaTeX.
 
@@ -533,10 +517,7 @@ Type  H <return>  for immediate help.
                                                   
 l.121 ...ons de connexion à la base de données 
                                                   :
-Your command was ignored.
-Type  I <command> <return>  to replace it with another command,
-or  <return>  to continue without it.
-
+? 
 
 ! Package inputenc Error: Unicode char \u8:  not set up for use with LaTeX.
 
@@ -546,10 +527,7 @@ Type  H <return>  for immediate help.
                                                   
 l.123 paragraphe « 
                      [MYSQL] » ligne 59 :
-Your command was ignored.
-Type  I <command> <return>  to replace it with another command,
-or  <return>  to continue without it.
-
+? 
 
 ! Package inputenc Error: Unicode char \u8:  not set up for use with LaTeX.
 
@@ -559,10 +537,7 @@ Type  H <return>  for immediate help.
                                                   
 l.123 paragraphe « [MYSQL] 
                               » ligne 59 :
-Your command was ignored.
-Type  I <command> <return>  to replace it with another command,
-or  <return>  to continue without it.
-
+? 
 
 ! Package inputenc Error: Unicode char \u8:  not set up for use with LaTeX.
 
@@ -572,10 +547,7 @@ Type  H <return>  for immediate help.
                                                   
 l.123 paragraphe « [MYSQL] » ligne 59 
                                            :
-Your command was ignored.
-Type  I <command> <return>  to replace it with another command,
-or  <return>  to continue without it.
-
+? 
 
 Overfull \hbox (50.54788pt too wide) in paragraph at lines 123--129
 []\T1/cmr/m/n/12 paragraphe ^^S[MYSQL]^^T ligne 59 : ta-ble=''ulog'' pass=''pas
@@ -591,10 +563,7 @@ Type  H <return>  for immediate help.
                                                   
 l.132 Configuration IP 
                         :
-Your command was ignored.
-Type  I <command> <return>  to replace it with another command,
-or  <return>  to continue without it.
-
+? 
 
 ! Package inputenc Error: Unicode char \u8:  not set up for use with LaTeX.
 
@@ -604,10 +573,7 @@ Type  H <return>  for immediate help.
                                                   
 l.134 ifconfig eth0 
                      172.20.8.2/24
-Your command was ignored.
-Type  I <command> <return>  to replace it with another command,
-or  <return>  to continue without it.
-
+? 
 
 ! Package inputenc Error: Unicode char \u8:  not set up for use with LaTeX.
 
@@ -618,10 +584,7 @@ Type  H <return>  for immediate help.
 l.144 ...onnées et création de l’utilisateur 
                                                   (les deux programmes vont ...
 
-Your command was ignored.
-Type  I <command> <return>  to replace it with another command,
-or  <return>  to continue without it.
-
+? 
 
 ! Package inputenc Error: Unicode char \u8:  not set up for use with LaTeX.
 
@@ -631,10 +594,7 @@ Type  H <return>  for immediate help.
                                                   
 l.148 ...er 'ulog'@'\%' identified by 'passulog' 
                                                   ;
-Your command was ignored.
-Type  I <command> <return>  to replace it with another command,
-or  <return>  to continue without it.
-
+? 
 
 ! Package inputenc Error: Unicode char \u8:  not set up for use with LaTeX.
 
@@ -644,10 +604,7 @@ Type  H <return>  for immediate help.
                                                   
 l.152 Commandes de création de la base 
                                          :
-Your command was ignored.
-Type  I <command> <return>  to replace it with another command,
-or  <return>  to continue without it.
-
+? 
 [5
 
 ]
@@ -665,10 +622,7 @@ Type  H <return>  for immediate help.
                                                   
 l.174 ...ons de connexion à la base de données 
                                                   :
-Your command was ignored.
-Type  I <command> <return>  to replace it with another command,
-or  <return>  to continue without it.
-
+? 
 
 ! Package inputenc Error: Unicode char \u8:  not set up for use with LaTeX.
 
@@ -678,10 +632,7 @@ Type  H <return>  for immediate help.
                                                   
 l.184 Sur la passerelle 
                          :
-Your command was ignored.
-Type  I <command> <return>  to replace it with another command,
-or  <return>  to continue without it.
-
+? 
 
 ! Package inputenc Error: Unicode char \u8:  not set up for use with LaTeX.
 
@@ -691,10 +642,7 @@ Type  H <return>  for immediate help.
                                                   
 l.188 Sur le serveur 
                       :
-Your command was ignored.
-Type  I <command> <return>  to replace it with another command,
-or  <return>  to continue without it.
-
+? 
 
 ! Package inputenc Error: Unicode char \u8:  not set up for use with LaTeX.
 
@@ -704,10 +652,7 @@ Type  H <return>  for immediate help.
                                                   
 l.193 On choisit ce que l’on veut loguer 
                                             avec iptables
-Your command was ignored.
-Type  I <command> <return>  to replace it with another command,
-or  <return>  to continue without it.
-
+? 
 [6]
  4.
 <images/auth.png, id=26, 355.3275pt x 411.03563pt>
@@ -725,10 +670,7 @@ Type  H <return>  for immediate help.
                                                   
 l.220 Pré-requis 
                    :
-Your command was ignored.
-Type  I <command> <return>  to replace it with another command,
-or  <return>  to continue without it.
-
+? 
 
 ! Package inputenc Error: Unicode char \u8:  not set up for use with LaTeX.
 
@@ -738,10 +680,7 @@ Type  H <return>  for immediate help.
                                                   
 l.222 Script autogen.sh 
                          :
-Your command was ignored.
-Type  I <command> <return>  to replace it with another command,
-or  <return>  to continue without it.
-
+? 
 
 ! Package inputenc Error: Unicode char \u8:  not set up for use with LaTeX.
 
@@ -751,28 +690,46 @@ Type  H <return>  for immediate help.
                                                   
 l.226 Compilation Nufw 
                         :
-Your command was ignored.
-Type  I <command> <return>  to replace it with another command,
-or  <return>  to continue without it.
+? 
+[8]
+ 5.
 
-[8] (./rapport.aux) ) 
+Overfull \hbox (15.9164pt too wide) in paragraph at lines 283--285
+[]\T1/cmr/m/n/12 Le dae-mon ufwi-filterd (an-ciene-ment ap-pel� nufw) n'est d'a
+utre qu'un pare-feu bas� sur NFQUEUE
+ []
+
+
+! Package inputenc Error: Unicode char \u8:  not set up for use with LaTeX.
+
+See the inputenc package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.294 Pré-requis 
+                   :
+? 
+[9
+
+] [10] (./rapport.aux) ) 
 Here is how much of TeX's memory you used:
- 2624 strings out of 495061
- 32193 string characters out of 1182620
- 94018 words of memory out of 3000000
- 5785 multiletter control sequences out of 15000+50000
- 9462 words of font info for 27 fonts, out of 3000000 for 9000
+ 2628 strings out of 495061
+ 32148 string characters out of 1182620
+ 94274 words of memory out of 3000000
+ 5790 multiletter control sequences out of 15000+50000
+ 11007 words of font info for 29 fonts, out of 3000000 for 9000
  28 hyphenation exceptions out of 8191
- 25i,11n,43p,303b,281s stack positions out of 5000i,500n,10000p,200000b,50000s
-{/usr/share/texmf/fonts/enc/dvips/cm-super/cm-super-t1.enc
-}</usr/share/texmf-texlive/fonts/type1/public/amsfonts/cm/cmmi12.pfb></usr/shar
-e/texmf-texlive/fonts/type1/public/amsfonts/cm/cmmi8.pfb></usr/share/texmf-texl
-ive/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/share/texmf/fonts/type1/publ
-ic/cm-super/sfbx1200.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfbx2488
-.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfrm1200.pfb>
-Output written on rapport.pdf (8 pages, 227154 bytes).
+ 25i,11n,43p,615b,281s stack positions out of 5000i,500n,10000p,200000b,50000s
+ </root/.texmf-var/fonts/pk/ljfour/jknappen/ec/ecbx1728
+.600pk> </root/.texmf-var/fonts/pk/ljfour/jknappen/ec/ecbx1200.600pk> </root/.t
+exmf-var/fonts/pk/ljfour/jknappen/ec/ecbx2488.600pk> </root/.texmf-var/fonts/pk
+/ljfour/jknappen/ec/ecrm1200.600pk></usr/share/texmf-texlive/fonts/type1/public
+/amsfonts/cm/cmmi12.pfb></usr/share/texmf-texlive/fonts/type1/public/amsfonts/c
+m/cmmi8.pfb></usr/share/texmf-texlive/fonts/type1/public/amsfonts/cm/cmr12.pfb>
+
+Output written on rapport.pdf (10 pages, 236459 bytes).
 PDF statistics:
- 55 PDF objects out of 1000 (max. 8388607)
+ 255 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
  6 words of extra memory for PDF output out of 10000 (max. 10000000)
 

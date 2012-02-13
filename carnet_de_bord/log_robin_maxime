@@ -7,4 +7,4 @@
 	- Configuration du fichier de conf (/etc/ufwi-rcpd/ufwi-rcpd.conf)
 	- Tentative de lancement du module avec "twistd -n -y /usr/sbin/ufwi-rpcd.tac -l /var/log/ufwi-rpcd-twisted.log" mais rien ne se produit.
 	- Test du fonctionnement du module "ufwi_rpcd_client --host 127.0.0.1 --cleartext -u admin -p admin" erreur retourner, connexion refuser
-	- 
+	- J'ai passé l'après midi sur mon module (5h environ) et je suis toujours bloqué. Je n'arrive pas a lancer rpcd. Je vois pas d'ou peut venir le problème.

@@ -282,7 +282,8 @@ Le fichier authd.conf est le fichier principal de configuration pour le
 daemon ufwi-authd. C'est dans ce fichier que seront indiqué l'adresse du daemon ufwi-filterd 
 par exemple ou encore le niveau de debug, le nombre de connexion qu'un utilsateur peut lancer.
 Dans ce fichier seront aussi renseigné les différents paramètres qui guide le comportement du 
-daemon, mais aussi les paramètres système.
+daemon, mais aussi les paramètres système, et pour finir les chemins absolus des autres fichiers
+de configuration.
 
 Il existe aussi d'autres fichiers de configurations liés à ufwi-authd:
 \begin{itemize}
@@ -345,6 +346,54 @@ Dans se fichier on trouvera l'adresse ou le nom du serveur d'authentification nu
   \item /etc/ufwi-filterd/cacert.pem
   \item /etc/ufwi-filterd/crl.pem (liste de révocation de certificat serveur)
 \end{itemize}
+
+%-------------------------------------------------------------------------------------------------------------------------------
+\chapter{Daemon ufwi-rcpd}
+\section{Introduction}
+Le module ufwi-rcpd (anciènnement appelé NuCentral) est le module qui gère les autres deamons.
+
+\section{Installation}
+\subsection{Pré-requis}
+Avant de lancer l'installation du module, certains pré-requis sont nécéssaires :
+\begin{itemize}
+  \item Python 2.5
+  \item Twisted web
+  \item M2Crypto
+  \item Jinja
+  \item Subversion (svnadmin program)
+  \item sudo
+  \item pysvn
+  \item pytz
+\end{itemize}
+Debian: apt-get install python-twisted-web python-svn python-m2crypto sudo python-jinja subversion python-tz
+\newline
+
+Pour l'installation de ufwi-rpcd:
+\begin{itemize}
+  \item (GNU) make
+  \item sqlite3
+\end{itemize}
+Sous Debian: apt-get install make sqlite3
+\newline
+
+Paquets optionnels :
+Pour compiler les fichiers de .ts à .qm et mettre à jours les transmissions :
+\begin{itemize}
+  \item lrelease4: Qt development tools
+  \item pylupdate4, lrelease-qt4: Python Qt development tools
+\end{itemize}
+Sous Debian: apt-get install libqt4-dev pyqt4-dev-tools
+\newline
+
+Autres :
+\begin{itemize}
+  \item python-twisted-snmp : pour le module SNMP.
+  \item gnutls-bin: certtool program used to generate certificates
+  \item py.test (used by unit tests): Debian package python-codespeak-lib
+  \item libconfig-inifiles-perl: pour tools/ufwi_rpcd_enmod
+  \item IPy (python-ipy): pour les tests
+\end{itemize}
+
 
 %---------------------------------------------------------------------------------------------------------------------------------
 \end{document}

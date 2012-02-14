@@ -1,0 +1,66 @@
+TOC:
+A) debian dependances
+B) template files
+C) user generated keytab file
+D) stopped/started daemons
+
+
+
+
+A) debian dependances
+depends:
+libsasl2, libsasl2-modules-gssapi-heimdal, krb5-clients, krb5-user
+
+
+
+
+B) template files
+********** file /etc/sasl/nuauth.conf **********
+keytab: /etc/nufw/nuauth.keytab
+pwcheck_method: GSSAPI
+************************************************
+
+
+********** file /etc/krb5.conf **********
+[libdefaults]
+ default_realm = %%kerberos_domain%%
+
+[realms]
+%%kerberos_domain%% = {
+ kdc = %%kdc%%
+ admin_server = %%admin_server%%
+}
+************************************************
+
+
+********** file /etc/default/saslauthd **********
+START=%%saslauthd_start%% -> yes or no
+DESC="SASL Authentication Daemon"
+NAME="saslauthd"
+MECHANISMS="pam"
+MECH_OPTIONS=""
+THREADS=5
+OPTIONS="-c -m /var/run/saslauthd"
+************************************************
+
+
+
+
+C) user-generated keytab file
+1) let the user generate a keytab on the admin_server
+2) let the user upload this keytab on nucentral
+3) process this file:
+- ktutil -k %%filename%% list
+- return code -> 0
+- move %%filename%% /etc/nufw/nuauth.keytab
+- return output to the frontend for the user to see it
+- chown root.nuauth /etc/nufw/nuauth.keytab (check errors)
+- chmod 0640 /etc/nufw/nuauth.keytab (check errors)
+
+
+D) stopped/started daemons
+-nuauth
+-saslauthd
+
+Addendum:
+For the tests, the kerberos domain MUST exist in dns servers

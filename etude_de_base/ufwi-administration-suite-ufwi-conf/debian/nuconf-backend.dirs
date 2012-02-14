@@ -1,0 +1,9 @@
+/var/lib/nucentral/user_configurations
+/usr/share/nucentral/templates
+/usr/share/nucentral/scripts
+/var/cache/nucentral/
+/var/lib/nucentral/test_ldap
+/var/lib/nucentral/nuconf
+/var/lib/nucentral/nuconf/ha
+/var/lib/nucentral/squid
+/var/www/proxy

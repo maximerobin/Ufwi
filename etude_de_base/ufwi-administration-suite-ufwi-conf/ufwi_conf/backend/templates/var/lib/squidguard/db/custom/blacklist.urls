@@ -1,0 +1,2 @@
+{% for url in custom_blacklist_urls %}{{url}}
+{% endfor %}

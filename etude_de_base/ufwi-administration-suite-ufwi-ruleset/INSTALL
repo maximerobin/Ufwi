@@ -1,0 +1,43 @@
+See INSTALL.qt to install the frontend (Qt client).
+
+Prerequisites
+=============
+
+Runtime
+-------
+
+ - Python 2.5+
+   http://www.python.org/
+ - LDAP module for Python
+ - IPy Python module version 0.42+
+ - NuCentral server
+ - nucentral component "network" (from nuconf backend)
+ - nucentral component "system" (from nuconf backend), only required for NuFW
+
+Debian package: apt-get install python-ldap python-ipy
+
+Development
+-----------
+
+For tests:
+
+ - py.test
+
+Debian packages: python-codespeak-lib
+
+
+Install files
+=============
+
+Use this command as root:
+
+   make install
+   nucentral_enmod forward
+   nucentral_enmod localfw
+
+LDAP configuration (NuFW)
+=========================
+
+For the LDAP backend, you need the acls.schema including the
+network interface fields (OutDev), part of NuFW 2.2.17+.
+

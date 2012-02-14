@@ -1,0 +1,556 @@
+
+################
+# mangle table #
+################
+*mangle
+:PREROUTING ACCEPT [0:0]
+:INPUT ACCEPT [0:0]
+:FORWARD ACCEPT [0:0]
+:OUTPUT ACCEPT [0:0]
+:POSTROUTING ACCEPT [0:0]
+
+-A PREROUTING -j CONNMARK --restore-mark
+-A POSTROUTING -m mark ! --mark 0 -j CONNMARK --save-mark --mask 0x0000ffff
+
+COMMIT
+
+################
+# filter table #
+################
+*filter
+:INPUT DROP [0:0]
+:FORWARD DROP [0:0]
+:OUTPUT ACCEPT [0:0]
+:ETH0-ETH1 - [0:0]
+:ETH0-ETH2 - [0:0]
+:ETH1-ETH0 - [0:0]
+:ETH1-ETH2 - [0:0]
+:ETH1-ETH3 - [0:0]
+:ETH2-ETH1 - [0:0]
+:ETH3-ETH0 - [0:0]
+:TUNP-ETH1 - [0:0]
+
+# Default filter rules
+# --------------------
+-A FORWARD -m state --state RELATED,ESTABLISHED -j ACCEPT
+-A INPUT -m state --state RELATED,ESTABLISHED -j ACCEPT
+-A OUTPUT -m state --state RELATED,ESTABLISHED -j ACCEPT
+-A FORWARD -m state --state INVALID -j ULOG --ulog-prefix "Drop INVALID FORWARD"
+-A FORWARD -m state --state INVALID -j DROP
+-A OUTPUT -m state --state INVALID -j ULOG --ulog-prefix "Drop INVALID OUTPUT"
+-A OUTPUT -m state --state INVALID -j DROP
+-A INPUT -i lo -j ACCEPT -m comment --comment "Trust loopback"
+-A OUTPUT -o lo -j ACCEPT -m comment --comment "Trust loopback"
+
+
+# Dispatch FORWARD to the different chains
+# ----------------------------------------
+-A FORWARD -i eth0 -o eth1 -j ETH0-ETH1
+-A FORWARD -i eth0 -o eth2 -j ETH0-ETH2
+-A FORWARD -i eth1 -o eth0 -j ETH1-ETH0
+-A FORWARD -i eth1 -o eth2 -j ETH1-ETH2
+-A FORWARD -i eth1 -o eth3 -j ETH1-ETH3
+-A FORWARD -i eth2 -o eth1 -j ETH2-ETH1
+-A FORWARD -i eth3 -o eth0 -j ETH3-ETH0
+-A FORWARD -i tunp -o eth1 -j TUNP-ETH1
+
+# IPv4 rule #910
+# --------------
+-A ETH3-ETH0 -s 192.168.1.129 -d 62.210.173.4 -p tcp --sport 1024:65535 --dport 5222 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #910: rule 1"
+
+# IPv4 rule #890
+# --------------
+-A ETH3-ETH0 -s 192.168.1.129 -d 192.168.33.2 -p tcp --sport 1024:65535 --dport 3128 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #890: rule 1"
+
+# IPv4 rule #920
+# --------------
+-A ETH3-ETH0 -s 192.168.1.0/24 -d 192.168.33.2 -p tcp --sport 1024:65535 --dport 3128 --syn -m state --state NEW -j ULOG --ulog-prefix "F920a:web access" -m comment --comment "IPv4 rule #920: rule 1"
+-A ETH3-ETH0 -s 192.168.1.0/24 -d 192.168.33.2 -p tcp --sport 1024:65535 --dport 3128 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #920: rule 2"
+
+# IPv4 rule #860
+# --------------
+-A ETH0-ETH2 -s 0.0.0.0/0 -d 192.168.36.2 -p tcp --sport 1024:65535 --dport 1495 --syn -m state --state NEW -j ULOG --ulog-prefix "F860a:Ovpn partenaires" -m comment --comment "IPv4 rule #860: rule 1"
+-A ETH0-ETH2 -s 0.0.0.0/0 -d 192.168.36.2 -p tcp --sport 1024:65535 --dport 1495 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #860: rule 2"
+
+# IPv4 rule #670
+# --------------
+# a retirer !!! ou mettre une authentification
+-A TUNP-ETH1 -d 192.168.33.128/25 -p tcp --sport 1024:65535 --dport 22 --syn -m state --state NEW -j NFQUEUE -m comment --comment "IPv4 rule #670: rule 1"
+
+# IPv4 rule #930
+# --------------
+-A ETH2-ETH1 -s 10.0.36.0/24 -d 192.168.33.236 -p tcp --sport 1024:65535 --dport 80 --syn -m state --state NEW -j ULOG --ulog-prefix "F930a:Acces forum" -m comment --comment "IPv4 rule #930: rule 1"
+-A ETH2-ETH1 -s 10.0.36.0/24 -d 192.168.33.236 -p tcp --sport 1024:65535 --dport 80 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #930: rule 2"
+
+# IPv4 rule #940
+# --------------
+-A ETH2-ETH1 -s 192.168.36.2 -d 192.168.33.231 -p tcp --sport 1024:65535 --dport 389 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #940: rule 1"
+
+# IPv4 rule #950
+# --------------
+-A ETH2-ETH1 -s 10.0.36.0/24 -d 192.168.33.236 -p icmp --icmp-type 8/0 -j ULOG --ulog-prefix "F950a:Acces forum" -m comment --comment "IPv4 rule #950: rule 1"
+-A ETH2-ETH1 -s 10.0.36.0/24 -d 192.168.33.236 -p icmp --icmp-type 8/0 -j ACCEPT -m comment --comment "IPv4 rule #950: rule 2"
+
+# IPv4 rule #870
+# --------------
+-A ETH1-ETH2 -s 192.168.33.128/25 -d 192.168.36.2 -p tcp --sport 1024:65535 --dport 22 --syn -m state --state NEW -j ULOG --ulog-prefix "F870a:ACL #870 (ACCEPT)" -m comment --comment "IPv4 rule #870: rule 1"
+-A ETH1-ETH2 -s 192.168.33.128/25 -d 192.168.36.2 -p tcp --sport 1024:65535 --dport 22 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #870: rule 2"
+-A ETH1-ETH2 -s 192.168.33.128/25 -d 192.168.36.2 -p tcp --sport 1024:65535 --dport 8443 --syn -m state --state NEW -j ULOG --ulog-prefix "F870a:ACL #870 (ACCEPT)" -m comment --comment "IPv4 rule #870: rule 3"
+-A ETH1-ETH2 -s 192.168.33.128/25 -d 192.168.36.2 -p tcp --sport 1024:65535 --dport 8443 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #870: rule 4"
+-A ETH1-ETH2 -s 192.168.33.128/25 -d 192.168.36.2 -p udp --sport 1024:65535 --dport 8080 -m state --state NEW -j ULOG --ulog-prefix "F870a:ACL #870 (ACCEPT)" -m comment --comment "IPv4 rule #870: rule 5"
+-A ETH1-ETH2 -s 192.168.33.128/25 -d 192.168.36.2 -p udp --sport 1024:65535 --dport 8080 -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #870: rule 6"
+
+# IPv4 rule #880
+# --------------
+-A ETH1-ETH3 -s 192.168.33.128/25 -d 192.168.1.0/24 -p tcp --sport 1024:65535 --dport 80 --syn -m state --state NEW -j NFQUEUE -m comment --comment "IPv4 rule #880: rule 1"
+-A ETH1-ETH3 -s 192.168.33.128/25 -d 192.168.1.0/24 -p tcp --sport 1024:65535 --dport 443 --syn -m state --state NEW -j NFQUEUE -m comment --comment "IPv4 rule #880: rule 2"
+
+# IPv4 rule #30
+# -------------
+-A ETH1-ETH0 -s 192.168.33.128/25 -d 192.168.33.2 -p tcp --sport 1024:65535 --dport 993 --syn -m state --state NEW -j NFQUEUE -m comment --comment "IPv4 rule #30: rule 1"
+-A ETH1-ETH0 -s 192.168.33.128/25 -d 192.168.33.2 -p tcp --sport 1024:65535 --dport 2000 --syn -m state --state NEW -j NFQUEUE -m comment --comment "IPv4 rule #30: rule 2"
+
+# IPv4 rule #630
+# --------------
+-A ETH1-ETH0 -s 192.168.33.213 -d 192.168.35.130 -p tcp --sport 1024:65535 --dport 22 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #630: rule 1"
+-A ETH1-ETH0 -s 192.168.33.218 -d 192.168.35.130 -p tcp --sport 1024:65535 --dport 22 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #630: rule 2"
+
+# IPv4 rule #20
+# -------------
+-A ETH1-ETH0 -s 192.168.33.128/25 -d 0.0.0.0/0 -p tcp --sport 1024:65535 --dport 22 --syn -m state --state NEW -j NFQUEUE -m comment --comment "IPv4 rule #20: rule 1"
+-A ETH1-ETH0 -s 192.168.33.128/25 -d 0.0.0.0/0 -p tcp --sport 1024:65535 --dport 2222 --syn -m state --state NEW -j NFQUEUE -m comment --comment "IPv4 rule #20: rule 2"
+
+# IPv4 rule #40
+# -------------
+-A ETH1-ETH0 -s 192.168.33.128/25 -d 192.168.33.2 -p tcp --sport 1024:65535 --dport 25 --syn -m state --state NEW -j ULOG --ulog-prefix "F40a:ACL #40 (ACCEPT)" -m comment --comment "IPv4 rule #40: rule 1"
+-A ETH1-ETH0 -s 192.168.33.128/25 -d 192.168.33.2 -p tcp --sport 1024:65535 --dport 25 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #40: rule 2"
+-A ETH1-ETH0 -s 192.168.33.128/25 -d 192.168.33.2 -p tcp --sport 1024:65535 --dport 3128 --syn -m state --state NEW -j ULOG --ulog-prefix "F40a:ACL #40 (ACCEPT)" -m comment --comment "IPv4 rule #40: rule 3"
+-A ETH1-ETH0 -s 192.168.33.128/25 -d 192.168.33.2 -p tcp --sport 1024:65535 --dport 3128 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #40: rule 4"
+
+# IPv4 rule #60
+# -------------
+-A ETH1-ETH0 -s 192.168.33.128/25 -d 0.0.0.0/0 -p icmp --icmp-type 8/0 -j ACCEPT -m comment --comment "IPv4 rule #60: rule 1"
+
+# IPv4 rule #770
+# --------------
+# Debian explicit drop
+-A ETH1-ETH0 -s 192.168.33.128/25 -d 209.85.229.99 -p tcp --sport 1024:65535 --dport 80 --syn -m state --state NEW -j NFQUEUE -m comment --comment "IPv4 rule #770: rule 1"
+-A ETH1-ETH0 -s 192.168.33.128/25 -d 209.85.229.103 -p tcp --sport 1024:65535 --dport 80 --syn -m state --state NEW -j NFQUEUE -m comment --comment "IPv4 rule #770: rule 2"
+-A ETH1-ETH0 -s 192.168.33.128/25 -d 209.85.229.104 -p tcp --sport 1024:65535 --dport 80 --syn -m state --state NEW -j NFQUEUE -m comment --comment "IPv4 rule #770: rule 3"
+-A ETH1-ETH0 -s 192.168.33.128/25 -d 209.85.229.105 -p tcp --sport 1024:65535 --dport 80 --syn -m state --state NEW -j NFQUEUE -m comment --comment "IPv4 rule #770: rule 4"
+-A ETH1-ETH0 -s 192.168.33.128/25 -d 209.85.229.106 -p tcp --sport 1024:65535 --dport 80 --syn -m state --state NEW -j NFQUEUE -m comment --comment "IPv4 rule #770: rule 5"
+-A ETH1-ETH0 -s 192.168.33.128/25 -d 209.85.229.147 -p tcp --sport 1024:65535 --dport 80 --syn -m state --state NEW -j NFQUEUE -m comment --comment "IPv4 rule #770: rule 6"
+
+# IPv4 rule #50
+# -------------
+-A ETH1-ETH0 -s 192.168.33.128/25 -d 192.168.33.0/25 -p tcp --sport 1024:65535 --dport 80 --syn -m state --state NEW -j NFQUEUE -m comment --comment "IPv4 rule #50: rule 1"
+-A ETH1-ETH0 -s 192.168.33.128/25 -d 192.168.33.0/25 -p tcp --sport 1024:65535 --dport 443 --syn -m state --state NEW -j NFQUEUE -m comment --comment "IPv4 rule #50: rule 2"
+
+# IPv4 rule #80
+# -------------
+-A ETH1-ETH0 -s 192.168.33.128/25 -d 192.168.33.2 -p tcp --sport 1024:65535 --dport 4129 --syn -m state --state NEW -j ULOG --ulog-prefix "F80a:ACL #80 (ACCEPT)" -m comment --comment "IPv4 rule #80: rule 1"
+-A ETH1-ETH0 -s 192.168.33.128/25 -d 192.168.33.2 -p tcp --sport 1024:65535 --dport 4129 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #80: rule 2"
+
+# IPv4 rule #90
+# -------------
+-A ETH1-ETH0 -s 192.168.33.128/25 -d 0.0.0.0/0 -p tcp --sport 1024:65535 --dport 5222 --syn -m state --state NEW -j NFQUEUE -m comment --comment "IPv4 rule #90: rule 1"
+-A ETH1-ETH0 -s 192.168.33.128/25 -d 0.0.0.0/0 -p tcp --sport 1024:65535 --dport 5223 --syn -m state --state NEW -j NFQUEUE -m comment --comment "IPv4 rule #90: rule 2"
+-A ETH1-ETH0 -s 192.168.33.128/25 -d 0.0.0.0/0 -p tcp --sport 1024:65535 --dport 6667 --syn -m state --state NEW -j NFQUEUE -m comment --comment "IPv4 rule #90: rule 3"
+-A ETH1-ETH0 -s 192.168.33.128/25 -d 0.0.0.0/0 -p tcp --sport 1024:65535 --dport 7000 --syn -m state --state NEW -j NFQUEUE -m comment --comment "IPv4 rule #90: rule 4"
+
+# IPv4 rule #70
+# -------------
+# Debian access
+-A ETH1-ETH0 -s 192.168.33.128/25 -d 0.0.0.0/0 -p tcp --sport 1024:65535 --dport 80 --syn -m state --state NEW -j NFQUEUE -m comment --comment "IPv4 rule #70: rule 1"
+
+# IPv4 rule #100
+# --------------
+-A ETH1-ETH0 -s 192.168.33.128/25 -d 192.168.33.2 -p tcp --sport 1024:65535 --dport 389 --syn -m state --state NEW -j ULOG --ulog-prefix "F100a:ACL #100 (ACCEPT)" -m comment --comment "IPv4 rule #100: rule 1"
+-A ETH1-ETH0 -s 192.168.33.128/25 -d 192.168.33.2 -p tcp --sport 1024:65535 --dport 389 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #100: rule 2"
+-A ETH1-ETH0 -s 192.168.33.128/25 -d 192.168.33.2 -p tcp --sport 1024:65535 --dport 636 --syn -m state --state NEW -j ULOG --ulog-prefix "F100a:ACL #100 (ACCEPT)" -m comment --comment "IPv4 rule #100: rule 3"
+-A ETH1-ETH0 -s 192.168.33.128/25 -d 192.168.33.2 -p tcp --sport 1024:65535 --dport 636 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #100: rule 4"
+-A ETH1-ETH0 -s 192.168.33.128/25 -d 192.168.33.10 -p tcp --sport 1024:65535 --dport 389 --syn -m state --state NEW -j ULOG --ulog-prefix "F100a:ACL #100 (ACCEPT)" -m comment --comment "IPv4 rule #100: rule 5"
+-A ETH1-ETH0 -s 192.168.33.128/25 -d 192.168.33.10 -p tcp --sport 1024:65535 --dport 389 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #100: rule 6"
+-A ETH1-ETH0 -s 192.168.33.128/25 -d 192.168.33.10 -p tcp --sport 1024:65535 --dport 636 --syn -m state --state NEW -j ULOG --ulog-prefix "F100a:ACL #100 (ACCEPT)" -m comment --comment "IPv4 rule #100: rule 7"
+-A ETH1-ETH0 -s 192.168.33.128/25 -d 192.168.33.10 -p tcp --sport 1024:65535 --dport 636 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #100: rule 8"
+
+# IPv4 rule #610
+# --------------
+-A ETH1-ETH0 -s 192.168.33.128/25 -d 192.168.33.10 -p tcp --sport 1:65535 --dport 88 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #610: rule 1"
+-A ETH1-ETH0 -s 192.168.33.128/25 -d 192.168.33.10 -p udp --sport 1:65535 --dport 88 -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #610: rule 2"
+
+# IPv4 rule #110
+# --------------
+-A ETH1-ETH0 -s 192.168.33.128/25 -d 192.168.33.2 -p udp --sport 1024:65535 --dport 53 -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #110: rule 1"
+
+# IPv4 rule #460
+# --------------
+-A ETH1-ETH0 -s 192.168.33.128/25 -d 192.168.33.7 -p tcp --sport 1024:65535 --dport 4690 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #460: rule 1"
+-A ETH1-ETH0 -s 192.168.33.128/25 -d 192.168.33.7 -p tcp --sport 1024:65535 --dport 5553 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #460: rule 2"
+
+# IPv4 rule #120
+# --------------
+-A ETH1-ETH0 -s 192.168.33.128/25 -d 192.168.33.2 -p udp --sport 1:65535 --dport 123 -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #120: rule 1"
+
+# IPv4 rule #440
+# --------------
+# drop ntp traffic silently
+-A ETH1-ETH0 -s 192.168.33.128/25 -d 0.0.0.0/0 -p udp --sport 1:65535 --dport 123 -m state --state NEW -j DROP -m comment --comment "IPv4 rule #440: rule 1"
+
+# IPv4 rule #130
+# --------------
+-A ETH1-ETH0 -s 192.168.33.128/25 -d 0.0.0.0/0 -p tcp --sport 1024:65535 --dport 2401 --syn -m state --state NEW -j NFQUEUE -m comment --comment "IPv4 rule #130: rule 1"
+
+# IPv4 rule #150
+# --------------
+-A ETH1-ETH0 -s 192.168.33.128/25 -d 192.168.35.34 -p tcp --sport 1024:65535 --dport 443 --syn -m state --state NEW -j NFQUEUE -m comment --comment "IPv4 rule #150: rule 1"
+
+# IPv4 rule #10
+# -------------
+-A ETH1-ETH0 -s 192.168.33.128/25 -d 0.0.0.0/0 -p tcp --sport 1024:65535 --dport 80 --syn -m state --state NEW -j NFQUEUE -m comment --comment "IPv4 rule #10: rule 1"
+-A ETH1-ETH0 -s 192.168.33.128/25 -d 0.0.0.0/0 -p tcp --sport 1024:65535 --dport 443 --syn -m state --state NEW -j NFQUEUE -m comment --comment "IPv4 rule #10: rule 2"
+
+# IPv4 rule #320
+# --------------
+-A ETH1-ETH0 -s 192.168.33.128/25 -d 192.168.32.168 -p tcp --sport 1024:65535 --dport 631 --syn -m state --state NEW -j ULOG --ulog-prefix "F320a:ACL #320 (ACCEPT)" -m comment --comment "IPv4 rule #320: rule 1"
+-A ETH1-ETH0 -s 192.168.33.128/25 -d 192.168.32.168 -p tcp --sport 1024:65535 --dport 631 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #320: rule 2"
+
+# IPv4 rule #400
+# --------------
+-A ETH1-ETH0 -s 192.168.33.210 -d 192.168.35.40 -p tcp --sport 1024:65535 --dport 9418 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #400: rule 1"
+
+# IPv4 rule #410
+# --------------
+-A ETH1-ETH0 -s 192.168.33.184 -d 192.168.33.6 -p tcp --sport 1024:65535 --dport 9101 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #410: rule 1"
+
+# IPv4 rule #420
+# --------------
+-A ETH1-ETH0 -s 192.168.33.225 -d 192.168.33.6 -p tcp --sport 1024:65535 --dport 9103 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #420: rule 1"
+-A ETH1-ETH0 -s 192.168.33.228 -d 192.168.33.6 -p tcp --sport 1024:65535 --dport 9103 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #420: rule 2"
+
+# IPv4 rule #430
+# --------------
+-A ETH1-ETH0 -s 192.168.33.128/25 -d 0.0.0.0/0 -p tcp --sport 1024:65535 --dport 993 --syn -m state --state NEW -j NFQUEUE -m comment --comment "IPv4 rule #430: rule 1"
+
+# IPv4 rule #450
+# --------------
+-A ETH1-ETH0 -s 192.168.33.128/25 -d 192.168.35.41 -p tcp --sport 1024:65535 --dport 9989 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #450: rule 1"
+
+# IPv4 rule #470
+# --------------
+-A ETH1-ETH0 -s 192.168.33.128/25 -d 192.168.33.0/25 -p tcp --sport 1024:65535 --dport 21 --syn -m state --state NEW -j NFQUEUE -m comment --comment "IPv4 rule #470: rule 1"
+-A ETH1-ETH0 -s 192.168.33.128/25 -d 192.168.32.0/24 -p tcp --sport 1024:65535 --dport 21 --syn -m state --state NEW -j NFQUEUE -m comment --comment "IPv4 rule #470: rule 2"
+-A ETH1-ETH0 -s 192.168.33.128/25 -d 192.168.35.0/24 -p tcp --sport 1024:65535 --dport 21 --syn -m state --state NEW -j NFQUEUE -m comment --comment "IPv4 rule #470: rule 3"
+
+# IPv4 rule #490
+# --------------
+-A ETH1-ETH0 -s 192.168.33.128/25 -d 0.0.0.0/0 -p tcp --sport 1024:65535 --dport 21 --syn -m state --state NEW -j NFQUEUE -m comment --comment "IPv4 rule #490: rule 1"
+
+# IPv4 rule #500
+# --------------
+-A ETH1-ETH0 -s 192.168.33.128/25 -d 0.0.0.0/0 -p tcp --sport 1024:65535 --dport 5050 --syn -m state --state NEW -j NFQUEUE -m comment --comment "IPv4 rule #500: rule 1"
+
+# IPv4 rule #510
+# --------------
+-A ETH1-ETH0 -s 192.168.33.128/25 -d 0.0.0.0/0 -p tcp --sport 1024:65535 --dport 5190 --syn -m state --state NEW -j NFQUEUE -m comment --comment "IPv4 rule #510: rule 1"
+
+# IPv4 rule #520
+# --------------
+-A ETH1-ETH0 -s 192.168.33.128/25 -d 192.168.35.3 -p tcp --sport 1024:65535 --dport 5003 --syn -m state --state NEW -j NFQUEUE -m comment --comment "IPv4 rule #520: rule 1"
+
+# IPv4 rule #550
+# --------------
+-A ETH1-ETH0 -s 192.168.33.128/25 -d 192.168.32.11 -p tcp --sport 1024:65535 --dport 631 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #550: rule 1"
+
+# IPv4 rule #560
+# --------------
+-A ETH1-ETH0 -s 192.168.33.128/25 -d 10.0.0.1 -p tcp --sport 1024:65535 --dport 443 --syn -m state --state NEW -j NFQUEUE -m comment --comment "IPv4 rule #560: rule 1"
+
+# IPv4 rule #570
+# --------------
+-A ETH1-ETH0 -s 192.168.33.128/25 -d 192.168.35.40 -p tcp --sport 1024:65535 --dport 9418 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #570: rule 1"
+
+# IPv4 rule #580
+# --------------
+-A ETH1-ETH0 -s 192.168.33.128/25 -d 192.168.35.133 -p tcp --sport 1024:65535 --dport 8070 --syn -m state --state NEW -j NFQUEUE -m comment --comment "IPv4 rule #580: rule 1"
+
+# IPv4 rule #600
+# --------------
+-A ETH1-ETH0 -s 192.168.33.128/25 -d 192.168.33.10 -p tcp --sport 1024:65535 --dport 389 --syn -m state --state NEW -j NFQUEUE -m comment --comment "IPv4 rule #600: rule 1"
+-A ETH1-ETH0 -s 192.168.33.128/25 -d 192.168.33.10 -p tcp --sport 1024:65535 --dport 636 --syn -m state --state NEW -j NFQUEUE -m comment --comment "IPv4 rule #600: rule 2"
+
+# IPv4 rule #620
+# --------------
+-A ETH1-ETH0 -s 192.168.33.128/25 -d 0.0.0.0/0 -p tcp --sport 1024:65535 --dport 9418 --syn -m state --state NEW -j NFQUEUE -m comment --comment "IPv4 rule #620: rule 1"
+
+# IPv4 rule #650
+# --------------
+-A ETH1-ETH0 -s 192.168.33.128/25 -d 192.168.33.10 -p tcp --sport 1:65535 --dport 88 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #650: rule 1"
+-A ETH1-ETH0 -s 192.168.33.128/25 -d 192.168.33.10 -p tcp --sport 1:65535 --dport 445 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #650: rule 2"
+-A ETH1-ETH0 -s 192.168.33.128/25 -d 192.168.33.10 -p tcp --sport 1024 --dport 139 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #650: rule 3"
+-A ETH1-ETH0 -s 192.168.33.128/25 -d 192.168.33.10 -p tcp --sport 1024:65535 --dport 53 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #650: rule 4"
+-A ETH1-ETH0 -s 192.168.33.128/25 -d 192.168.33.10 -p tcp --sport 1024:65535 --dport 389 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #650: rule 5"
+-A ETH1-ETH0 -s 192.168.33.128/25 -d 192.168.33.10 -p tcp --sport 1024:65535 --dport 389 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #650: rule 6"
+-A ETH1-ETH0 -s 192.168.33.128/25 -d 192.168.33.10 -p tcp --sport 1024:65535 --dport 636 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #650: rule 7"
+-A ETH1-ETH0 -s 192.168.33.128/25 -d 192.168.33.10 -p udp --sport 1:65535 --dport 88 -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #650: rule 8"
+-A ETH1-ETH0 -s 192.168.33.128/25 -d 192.168.33.10 -p udp --sport 1:65535 --dport 135:139 -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #650: rule 9"
+-A ETH1-ETH0 -s 192.168.33.128/25 -d 192.168.33.10 -p udp --sport 1024:65535 --dport 53 -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #650: rule 10"
+
+# IPv4 rule #700
+# --------------
+-A ETH1-ETH0 -s 192.168.33.228 -d 192.168.35.228 -p tcp --sport 1024:65535 --dport 3306 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #700: rule 1"
+-A ETH1-ETH0 -s 192.168.33.228 -d 192.168.35.228 -p tcp --sport 1024:65535 --dport 5432 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #700: rule 2"
+
+# IPv4 rule #720
+# --------------
+-A ETH1-ETH0 -s 192.168.33.210 -d 192.168.35.228 -p tcp --sport 1024:65535 --dport 5432 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #720: rule 1"
+
+# IPv4 rule #730
+# --------------
+-A ETH1-ETH0 -s 192.168.33.237 -d 192.168.35.228 -p tcp --sport 1024:65535 --dport 3306 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #730: rule 1"
+
+# IPv4 rule #740
+# --------------
+-A ETH1-ETH0 -s 192.168.33.209 -d 192.168.35.228 -p tcp --sport 1024:65535 --dport 5432 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #740: rule 1"
+
+# IPv4 rule #750
+# --------------
+-A ETH1-ETH0 -s 192.168.33.236 -d 192.168.35.228 -p tcp --sport 1024:65535 --dport 3306 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #750: rule 1"
+
+# IPv4 rule #760
+# --------------
+-A ETH1-ETH0 -s 192.168.33.128/25 -d 192.168.35.228 -p tcp --sport 1024:65535 --dport 5432 --syn -m state --state NEW -j NFQUEUE -m comment --comment "IPv4 rule #760: rule 1"
+
+# IPv4 rule #800
+# --------------
+-A ETH1-ETH0 -s 192.168.33.128/25 -d 192.168.35.137 -p tcp --sport 1024:65535 --dport 3389 --syn -m state --state NEW -j NFQUEUE -m comment --comment "IPv4 rule #800: rule 1"
+
+# IPv4 rule #810
+# --------------
+-A ETH1-ETH0 -s 192.168.33.128/25 -d 82.226.58.44 -p tcp --sport 1024:65535 --dport 8000 --syn -m state --state NEW -j NFQUEUE -m comment --comment "IPv4 rule #810: rule 1"
+
+# IPv4 rule #830
+# --------------
+-A ETH1-ETH0 -s 192.168.33.128/25 -d 88.164.127.124 -p tcp --sport 1024:65535 --dport 30022 --syn -m state --state NEW -j ULOG --ulog-prefix "F830a:Tests EMF" -m comment --comment "IPv4 rule #830: rule 1"
+-A ETH1-ETH0 -s 192.168.33.128/25 -d 88.164.127.124 -p tcp --sport 1024:65535 --dport 30022 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #830: rule 2"
+-A ETH1-ETH0 -s 192.168.33.128/25 -d 88.164.127.124 -p tcp --sport 1024:65535 --dport 38443 --syn -m state --state NEW -j ULOG --ulog-prefix "F830a:Tests EMF" -m comment --comment "IPv4 rule #830: rule 3"
+-A ETH1-ETH0 -s 192.168.33.128/25 -d 88.164.127.124 -p tcp --sport 1024:65535 --dport 38443 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #830: rule 4"
+-A ETH1-ETH0 -s 192.168.33.128/25 -d 88.164.127.124 -p udp --sport 1024:65535 --dport 38080 -m state --state NEW -j ULOG --ulog-prefix "F830a:Tests EMF" -m comment --comment "IPv4 rule #830: rule 5"
+-A ETH1-ETH0 -s 192.168.33.128/25 -d 88.164.127.124 -p udp --sport 1024:65535 --dport 38080 -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #830: rule 6"
+
+# IPv4 rule #780
+# --------------
+# Auth drop
+-A ETH1-ETH0 -s 192.168.33.128/25 -d 0.0.0.0/0 -p tcp --sport 1:65535 --dport 1:65535 --syn -m state --state NEW -j NFQUEUE -m comment --comment "IPv4 rule #780: rule 1"
+
+# IPv4 rule #160
+# --------------
+# Proxy pour les paquets
+-A ETH0-ETH1 -s 192.168.33.2 -d 192.168.33.186 -p tcp --sport 1024:65535 --dport 80 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #160: rule 1"
+
+# IPv4 rule #170
+# --------------
+-A ETH0-ETH1 -s 10.8.0.0/24 -d 192.168.33.128/25 -p tcp --sport 1024:65535 --dport 22 --syn -m state --state NEW -j ULOG --ulog-prefix "F170a:ACL #170 (ACCEPT)" -m comment --comment "IPv4 rule #170: rule 1"
+-A ETH0-ETH1 -s 10.8.0.0/24 -d 192.168.33.128/25 -p tcp --sport 1024:65535 --dport 22 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #170: rule 2"
+
+# IPv4 rule #180
+# --------------
+-A ETH0-ETH1 -s 10.8.0.0/24 -d 192.168.33.128/25 -p tcp --sport 1024:65535 --dport 80 --syn -m state --state NEW -j ULOG --ulog-prefix "F180a:ACL #180 (ACCEPT)" -m comment --comment "IPv4 rule #180: rule 1"
+-A ETH0-ETH1 -s 10.8.0.0/24 -d 192.168.33.128/25 -p tcp --sport 1024:65535 --dport 80 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #180: rule 2"
+-A ETH0-ETH1 -s 10.8.0.0/24 -d 192.168.33.128/25 -p tcp --sport 1024:65535 --dport 443 --syn -m state --state NEW -j ULOG --ulog-prefix "F180a:ACL #180 (ACCEPT)" -m comment --comment "IPv4 rule #180: rule 3"
+-A ETH0-ETH1 -s 10.8.0.0/24 -d 192.168.33.128/25 -p tcp --sport 1024:65535 --dport 443 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #180: rule 4"
+
+# IPv4 rule #190
+# --------------
+# todo: limitation à liste de machines
+-A ETH0-ETH1 -s 192.168.33.2 -d 192.168.33.128/25 -p tcp --sport 1024:65535 --dport 80 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #190: rule 1"
+-A ETH0-ETH1 -s 192.168.33.2 -d 192.168.33.128/25 -p tcp --sport 1024:65535 --dport 443 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #190: rule 2"
+
+# IPv4 rule #200
+# --------------
+-A ETH0-ETH1 -s 192.168.33.2 -d 192.168.33.213 -p tcp --sport 1024:65535 --dport 25 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #200: rule 1"
+-A ETH0-ETH1 -s 192.168.33.2 -d 192.168.33.218 -p tcp --sport 1024:65535 --dport 25 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #200: rule 2"
+
+# IPv4 rule #210
+# --------------
+-A ETH0-ETH1 -s 192.168.33.4 -d 192.168.33.181 -p icmp --icmp-type 8/0 -j ACCEPT -m comment --comment "IPv4 rule #210: rule 1"
+-A ETH0-ETH1 -s 192.168.33.4 -d 192.168.33.181 -p udp --sport 1024:65535 --dport 161 -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #210: rule 2"
+-A ETH0-ETH1 -s 192.168.33.4 -d 192.168.33.225 -p icmp --icmp-type 8/0 -j ACCEPT -m comment --comment "IPv4 rule #210: rule 3"
+-A ETH0-ETH1 -s 192.168.33.4 -d 192.168.33.225 -p udp --sport 1024:65535 --dport 161 -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #210: rule 4"
+-A ETH0-ETH1 -s 192.168.33.4 -d 192.168.33.184 -p icmp --icmp-type 8/0 -j ACCEPT -m comment --comment "IPv4 rule #210: rule 5"
+-A ETH0-ETH1 -s 192.168.33.4 -d 192.168.33.184 -p udp --sport 1024:65535 --dport 161 -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #210: rule 6"
+
+# IPv4 rule #220
+# --------------
+-A ETH0-ETH1 -s 192.168.33.6 -d 192.168.33.128/25 -p tcp --sport 1024:65535 --dport 9102 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #220: rule 1"
+
+# IPv4 rule #230
+# --------------
+-A ETH0-ETH1 -s 192.168.33.9 -d 192.168.33.128/25 -p icmp --icmp-type 8/0 -j ACCEPT -m comment --comment "IPv4 rule #230: rule 1"
+-A ETH0-ETH1 -s 192.168.33.9 -d 192.168.33.128/25 -p tcp --sport 1024:65535 --dport 80 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #230: rule 2"
+-A ETH0-ETH1 -s 192.168.33.9 -d 192.168.33.128/25 -p udp --sport 1024:65535 --dport 161 -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #230: rule 3"
+
+# IPv4 rule #530
+# --------------
+-A ETH0-ETH1 -s 192.168.33.9 -d 192.168.33.225 -p tcp --sport 1024:65535 --dport 22 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #530: rule 1"
+
+# IPv4 rule #250
+# --------------
+-A ETH0-ETH1 -s 192.168.33.2 -d 192.168.33.210 -p tcp --sport 1024:65535 --dport 80 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #250: rule 1"
+-A ETH0-ETH1 -s 192.168.33.2 -d 192.168.33.210 -p tcp --sport 1024:65535 --dport 443 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #250: rule 2"
+
+# IPv4 rule #260
+# --------------
+-A ETH0-ETH1 -s 10.8.0.0/24 -d 192.168.33.128/25 -p tcp --sport 1024:65535 --dport 4690 --syn -m state --state NEW -j ULOG --ulog-prefix "F260a:ACL #260 (ACCEPT)" -m comment --comment "IPv4 rule #260: rule 1"
+-A ETH0-ETH1 -s 10.8.0.0/24 -d 192.168.33.128/25 -p tcp --sport 1024:65535 --dport 4690 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #260: rule 2"
+-A ETH0-ETH1 -s 10.8.0.0/24 -d 192.168.33.128/25 -p tcp --sport 1024:65535 --dport 5553 --syn -m state --state NEW -j ULOG --ulog-prefix "F260a:ACL #260 (ACCEPT)" -m comment --comment "IPv4 rule #260: rule 3"
+-A ETH0-ETH1 -s 10.8.0.0/24 -d 192.168.33.128/25 -p tcp --sport 1024:65535 --dport 5553 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #260: rule 4"
+
+# IPv4 rule #270
+# --------------
+-A ETH0-ETH1 -s 10.8.0.0/24 -d 192.168.33.148 -p tcp --sport 1024:65535 --dport 3389 --syn -m state --state NEW -j ULOG --ulog-prefix "F270a:ACL #270 (ACCEPT)" -m comment --comment "IPv4 rule #270: rule 1"
+-A ETH0-ETH1 -s 10.8.0.0/24 -d 192.168.33.148 -p tcp --sport 1024:65535 --dport 3389 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #270: rule 2"
+
+# IPv4 rule #280
+# --------------
+-A ETH0-ETH1 -s 192.168.35.34 -d 192.168.33.228 -p tcp --sport 1024:65535 --dport 5432 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #280: rule 1"
+
+# IPv4 rule #290
+# --------------
+-A ETH0-ETH1 -s 192.168.33.2 -d 192.168.33.228 -p tcp --sport 1024:65535 --dport 3306 --syn -m state --state NEW -j ULOG --ulog-prefix "F290a:ACL #290 (ACCEPT)" -m comment --comment "IPv4 rule #290: rule 1"
+-A ETH0-ETH1 -s 192.168.33.2 -d 192.168.33.228 -p tcp --sport 1024:65535 --dport 3306 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #290: rule 2"
+
+# IPv4 rule #300
+# --------------
+-A ETH0-ETH1 -s 192.168.35.129 -d 192.168.33.228 -p tcp --sport 1024:65535 --dport 5432 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #300: rule 1"
+
+# IPv4 rule #310
+# --------------
+-A ETH0-ETH1 -s 0.0.0.0/0 -d 192.168.33.245 -p tcp --sport 1024:65535 --dport 22 --syn -m state --state NEW -j ULOG --ulog-prefix "F310a:ACL #310 (ACCEPT)" -m comment --comment "IPv4 rule #310: rule 1"
+-A ETH0-ETH1 -s 0.0.0.0/0 -d 192.168.33.245 -p tcp --sport 1024:65535 --dport 22 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #310: rule 2"
+
+# IPv4 rule #330
+# --------------
+-A ETH0-ETH1 -s 192.168.32.0/24 -d 192.168.33.232 -p tcp --sport 1024:65535 --dport 5222 --syn -m state --state NEW -j ULOG --ulog-prefix "F330a:ACL #330 (ACCEPT)" -m comment --comment "IPv4 rule #330: rule 1"
+-A ETH0-ETH1 -s 192.168.32.0/24 -d 192.168.33.232 -p tcp --sport 1024:65535 --dport 5222 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #330: rule 2"
+-A ETH0-ETH1 -s 192.168.32.0/24 -d 192.168.33.232 -p tcp --sport 1024:65535 --dport 5223 --syn -m state --state NEW -j ULOG --ulog-prefix "F330a:ACL #330 (ACCEPT)" -m comment --comment "IPv4 rule #330: rule 3"
+-A ETH0-ETH1 -s 192.168.32.0/24 -d 192.168.33.232 -p tcp --sport 1024:65535 --dport 5223 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #330: rule 4"
+
+# IPv4 rule #390
+# --------------
+-A ETH0-ETH1 -s 0.0.0.0/0 -d 192.168.33.232 -p tcp --sport 1024:65535 --dport 5222 --syn -m state --state NEW -j ULOG --ulog-prefix "F390a:ACL #390 (ACCEPT)" -m comment --comment "IPv4 rule #390: rule 1"
+-A ETH0-ETH1 -s 0.0.0.0/0 -d 192.168.33.232 -p tcp --sport 1024:65535 --dport 5222 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #390: rule 2"
+-A ETH0-ETH1 -s 0.0.0.0/0 -d 192.168.33.232 -p tcp --sport 1024:65535 --dport 5223 --syn -m state --state NEW -j ULOG --ulog-prefix "F390a:ACL #390 (ACCEPT)" -m comment --comment "IPv4 rule #390: rule 3"
+-A ETH0-ETH1 -s 0.0.0.0/0 -d 192.168.33.232 -p tcp --sport 1024:65535 --dport 5223 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #390: rule 4"
+
+# IPv4 rule #340
+# --------------
+-A ETH0-ETH1 -s 192.168.35.37 -d 192.168.33.228 -p tcp --sport 1024:65535 --dport 3306 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #340: rule 1"
+
+# IPv4 rule #350
+# --------------
+-A ETH0-ETH1 -s 192.168.32.0/24 -d 192.168.33.228 -p tcp --sport 1024:65535 --dport 5432 --syn -m state --state NEW -j ULOG --ulog-prefix "F350a:ACL #350 (ACCEPT)" -m comment --comment "IPv4 rule #350: rule 1"
+-A ETH0-ETH1 -s 192.168.32.0/24 -d 192.168.33.228 -p tcp --sport 1024:65535 --dport 5432 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #350: rule 2"
+
+# IPv4 rule #360
+# --------------
+-A ETH0-ETH1 -s 192.168.35.133 -d 192.168.33.228 -p tcp --sport 1024:65535 --dport 5432 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #360: rule 1"
+
+# IPv4 rule #370
+# --------------
+-A ETH0-ETH1 -s 192.168.33.0/25 -d 192.168.33.222 -p tcp --sport 1024:65535 --dport 80 --syn -m state --state NEW -j ULOG --ulog-prefix "F370a:ACL #370 (ACCEPT)" -m comment --comment "IPv4 rule #370: rule 1"
+-A ETH0-ETH1 -s 192.168.33.0/25 -d 192.168.33.222 -p tcp --sport 1024:65535 --dport 80 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #370: rule 2"
+-A ETH0-ETH1 -s 192.168.33.0/25 -d 192.168.33.222 -p tcp --sport 1024:65535 --dport 443 --syn -m state --state NEW -j ULOG --ulog-prefix "F370a:ACL #370 (ACCEPT)" -m comment --comment "IPv4 rule #370: rule 3"
+-A ETH0-ETH1 -s 192.168.33.0/25 -d 192.168.33.222 -p tcp --sport 1024:65535 --dport 443 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #370: rule 4"
+-A ETH0-ETH1 -s 192.168.32.0/24 -d 192.168.33.222 -p tcp --sport 1024:65535 --dport 80 --syn -m state --state NEW -j ULOG --ulog-prefix "F370a:ACL #370 (ACCEPT)" -m comment --comment "IPv4 rule #370: rule 5"
+-A ETH0-ETH1 -s 192.168.32.0/24 -d 192.168.33.222 -p tcp --sport 1024:65535 --dport 80 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #370: rule 6"
+-A ETH0-ETH1 -s 192.168.32.0/24 -d 192.168.33.222 -p tcp --sport 1024:65535 --dport 443 --syn -m state --state NEW -j ULOG --ulog-prefix "F370a:ACL #370 (ACCEPT)" -m comment --comment "IPv4 rule #370: rule 7"
+-A ETH0-ETH1 -s 192.168.32.0/24 -d 192.168.33.222 -p tcp --sport 1024:65535 --dport 443 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #370: rule 8"
+-A ETH0-ETH1 -s 192.168.35.0/24 -d 192.168.33.222 -p tcp --sport 1024:65535 --dport 80 --syn -m state --state NEW -j ULOG --ulog-prefix "F370a:ACL #370 (ACCEPT)" -m comment --comment "IPv4 rule #370: rule 9"
+-A ETH0-ETH1 -s 192.168.35.0/24 -d 192.168.33.222 -p tcp --sport 1024:65535 --dport 80 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #370: rule 10"
+-A ETH0-ETH1 -s 192.168.35.0/24 -d 192.168.33.222 -p tcp --sport 1024:65535 --dport 443 --syn -m state --state NEW -j ULOG --ulog-prefix "F370a:ACL #370 (ACCEPT)" -m comment --comment "IPv4 rule #370: rule 11"
+-A ETH0-ETH1 -s 192.168.35.0/24 -d 192.168.33.222 -p tcp --sport 1024:65535 --dport 443 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #370: rule 12"
+
+# IPv4 rule #540
+# --------------
+-A ETH0-ETH1 -s 10.0.0.1 -d 192.168.33.128/25 -p tcp --sport 1024:65535 --dport 22 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #540: rule 1"
+
+# IPv4 rule #590
+# --------------
+-A ETH0-ETH1 -s 192.168.32.0/24 -d 192.168.33.199 -p tcp --sport 1024:65535 --dport 5154 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #590: rule 1"
+
+# IPv4 rule #640
+# --------------
+-A ETH0-ETH1 -s 10.8.0.0/24 -d 192.168.33.128/25 -p tcp --sport 1024:65535 --dport 8443 --syn -m state --state NEW -j ULOG --ulog-prefix "F640a:ACL #640 (ACCEPT)" -m comment --comment "IPv4 rule #640: rule 1"
+-A ETH0-ETH1 -s 10.8.0.0/24 -d 192.168.33.128/25 -p tcp --sport 1024:65535 --dport 8443 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #640: rule 2"
+-A ETH0-ETH1 -s 10.8.0.0/24 -d 192.168.33.128/25 -p udp --sport 1024:65535 --dport 8080 -m state --state NEW -j ULOG --ulog-prefix "F640a:ACL #640 (ACCEPT)" -m comment --comment "IPv4 rule #640: rule 3"
+-A ETH0-ETH1 -s 10.8.0.0/24 -d 192.168.33.128/25 -p udp --sport 1024:65535 --dport 8080 -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #640: rule 4"
+
+# IPv4 rule #660
+# --------------
+-A ETH0-ETH1 -s 192.168.32.0/24 -d 192.168.33.128/25 -p tcp --sport 1024:65535 --dport 8443 --syn -m state --state NEW -j ULOG --ulog-prefix "F660a:Access test EW4" -m comment --comment "IPv4 rule #660: rule 1"
+-A ETH0-ETH1 -s 192.168.32.0/24 -d 192.168.33.128/25 -p tcp --sport 1024:65535 --dport 8443 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #660: rule 2"
+-A ETH0-ETH1 -s 192.168.32.0/24 -d 192.168.33.128/25 -p udp --sport 1024:65535 --dport 8080 -m state --state NEW -j ULOG --ulog-prefix "F660a:Access test EW4" -m comment --comment "IPv4 rule #660: rule 3"
+-A ETH0-ETH1 -s 192.168.32.0/24 -d 192.168.33.128/25 -p udp --sport 1024:65535 --dport 8080 -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #660: rule 4"
+
+# IPv4 rule #680
+# --------------
+-A ETH0-ETH1 -s 192.168.33.2 -d 192.168.33.146 -p tcp --sport 1024:65535 --dport 8000 --syn -m state --state NEW -j ULOG --ulog-prefix "F680a:ACL #680 (ACCEPT)" -m comment --comment "IPv4 rule #680: rule 1"
+-A ETH0-ETH1 -s 192.168.33.2 -d 192.168.33.146 -p tcp --sport 1024:65535 --dport 8000 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #680: rule 2"
+
+# IPv4 rule #690
+# --------------
+-A ETH0-ETH1 -s 192.168.33.10 -d 192.168.33.228 -p tcp --sport 1024:65535 --dport 3307 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #690: rule 1"
+
+# IPv4 rule #820
+# --------------
+-A ETH0-ETH1 -s 88.164.127.124 -d 192.168.33.170 -p tcp --sport 1024:65535 --dport 8443 --syn -m state --state NEW -j ULOG --ulog-prefix "F820a:Tests EMF" -m comment --comment "IPv4 rule #820: rule 1"
+-A ETH0-ETH1 -s 88.164.127.124 -d 192.168.33.170 -p tcp --sport 1024:65535 --dport 8443 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #820: rule 2"
+-A ETH0-ETH1 -s 88.164.127.124 -d 192.168.33.170 -p udp --sport 1024:65535 --dport 8844 -m state --state NEW -j ULOG --ulog-prefix "F820a:Tests EMF" -m comment --comment "IPv4 rule #820: rule 3"
+-A ETH0-ETH1 -s 88.164.127.124 -d 192.168.33.170 -p udp --sport 1024:65535 --dport 8844 -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #820: rule 4"
+
+
+# Default decisions
+# -----------------
+-A ETH0-ETH1 -j ULOG --ulog-prefix "F0d:Default DROP for ETH0-ETH1"
+-A ETH0-ETH1 -j DROP -m comment --comment "Default decision"
+-A ETH0-ETH2 -j ULOG --ulog-prefix "F0d:Default DROP for ETH0-ETH2"
+-A ETH0-ETH2 -j DROP -m comment --comment "Default decision"
+-A ETH1-ETH0 -j ULOG --ulog-prefix "F0d:Default DROP for ETH1-ETH0"
+-A ETH1-ETH0 -j DROP -m comment --comment "Default decision"
+-A ETH1-ETH2 -j ULOG --ulog-prefix "F0d:Default DROP for ETH1-ETH2"
+-A ETH1-ETH2 -j DROP -m comment --comment "Default decision"
+-A ETH1-ETH3 -j ULOG --ulog-prefix "F0d:Default DROP for ETH1-ETH3"
+-A ETH1-ETH3 -j DROP -m comment --comment "Default decision"
+-A ETH2-ETH1 -j ULOG --ulog-prefix "F0d:Default DROP for ETH2-ETH1"
+-A ETH2-ETH1 -j DROP -m comment --comment "Default decision"
+-A ETH3-ETH0 -j ULOG --ulog-prefix "F0d:Default DROP for ETH3-ETH0"
+-A ETH3-ETH0 -j DROP -m comment --comment "Default decision"
+-A TUNP-ETH1 -j ULOG --ulog-prefix "F0d:Default DROP for TUNP-ETH1"
+-A TUNP-ETH1 -j DROP -m comment --comment "Default decision"
+-A INPUT -j ULOG --ulog-prefix "I0d:Default DROP for INPUT"
+-A INPUT -j DROP -m comment --comment "Default decision"
+-A FORWARD -j ULOG --ulog-prefix "F0d:Default DROP for FORWARD"
+-A FORWARD -j DROP -m comment --comment "Default decision"
+-A OUTPUT -j ACCEPT -m comment --comment "Default decision"
+COMMIT
+
+#############
+# nat table #
+#############
+*nat
+:PREROUTING ACCEPT [0:0]
+:POSTROUTING ACCEPT [0:0]
+:OUTPUT ACCEPT [0:0]
+
+# NAT rule #20
+# ------------
+-A PREROUTING -i eth1 -s 192.168.33.128/25 -d 192.168.33.2 -p tcp --sport 1024:65535 --dport 4129 --syn -m state --state NEW -j DNAT --to-destination 10.0.0.254 -m comment --comment "NAT rule #20: rule 1"
+
+# NAT rule #30
+# ------------
+# Wizard generated
+-A POSTROUTING -s 192.168.36.0/24 -o eth0 -d 0.0.0.0/0 -j MASQUERADE -m comment --comment "NAT rule #30: rule 1"
+
+COMMIT
+

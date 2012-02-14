@@ -1,0 +1,1099 @@
+
+################
+# mangle table #
+################
+*mangle
+:PREROUTING ACCEPT [0:0]
+:INPUT ACCEPT [0:0]
+:FORWARD ACCEPT [0:0]
+:OUTPUT ACCEPT [0:0]
+:POSTROUTING ACCEPT [0:0]
+
+-A PREROUTING -j CONNMARK --restore-mark
+-A POSTROUTING -m mark ! --mark 0 -j CONNMARK --save-mark --mask 0x0000ffff
+
+COMMIT
+
+################
+# filter table #
+################
+*filter
+:INPUT DROP [0:0]
+:FORWARD DROP [0:0]
+:OUTPUT ACCEPT [0:0]
+:ETH+-ETH+ - [0:0]
+:ETH+-ETH3.24 - [0:0]
+:ETH+-ETH4 - [0:0]
+:ETH3.24-ETH+ - [0:0]
+:TUNP-ETH+ - [0:0]
+:ETH0-ETH4 - [0:0]
+:ETH3.24-ETH4 - [0:0]
+
+# Default filter rules
+# --------------------
+-A FORWARD -m state --state RELATED,ESTABLISHED -j ACCEPT
+-A INPUT -m state --state RELATED,ESTABLISHED -j ACCEPT
+-A OUTPUT -m state --state RELATED,ESTABLISHED -j ACCEPT
+-A FORWARD -m state --state INVALID -j ULOG --ulog-prefix "Drop INVALID FORWARD"
+-A FORWARD -m state --state INVALID -j DROP
+-A OUTPUT -m state --state INVALID -j ULOG --ulog-prefix "Drop INVALID OUTPUT"
+-A OUTPUT -m state --state INVALID -j DROP
+-A INPUT -i lo -j ACCEPT -m comment --comment "Trust loopback"
+-A OUTPUT -o lo -j ACCEPT -m comment --comment "Trust loopback"
+
+
+# Dispatch FORWARD to the different chains
+# ----------------------------------------
+-A FORWARD -i eth+ -o eth+ -j ETH+-ETH+
+-A FORWARD -i eth+ -o eth3.24 -j ETH+-ETH3.24
+-A FORWARD -i eth+ -o eth4 -j ETH+-ETH4
+-A FORWARD -i eth3.24 -o eth+ -j ETH3.24-ETH+
+-A FORWARD -i tunp -o eth+ -j TUNP-ETH+
+-A FORWARD -i eth0 -o eth4 -j ETH0-ETH4
+-A FORWARD -i eth3.24 -o eth4 -j ETH3.24-ETH4
+
+# IPv4 rule #1280
+# ---------------
+-A TUNP-ETH+ -s 10.131.18.0/24 -p tcp --sport 1:65535 --dport 3389 --syn -m state --state NEW -j NFQUEUE -m comment --comment "IPv4 rule #1280: rule 1"
+
+# IPv4 rule #1360
+# ---------------
+-A ETH3.24-ETH+ -s 10.131.24.0/24 -d 193.50.50.6 -p tcp --sport 1024:65535 --dport 53 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1360: rule 1"
+-A ETH3.24-ETH+ -s 10.131.24.0/24 -d 193.50.50.6 -p udp --sport 1024:65535 --dport 53 -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1360: rule 2"
+-A ETH3.24-ETH+ -s 10.131.24.0/24 -d 10.131.23.50 -p tcp --sport 1024:65535 --dport 53 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1360: rule 3"
+-A ETH3.24-ETH+ -s 10.131.24.0/24 -d 10.131.23.50 -p udp --sport 1024:65535 --dport 53 -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1360: rule 4"
+
+# IPv4 rule #1330
+# ---------------
+-A ETH+-ETH+ -d 193.52.240.114 -p tcp --sport 1:65535 --dport 81 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1330: rule 1"
+
+# IPv4 rule #1390
+# ---------------
+-A ETH+-ETH+ -d 193.52.240.103 -p tcp --sport 1:65535 --dport 3389 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1390: rule 1"
+-A ETH+-ETH+ -d 193.52.240.103 -p tcp --sport 1024:65535 --dport 80 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1390: rule 2"
+-A ETH+-ETH+ -d 193.52.240.103 -p tcp --sport 1024:65535 --dport 443 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1390: rule 3"
+
+# IPv4 rule #1210
+# ---------------
+-A ETH+-ETH+ -d 193.52.240.96/27 -p tcp --sport 1024:65535 --dport 80 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1210: rule 1"
+-A ETH+-ETH+ -d 193.52.240.96/27 -p tcp --sport 1024:65535 --dport 443 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1210: rule 2"
+
+# IPv4 rule #1260
+# ---------------
+-A ETH+-ETH+ -d 193.52.240.32/27 -j ACCEPT -m comment --comment "IPv4 rule #1260: rule 1"
+
+# IPv4 rule #1130
+# ---------------
+# Accès aux Imprimantes
+-A ETH+-ETH+ -d 10.131.20.0/24 -j ACCEPT -m comment --comment "IPv4 rule #1130: rule 1"
+
+# IPv4 rule #1060
+# ---------------
+# Accès aux serveurs DNS/AD et Synchro inter-AD
+-A ETH+-ETH+ -d 10.131.23.50 -p tcp --sport 1:65535 --dport 88 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1060: rule 1"
+-A ETH+-ETH+ -d 10.131.23.50 -p tcp --sport 1:65535 --dport 135 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1060: rule 2"
+-A ETH+-ETH+ -d 10.131.23.50 -p tcp --sport 1:65535 --dport 139 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1060: rule 3"
+-A ETH+-ETH+ -d 10.131.23.50 -p tcp --sport 1:65535 --dport 445 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1060: rule 4"
+-A ETH+-ETH+ -d 10.131.23.50 -p tcp --sport 1:65535 --dport 464 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1060: rule 5"
+-A ETH+-ETH+ -d 10.131.23.50 -p tcp --sport 1:65535 --dport 3268 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1060: rule 6"
+-A ETH+-ETH+ -d 10.131.23.50 -p tcp --sport 1:65535 --dport 49152:65535 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1060: rule 7"
+-A ETH+-ETH+ -d 10.131.23.50 -p tcp --sport 1024:65535 --dport 53 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1060: rule 8"
+-A ETH+-ETH+ -d 10.131.23.50 -p tcp --sport 1024:65535 --dport 389 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1060: rule 9"
+-A ETH+-ETH+ -d 10.131.23.50 -p udp --sport 1:65535 --dport 88 -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1060: rule 10"
+-A ETH+-ETH+ -d 10.131.23.50 -p udp --sport 1:65535 --dport 123 -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1060: rule 11"
+-A ETH+-ETH+ -d 10.131.23.50 -p udp --sport 1:65535 --dport 135 -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1060: rule 12"
+-A ETH+-ETH+ -d 10.131.23.50 -p udp --sport 1:65535 --dport 139 -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1060: rule 13"
+-A ETH+-ETH+ -d 10.131.23.50 -p udp --sport 1:65535 --dport 464 -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1060: rule 14"
+-A ETH+-ETH+ -d 10.131.23.50 -p udp --sport 1:65535 --dport 3268 -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1060: rule 15"
+-A ETH+-ETH+ -d 10.131.23.50 -p udp --sport 1:65535 --dport 49152:65535 -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1060: rule 16"
+-A ETH+-ETH+ -d 10.131.23.50 -p udp --sport 137 --dport 137 -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1060: rule 17"
+-A ETH+-ETH+ -d 10.131.23.50 -p udp --sport 138 --dport 138 -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1060: rule 18"
+-A ETH+-ETH+ -d 10.131.23.50 -p udp --sport 1024:65535 --dport 53 -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1060: rule 19"
+-A ETH+-ETH+ -d 192.168.32.6 -p tcp --sport 1:65535 --dport 88 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1060: rule 20"
+-A ETH+-ETH+ -d 192.168.32.6 -p tcp --sport 1:65535 --dport 135 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1060: rule 21"
+-A ETH+-ETH+ -d 192.168.32.6 -p tcp --sport 1:65535 --dport 139 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1060: rule 22"
+-A ETH+-ETH+ -d 192.168.32.6 -p tcp --sport 1:65535 --dport 445 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1060: rule 23"
+-A ETH+-ETH+ -d 192.168.32.6 -p tcp --sport 1:65535 --dport 464 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1060: rule 24"
+-A ETH+-ETH+ -d 192.168.32.6 -p tcp --sport 1:65535 --dport 3268 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1060: rule 25"
+-A ETH+-ETH+ -d 192.168.32.6 -p tcp --sport 1:65535 --dport 49152:65535 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1060: rule 26"
+-A ETH+-ETH+ -d 192.168.32.6 -p tcp --sport 1024:65535 --dport 53 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1060: rule 27"
+-A ETH+-ETH+ -d 192.168.32.6 -p tcp --sport 1024:65535 --dport 389 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1060: rule 28"
+-A ETH+-ETH+ -d 192.168.32.6 -p udp --sport 1:65535 --dport 88 -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1060: rule 29"
+-A ETH+-ETH+ -d 192.168.32.6 -p udp --sport 1:65535 --dport 123 -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1060: rule 30"
+-A ETH+-ETH+ -d 192.168.32.6 -p udp --sport 1:65535 --dport 135 -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1060: rule 31"
+-A ETH+-ETH+ -d 192.168.32.6 -p udp --sport 1:65535 --dport 139 -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1060: rule 32"
+-A ETH+-ETH+ -d 192.168.32.6 -p udp --sport 1:65535 --dport 464 -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1060: rule 33"
+-A ETH+-ETH+ -d 192.168.32.6 -p udp --sport 1:65535 --dport 3268 -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1060: rule 34"
+-A ETH+-ETH+ -d 192.168.32.6 -p udp --sport 1:65535 --dport 49152:65535 -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1060: rule 35"
+-A ETH+-ETH+ -d 192.168.32.6 -p udp --sport 137 --dport 137 -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1060: rule 36"
+-A ETH+-ETH+ -d 192.168.32.6 -p udp --sport 138 --dport 138 -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1060: rule 37"
+-A ETH+-ETH+ -d 192.168.32.6 -p udp --sport 1024:65535 --dport 53 -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1060: rule 38"
+-A ETH+-ETH+ -d 192.168.36.6 -p tcp --sport 1:65535 --dport 88 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1060: rule 39"
+-A ETH+-ETH+ -d 192.168.36.6 -p tcp --sport 1:65535 --dport 135 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1060: rule 40"
+-A ETH+-ETH+ -d 192.168.36.6 -p tcp --sport 1:65535 --dport 139 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1060: rule 41"
+-A ETH+-ETH+ -d 192.168.36.6 -p tcp --sport 1:65535 --dport 445 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1060: rule 42"
+-A ETH+-ETH+ -d 192.168.36.6 -p tcp --sport 1:65535 --dport 464 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1060: rule 43"
+-A ETH+-ETH+ -d 192.168.36.6 -p tcp --sport 1:65535 --dport 3268 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1060: rule 44"
+-A ETH+-ETH+ -d 192.168.36.6 -p tcp --sport 1:65535 --dport 49152:65535 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1060: rule 45"
+-A ETH+-ETH+ -d 192.168.36.6 -p tcp --sport 1024:65535 --dport 53 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1060: rule 46"
+-A ETH+-ETH+ -d 192.168.36.6 -p tcp --sport 1024:65535 --dport 389 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1060: rule 47"
+-A ETH+-ETH+ -d 192.168.36.6 -p udp --sport 1:65535 --dport 88 -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1060: rule 48"
+-A ETH+-ETH+ -d 192.168.36.6 -p udp --sport 1:65535 --dport 123 -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1060: rule 49"
+-A ETH+-ETH+ -d 192.168.36.6 -p udp --sport 1:65535 --dport 135 -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1060: rule 50"
+-A ETH+-ETH+ -d 192.168.36.6 -p udp --sport 1:65535 --dport 139 -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1060: rule 51"
+-A ETH+-ETH+ -d 192.168.36.6 -p udp --sport 1:65535 --dport 464 -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1060: rule 52"
+-A ETH+-ETH+ -d 192.168.36.6 -p udp --sport 1:65535 --dport 3268 -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1060: rule 53"
+-A ETH+-ETH+ -d 192.168.36.6 -p udp --sport 1:65535 --dport 49152:65535 -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1060: rule 54"
+-A ETH+-ETH+ -d 192.168.36.6 -p udp --sport 137 --dport 137 -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1060: rule 55"
+-A ETH+-ETH+ -d 192.168.36.6 -p udp --sport 138 --dport 138 -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1060: rule 56"
+-A ETH+-ETH+ -d 192.168.36.6 -p udp --sport 1024:65535 --dport 53 -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1060: rule 57"
+
+# IPv4 rule #1090
+# ---------------
+-A ETH+-ETH+ -d 10.131.23.71 -p tcp --sport 1:65535 --dport 8530 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1090: rule 1"
+
+# IPv4 rule #1100
+# ---------------
+-A ETH+-ETH+ -d 10.131.23.17 -p tcp --sport 1024:65535 --dport 80 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1100: rule 1"
+
+# IPv4 rule #1110
+# ---------------
+-A ETH+-ETH+ -d 10.131.23.36 -p udp --sport 1024:65535 --dport 161 -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1110: rule 1"
+
+# IPv4 rule #1120
+# ---------------
+-A ETH+-ETH+ -d 10.131.23.36 -p tcp --sport 1:65535 --dport 2967 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1120: rule 1"
+-A ETH+-ETH+ -d 10.131.23.36 -p tcp --sport 1024:65535 --dport 80 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1120: rule 2"
+-A ETH+-ETH+ -d 10.131.23.36 -p udp --sport 1:65535 --dport 2967 -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1120: rule 3"
+
+# IPv4 rule #1160
+# ---------------
+-A ETH+-ETH+ -s 10.131.17.0/24 -d 10.131.23.20 -p tcp --sport 1:65535 --dport 81 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1160: rule 1"
+-A ETH+-ETH+ -s 10.131.17.0/24 -d 10.131.23.20 -p tcp --sport 1024:65535 --dport 80 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1160: rule 2"
+-A ETH+-ETH+ -s 10.131.12.0/24 -d 10.131.23.20 -p tcp --sport 1:65535 --dport 81 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1160: rule 3"
+-A ETH+-ETH+ -s 10.131.12.0/24 -d 10.131.23.20 -p tcp --sport 1024:65535 --dport 80 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1160: rule 4"
+-A ETH+-ETH+ -s 10.131.16.0/24 -d 10.131.23.20 -p tcp --sport 1:65535 --dport 81 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1160: rule 5"
+-A ETH+-ETH+ -s 10.131.16.0/24 -d 10.131.23.20 -p tcp --sport 1024:65535 --dport 80 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1160: rule 6"
+-A ETH+-ETH+ -s 10.131.14.0/24 -d 10.131.23.20 -p tcp --sport 1:65535 --dport 81 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1160: rule 7"
+-A ETH+-ETH+ -s 10.131.14.0/24 -d 10.131.23.20 -p tcp --sport 1024:65535 --dport 80 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1160: rule 8"
+-A ETH+-ETH+ -s 10.131.15.0/24 -d 10.131.23.20 -p tcp --sport 1:65535 --dport 81 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1160: rule 9"
+-A ETH+-ETH+ -s 10.131.15.0/24 -d 10.131.23.20 -p tcp --sport 1024:65535 --dport 80 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1160: rule 10"
+-A ETH+-ETH+ -s 10.131.13.0/24 -d 10.131.23.20 -p tcp --sport 1:65535 --dport 81 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1160: rule 11"
+-A ETH+-ETH+ -s 10.131.13.0/24 -d 10.131.23.20 -p tcp --sport 1024:65535 --dport 80 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1160: rule 12"
+-A ETH+-ETH+ -s 10.131.19.0/24 -d 10.131.23.20 -p tcp --sport 1:65535 --dport 81 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1160: rule 13"
+-A ETH+-ETH+ -s 10.131.19.0/24 -d 10.131.23.20 -p tcp --sport 1024:65535 --dport 80 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1160: rule 14"
+
+# IPv4 rule #1200
+# ---------------
+-A ETH+-ETH+ -s 10.131.17.0/24 -d 10.131.23.48 -p tcp --sport 1:65535 --dport 23 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1200: rule 1"
+-A ETH+-ETH+ -s 10.131.17.0/24 -d 10.131.23.48 -p tcp --sport 1:65535 --dport 443 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1200: rule 2"
+-A ETH+-ETH+ -s 10.131.17.0/24 -d 10.131.23.48 -p tcp --sport 1:65535 --dport 1040:1060 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1200: rule 3"
+-A ETH+-ETH+ -s 10.131.17.0/24 -d 10.131.23.48 -p tcp --sport 1:65535 --dport 1100 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1200: rule 4"
+-A ETH+-ETH+ -s 10.131.17.0/24 -d 10.131.23.48 -p tcp --sport 1:65535 --dport 1521 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1200: rule 5"
+-A ETH+-ETH+ -s 10.131.17.0/24 -d 10.131.23.48 -p tcp --sport 1:65535 --dport 1534 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1200: rule 6"
+-A ETH+-ETH+ -s 10.131.17.0/24 -d 10.131.23.48 -p tcp --sport 1:65535 --dport 3099 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1200: rule 7"
+-A ETH+-ETH+ -s 10.131.17.0/24 -d 10.131.23.48 -p tcp --sport 1:65535 --dport 3200 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1200: rule 8"
+-A ETH+-ETH+ -s 10.131.17.0/24 -d 10.131.23.48 -p tcp --sport 1:65535 --dport 3389 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1200: rule 9"
+-A ETH+-ETH+ -s 10.131.17.0/24 -d 10.131.23.48 -p tcp --sport 1:65535 --dport 5402 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1200: rule 10"
+-A ETH+-ETH+ -s 10.131.17.0/24 -d 10.131.23.48 -p tcp --sport 1024:65535 --dport 22 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1200: rule 11"
+-A ETH+-ETH+ -s 10.131.23.48 -d 10.131.23.48 -p tcp --sport 1:65535 --dport 23 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1200: rule 12"
+-A ETH+-ETH+ -s 10.131.23.48 -d 10.131.23.48 -p tcp --sport 1:65535 --dport 443 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1200: rule 13"
+-A ETH+-ETH+ -s 10.131.23.48 -d 10.131.23.48 -p tcp --sport 1:65535 --dport 1040:1060 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1200: rule 14"
+-A ETH+-ETH+ -s 10.131.23.48 -d 10.131.23.48 -p tcp --sport 1:65535 --dport 1100 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1200: rule 15"
+-A ETH+-ETH+ -s 10.131.23.48 -d 10.131.23.48 -p tcp --sport 1:65535 --dport 1521 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1200: rule 16"
+-A ETH+-ETH+ -s 10.131.23.48 -d 10.131.23.48 -p tcp --sport 1:65535 --dport 1534 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1200: rule 17"
+-A ETH+-ETH+ -s 10.131.23.48 -d 10.131.23.48 -p tcp --sport 1:65535 --dport 3099 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1200: rule 18"
+-A ETH+-ETH+ -s 10.131.23.48 -d 10.131.23.48 -p tcp --sport 1:65535 --dport 3200 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1200: rule 19"
+-A ETH+-ETH+ -s 10.131.23.48 -d 10.131.23.48 -p tcp --sport 1:65535 --dport 3389 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1200: rule 20"
+-A ETH+-ETH+ -s 10.131.23.48 -d 10.131.23.48 -p tcp --sport 1:65535 --dport 5402 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1200: rule 21"
+-A ETH+-ETH+ -s 10.131.23.48 -d 10.131.23.48 -p tcp --sport 1024:65535 --dport 22 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1200: rule 22"
+-A ETH+-ETH+ -s 10.131.12.0/24 -d 10.131.23.48 -p tcp --sport 1:65535 --dport 23 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1200: rule 23"
+-A ETH+-ETH+ -s 10.131.12.0/24 -d 10.131.23.48 -p tcp --sport 1:65535 --dport 443 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1200: rule 24"
+-A ETH+-ETH+ -s 10.131.12.0/24 -d 10.131.23.48 -p tcp --sport 1:65535 --dport 1040:1060 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1200: rule 25"
+-A ETH+-ETH+ -s 10.131.12.0/24 -d 10.131.23.48 -p tcp --sport 1:65535 --dport 1100 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1200: rule 26"
+-A ETH+-ETH+ -s 10.131.12.0/24 -d 10.131.23.48 -p tcp --sport 1:65535 --dport 1521 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1200: rule 27"
+-A ETH+-ETH+ -s 10.131.12.0/24 -d 10.131.23.48 -p tcp --sport 1:65535 --dport 1534 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1200: rule 28"
+-A ETH+-ETH+ -s 10.131.12.0/24 -d 10.131.23.48 -p tcp --sport 1:65535 --dport 3099 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1200: rule 29"
+-A ETH+-ETH+ -s 10.131.12.0/24 -d 10.131.23.48 -p tcp --sport 1:65535 --dport 3200 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1200: rule 30"
+-A ETH+-ETH+ -s 10.131.12.0/24 -d 10.131.23.48 -p tcp --sport 1:65535 --dport 3389 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1200: rule 31"
+-A ETH+-ETH+ -s 10.131.12.0/24 -d 10.131.23.48 -p tcp --sport 1:65535 --dport 5402 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1200: rule 32"
+-A ETH+-ETH+ -s 10.131.12.0/24 -d 10.131.23.48 -p tcp --sport 1024:65535 --dport 22 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1200: rule 33"
+-A ETH+-ETH+ -s 10.131.16.0/24 -d 10.131.23.48 -p tcp --sport 1:65535 --dport 23 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1200: rule 34"
+-A ETH+-ETH+ -s 10.131.16.0/24 -d 10.131.23.48 -p tcp --sport 1:65535 --dport 443 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1200: rule 35"
+-A ETH+-ETH+ -s 10.131.16.0/24 -d 10.131.23.48 -p tcp --sport 1:65535 --dport 1040:1060 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1200: rule 36"
+-A ETH+-ETH+ -s 10.131.16.0/24 -d 10.131.23.48 -p tcp --sport 1:65535 --dport 1100 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1200: rule 37"
+-A ETH+-ETH+ -s 10.131.16.0/24 -d 10.131.23.48 -p tcp --sport 1:65535 --dport 1521 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1200: rule 38"
+-A ETH+-ETH+ -s 10.131.16.0/24 -d 10.131.23.48 -p tcp --sport 1:65535 --dport 1534 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1200: rule 39"
+-A ETH+-ETH+ -s 10.131.16.0/24 -d 10.131.23.48 -p tcp --sport 1:65535 --dport 3099 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1200: rule 40"
+-A ETH+-ETH+ -s 10.131.16.0/24 -d 10.131.23.48 -p tcp --sport 1:65535 --dport 3200 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1200: rule 41"
+-A ETH+-ETH+ -s 10.131.16.0/24 -d 10.131.23.48 -p tcp --sport 1:65535 --dport 3389 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1200: rule 42"
+-A ETH+-ETH+ -s 10.131.16.0/24 -d 10.131.23.48 -p tcp --sport 1:65535 --dport 5402 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1200: rule 43"
+-A ETH+-ETH+ -s 10.131.16.0/24 -d 10.131.23.48 -p tcp --sport 1024:65535 --dport 22 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1200: rule 44"
+-A ETH+-ETH+ -s 10.131.14.0/24 -d 10.131.23.48 -p tcp --sport 1:65535 --dport 23 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1200: rule 45"
+-A ETH+-ETH+ -s 10.131.14.0/24 -d 10.131.23.48 -p tcp --sport 1:65535 --dport 443 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1200: rule 46"
+-A ETH+-ETH+ -s 10.131.14.0/24 -d 10.131.23.48 -p tcp --sport 1:65535 --dport 1040:1060 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1200: rule 47"
+-A ETH+-ETH+ -s 10.131.14.0/24 -d 10.131.23.48 -p tcp --sport 1:65535 --dport 1100 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1200: rule 48"
+-A ETH+-ETH+ -s 10.131.14.0/24 -d 10.131.23.48 -p tcp --sport 1:65535 --dport 1521 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1200: rule 49"
+-A ETH+-ETH+ -s 10.131.14.0/24 -d 10.131.23.48 -p tcp --sport 1:65535 --dport 1534 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1200: rule 50"
+-A ETH+-ETH+ -s 10.131.14.0/24 -d 10.131.23.48 -p tcp --sport 1:65535 --dport 3099 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1200: rule 51"
+-A ETH+-ETH+ -s 10.131.14.0/24 -d 10.131.23.48 -p tcp --sport 1:65535 --dport 3200 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1200: rule 52"
+-A ETH+-ETH+ -s 10.131.14.0/24 -d 10.131.23.48 -p tcp --sport 1:65535 --dport 3389 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1200: rule 53"
+-A ETH+-ETH+ -s 10.131.14.0/24 -d 10.131.23.48 -p tcp --sport 1:65535 --dport 5402 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1200: rule 54"
+-A ETH+-ETH+ -s 10.131.14.0/24 -d 10.131.23.48 -p tcp --sport 1024:65535 --dport 22 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1200: rule 55"
+-A ETH+-ETH+ -s 10.131.15.0/24 -d 10.131.23.48 -p tcp --sport 1:65535 --dport 23 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1200: rule 56"
+-A ETH+-ETH+ -s 10.131.15.0/24 -d 10.131.23.48 -p tcp --sport 1:65535 --dport 443 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1200: rule 57"
+-A ETH+-ETH+ -s 10.131.15.0/24 -d 10.131.23.48 -p tcp --sport 1:65535 --dport 1040:1060 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1200: rule 58"
+-A ETH+-ETH+ -s 10.131.15.0/24 -d 10.131.23.48 -p tcp --sport 1:65535 --dport 1100 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1200: rule 59"
+-A ETH+-ETH+ -s 10.131.15.0/24 -d 10.131.23.48 -p tcp --sport 1:65535 --dport 1521 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1200: rule 60"
+-A ETH+-ETH+ -s 10.131.15.0/24 -d 10.131.23.48 -p tcp --sport 1:65535 --dport 1534 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1200: rule 61"
+-A ETH+-ETH+ -s 10.131.15.0/24 -d 10.131.23.48 -p tcp --sport 1:65535 --dport 3099 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1200: rule 62"
+-A ETH+-ETH+ -s 10.131.15.0/24 -d 10.131.23.48 -p tcp --sport 1:65535 --dport 3200 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1200: rule 63"
+-A ETH+-ETH+ -s 10.131.15.0/24 -d 10.131.23.48 -p tcp --sport 1:65535 --dport 3389 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1200: rule 64"
+-A ETH+-ETH+ -s 10.131.15.0/24 -d 10.131.23.48 -p tcp --sport 1:65535 --dport 5402 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1200: rule 65"
+-A ETH+-ETH+ -s 10.131.15.0/24 -d 10.131.23.48 -p tcp --sport 1024:65535 --dport 22 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1200: rule 66"
+-A ETH+-ETH+ -s 10.131.13.0/24 -d 10.131.23.48 -p tcp --sport 1:65535 --dport 23 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1200: rule 67"
+-A ETH+-ETH+ -s 10.131.13.0/24 -d 10.131.23.48 -p tcp --sport 1:65535 --dport 443 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1200: rule 68"
+-A ETH+-ETH+ -s 10.131.13.0/24 -d 10.131.23.48 -p tcp --sport 1:65535 --dport 1040:1060 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1200: rule 69"
+-A ETH+-ETH+ -s 10.131.13.0/24 -d 10.131.23.48 -p tcp --sport 1:65535 --dport 1100 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1200: rule 70"
+-A ETH+-ETH+ -s 10.131.13.0/24 -d 10.131.23.48 -p tcp --sport 1:65535 --dport 1521 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1200: rule 71"
+-A ETH+-ETH+ -s 10.131.13.0/24 -d 10.131.23.48 -p tcp --sport 1:65535 --dport 1534 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1200: rule 72"
+-A ETH+-ETH+ -s 10.131.13.0/24 -d 10.131.23.48 -p tcp --sport 1:65535 --dport 3099 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1200: rule 73"
+-A ETH+-ETH+ -s 10.131.13.0/24 -d 10.131.23.48 -p tcp --sport 1:65535 --dport 3200 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1200: rule 74"
+-A ETH+-ETH+ -s 10.131.13.0/24 -d 10.131.23.48 -p tcp --sport 1:65535 --dport 3389 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1200: rule 75"
+-A ETH+-ETH+ -s 10.131.13.0/24 -d 10.131.23.48 -p tcp --sport 1:65535 --dport 5402 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1200: rule 76"
+-A ETH+-ETH+ -s 10.131.13.0/24 -d 10.131.23.48 -p tcp --sport 1024:65535 --dport 22 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1200: rule 77"
+-A ETH+-ETH+ -s 10.131.19.0/24 -d 10.131.23.48 -p tcp --sport 1:65535 --dport 23 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1200: rule 78"
+-A ETH+-ETH+ -s 10.131.19.0/24 -d 10.131.23.48 -p tcp --sport 1:65535 --dport 443 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1200: rule 79"
+-A ETH+-ETH+ -s 10.131.19.0/24 -d 10.131.23.48 -p tcp --sport 1:65535 --dport 1040:1060 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1200: rule 80"
+-A ETH+-ETH+ -s 10.131.19.0/24 -d 10.131.23.48 -p tcp --sport 1:65535 --dport 1100 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1200: rule 81"
+-A ETH+-ETH+ -s 10.131.19.0/24 -d 10.131.23.48 -p tcp --sport 1:65535 --dport 1521 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1200: rule 82"
+-A ETH+-ETH+ -s 10.131.19.0/24 -d 10.131.23.48 -p tcp --sport 1:65535 --dport 1534 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1200: rule 83"
+-A ETH+-ETH+ -s 10.131.19.0/24 -d 10.131.23.48 -p tcp --sport 1:65535 --dport 3099 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1200: rule 84"
+-A ETH+-ETH+ -s 10.131.19.0/24 -d 10.131.23.48 -p tcp --sport 1:65535 --dport 3200 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1200: rule 85"
+-A ETH+-ETH+ -s 10.131.19.0/24 -d 10.131.23.48 -p tcp --sport 1:65535 --dport 3389 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1200: rule 86"
+-A ETH+-ETH+ -s 10.131.19.0/24 -d 10.131.23.48 -p tcp --sport 1:65535 --dport 5402 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1200: rule 87"
+-A ETH+-ETH+ -s 10.131.19.0/24 -d 10.131.23.48 -p tcp --sport 1024:65535 --dport 22 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1200: rule 88"
+
+# IPv4 rule #1310
+# ---------------
+-A ETH+-ETH+ -s 10.131.15.0/24 -d 193.52.240.96/27 -p tcp --sport 1:65535 --dport 139 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1310: rule 1"
+-A ETH+-ETH+ -s 10.131.15.0/24 -d 193.52.240.96/27 -p tcp --sport 1:65535 --dport 445 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1310: rule 2"
+-A ETH+-ETH+ -s 10.131.15.0/24 -d 193.52.240.96/27 -p udp --sport 1:65535 --dport 139 -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1310: rule 3"
+-A ETH+-ETH+ -s 10.131.15.0/24 -d 193.52.240.96/27 -p udp --sport 137 --dport 137 -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1310: rule 4"
+
+# IPv4 rule #1300
+# ---------------
+-A ETH+-ETH+ -s 10.131.15.51 -d 193.52.240.114 -p tcp --sport 1:65535 --dport 139 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1300: rule 1"
+-A ETH+-ETH+ -s 10.131.15.51 -d 193.52.240.114 -p tcp --sport 1:65535 --dport 445 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1300: rule 2"
+-A ETH+-ETH+ -s 10.131.15.51 -d 193.52.240.114 -p udp --sport 1:65535 --dport 139 -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1300: rule 3"
+-A ETH+-ETH+ -s 10.131.15.51 -d 193.52.240.114 -p udp --sport 137 --dport 137 -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1300: rule 4"
+-A ETH+-ETH+ -s 10.131.15.51 -d 10.131.13.234 -p tcp --sport 1:65535 --dport 139 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1300: rule 5"
+-A ETH+-ETH+ -s 10.131.15.51 -d 10.131.13.234 -p tcp --sport 1:65535 --dport 445 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1300: rule 6"
+-A ETH+-ETH+ -s 10.131.15.51 -d 10.131.13.234 -p udp --sport 1:65535 --dport 139 -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1300: rule 7"
+-A ETH+-ETH+ -s 10.131.15.51 -d 10.131.13.234 -p udp --sport 137 --dport 137 -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1300: rule 8"
+-A ETH+-ETH+ -s 10.131.13.0/24 -d 193.52.240.114 -p tcp --sport 1:65535 --dport 139 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1300: rule 9"
+-A ETH+-ETH+ -s 10.131.13.0/24 -d 193.52.240.114 -p tcp --sport 1:65535 --dport 445 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1300: rule 10"
+-A ETH+-ETH+ -s 10.131.13.0/24 -d 193.52.240.114 -p udp --sport 1:65535 --dport 139 -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1300: rule 11"
+-A ETH+-ETH+ -s 10.131.13.0/24 -d 193.52.240.114 -p udp --sport 137 --dport 137 -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1300: rule 12"
+-A ETH+-ETH+ -s 10.131.13.0/24 -d 10.131.13.234 -p tcp --sport 1:65535 --dport 139 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1300: rule 13"
+-A ETH+-ETH+ -s 10.131.13.0/24 -d 10.131.13.234 -p tcp --sport 1:65535 --dport 445 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1300: rule 14"
+-A ETH+-ETH+ -s 10.131.13.0/24 -d 10.131.13.234 -p udp --sport 1:65535 --dport 139 -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1300: rule 15"
+-A ETH+-ETH+ -s 10.131.13.0/24 -d 10.131.13.234 -p udp --sport 137 --dport 137 -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1300: rule 16"
+
+# IPv4 rule #1320
+# ---------------
+-A ETH+-ETH+ -d 10.131.23.32 -p tcp --sport 1:65535 --dport 139 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1320: rule 1"
+-A ETH+-ETH+ -d 10.131.23.32 -p tcp --sport 1:65535 --dport 445 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1320: rule 2"
+-A ETH+-ETH+ -d 10.131.23.32 -p udp --sport 1:65535 --dport 139 -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1320: rule 3"
+-A ETH+-ETH+ -d 10.131.23.32 -p udp --sport 137 --dport 137 -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1320: rule 4"
+
+# IPv4 rule #1340
+# ---------------
+-A ETH+-ETH+ -s 10.131.15.52 -d 193.52.240.96/27 -p tcp --sport 1:65535 --dport 139 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1340: rule 1"
+-A ETH+-ETH+ -s 10.131.15.52 -d 193.52.240.96/27 -p tcp --sport 1:65535 --dport 445 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1340: rule 2"
+-A ETH+-ETH+ -s 10.131.15.52 -d 193.52.240.96/27 -p tcp --sport 1:65535 --dport 3389 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1340: rule 3"
+-A ETH+-ETH+ -s 10.131.15.52 -d 193.52.240.96/27 -p tcp --sport 1024:65535 --dport 5900 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1340: rule 4"
+-A ETH+-ETH+ -s 10.131.15.52 -d 193.52.240.96/27 -p udp --sport 1:65535 --dport 139 -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1340: rule 5"
+-A ETH+-ETH+ -s 10.131.15.52 -d 193.52.240.96/27 -p udp --sport 137 --dport 137 -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1340: rule 6"
+
+# IPv4 rule #1370
+# ---------------
+-A ETH3.24-ETH4 -s 10.131.24.0/24 -d 0.0.0.0/0 -p tcp --sport 1024:65535 --dport 80 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1370: rule 1"
+
+# IPv4 rule #1040
+# ---------------
+-A ETH+-ETH+ -p icmp -j ACCEPT -m comment --comment "IPv4 rule #1040: rule 1"
+
+# IPv4 rule #1240
+# ---------------
+-A ETH+-ETH+ -s 10.131.15.7 -j ACCEPT -m comment --comment "IPv4 rule #1240: rule 1"
+-A ETH+-ETH+ -s 10.131.15.50 -j ACCEPT -m comment --comment "IPv4 rule #1240: rule 2"
+-A ETH+-ETH+ -s 10.131.15.10 -j ACCEPT -m comment --comment "IPv4 rule #1240: rule 3"
+-A ETH+-ETH+ -s 10.131.15.8 -j ACCEPT -m comment --comment "IPv4 rule #1240: rule 4"
+-A ETH+-ETH+ -s 10.131.15.11 -j ACCEPT -m comment --comment "IPv4 rule #1240: rule 5"
+-A ETH+-ETH+ -s 10.131.15.6 -j ACCEPT -m comment --comment "IPv4 rule #1240: rule 6"
+
+# IPv4 rule #1180
+# ---------------
+-A ETH+-ETH+ -d 193.50.50.6 -p tcp --sport 1024:65535 --dport 53 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1180: rule 1"
+-A ETH+-ETH+ -d 193.50.50.6 -p udp --sport 1024:65535 --dport 53 -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1180: rule 2"
+-A ETH+-ETH+ -d 10.131.23.50 -p tcp --sport 1024:65535 --dport 53 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1180: rule 3"
+-A ETH+-ETH+ -d 10.131.23.50 -p udp --sport 1024:65535 --dport 53 -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1180: rule 4"
+
+# IPv4 rule #1250
+# ---------------
+-A ETH+-ETH+ -s 193.52.240.32/27 -j ACCEPT -m comment --comment "IPv4 rule #1250: rule 1"
+
+# IPv4 rule #1220
+# ---------------
+-A ETH0-ETH4 -s 192.168.36.0/24 -d 0.0.0.0/0 -p tcp --sport 1024:65535 --dport 80 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1220: rule 1"
+-A ETH0-ETH4 -s 192.168.36.0/24 -d 0.0.0.0/0 -p tcp --sport 1024:65535 --dport 443 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1220: rule 2"
+-A ETH0-ETH4 -s 192.168.32.0/22 -d 0.0.0.0/0 -p tcp --sport 1024:65535 --dport 80 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1220: rule 3"
+-A ETH0-ETH4 -s 192.168.32.0/22 -d 0.0.0.0/0 -p tcp --sport 1024:65535 --dport 443 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1220: rule 4"
+
+# IPv4 rule #1230
+# ---------------
+-A ETH0-ETH4 -s 192.168.37.0/24 -d 0.0.0.0/0 -p tcp --sport 1024:65535 --dport 80 --syn -m state --state NEW -j NFQUEUE -m comment --comment "IPv4 rule #1230: rule 1"
+-A ETH0-ETH4 -s 192.168.37.0/24 -d 0.0.0.0/0 -p tcp --sport 1024:65535 --dport 443 --syn -m state --state NEW -j NFQUEUE -m comment --comment "IPv4 rule #1230: rule 2"
+
+# IPv4 rule #1380
+# ---------------
+-A ETH+-ETH3.24 -s 10.131.15.7 -d 10.131.24.0/24 -j ACCEPT -m comment --comment "IPv4 rule #1380: rule 1"
+-A ETH+-ETH3.24 -s 10.131.15.50 -d 10.131.24.0/24 -j ACCEPT -m comment --comment "IPv4 rule #1380: rule 2"
+-A ETH+-ETH3.24 -s 10.131.15.10 -d 10.131.24.0/24 -j ACCEPT -m comment --comment "IPv4 rule #1380: rule 3"
+-A ETH+-ETH3.24 -s 10.131.15.8 -d 10.131.24.0/24 -j ACCEPT -m comment --comment "IPv4 rule #1380: rule 4"
+-A ETH+-ETH3.24 -s 10.131.15.11 -d 10.131.24.0/24 -j ACCEPT -m comment --comment "IPv4 rule #1380: rule 5"
+-A ETH+-ETH3.24 -s 10.131.15.6 -d 10.131.24.0/24 -j ACCEPT -m comment --comment "IPv4 rule #1380: rule 6"
+
+# IPv4 rule #1050
+# ---------------
+-A ETH+-ETH4 -d 0.0.0.0/0 -p udp --sport 1:65535 --dport 123 -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1050: rule 1"
+
+# IPv4 rule #1150
+# ---------------
+-A ETH+-ETH4 -s 10.131.17.0/24 -d 0.0.0.0/0 -p tcp --sport 1024:65535 --dport 80 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1150: rule 1"
+-A ETH+-ETH4 -s 10.131.17.0/24 -d 0.0.0.0/0 -p tcp --sport 1024:65535 --dport 443 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1150: rule 2"
+-A ETH+-ETH4 -s 10.131.12.0/24 -d 0.0.0.0/0 -p tcp --sport 1024:65535 --dport 80 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1150: rule 3"
+-A ETH+-ETH4 -s 10.131.12.0/24 -d 0.0.0.0/0 -p tcp --sport 1024:65535 --dport 443 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1150: rule 4"
+-A ETH+-ETH4 -s 10.131.16.0/24 -d 0.0.0.0/0 -p tcp --sport 1024:65535 --dport 80 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1150: rule 5"
+-A ETH+-ETH4 -s 10.131.16.0/24 -d 0.0.0.0/0 -p tcp --sport 1024:65535 --dport 443 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1150: rule 6"
+-A ETH+-ETH4 -s 10.131.14.0/24 -d 0.0.0.0/0 -p tcp --sport 1024:65535 --dport 80 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1150: rule 7"
+-A ETH+-ETH4 -s 10.131.14.0/24 -d 0.0.0.0/0 -p tcp --sport 1024:65535 --dport 443 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1150: rule 8"
+-A ETH+-ETH4 -s 10.131.15.0/24 -d 0.0.0.0/0 -p tcp --sport 1024:65535 --dport 80 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1150: rule 9"
+-A ETH+-ETH4 -s 10.131.15.0/24 -d 0.0.0.0/0 -p tcp --sport 1024:65535 --dport 443 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1150: rule 10"
+-A ETH+-ETH4 -s 10.131.13.0/24 -d 0.0.0.0/0 -p tcp --sport 1024:65535 --dport 80 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1150: rule 11"
+-A ETH+-ETH4 -s 10.131.13.0/24 -d 0.0.0.0/0 -p tcp --sport 1024:65535 --dport 443 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1150: rule 12"
+-A ETH+-ETH4 -s 10.131.19.0/24 -d 0.0.0.0/0 -p tcp --sport 1024:65535 --dport 80 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1150: rule 13"
+-A ETH+-ETH4 -s 10.131.19.0/24 -d 0.0.0.0/0 -p tcp --sport 1024:65535 --dport 443 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1150: rule 14"
+
+# IPv4 rule #1170
+# ---------------
+-A ETH+-ETH4 -s 10.131.17.0/24 -d 0.0.0.0/0 -p tcp --sport 1:65535 --dport 587 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1170: rule 1"
+-A ETH+-ETH4 -s 10.131.17.0/24 -d 0.0.0.0/0 -p tcp --sport 1:65535 --dport 995 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1170: rule 2"
+-A ETH+-ETH4 -s 10.131.17.0/24 -d 0.0.0.0/0 -p tcp --sport 1024:65535 --dport 25 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1170: rule 3"
+-A ETH+-ETH4 -s 10.131.17.0/24 -d 0.0.0.0/0 -p tcp --sport 1024:65535 --dport 110 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1170: rule 4"
+-A ETH+-ETH4 -s 10.131.17.0/24 -d 0.0.0.0/0 -p tcp --sport 1024:65535 --dport 143 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1170: rule 5"
+-A ETH+-ETH4 -s 10.131.17.0/24 -d 0.0.0.0/0 -p tcp --sport 1024:65535 --dport 993 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1170: rule 6"
+-A ETH+-ETH4 -s 10.131.12.0/24 -d 0.0.0.0/0 -p tcp --sport 1:65535 --dport 587 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1170: rule 7"
+-A ETH+-ETH4 -s 10.131.12.0/24 -d 0.0.0.0/0 -p tcp --sport 1:65535 --dport 995 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1170: rule 8"
+-A ETH+-ETH4 -s 10.131.12.0/24 -d 0.0.0.0/0 -p tcp --sport 1024:65535 --dport 25 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1170: rule 9"
+-A ETH+-ETH4 -s 10.131.12.0/24 -d 0.0.0.0/0 -p tcp --sport 1024:65535 --dport 110 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1170: rule 10"
+-A ETH+-ETH4 -s 10.131.12.0/24 -d 0.0.0.0/0 -p tcp --sport 1024:65535 --dport 143 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1170: rule 11"
+-A ETH+-ETH4 -s 10.131.12.0/24 -d 0.0.0.0/0 -p tcp --sport 1024:65535 --dport 993 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1170: rule 12"
+-A ETH+-ETH4 -s 10.131.16.0/24 -d 0.0.0.0/0 -p tcp --sport 1:65535 --dport 587 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1170: rule 13"
+-A ETH+-ETH4 -s 10.131.16.0/24 -d 0.0.0.0/0 -p tcp --sport 1:65535 --dport 995 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1170: rule 14"
+-A ETH+-ETH4 -s 10.131.16.0/24 -d 0.0.0.0/0 -p tcp --sport 1024:65535 --dport 25 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1170: rule 15"
+-A ETH+-ETH4 -s 10.131.16.0/24 -d 0.0.0.0/0 -p tcp --sport 1024:65535 --dport 110 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1170: rule 16"
+-A ETH+-ETH4 -s 10.131.16.0/24 -d 0.0.0.0/0 -p tcp --sport 1024:65535 --dport 143 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1170: rule 17"
+-A ETH+-ETH4 -s 10.131.16.0/24 -d 0.0.0.0/0 -p tcp --sport 1024:65535 --dport 993 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1170: rule 18"
+-A ETH+-ETH4 -s 10.131.14.0/24 -d 0.0.0.0/0 -p tcp --sport 1:65535 --dport 587 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1170: rule 19"
+-A ETH+-ETH4 -s 10.131.14.0/24 -d 0.0.0.0/0 -p tcp --sport 1:65535 --dport 995 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1170: rule 20"
+-A ETH+-ETH4 -s 10.131.14.0/24 -d 0.0.0.0/0 -p tcp --sport 1024:65535 --dport 25 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1170: rule 21"
+-A ETH+-ETH4 -s 10.131.14.0/24 -d 0.0.0.0/0 -p tcp --sport 1024:65535 --dport 110 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1170: rule 22"
+-A ETH+-ETH4 -s 10.131.14.0/24 -d 0.0.0.0/0 -p tcp --sport 1024:65535 --dport 143 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1170: rule 23"
+-A ETH+-ETH4 -s 10.131.14.0/24 -d 0.0.0.0/0 -p tcp --sport 1024:65535 --dport 993 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1170: rule 24"
+-A ETH+-ETH4 -s 10.131.15.0/24 -d 0.0.0.0/0 -p tcp --sport 1:65535 --dport 587 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1170: rule 25"
+-A ETH+-ETH4 -s 10.131.15.0/24 -d 0.0.0.0/0 -p tcp --sport 1:65535 --dport 995 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1170: rule 26"
+-A ETH+-ETH4 -s 10.131.15.0/24 -d 0.0.0.0/0 -p tcp --sport 1024:65535 --dport 25 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1170: rule 27"
+-A ETH+-ETH4 -s 10.131.15.0/24 -d 0.0.0.0/0 -p tcp --sport 1024:65535 --dport 110 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1170: rule 28"
+-A ETH+-ETH4 -s 10.131.15.0/24 -d 0.0.0.0/0 -p tcp --sport 1024:65535 --dport 143 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1170: rule 29"
+-A ETH+-ETH4 -s 10.131.15.0/24 -d 0.0.0.0/0 -p tcp --sport 1024:65535 --dport 993 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1170: rule 30"
+-A ETH+-ETH4 -s 10.131.13.0/24 -d 0.0.0.0/0 -p tcp --sport 1:65535 --dport 587 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1170: rule 31"
+-A ETH+-ETH4 -s 10.131.13.0/24 -d 0.0.0.0/0 -p tcp --sport 1:65535 --dport 995 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1170: rule 32"
+-A ETH+-ETH4 -s 10.131.13.0/24 -d 0.0.0.0/0 -p tcp --sport 1024:65535 --dport 25 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1170: rule 33"
+-A ETH+-ETH4 -s 10.131.13.0/24 -d 0.0.0.0/0 -p tcp --sport 1024:65535 --dport 110 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1170: rule 34"
+-A ETH+-ETH4 -s 10.131.13.0/24 -d 0.0.0.0/0 -p tcp --sport 1024:65535 --dport 143 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1170: rule 35"
+-A ETH+-ETH4 -s 10.131.13.0/24 -d 0.0.0.0/0 -p tcp --sport 1024:65535 --dport 993 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1170: rule 36"
+-A ETH+-ETH4 -s 10.131.19.0/24 -d 0.0.0.0/0 -p tcp --sport 1:65535 --dport 587 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1170: rule 37"
+-A ETH+-ETH4 -s 10.131.19.0/24 -d 0.0.0.0/0 -p tcp --sport 1:65535 --dport 995 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1170: rule 38"
+-A ETH+-ETH4 -s 10.131.19.0/24 -d 0.0.0.0/0 -p tcp --sport 1024:65535 --dport 25 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1170: rule 39"
+-A ETH+-ETH4 -s 10.131.19.0/24 -d 0.0.0.0/0 -p tcp --sport 1024:65535 --dport 110 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1170: rule 40"
+-A ETH+-ETH4 -s 10.131.19.0/24 -d 0.0.0.0/0 -p tcp --sport 1024:65535 --dport 143 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1170: rule 41"
+-A ETH+-ETH4 -s 10.131.19.0/24 -d 0.0.0.0/0 -p tcp --sport 1024:65535 --dport 993 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1170: rule 42"
+
+# IPv4 rule #1270
+# ---------------
+-A ETH+-ETH4 -s 10.131.40.0/24 -d 0.0.0.0/0 -p tcp --sport 1:65535 --dport 587 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1270: rule 1"
+-A ETH+-ETH4 -s 10.131.40.0/24 -d 0.0.0.0/0 -p tcp --sport 1:65535 --dport 995 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1270: rule 2"
+-A ETH+-ETH4 -s 10.131.40.0/24 -d 0.0.0.0/0 -p tcp --sport 1024:65535 --dport 25 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1270: rule 3"
+-A ETH+-ETH4 -s 10.131.40.0/24 -d 0.0.0.0/0 -p tcp --sport 1024:65535 --dport 110 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1270: rule 4"
+-A ETH+-ETH4 -s 10.131.40.0/24 -d 0.0.0.0/0 -p tcp --sport 1024:65535 --dport 143 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1270: rule 5"
+-A ETH+-ETH4 -s 10.131.40.0/24 -d 0.0.0.0/0 -p tcp --sport 1024:65535 --dport 993 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1270: rule 6"
+-A ETH+-ETH4 -s 193.52.240.32/27 -d 0.0.0.0/0 -p tcp --sport 1:65535 --dport 587 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1270: rule 7"
+-A ETH+-ETH4 -s 193.52.240.32/27 -d 0.0.0.0/0 -p tcp --sport 1:65535 --dport 995 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1270: rule 8"
+-A ETH+-ETH4 -s 193.52.240.32/27 -d 0.0.0.0/0 -p tcp --sport 1024:65535 --dport 25 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1270: rule 9"
+-A ETH+-ETH4 -s 193.52.240.32/27 -d 0.0.0.0/0 -p tcp --sport 1024:65535 --dport 110 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1270: rule 10"
+-A ETH+-ETH4 -s 193.52.240.32/27 -d 0.0.0.0/0 -p tcp --sport 1024:65535 --dport 143 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1270: rule 11"
+-A ETH+-ETH4 -s 193.52.240.32/27 -d 0.0.0.0/0 -p tcp --sport 1024:65535 --dport 993 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1270: rule 12"
+-A ETH+-ETH4 -s 193.52.240.96/27 -d 0.0.0.0/0 -p tcp --sport 1:65535 --dport 587 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1270: rule 13"
+-A ETH+-ETH4 -s 193.52.240.96/27 -d 0.0.0.0/0 -p tcp --sport 1:65535 --dport 995 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1270: rule 14"
+-A ETH+-ETH4 -s 193.52.240.96/27 -d 0.0.0.0/0 -p tcp --sport 1024:65535 --dport 25 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1270: rule 15"
+-A ETH+-ETH4 -s 193.52.240.96/27 -d 0.0.0.0/0 -p tcp --sport 1024:65535 --dport 110 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1270: rule 16"
+-A ETH+-ETH4 -s 193.52.240.96/27 -d 0.0.0.0/0 -p tcp --sport 1024:65535 --dport 143 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1270: rule 17"
+-A ETH+-ETH4 -s 193.52.240.96/27 -d 0.0.0.0/0 -p tcp --sport 1024:65535 --dport 993 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1270: rule 18"
+-A ETH+-ETH4 -s 192.168.168.0/24 -d 0.0.0.0/0 -p tcp --sport 1:65535 --dport 587 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1270: rule 19"
+-A ETH+-ETH4 -s 192.168.168.0/24 -d 0.0.0.0/0 -p tcp --sport 1:65535 --dport 995 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1270: rule 20"
+-A ETH+-ETH4 -s 192.168.168.0/24 -d 0.0.0.0/0 -p tcp --sport 1024:65535 --dport 25 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1270: rule 21"
+-A ETH+-ETH4 -s 192.168.168.0/24 -d 0.0.0.0/0 -p tcp --sport 1024:65535 --dport 110 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1270: rule 22"
+-A ETH+-ETH4 -s 192.168.168.0/24 -d 0.0.0.0/0 -p tcp --sport 1024:65535 --dport 143 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1270: rule 23"
+-A ETH+-ETH4 -s 192.168.168.0/24 -d 0.0.0.0/0 -p tcp --sport 1024:65535 --dport 993 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1270: rule 24"
+-A ETH+-ETH4 -s 10.131.20.0/24 -d 0.0.0.0/0 -p tcp --sport 1:65535 --dport 587 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1270: rule 25"
+-A ETH+-ETH4 -s 10.131.20.0/24 -d 0.0.0.0/0 -p tcp --sport 1:65535 --dport 995 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1270: rule 26"
+-A ETH+-ETH4 -s 10.131.20.0/24 -d 0.0.0.0/0 -p tcp --sport 1024:65535 --dport 25 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1270: rule 27"
+-A ETH+-ETH4 -s 10.131.20.0/24 -d 0.0.0.0/0 -p tcp --sport 1024:65535 --dport 110 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1270: rule 28"
+-A ETH+-ETH4 -s 10.131.20.0/24 -d 0.0.0.0/0 -p tcp --sport 1024:65535 --dport 143 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1270: rule 29"
+-A ETH+-ETH4 -s 10.131.20.0/24 -d 0.0.0.0/0 -p tcp --sport 1024:65535 --dport 993 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1270: rule 30"
+-A ETH+-ETH4 -s 192.168.40.0/30 -d 0.0.0.0/0 -p tcp --sport 1:65535 --dport 587 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1270: rule 31"
+-A ETH+-ETH4 -s 192.168.40.0/30 -d 0.0.0.0/0 -p tcp --sport 1:65535 --dport 995 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1270: rule 32"
+-A ETH+-ETH4 -s 192.168.40.0/30 -d 0.0.0.0/0 -p tcp --sport 1024:65535 --dport 25 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1270: rule 33"
+-A ETH+-ETH4 -s 192.168.40.0/30 -d 0.0.0.0/0 -p tcp --sport 1024:65535 --dport 110 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1270: rule 34"
+-A ETH+-ETH4 -s 192.168.40.0/30 -d 0.0.0.0/0 -p tcp --sport 1024:65535 --dport 143 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1270: rule 35"
+-A ETH+-ETH4 -s 192.168.40.0/30 -d 0.0.0.0/0 -p tcp --sport 1024:65535 --dport 993 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1270: rule 36"
+-A ETH+-ETH4 -s 10.131.22.0/24 -d 0.0.0.0/0 -p tcp --sport 1:65535 --dport 587 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1270: rule 37"
+-A ETH+-ETH4 -s 10.131.22.0/24 -d 0.0.0.0/0 -p tcp --sport 1:65535 --dport 995 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1270: rule 38"
+-A ETH+-ETH4 -s 10.131.22.0/24 -d 0.0.0.0/0 -p tcp --sport 1024:65535 --dport 25 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1270: rule 39"
+-A ETH+-ETH4 -s 10.131.22.0/24 -d 0.0.0.0/0 -p tcp --sport 1024:65535 --dport 110 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1270: rule 40"
+-A ETH+-ETH4 -s 10.131.22.0/24 -d 0.0.0.0/0 -p tcp --sport 1024:65535 --dport 143 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1270: rule 41"
+-A ETH+-ETH4 -s 10.131.22.0/24 -d 0.0.0.0/0 -p tcp --sport 1024:65535 --dport 993 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1270: rule 42"
+-A ETH+-ETH4 -s 192.168.210.0/24 -d 0.0.0.0/0 -p tcp --sport 1:65535 --dport 587 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1270: rule 43"
+-A ETH+-ETH4 -s 192.168.210.0/24 -d 0.0.0.0/0 -p tcp --sport 1:65535 --dport 995 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1270: rule 44"
+-A ETH+-ETH4 -s 192.168.210.0/24 -d 0.0.0.0/0 -p tcp --sport 1024:65535 --dport 25 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1270: rule 45"
+-A ETH+-ETH4 -s 192.168.210.0/24 -d 0.0.0.0/0 -p tcp --sport 1024:65535 --dport 110 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1270: rule 46"
+-A ETH+-ETH4 -s 192.168.210.0/24 -d 0.0.0.0/0 -p tcp --sport 1024:65535 --dport 143 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1270: rule 47"
+-A ETH+-ETH4 -s 192.168.210.0/24 -d 0.0.0.0/0 -p tcp --sport 1024:65535 --dport 993 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1270: rule 48"
+-A ETH+-ETH4 -s 10.131.23.0/24 -d 0.0.0.0/0 -p tcp --sport 1:65535 --dport 587 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1270: rule 49"
+-A ETH+-ETH4 -s 10.131.23.0/24 -d 0.0.0.0/0 -p tcp --sport 1:65535 --dport 995 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1270: rule 50"
+-A ETH+-ETH4 -s 10.131.23.0/24 -d 0.0.0.0/0 -p tcp --sport 1024:65535 --dport 25 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1270: rule 51"
+-A ETH+-ETH4 -s 10.131.23.0/24 -d 0.0.0.0/0 -p tcp --sport 1024:65535 --dport 110 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1270: rule 52"
+-A ETH+-ETH4 -s 10.131.23.0/24 -d 0.0.0.0/0 -p tcp --sport 1024:65535 --dport 143 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1270: rule 53"
+-A ETH+-ETH4 -s 10.131.23.0/24 -d 0.0.0.0/0 -p tcp --sport 1024:65535 --dport 993 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1270: rule 54"
+
+# IPv4 rule #1350
+# ---------------
+-A ETH+-ETH4 -s 10.131.40.0/24 -d 0.0.0.0/0 -p tcp --sport 1024:65535 --dport 80 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1350: rule 1"
+-A ETH+-ETH4 -s 193.52.240.32/27 -d 0.0.0.0/0 -p tcp --sport 1024:65535 --dport 80 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1350: rule 2"
+-A ETH+-ETH4 -s 193.52.240.96/27 -d 0.0.0.0/0 -p tcp --sport 1024:65535 --dport 80 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1350: rule 3"
+-A ETH+-ETH4 -s 192.168.168.0/24 -d 0.0.0.0/0 -p tcp --sport 1024:65535 --dport 80 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1350: rule 4"
+-A ETH+-ETH4 -s 10.131.20.0/24 -d 0.0.0.0/0 -p tcp --sport 1024:65535 --dport 80 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1350: rule 5"
+-A ETH+-ETH4 -s 192.168.40.0/30 -d 0.0.0.0/0 -p tcp --sport 1024:65535 --dport 80 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1350: rule 6"
+-A ETH+-ETH4 -s 10.131.22.0/24 -d 0.0.0.0/0 -p tcp --sport 1024:65535 --dport 80 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1350: rule 7"
+-A ETH+-ETH4 -s 192.168.210.0/24 -d 0.0.0.0/0 -p tcp --sport 1024:65535 --dport 80 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1350: rule 8"
+-A ETH+-ETH4 -s 10.131.23.0/24 -d 0.0.0.0/0 -p tcp --sport 1024:65535 --dport 80 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1350: rule 9"
+
+# IPv4 rule #1140
+# ---------------
+-A ETH+-ETH4 -d 193.52.245.234 -p tcp --sport 1:65535 --dport 8085 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1140: rule 1"
+
+# IPv4 rule #1190
+# ---------------
+-A ETH+-ETH4 -s 10.131.17.0/24 -d 193.52.26.1 -p tcp --sport 1:65535 --dport 23 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 1"
+-A ETH+-ETH4 -s 10.131.17.0/24 -d 193.52.26.1 -p tcp --sport 1:65535 --dport 443 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 2"
+-A ETH+-ETH4 -s 10.131.17.0/24 -d 193.52.26.1 -p tcp --sport 1:65535 --dport 1040:1060 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 3"
+-A ETH+-ETH4 -s 10.131.17.0/24 -d 193.52.26.1 -p tcp --sport 1:65535 --dport 1100 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 4"
+-A ETH+-ETH4 -s 10.131.17.0/24 -d 193.52.26.1 -p tcp --sport 1:65535 --dport 1521 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 5"
+-A ETH+-ETH4 -s 10.131.17.0/24 -d 193.52.26.1 -p tcp --sport 1:65535 --dport 1534 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 6"
+-A ETH+-ETH4 -s 10.131.17.0/24 -d 193.52.26.1 -p tcp --sport 1:65535 --dport 3099 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 7"
+-A ETH+-ETH4 -s 10.131.17.0/24 -d 193.52.26.1 -p tcp --sport 1:65535 --dport 3200 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 8"
+-A ETH+-ETH4 -s 10.131.17.0/24 -d 193.52.26.1 -p tcp --sport 1:65535 --dport 3389 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 9"
+-A ETH+-ETH4 -s 10.131.17.0/24 -d 193.52.26.1 -p tcp --sport 1:65535 --dport 5402 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 10"
+-A ETH+-ETH4 -s 10.131.17.0/24 -d 193.52.26.1 -p tcp --sport 1024:65535 --dport 22 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 11"
+-A ETH+-ETH4 -s 10.131.17.0/24 -d 193.52.26.20 -p tcp --sport 1:65535 --dport 23 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 12"
+-A ETH+-ETH4 -s 10.131.17.0/24 -d 193.52.26.20 -p tcp --sport 1:65535 --dport 443 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 13"
+-A ETH+-ETH4 -s 10.131.17.0/24 -d 193.52.26.20 -p tcp --sport 1:65535 --dport 1040:1060 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 14"
+-A ETH+-ETH4 -s 10.131.17.0/24 -d 193.52.26.20 -p tcp --sport 1:65535 --dport 1100 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 15"
+-A ETH+-ETH4 -s 10.131.17.0/24 -d 193.52.26.20 -p tcp --sport 1:65535 --dport 1521 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 16"
+-A ETH+-ETH4 -s 10.131.17.0/24 -d 193.52.26.20 -p tcp --sport 1:65535 --dport 1534 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 17"
+-A ETH+-ETH4 -s 10.131.17.0/24 -d 193.52.26.20 -p tcp --sport 1:65535 --dport 3099 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 18"
+-A ETH+-ETH4 -s 10.131.17.0/24 -d 193.52.26.20 -p tcp --sport 1:65535 --dport 3200 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 19"
+-A ETH+-ETH4 -s 10.131.17.0/24 -d 193.52.26.20 -p tcp --sport 1:65535 --dport 3389 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 20"
+-A ETH+-ETH4 -s 10.131.17.0/24 -d 193.52.26.20 -p tcp --sport 1:65535 --dport 5402 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 21"
+-A ETH+-ETH4 -s 10.131.17.0/24 -d 193.52.26.20 -p tcp --sport 1024:65535 --dport 22 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 22"
+-A ETH+-ETH4 -s 10.131.17.0/24 -d 193.52.245.0/24 -p tcp --sport 1:65535 --dport 23 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 23"
+-A ETH+-ETH4 -s 10.131.17.0/24 -d 193.52.245.0/24 -p tcp --sport 1:65535 --dport 443 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 24"
+-A ETH+-ETH4 -s 10.131.17.0/24 -d 193.52.245.0/24 -p tcp --sport 1:65535 --dport 1040:1060 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 25"
+-A ETH+-ETH4 -s 10.131.17.0/24 -d 193.52.245.0/24 -p tcp --sport 1:65535 --dport 1100 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 26"
+-A ETH+-ETH4 -s 10.131.17.0/24 -d 193.52.245.0/24 -p tcp --sport 1:65535 --dport 1521 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 27"
+-A ETH+-ETH4 -s 10.131.17.0/24 -d 193.52.245.0/24 -p tcp --sport 1:65535 --dport 1534 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 28"
+-A ETH+-ETH4 -s 10.131.17.0/24 -d 193.52.245.0/24 -p tcp --sport 1:65535 --dport 3099 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 29"
+-A ETH+-ETH4 -s 10.131.17.0/24 -d 193.52.245.0/24 -p tcp --sport 1:65535 --dport 3200 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 30"
+-A ETH+-ETH4 -s 10.131.17.0/24 -d 193.52.245.0/24 -p tcp --sport 1:65535 --dport 3389 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 31"
+-A ETH+-ETH4 -s 10.131.17.0/24 -d 193.52.245.0/24 -p tcp --sport 1:65535 --dport 5402 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 32"
+-A ETH+-ETH4 -s 10.131.17.0/24 -d 193.52.245.0/24 -p tcp --sport 1024:65535 --dport 22 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 33"
+-A ETH+-ETH4 -s 10.131.17.0/24 -d 193.52.246.36 -p tcp --sport 1:65535 --dport 23 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 34"
+-A ETH+-ETH4 -s 10.131.17.0/24 -d 193.52.246.36 -p tcp --sport 1:65535 --dport 443 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 35"
+-A ETH+-ETH4 -s 10.131.17.0/24 -d 193.52.246.36 -p tcp --sport 1:65535 --dport 1040:1060 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 36"
+-A ETH+-ETH4 -s 10.131.17.0/24 -d 193.52.246.36 -p tcp --sport 1:65535 --dport 1100 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 37"
+-A ETH+-ETH4 -s 10.131.17.0/24 -d 193.52.246.36 -p tcp --sport 1:65535 --dport 1521 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 38"
+-A ETH+-ETH4 -s 10.131.17.0/24 -d 193.52.246.36 -p tcp --sport 1:65535 --dport 1534 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 39"
+-A ETH+-ETH4 -s 10.131.17.0/24 -d 193.52.246.36 -p tcp --sport 1:65535 --dport 3099 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 40"
+-A ETH+-ETH4 -s 10.131.17.0/24 -d 193.52.246.36 -p tcp --sport 1:65535 --dport 3200 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 41"
+-A ETH+-ETH4 -s 10.131.17.0/24 -d 193.52.246.36 -p tcp --sport 1:65535 --dport 3389 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 42"
+-A ETH+-ETH4 -s 10.131.17.0/24 -d 193.52.246.36 -p tcp --sport 1:65535 --dport 5402 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 43"
+-A ETH+-ETH4 -s 10.131.17.0/24 -d 193.52.246.36 -p tcp --sport 1024:65535 --dport 22 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 44"
+-A ETH+-ETH4 -s 10.131.17.0/24 -d 62.212.120.15 -p tcp --sport 1:65535 --dport 23 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 45"
+-A ETH+-ETH4 -s 10.131.17.0/24 -d 62.212.120.15 -p tcp --sport 1:65535 --dport 443 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 46"
+-A ETH+-ETH4 -s 10.131.17.0/24 -d 62.212.120.15 -p tcp --sport 1:65535 --dport 1040:1060 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 47"
+-A ETH+-ETH4 -s 10.131.17.0/24 -d 62.212.120.15 -p tcp --sport 1:65535 --dport 1100 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 48"
+-A ETH+-ETH4 -s 10.131.17.0/24 -d 62.212.120.15 -p tcp --sport 1:65535 --dport 1521 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 49"
+-A ETH+-ETH4 -s 10.131.17.0/24 -d 62.212.120.15 -p tcp --sport 1:65535 --dport 1534 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 50"
+-A ETH+-ETH4 -s 10.131.17.0/24 -d 62.212.120.15 -p tcp --sport 1:65535 --dport 3099 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 51"
+-A ETH+-ETH4 -s 10.131.17.0/24 -d 62.212.120.15 -p tcp --sport 1:65535 --dport 3200 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 52"
+-A ETH+-ETH4 -s 10.131.17.0/24 -d 62.212.120.15 -p tcp --sport 1:65535 --dport 3389 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 53"
+-A ETH+-ETH4 -s 10.131.17.0/24 -d 62.212.120.15 -p tcp --sport 1:65535 --dport 5402 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 54"
+-A ETH+-ETH4 -s 10.131.17.0/24 -d 62.212.120.15 -p tcp --sport 1024:65535 --dport 22 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 55"
+-A ETH+-ETH4 -s 10.131.23.48 -d 193.52.26.1 -p tcp --sport 1:65535 --dport 23 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 56"
+-A ETH+-ETH4 -s 10.131.23.48 -d 193.52.26.1 -p tcp --sport 1:65535 --dport 443 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 57"
+-A ETH+-ETH4 -s 10.131.23.48 -d 193.52.26.1 -p tcp --sport 1:65535 --dport 1040:1060 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 58"
+-A ETH+-ETH4 -s 10.131.23.48 -d 193.52.26.1 -p tcp --sport 1:65535 --dport 1100 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 59"
+-A ETH+-ETH4 -s 10.131.23.48 -d 193.52.26.1 -p tcp --sport 1:65535 --dport 1521 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 60"
+-A ETH+-ETH4 -s 10.131.23.48 -d 193.52.26.1 -p tcp --sport 1:65535 --dport 1534 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 61"
+-A ETH+-ETH4 -s 10.131.23.48 -d 193.52.26.1 -p tcp --sport 1:65535 --dport 3099 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 62"
+-A ETH+-ETH4 -s 10.131.23.48 -d 193.52.26.1 -p tcp --sport 1:65535 --dport 3200 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 63"
+-A ETH+-ETH4 -s 10.131.23.48 -d 193.52.26.1 -p tcp --sport 1:65535 --dport 3389 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 64"
+-A ETH+-ETH4 -s 10.131.23.48 -d 193.52.26.1 -p tcp --sport 1:65535 --dport 5402 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 65"
+-A ETH+-ETH4 -s 10.131.23.48 -d 193.52.26.1 -p tcp --sport 1024:65535 --dport 22 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 66"
+-A ETH+-ETH4 -s 10.131.23.48 -d 193.52.26.20 -p tcp --sport 1:65535 --dport 23 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 67"
+-A ETH+-ETH4 -s 10.131.23.48 -d 193.52.26.20 -p tcp --sport 1:65535 --dport 443 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 68"
+-A ETH+-ETH4 -s 10.131.23.48 -d 193.52.26.20 -p tcp --sport 1:65535 --dport 1040:1060 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 69"
+-A ETH+-ETH4 -s 10.131.23.48 -d 193.52.26.20 -p tcp --sport 1:65535 --dport 1100 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 70"
+-A ETH+-ETH4 -s 10.131.23.48 -d 193.52.26.20 -p tcp --sport 1:65535 --dport 1521 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 71"
+-A ETH+-ETH4 -s 10.131.23.48 -d 193.52.26.20 -p tcp --sport 1:65535 --dport 1534 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 72"
+-A ETH+-ETH4 -s 10.131.23.48 -d 193.52.26.20 -p tcp --sport 1:65535 --dport 3099 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 73"
+-A ETH+-ETH4 -s 10.131.23.48 -d 193.52.26.20 -p tcp --sport 1:65535 --dport 3200 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 74"
+-A ETH+-ETH4 -s 10.131.23.48 -d 193.52.26.20 -p tcp --sport 1:65535 --dport 3389 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 75"
+-A ETH+-ETH4 -s 10.131.23.48 -d 193.52.26.20 -p tcp --sport 1:65535 --dport 5402 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 76"
+-A ETH+-ETH4 -s 10.131.23.48 -d 193.52.26.20 -p tcp --sport 1024:65535 --dport 22 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 77"
+-A ETH+-ETH4 -s 10.131.23.48 -d 193.52.245.0/24 -p tcp --sport 1:65535 --dport 23 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 78"
+-A ETH+-ETH4 -s 10.131.23.48 -d 193.52.245.0/24 -p tcp --sport 1:65535 --dport 443 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 79"
+-A ETH+-ETH4 -s 10.131.23.48 -d 193.52.245.0/24 -p tcp --sport 1:65535 --dport 1040:1060 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 80"
+-A ETH+-ETH4 -s 10.131.23.48 -d 193.52.245.0/24 -p tcp --sport 1:65535 --dport 1100 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 81"
+-A ETH+-ETH4 -s 10.131.23.48 -d 193.52.245.0/24 -p tcp --sport 1:65535 --dport 1521 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 82"
+-A ETH+-ETH4 -s 10.131.23.48 -d 193.52.245.0/24 -p tcp --sport 1:65535 --dport 1534 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 83"
+-A ETH+-ETH4 -s 10.131.23.48 -d 193.52.245.0/24 -p tcp --sport 1:65535 --dport 3099 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 84"
+-A ETH+-ETH4 -s 10.131.23.48 -d 193.52.245.0/24 -p tcp --sport 1:65535 --dport 3200 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 85"
+-A ETH+-ETH4 -s 10.131.23.48 -d 193.52.245.0/24 -p tcp --sport 1:65535 --dport 3389 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 86"
+-A ETH+-ETH4 -s 10.131.23.48 -d 193.52.245.0/24 -p tcp --sport 1:65535 --dport 5402 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 87"
+-A ETH+-ETH4 -s 10.131.23.48 -d 193.52.245.0/24 -p tcp --sport 1024:65535 --dport 22 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 88"
+-A ETH+-ETH4 -s 10.131.23.48 -d 193.52.246.36 -p tcp --sport 1:65535 --dport 23 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 89"
+-A ETH+-ETH4 -s 10.131.23.48 -d 193.52.246.36 -p tcp --sport 1:65535 --dport 443 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 90"
+-A ETH+-ETH4 -s 10.131.23.48 -d 193.52.246.36 -p tcp --sport 1:65535 --dport 1040:1060 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 91"
+-A ETH+-ETH4 -s 10.131.23.48 -d 193.52.246.36 -p tcp --sport 1:65535 --dport 1100 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 92"
+-A ETH+-ETH4 -s 10.131.23.48 -d 193.52.246.36 -p tcp --sport 1:65535 --dport 1521 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 93"
+-A ETH+-ETH4 -s 10.131.23.48 -d 193.52.246.36 -p tcp --sport 1:65535 --dport 1534 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 94"
+-A ETH+-ETH4 -s 10.131.23.48 -d 193.52.246.36 -p tcp --sport 1:65535 --dport 3099 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 95"
+-A ETH+-ETH4 -s 10.131.23.48 -d 193.52.246.36 -p tcp --sport 1:65535 --dport 3200 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 96"
+-A ETH+-ETH4 -s 10.131.23.48 -d 193.52.246.36 -p tcp --sport 1:65535 --dport 3389 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 97"
+-A ETH+-ETH4 -s 10.131.23.48 -d 193.52.246.36 -p tcp --sport 1:65535 --dport 5402 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 98"
+-A ETH+-ETH4 -s 10.131.23.48 -d 193.52.246.36 -p tcp --sport 1024:65535 --dport 22 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 99"
+-A ETH+-ETH4 -s 10.131.23.48 -d 62.212.120.15 -p tcp --sport 1:65535 --dport 23 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 100"
+-A ETH+-ETH4 -s 10.131.23.48 -d 62.212.120.15 -p tcp --sport 1:65535 --dport 443 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 101"
+-A ETH+-ETH4 -s 10.131.23.48 -d 62.212.120.15 -p tcp --sport 1:65535 --dport 1040:1060 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 102"
+-A ETH+-ETH4 -s 10.131.23.48 -d 62.212.120.15 -p tcp --sport 1:65535 --dport 1100 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 103"
+-A ETH+-ETH4 -s 10.131.23.48 -d 62.212.120.15 -p tcp --sport 1:65535 --dport 1521 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 104"
+-A ETH+-ETH4 -s 10.131.23.48 -d 62.212.120.15 -p tcp --sport 1:65535 --dport 1534 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 105"
+-A ETH+-ETH4 -s 10.131.23.48 -d 62.212.120.15 -p tcp --sport 1:65535 --dport 3099 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 106"
+-A ETH+-ETH4 -s 10.131.23.48 -d 62.212.120.15 -p tcp --sport 1:65535 --dport 3200 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 107"
+-A ETH+-ETH4 -s 10.131.23.48 -d 62.212.120.15 -p tcp --sport 1:65535 --dport 3389 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 108"
+-A ETH+-ETH4 -s 10.131.23.48 -d 62.212.120.15 -p tcp --sport 1:65535 --dport 5402 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 109"
+-A ETH+-ETH4 -s 10.131.23.48 -d 62.212.120.15 -p tcp --sport 1024:65535 --dport 22 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 110"
+-A ETH+-ETH4 -s 10.131.12.0/24 -d 193.52.26.1 -p tcp --sport 1:65535 --dport 23 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 111"
+-A ETH+-ETH4 -s 10.131.12.0/24 -d 193.52.26.1 -p tcp --sport 1:65535 --dport 443 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 112"
+-A ETH+-ETH4 -s 10.131.12.0/24 -d 193.52.26.1 -p tcp --sport 1:65535 --dport 1040:1060 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 113"
+-A ETH+-ETH4 -s 10.131.12.0/24 -d 193.52.26.1 -p tcp --sport 1:65535 --dport 1100 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 114"
+-A ETH+-ETH4 -s 10.131.12.0/24 -d 193.52.26.1 -p tcp --sport 1:65535 --dport 1521 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 115"
+-A ETH+-ETH4 -s 10.131.12.0/24 -d 193.52.26.1 -p tcp --sport 1:65535 --dport 1534 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 116"
+-A ETH+-ETH4 -s 10.131.12.0/24 -d 193.52.26.1 -p tcp --sport 1:65535 --dport 3099 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 117"
+-A ETH+-ETH4 -s 10.131.12.0/24 -d 193.52.26.1 -p tcp --sport 1:65535 --dport 3200 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 118"
+-A ETH+-ETH4 -s 10.131.12.0/24 -d 193.52.26.1 -p tcp --sport 1:65535 --dport 3389 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 119"
+-A ETH+-ETH4 -s 10.131.12.0/24 -d 193.52.26.1 -p tcp --sport 1:65535 --dport 5402 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 120"
+-A ETH+-ETH4 -s 10.131.12.0/24 -d 193.52.26.1 -p tcp --sport 1024:65535 --dport 22 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 121"
+-A ETH+-ETH4 -s 10.131.12.0/24 -d 193.52.26.20 -p tcp --sport 1:65535 --dport 23 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 122"
+-A ETH+-ETH4 -s 10.131.12.0/24 -d 193.52.26.20 -p tcp --sport 1:65535 --dport 443 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 123"
+-A ETH+-ETH4 -s 10.131.12.0/24 -d 193.52.26.20 -p tcp --sport 1:65535 --dport 1040:1060 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 124"
+-A ETH+-ETH4 -s 10.131.12.0/24 -d 193.52.26.20 -p tcp --sport 1:65535 --dport 1100 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 125"
+-A ETH+-ETH4 -s 10.131.12.0/24 -d 193.52.26.20 -p tcp --sport 1:65535 --dport 1521 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 126"
+-A ETH+-ETH4 -s 10.131.12.0/24 -d 193.52.26.20 -p tcp --sport 1:65535 --dport 1534 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 127"
+-A ETH+-ETH4 -s 10.131.12.0/24 -d 193.52.26.20 -p tcp --sport 1:65535 --dport 3099 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 128"
+-A ETH+-ETH4 -s 10.131.12.0/24 -d 193.52.26.20 -p tcp --sport 1:65535 --dport 3200 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 129"
+-A ETH+-ETH4 -s 10.131.12.0/24 -d 193.52.26.20 -p tcp --sport 1:65535 --dport 3389 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 130"
+-A ETH+-ETH4 -s 10.131.12.0/24 -d 193.52.26.20 -p tcp --sport 1:65535 --dport 5402 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 131"
+-A ETH+-ETH4 -s 10.131.12.0/24 -d 193.52.26.20 -p tcp --sport 1024:65535 --dport 22 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 132"
+-A ETH+-ETH4 -s 10.131.12.0/24 -d 193.52.245.0/24 -p tcp --sport 1:65535 --dport 23 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 133"
+-A ETH+-ETH4 -s 10.131.12.0/24 -d 193.52.245.0/24 -p tcp --sport 1:65535 --dport 443 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 134"
+-A ETH+-ETH4 -s 10.131.12.0/24 -d 193.52.245.0/24 -p tcp --sport 1:65535 --dport 1040:1060 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 135"
+-A ETH+-ETH4 -s 10.131.12.0/24 -d 193.52.245.0/24 -p tcp --sport 1:65535 --dport 1100 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 136"
+-A ETH+-ETH4 -s 10.131.12.0/24 -d 193.52.245.0/24 -p tcp --sport 1:65535 --dport 1521 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 137"
+-A ETH+-ETH4 -s 10.131.12.0/24 -d 193.52.245.0/24 -p tcp --sport 1:65535 --dport 1534 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 138"
+-A ETH+-ETH4 -s 10.131.12.0/24 -d 193.52.245.0/24 -p tcp --sport 1:65535 --dport 3099 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 139"
+-A ETH+-ETH4 -s 10.131.12.0/24 -d 193.52.245.0/24 -p tcp --sport 1:65535 --dport 3200 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 140"
+-A ETH+-ETH4 -s 10.131.12.0/24 -d 193.52.245.0/24 -p tcp --sport 1:65535 --dport 3389 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 141"
+-A ETH+-ETH4 -s 10.131.12.0/24 -d 193.52.245.0/24 -p tcp --sport 1:65535 --dport 5402 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 142"
+-A ETH+-ETH4 -s 10.131.12.0/24 -d 193.52.245.0/24 -p tcp --sport 1024:65535 --dport 22 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 143"
+-A ETH+-ETH4 -s 10.131.12.0/24 -d 193.52.246.36 -p tcp --sport 1:65535 --dport 23 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 144"
+-A ETH+-ETH4 -s 10.131.12.0/24 -d 193.52.246.36 -p tcp --sport 1:65535 --dport 443 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 145"
+-A ETH+-ETH4 -s 10.131.12.0/24 -d 193.52.246.36 -p tcp --sport 1:65535 --dport 1040:1060 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 146"
+-A ETH+-ETH4 -s 10.131.12.0/24 -d 193.52.246.36 -p tcp --sport 1:65535 --dport 1100 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 147"
+-A ETH+-ETH4 -s 10.131.12.0/24 -d 193.52.246.36 -p tcp --sport 1:65535 --dport 1521 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 148"
+-A ETH+-ETH4 -s 10.131.12.0/24 -d 193.52.246.36 -p tcp --sport 1:65535 --dport 1534 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 149"
+-A ETH+-ETH4 -s 10.131.12.0/24 -d 193.52.246.36 -p tcp --sport 1:65535 --dport 3099 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 150"
+-A ETH+-ETH4 -s 10.131.12.0/24 -d 193.52.246.36 -p tcp --sport 1:65535 --dport 3200 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 151"
+-A ETH+-ETH4 -s 10.131.12.0/24 -d 193.52.246.36 -p tcp --sport 1:65535 --dport 3389 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 152"
+-A ETH+-ETH4 -s 10.131.12.0/24 -d 193.52.246.36 -p tcp --sport 1:65535 --dport 5402 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 153"
+-A ETH+-ETH4 -s 10.131.12.0/24 -d 193.52.246.36 -p tcp --sport 1024:65535 --dport 22 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 154"
+-A ETH+-ETH4 -s 10.131.12.0/24 -d 62.212.120.15 -p tcp --sport 1:65535 --dport 23 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 155"
+-A ETH+-ETH4 -s 10.131.12.0/24 -d 62.212.120.15 -p tcp --sport 1:65535 --dport 443 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 156"
+-A ETH+-ETH4 -s 10.131.12.0/24 -d 62.212.120.15 -p tcp --sport 1:65535 --dport 1040:1060 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 157"
+-A ETH+-ETH4 -s 10.131.12.0/24 -d 62.212.120.15 -p tcp --sport 1:65535 --dport 1100 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 158"
+-A ETH+-ETH4 -s 10.131.12.0/24 -d 62.212.120.15 -p tcp --sport 1:65535 --dport 1521 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 159"
+-A ETH+-ETH4 -s 10.131.12.0/24 -d 62.212.120.15 -p tcp --sport 1:65535 --dport 1534 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 160"
+-A ETH+-ETH4 -s 10.131.12.0/24 -d 62.212.120.15 -p tcp --sport 1:65535 --dport 3099 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 161"
+-A ETH+-ETH4 -s 10.131.12.0/24 -d 62.212.120.15 -p tcp --sport 1:65535 --dport 3200 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 162"
+-A ETH+-ETH4 -s 10.131.12.0/24 -d 62.212.120.15 -p tcp --sport 1:65535 --dport 3389 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 163"
+-A ETH+-ETH4 -s 10.131.12.0/24 -d 62.212.120.15 -p tcp --sport 1:65535 --dport 5402 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 164"
+-A ETH+-ETH4 -s 10.131.12.0/24 -d 62.212.120.15 -p tcp --sport 1024:65535 --dport 22 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 165"
+-A ETH+-ETH4 -s 10.131.16.0/24 -d 193.52.26.1 -p tcp --sport 1:65535 --dport 23 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 166"
+-A ETH+-ETH4 -s 10.131.16.0/24 -d 193.52.26.1 -p tcp --sport 1:65535 --dport 443 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 167"
+-A ETH+-ETH4 -s 10.131.16.0/24 -d 193.52.26.1 -p tcp --sport 1:65535 --dport 1040:1060 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 168"
+-A ETH+-ETH4 -s 10.131.16.0/24 -d 193.52.26.1 -p tcp --sport 1:65535 --dport 1100 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 169"
+-A ETH+-ETH4 -s 10.131.16.0/24 -d 193.52.26.1 -p tcp --sport 1:65535 --dport 1521 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 170"
+-A ETH+-ETH4 -s 10.131.16.0/24 -d 193.52.26.1 -p tcp --sport 1:65535 --dport 1534 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 171"
+-A ETH+-ETH4 -s 10.131.16.0/24 -d 193.52.26.1 -p tcp --sport 1:65535 --dport 3099 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 172"
+-A ETH+-ETH4 -s 10.131.16.0/24 -d 193.52.26.1 -p tcp --sport 1:65535 --dport 3200 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 173"
+-A ETH+-ETH4 -s 10.131.16.0/24 -d 193.52.26.1 -p tcp --sport 1:65535 --dport 3389 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 174"
+-A ETH+-ETH4 -s 10.131.16.0/24 -d 193.52.26.1 -p tcp --sport 1:65535 --dport 5402 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 175"
+-A ETH+-ETH4 -s 10.131.16.0/24 -d 193.52.26.1 -p tcp --sport 1024:65535 --dport 22 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 176"
+-A ETH+-ETH4 -s 10.131.16.0/24 -d 193.52.26.20 -p tcp --sport 1:65535 --dport 23 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 177"
+-A ETH+-ETH4 -s 10.131.16.0/24 -d 193.52.26.20 -p tcp --sport 1:65535 --dport 443 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 178"
+-A ETH+-ETH4 -s 10.131.16.0/24 -d 193.52.26.20 -p tcp --sport 1:65535 --dport 1040:1060 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 179"
+-A ETH+-ETH4 -s 10.131.16.0/24 -d 193.52.26.20 -p tcp --sport 1:65535 --dport 1100 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 180"
+-A ETH+-ETH4 -s 10.131.16.0/24 -d 193.52.26.20 -p tcp --sport 1:65535 --dport 1521 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 181"
+-A ETH+-ETH4 -s 10.131.16.0/24 -d 193.52.26.20 -p tcp --sport 1:65535 --dport 1534 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 182"
+-A ETH+-ETH4 -s 10.131.16.0/24 -d 193.52.26.20 -p tcp --sport 1:65535 --dport 3099 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 183"
+-A ETH+-ETH4 -s 10.131.16.0/24 -d 193.52.26.20 -p tcp --sport 1:65535 --dport 3200 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 184"
+-A ETH+-ETH4 -s 10.131.16.0/24 -d 193.52.26.20 -p tcp --sport 1:65535 --dport 3389 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 185"
+-A ETH+-ETH4 -s 10.131.16.0/24 -d 193.52.26.20 -p tcp --sport 1:65535 --dport 5402 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 186"
+-A ETH+-ETH4 -s 10.131.16.0/24 -d 193.52.26.20 -p tcp --sport 1024:65535 --dport 22 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 187"
+-A ETH+-ETH4 -s 10.131.16.0/24 -d 193.52.245.0/24 -p tcp --sport 1:65535 --dport 23 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 188"
+-A ETH+-ETH4 -s 10.131.16.0/24 -d 193.52.245.0/24 -p tcp --sport 1:65535 --dport 443 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 189"
+-A ETH+-ETH4 -s 10.131.16.0/24 -d 193.52.245.0/24 -p tcp --sport 1:65535 --dport 1040:1060 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 190"
+-A ETH+-ETH4 -s 10.131.16.0/24 -d 193.52.245.0/24 -p tcp --sport 1:65535 --dport 1100 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 191"
+-A ETH+-ETH4 -s 10.131.16.0/24 -d 193.52.245.0/24 -p tcp --sport 1:65535 --dport 1521 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 192"
+-A ETH+-ETH4 -s 10.131.16.0/24 -d 193.52.245.0/24 -p tcp --sport 1:65535 --dport 1534 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 193"
+-A ETH+-ETH4 -s 10.131.16.0/24 -d 193.52.245.0/24 -p tcp --sport 1:65535 --dport 3099 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 194"
+-A ETH+-ETH4 -s 10.131.16.0/24 -d 193.52.245.0/24 -p tcp --sport 1:65535 --dport 3200 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 195"
+-A ETH+-ETH4 -s 10.131.16.0/24 -d 193.52.245.0/24 -p tcp --sport 1:65535 --dport 3389 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 196"
+-A ETH+-ETH4 -s 10.131.16.0/24 -d 193.52.245.0/24 -p tcp --sport 1:65535 --dport 5402 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 197"
+-A ETH+-ETH4 -s 10.131.16.0/24 -d 193.52.245.0/24 -p tcp --sport 1024:65535 --dport 22 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 198"
+-A ETH+-ETH4 -s 10.131.16.0/24 -d 193.52.246.36 -p tcp --sport 1:65535 --dport 23 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 199"
+-A ETH+-ETH4 -s 10.131.16.0/24 -d 193.52.246.36 -p tcp --sport 1:65535 --dport 443 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 200"
+-A ETH+-ETH4 -s 10.131.16.0/24 -d 193.52.246.36 -p tcp --sport 1:65535 --dport 1040:1060 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 201"
+-A ETH+-ETH4 -s 10.131.16.0/24 -d 193.52.246.36 -p tcp --sport 1:65535 --dport 1100 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 202"
+-A ETH+-ETH4 -s 10.131.16.0/24 -d 193.52.246.36 -p tcp --sport 1:65535 --dport 1521 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 203"
+-A ETH+-ETH4 -s 10.131.16.0/24 -d 193.52.246.36 -p tcp --sport 1:65535 --dport 1534 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 204"
+-A ETH+-ETH4 -s 10.131.16.0/24 -d 193.52.246.36 -p tcp --sport 1:65535 --dport 3099 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 205"
+-A ETH+-ETH4 -s 10.131.16.0/24 -d 193.52.246.36 -p tcp --sport 1:65535 --dport 3200 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 206"
+-A ETH+-ETH4 -s 10.131.16.0/24 -d 193.52.246.36 -p tcp --sport 1:65535 --dport 3389 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 207"
+-A ETH+-ETH4 -s 10.131.16.0/24 -d 193.52.246.36 -p tcp --sport 1:65535 --dport 5402 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 208"
+-A ETH+-ETH4 -s 10.131.16.0/24 -d 193.52.246.36 -p tcp --sport 1024:65535 --dport 22 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 209"
+-A ETH+-ETH4 -s 10.131.16.0/24 -d 62.212.120.15 -p tcp --sport 1:65535 --dport 23 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 210"
+-A ETH+-ETH4 -s 10.131.16.0/24 -d 62.212.120.15 -p tcp --sport 1:65535 --dport 443 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 211"
+-A ETH+-ETH4 -s 10.131.16.0/24 -d 62.212.120.15 -p tcp --sport 1:65535 --dport 1040:1060 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 212"
+-A ETH+-ETH4 -s 10.131.16.0/24 -d 62.212.120.15 -p tcp --sport 1:65535 --dport 1100 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 213"
+-A ETH+-ETH4 -s 10.131.16.0/24 -d 62.212.120.15 -p tcp --sport 1:65535 --dport 1521 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 214"
+-A ETH+-ETH4 -s 10.131.16.0/24 -d 62.212.120.15 -p tcp --sport 1:65535 --dport 1534 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 215"
+-A ETH+-ETH4 -s 10.131.16.0/24 -d 62.212.120.15 -p tcp --sport 1:65535 --dport 3099 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 216"
+-A ETH+-ETH4 -s 10.131.16.0/24 -d 62.212.120.15 -p tcp --sport 1:65535 --dport 3200 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 217"
+-A ETH+-ETH4 -s 10.131.16.0/24 -d 62.212.120.15 -p tcp --sport 1:65535 --dport 3389 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 218"
+-A ETH+-ETH4 -s 10.131.16.0/24 -d 62.212.120.15 -p tcp --sport 1:65535 --dport 5402 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 219"
+-A ETH+-ETH4 -s 10.131.16.0/24 -d 62.212.120.15 -p tcp --sport 1024:65535 --dport 22 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 220"
+-A ETH+-ETH4 -s 10.131.14.0/24 -d 193.52.26.1 -p tcp --sport 1:65535 --dport 23 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 221"
+-A ETH+-ETH4 -s 10.131.14.0/24 -d 193.52.26.1 -p tcp --sport 1:65535 --dport 443 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 222"
+-A ETH+-ETH4 -s 10.131.14.0/24 -d 193.52.26.1 -p tcp --sport 1:65535 --dport 1040:1060 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 223"
+-A ETH+-ETH4 -s 10.131.14.0/24 -d 193.52.26.1 -p tcp --sport 1:65535 --dport 1100 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 224"
+-A ETH+-ETH4 -s 10.131.14.0/24 -d 193.52.26.1 -p tcp --sport 1:65535 --dport 1521 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 225"
+-A ETH+-ETH4 -s 10.131.14.0/24 -d 193.52.26.1 -p tcp --sport 1:65535 --dport 1534 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 226"
+-A ETH+-ETH4 -s 10.131.14.0/24 -d 193.52.26.1 -p tcp --sport 1:65535 --dport 3099 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 227"
+-A ETH+-ETH4 -s 10.131.14.0/24 -d 193.52.26.1 -p tcp --sport 1:65535 --dport 3200 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 228"
+-A ETH+-ETH4 -s 10.131.14.0/24 -d 193.52.26.1 -p tcp --sport 1:65535 --dport 3389 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 229"
+-A ETH+-ETH4 -s 10.131.14.0/24 -d 193.52.26.1 -p tcp --sport 1:65535 --dport 5402 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 230"
+-A ETH+-ETH4 -s 10.131.14.0/24 -d 193.52.26.1 -p tcp --sport 1024:65535 --dport 22 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 231"
+-A ETH+-ETH4 -s 10.131.14.0/24 -d 193.52.26.20 -p tcp --sport 1:65535 --dport 23 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 232"
+-A ETH+-ETH4 -s 10.131.14.0/24 -d 193.52.26.20 -p tcp --sport 1:65535 --dport 443 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 233"
+-A ETH+-ETH4 -s 10.131.14.0/24 -d 193.52.26.20 -p tcp --sport 1:65535 --dport 1040:1060 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 234"
+-A ETH+-ETH4 -s 10.131.14.0/24 -d 193.52.26.20 -p tcp --sport 1:65535 --dport 1100 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 235"
+-A ETH+-ETH4 -s 10.131.14.0/24 -d 193.52.26.20 -p tcp --sport 1:65535 --dport 1521 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 236"
+-A ETH+-ETH4 -s 10.131.14.0/24 -d 193.52.26.20 -p tcp --sport 1:65535 --dport 1534 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 237"
+-A ETH+-ETH4 -s 10.131.14.0/24 -d 193.52.26.20 -p tcp --sport 1:65535 --dport 3099 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 238"
+-A ETH+-ETH4 -s 10.131.14.0/24 -d 193.52.26.20 -p tcp --sport 1:65535 --dport 3200 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 239"
+-A ETH+-ETH4 -s 10.131.14.0/24 -d 193.52.26.20 -p tcp --sport 1:65535 --dport 3389 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 240"
+-A ETH+-ETH4 -s 10.131.14.0/24 -d 193.52.26.20 -p tcp --sport 1:65535 --dport 5402 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 241"
+-A ETH+-ETH4 -s 10.131.14.0/24 -d 193.52.26.20 -p tcp --sport 1024:65535 --dport 22 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 242"
+-A ETH+-ETH4 -s 10.131.14.0/24 -d 193.52.245.0/24 -p tcp --sport 1:65535 --dport 23 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 243"
+-A ETH+-ETH4 -s 10.131.14.0/24 -d 193.52.245.0/24 -p tcp --sport 1:65535 --dport 443 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 244"
+-A ETH+-ETH4 -s 10.131.14.0/24 -d 193.52.245.0/24 -p tcp --sport 1:65535 --dport 1040:1060 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 245"
+-A ETH+-ETH4 -s 10.131.14.0/24 -d 193.52.245.0/24 -p tcp --sport 1:65535 --dport 1100 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 246"
+-A ETH+-ETH4 -s 10.131.14.0/24 -d 193.52.245.0/24 -p tcp --sport 1:65535 --dport 1521 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 247"
+-A ETH+-ETH4 -s 10.131.14.0/24 -d 193.52.245.0/24 -p tcp --sport 1:65535 --dport 1534 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 248"
+-A ETH+-ETH4 -s 10.131.14.0/24 -d 193.52.245.0/24 -p tcp --sport 1:65535 --dport 3099 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 249"
+-A ETH+-ETH4 -s 10.131.14.0/24 -d 193.52.245.0/24 -p tcp --sport 1:65535 --dport 3200 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 250"
+-A ETH+-ETH4 -s 10.131.14.0/24 -d 193.52.245.0/24 -p tcp --sport 1:65535 --dport 3389 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 251"
+-A ETH+-ETH4 -s 10.131.14.0/24 -d 193.52.245.0/24 -p tcp --sport 1:65535 --dport 5402 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 252"
+-A ETH+-ETH4 -s 10.131.14.0/24 -d 193.52.245.0/24 -p tcp --sport 1024:65535 --dport 22 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 253"
+-A ETH+-ETH4 -s 10.131.14.0/24 -d 193.52.246.36 -p tcp --sport 1:65535 --dport 23 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 254"
+-A ETH+-ETH4 -s 10.131.14.0/24 -d 193.52.246.36 -p tcp --sport 1:65535 --dport 443 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 255"
+-A ETH+-ETH4 -s 10.131.14.0/24 -d 193.52.246.36 -p tcp --sport 1:65535 --dport 1040:1060 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 256"
+-A ETH+-ETH4 -s 10.131.14.0/24 -d 193.52.246.36 -p tcp --sport 1:65535 --dport 1100 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 257"
+-A ETH+-ETH4 -s 10.131.14.0/24 -d 193.52.246.36 -p tcp --sport 1:65535 --dport 1521 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 258"
+-A ETH+-ETH4 -s 10.131.14.0/24 -d 193.52.246.36 -p tcp --sport 1:65535 --dport 1534 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 259"
+-A ETH+-ETH4 -s 10.131.14.0/24 -d 193.52.246.36 -p tcp --sport 1:65535 --dport 3099 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 260"
+-A ETH+-ETH4 -s 10.131.14.0/24 -d 193.52.246.36 -p tcp --sport 1:65535 --dport 3200 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 261"
+-A ETH+-ETH4 -s 10.131.14.0/24 -d 193.52.246.36 -p tcp --sport 1:65535 --dport 3389 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 262"
+-A ETH+-ETH4 -s 10.131.14.0/24 -d 193.52.246.36 -p tcp --sport 1:65535 --dport 5402 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 263"
+-A ETH+-ETH4 -s 10.131.14.0/24 -d 193.52.246.36 -p tcp --sport 1024:65535 --dport 22 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 264"
+-A ETH+-ETH4 -s 10.131.14.0/24 -d 62.212.120.15 -p tcp --sport 1:65535 --dport 23 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 265"
+-A ETH+-ETH4 -s 10.131.14.0/24 -d 62.212.120.15 -p tcp --sport 1:65535 --dport 443 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 266"
+-A ETH+-ETH4 -s 10.131.14.0/24 -d 62.212.120.15 -p tcp --sport 1:65535 --dport 1040:1060 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 267"
+-A ETH+-ETH4 -s 10.131.14.0/24 -d 62.212.120.15 -p tcp --sport 1:65535 --dport 1100 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 268"
+-A ETH+-ETH4 -s 10.131.14.0/24 -d 62.212.120.15 -p tcp --sport 1:65535 --dport 1521 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 269"
+-A ETH+-ETH4 -s 10.131.14.0/24 -d 62.212.120.15 -p tcp --sport 1:65535 --dport 1534 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 270"
+-A ETH+-ETH4 -s 10.131.14.0/24 -d 62.212.120.15 -p tcp --sport 1:65535 --dport 3099 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 271"
+-A ETH+-ETH4 -s 10.131.14.0/24 -d 62.212.120.15 -p tcp --sport 1:65535 --dport 3200 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 272"
+-A ETH+-ETH4 -s 10.131.14.0/24 -d 62.212.120.15 -p tcp --sport 1:65535 --dport 3389 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 273"
+-A ETH+-ETH4 -s 10.131.14.0/24 -d 62.212.120.15 -p tcp --sport 1:65535 --dport 5402 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 274"
+-A ETH+-ETH4 -s 10.131.14.0/24 -d 62.212.120.15 -p tcp --sport 1024:65535 --dport 22 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 275"
+-A ETH+-ETH4 -s 10.131.15.0/24 -d 193.52.26.1 -p tcp --sport 1:65535 --dport 23 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 276"
+-A ETH+-ETH4 -s 10.131.15.0/24 -d 193.52.26.1 -p tcp --sport 1:65535 --dport 443 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 277"
+-A ETH+-ETH4 -s 10.131.15.0/24 -d 193.52.26.1 -p tcp --sport 1:65535 --dport 1040:1060 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 278"
+-A ETH+-ETH4 -s 10.131.15.0/24 -d 193.52.26.1 -p tcp --sport 1:65535 --dport 1100 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 279"
+-A ETH+-ETH4 -s 10.131.15.0/24 -d 193.52.26.1 -p tcp --sport 1:65535 --dport 1521 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 280"
+-A ETH+-ETH4 -s 10.131.15.0/24 -d 193.52.26.1 -p tcp --sport 1:65535 --dport 1534 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 281"
+-A ETH+-ETH4 -s 10.131.15.0/24 -d 193.52.26.1 -p tcp --sport 1:65535 --dport 3099 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 282"
+-A ETH+-ETH4 -s 10.131.15.0/24 -d 193.52.26.1 -p tcp --sport 1:65535 --dport 3200 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 283"
+-A ETH+-ETH4 -s 10.131.15.0/24 -d 193.52.26.1 -p tcp --sport 1:65535 --dport 3389 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 284"
+-A ETH+-ETH4 -s 10.131.15.0/24 -d 193.52.26.1 -p tcp --sport 1:65535 --dport 5402 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 285"
+-A ETH+-ETH4 -s 10.131.15.0/24 -d 193.52.26.1 -p tcp --sport 1024:65535 --dport 22 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 286"
+-A ETH+-ETH4 -s 10.131.15.0/24 -d 193.52.26.20 -p tcp --sport 1:65535 --dport 23 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 287"
+-A ETH+-ETH4 -s 10.131.15.0/24 -d 193.52.26.20 -p tcp --sport 1:65535 --dport 443 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 288"
+-A ETH+-ETH4 -s 10.131.15.0/24 -d 193.52.26.20 -p tcp --sport 1:65535 --dport 1040:1060 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 289"
+-A ETH+-ETH4 -s 10.131.15.0/24 -d 193.52.26.20 -p tcp --sport 1:65535 --dport 1100 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 290"
+-A ETH+-ETH4 -s 10.131.15.0/24 -d 193.52.26.20 -p tcp --sport 1:65535 --dport 1521 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 291"
+-A ETH+-ETH4 -s 10.131.15.0/24 -d 193.52.26.20 -p tcp --sport 1:65535 --dport 1534 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 292"
+-A ETH+-ETH4 -s 10.131.15.0/24 -d 193.52.26.20 -p tcp --sport 1:65535 --dport 3099 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 293"
+-A ETH+-ETH4 -s 10.131.15.0/24 -d 193.52.26.20 -p tcp --sport 1:65535 --dport 3200 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 294"
+-A ETH+-ETH4 -s 10.131.15.0/24 -d 193.52.26.20 -p tcp --sport 1:65535 --dport 3389 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 295"
+-A ETH+-ETH4 -s 10.131.15.0/24 -d 193.52.26.20 -p tcp --sport 1:65535 --dport 5402 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 296"
+-A ETH+-ETH4 -s 10.131.15.0/24 -d 193.52.26.20 -p tcp --sport 1024:65535 --dport 22 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 297"
+-A ETH+-ETH4 -s 10.131.15.0/24 -d 193.52.245.0/24 -p tcp --sport 1:65535 --dport 23 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 298"
+-A ETH+-ETH4 -s 10.131.15.0/24 -d 193.52.245.0/24 -p tcp --sport 1:65535 --dport 443 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 299"
+-A ETH+-ETH4 -s 10.131.15.0/24 -d 193.52.245.0/24 -p tcp --sport 1:65535 --dport 1040:1060 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 300"
+-A ETH+-ETH4 -s 10.131.15.0/24 -d 193.52.245.0/24 -p tcp --sport 1:65535 --dport 1100 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 301"
+-A ETH+-ETH4 -s 10.131.15.0/24 -d 193.52.245.0/24 -p tcp --sport 1:65535 --dport 1521 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 302"
+-A ETH+-ETH4 -s 10.131.15.0/24 -d 193.52.245.0/24 -p tcp --sport 1:65535 --dport 1534 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 303"
+-A ETH+-ETH4 -s 10.131.15.0/24 -d 193.52.245.0/24 -p tcp --sport 1:65535 --dport 3099 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 304"
+-A ETH+-ETH4 -s 10.131.15.0/24 -d 193.52.245.0/24 -p tcp --sport 1:65535 --dport 3200 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 305"
+-A ETH+-ETH4 -s 10.131.15.0/24 -d 193.52.245.0/24 -p tcp --sport 1:65535 --dport 3389 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 306"
+-A ETH+-ETH4 -s 10.131.15.0/24 -d 193.52.245.0/24 -p tcp --sport 1:65535 --dport 5402 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 307"
+-A ETH+-ETH4 -s 10.131.15.0/24 -d 193.52.245.0/24 -p tcp --sport 1024:65535 --dport 22 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 308"
+-A ETH+-ETH4 -s 10.131.15.0/24 -d 193.52.246.36 -p tcp --sport 1:65535 --dport 23 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 309"
+-A ETH+-ETH4 -s 10.131.15.0/24 -d 193.52.246.36 -p tcp --sport 1:65535 --dport 443 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 310"
+-A ETH+-ETH4 -s 10.131.15.0/24 -d 193.52.246.36 -p tcp --sport 1:65535 --dport 1040:1060 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 311"
+-A ETH+-ETH4 -s 10.131.15.0/24 -d 193.52.246.36 -p tcp --sport 1:65535 --dport 1100 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 312"
+-A ETH+-ETH4 -s 10.131.15.0/24 -d 193.52.246.36 -p tcp --sport 1:65535 --dport 1521 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 313"
+-A ETH+-ETH4 -s 10.131.15.0/24 -d 193.52.246.36 -p tcp --sport 1:65535 --dport 1534 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 314"
+-A ETH+-ETH4 -s 10.131.15.0/24 -d 193.52.246.36 -p tcp --sport 1:65535 --dport 3099 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 315"
+-A ETH+-ETH4 -s 10.131.15.0/24 -d 193.52.246.36 -p tcp --sport 1:65535 --dport 3200 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 316"
+-A ETH+-ETH4 -s 10.131.15.0/24 -d 193.52.246.36 -p tcp --sport 1:65535 --dport 3389 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 317"
+-A ETH+-ETH4 -s 10.131.15.0/24 -d 193.52.246.36 -p tcp --sport 1:65535 --dport 5402 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 318"
+-A ETH+-ETH4 -s 10.131.15.0/24 -d 193.52.246.36 -p tcp --sport 1024:65535 --dport 22 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 319"
+-A ETH+-ETH4 -s 10.131.15.0/24 -d 62.212.120.15 -p tcp --sport 1:65535 --dport 23 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 320"
+-A ETH+-ETH4 -s 10.131.15.0/24 -d 62.212.120.15 -p tcp --sport 1:65535 --dport 443 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 321"
+-A ETH+-ETH4 -s 10.131.15.0/24 -d 62.212.120.15 -p tcp --sport 1:65535 --dport 1040:1060 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 322"
+-A ETH+-ETH4 -s 10.131.15.0/24 -d 62.212.120.15 -p tcp --sport 1:65535 --dport 1100 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 323"
+-A ETH+-ETH4 -s 10.131.15.0/24 -d 62.212.120.15 -p tcp --sport 1:65535 --dport 1521 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 324"
+-A ETH+-ETH4 -s 10.131.15.0/24 -d 62.212.120.15 -p tcp --sport 1:65535 --dport 1534 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 325"
+-A ETH+-ETH4 -s 10.131.15.0/24 -d 62.212.120.15 -p tcp --sport 1:65535 --dport 3099 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 326"
+-A ETH+-ETH4 -s 10.131.15.0/24 -d 62.212.120.15 -p tcp --sport 1:65535 --dport 3200 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 327"
+-A ETH+-ETH4 -s 10.131.15.0/24 -d 62.212.120.15 -p tcp --sport 1:65535 --dport 3389 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 328"
+-A ETH+-ETH4 -s 10.131.15.0/24 -d 62.212.120.15 -p tcp --sport 1:65535 --dport 5402 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 329"
+-A ETH+-ETH4 -s 10.131.15.0/24 -d 62.212.120.15 -p tcp --sport 1024:65535 --dport 22 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 330"
+-A ETH+-ETH4 -s 10.131.13.0/24 -d 193.52.26.1 -p tcp --sport 1:65535 --dport 23 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 331"
+-A ETH+-ETH4 -s 10.131.13.0/24 -d 193.52.26.1 -p tcp --sport 1:65535 --dport 443 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 332"
+-A ETH+-ETH4 -s 10.131.13.0/24 -d 193.52.26.1 -p tcp --sport 1:65535 --dport 1040:1060 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 333"
+-A ETH+-ETH4 -s 10.131.13.0/24 -d 193.52.26.1 -p tcp --sport 1:65535 --dport 1100 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 334"
+-A ETH+-ETH4 -s 10.131.13.0/24 -d 193.52.26.1 -p tcp --sport 1:65535 --dport 1521 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 335"
+-A ETH+-ETH4 -s 10.131.13.0/24 -d 193.52.26.1 -p tcp --sport 1:65535 --dport 1534 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 336"
+-A ETH+-ETH4 -s 10.131.13.0/24 -d 193.52.26.1 -p tcp --sport 1:65535 --dport 3099 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 337"
+-A ETH+-ETH4 -s 10.131.13.0/24 -d 193.52.26.1 -p tcp --sport 1:65535 --dport 3200 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 338"
+-A ETH+-ETH4 -s 10.131.13.0/24 -d 193.52.26.1 -p tcp --sport 1:65535 --dport 3389 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 339"
+-A ETH+-ETH4 -s 10.131.13.0/24 -d 193.52.26.1 -p tcp --sport 1:65535 --dport 5402 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 340"
+-A ETH+-ETH4 -s 10.131.13.0/24 -d 193.52.26.1 -p tcp --sport 1024:65535 --dport 22 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 341"
+-A ETH+-ETH4 -s 10.131.13.0/24 -d 193.52.26.20 -p tcp --sport 1:65535 --dport 23 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 342"
+-A ETH+-ETH4 -s 10.131.13.0/24 -d 193.52.26.20 -p tcp --sport 1:65535 --dport 443 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 343"
+-A ETH+-ETH4 -s 10.131.13.0/24 -d 193.52.26.20 -p tcp --sport 1:65535 --dport 1040:1060 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 344"
+-A ETH+-ETH4 -s 10.131.13.0/24 -d 193.52.26.20 -p tcp --sport 1:65535 --dport 1100 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 345"
+-A ETH+-ETH4 -s 10.131.13.0/24 -d 193.52.26.20 -p tcp --sport 1:65535 --dport 1521 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 346"
+-A ETH+-ETH4 -s 10.131.13.0/24 -d 193.52.26.20 -p tcp --sport 1:65535 --dport 1534 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 347"
+-A ETH+-ETH4 -s 10.131.13.0/24 -d 193.52.26.20 -p tcp --sport 1:65535 --dport 3099 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 348"
+-A ETH+-ETH4 -s 10.131.13.0/24 -d 193.52.26.20 -p tcp --sport 1:65535 --dport 3200 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 349"
+-A ETH+-ETH4 -s 10.131.13.0/24 -d 193.52.26.20 -p tcp --sport 1:65535 --dport 3389 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 350"
+-A ETH+-ETH4 -s 10.131.13.0/24 -d 193.52.26.20 -p tcp --sport 1:65535 --dport 5402 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 351"
+-A ETH+-ETH4 -s 10.131.13.0/24 -d 193.52.26.20 -p tcp --sport 1024:65535 --dport 22 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 352"
+-A ETH+-ETH4 -s 10.131.13.0/24 -d 193.52.245.0/24 -p tcp --sport 1:65535 --dport 23 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 353"
+-A ETH+-ETH4 -s 10.131.13.0/24 -d 193.52.245.0/24 -p tcp --sport 1:65535 --dport 443 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 354"
+-A ETH+-ETH4 -s 10.131.13.0/24 -d 193.52.245.0/24 -p tcp --sport 1:65535 --dport 1040:1060 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 355"
+-A ETH+-ETH4 -s 10.131.13.0/24 -d 193.52.245.0/24 -p tcp --sport 1:65535 --dport 1100 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 356"
+-A ETH+-ETH4 -s 10.131.13.0/24 -d 193.52.245.0/24 -p tcp --sport 1:65535 --dport 1521 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 357"
+-A ETH+-ETH4 -s 10.131.13.0/24 -d 193.52.245.0/24 -p tcp --sport 1:65535 --dport 1534 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 358"
+-A ETH+-ETH4 -s 10.131.13.0/24 -d 193.52.245.0/24 -p tcp --sport 1:65535 --dport 3099 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 359"
+-A ETH+-ETH4 -s 10.131.13.0/24 -d 193.52.245.0/24 -p tcp --sport 1:65535 --dport 3200 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 360"
+-A ETH+-ETH4 -s 10.131.13.0/24 -d 193.52.245.0/24 -p tcp --sport 1:65535 --dport 3389 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 361"
+-A ETH+-ETH4 -s 10.131.13.0/24 -d 193.52.245.0/24 -p tcp --sport 1:65535 --dport 5402 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 362"
+-A ETH+-ETH4 -s 10.131.13.0/24 -d 193.52.245.0/24 -p tcp --sport 1024:65535 --dport 22 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 363"
+-A ETH+-ETH4 -s 10.131.13.0/24 -d 193.52.246.36 -p tcp --sport 1:65535 --dport 23 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 364"
+-A ETH+-ETH4 -s 10.131.13.0/24 -d 193.52.246.36 -p tcp --sport 1:65535 --dport 443 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 365"
+-A ETH+-ETH4 -s 10.131.13.0/24 -d 193.52.246.36 -p tcp --sport 1:65535 --dport 1040:1060 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 366"
+-A ETH+-ETH4 -s 10.131.13.0/24 -d 193.52.246.36 -p tcp --sport 1:65535 --dport 1100 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 367"
+-A ETH+-ETH4 -s 10.131.13.0/24 -d 193.52.246.36 -p tcp --sport 1:65535 --dport 1521 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 368"
+-A ETH+-ETH4 -s 10.131.13.0/24 -d 193.52.246.36 -p tcp --sport 1:65535 --dport 1534 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 369"
+-A ETH+-ETH4 -s 10.131.13.0/24 -d 193.52.246.36 -p tcp --sport 1:65535 --dport 3099 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 370"
+-A ETH+-ETH4 -s 10.131.13.0/24 -d 193.52.246.36 -p tcp --sport 1:65535 --dport 3200 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 371"
+-A ETH+-ETH4 -s 10.131.13.0/24 -d 193.52.246.36 -p tcp --sport 1:65535 --dport 3389 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 372"
+-A ETH+-ETH4 -s 10.131.13.0/24 -d 193.52.246.36 -p tcp --sport 1:65535 --dport 5402 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 373"
+-A ETH+-ETH4 -s 10.131.13.0/24 -d 193.52.246.36 -p tcp --sport 1024:65535 --dport 22 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 374"
+-A ETH+-ETH4 -s 10.131.13.0/24 -d 62.212.120.15 -p tcp --sport 1:65535 --dport 23 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 375"
+-A ETH+-ETH4 -s 10.131.13.0/24 -d 62.212.120.15 -p tcp --sport 1:65535 --dport 443 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 376"
+-A ETH+-ETH4 -s 10.131.13.0/24 -d 62.212.120.15 -p tcp --sport 1:65535 --dport 1040:1060 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 377"
+-A ETH+-ETH4 -s 10.131.13.0/24 -d 62.212.120.15 -p tcp --sport 1:65535 --dport 1100 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 378"
+-A ETH+-ETH4 -s 10.131.13.0/24 -d 62.212.120.15 -p tcp --sport 1:65535 --dport 1521 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 379"
+-A ETH+-ETH4 -s 10.131.13.0/24 -d 62.212.120.15 -p tcp --sport 1:65535 --dport 1534 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 380"
+-A ETH+-ETH4 -s 10.131.13.0/24 -d 62.212.120.15 -p tcp --sport 1:65535 --dport 3099 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 381"
+-A ETH+-ETH4 -s 10.131.13.0/24 -d 62.212.120.15 -p tcp --sport 1:65535 --dport 3200 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 382"
+-A ETH+-ETH4 -s 10.131.13.0/24 -d 62.212.120.15 -p tcp --sport 1:65535 --dport 3389 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 383"
+-A ETH+-ETH4 -s 10.131.13.0/24 -d 62.212.120.15 -p tcp --sport 1:65535 --dport 5402 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 384"
+-A ETH+-ETH4 -s 10.131.13.0/24 -d 62.212.120.15 -p tcp --sport 1024:65535 --dport 22 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 385"
+-A ETH+-ETH4 -s 10.131.19.0/24 -d 193.52.26.1 -p tcp --sport 1:65535 --dport 23 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 386"
+-A ETH+-ETH4 -s 10.131.19.0/24 -d 193.52.26.1 -p tcp --sport 1:65535 --dport 443 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 387"
+-A ETH+-ETH4 -s 10.131.19.0/24 -d 193.52.26.1 -p tcp --sport 1:65535 --dport 1040:1060 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 388"
+-A ETH+-ETH4 -s 10.131.19.0/24 -d 193.52.26.1 -p tcp --sport 1:65535 --dport 1100 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 389"
+-A ETH+-ETH4 -s 10.131.19.0/24 -d 193.52.26.1 -p tcp --sport 1:65535 --dport 1521 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 390"
+-A ETH+-ETH4 -s 10.131.19.0/24 -d 193.52.26.1 -p tcp --sport 1:65535 --dport 1534 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 391"
+-A ETH+-ETH4 -s 10.131.19.0/24 -d 193.52.26.1 -p tcp --sport 1:65535 --dport 3099 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 392"
+-A ETH+-ETH4 -s 10.131.19.0/24 -d 193.52.26.1 -p tcp --sport 1:65535 --dport 3200 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 393"
+-A ETH+-ETH4 -s 10.131.19.0/24 -d 193.52.26.1 -p tcp --sport 1:65535 --dport 3389 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 394"
+-A ETH+-ETH4 -s 10.131.19.0/24 -d 193.52.26.1 -p tcp --sport 1:65535 --dport 5402 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 395"
+-A ETH+-ETH4 -s 10.131.19.0/24 -d 193.52.26.1 -p tcp --sport 1024:65535 --dport 22 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 396"
+-A ETH+-ETH4 -s 10.131.19.0/24 -d 193.52.26.20 -p tcp --sport 1:65535 --dport 23 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 397"
+-A ETH+-ETH4 -s 10.131.19.0/24 -d 193.52.26.20 -p tcp --sport 1:65535 --dport 443 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 398"
+-A ETH+-ETH4 -s 10.131.19.0/24 -d 193.52.26.20 -p tcp --sport 1:65535 --dport 1040:1060 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 399"
+-A ETH+-ETH4 -s 10.131.19.0/24 -d 193.52.26.20 -p tcp --sport 1:65535 --dport 1100 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 400"
+-A ETH+-ETH4 -s 10.131.19.0/24 -d 193.52.26.20 -p tcp --sport 1:65535 --dport 1521 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 401"
+-A ETH+-ETH4 -s 10.131.19.0/24 -d 193.52.26.20 -p tcp --sport 1:65535 --dport 1534 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 402"
+-A ETH+-ETH4 -s 10.131.19.0/24 -d 193.52.26.20 -p tcp --sport 1:65535 --dport 3099 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 403"
+-A ETH+-ETH4 -s 10.131.19.0/24 -d 193.52.26.20 -p tcp --sport 1:65535 --dport 3200 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 404"
+-A ETH+-ETH4 -s 10.131.19.0/24 -d 193.52.26.20 -p tcp --sport 1:65535 --dport 3389 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 405"
+-A ETH+-ETH4 -s 10.131.19.0/24 -d 193.52.26.20 -p tcp --sport 1:65535 --dport 5402 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 406"
+-A ETH+-ETH4 -s 10.131.19.0/24 -d 193.52.26.20 -p tcp --sport 1024:65535 --dport 22 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 407"
+-A ETH+-ETH4 -s 10.131.19.0/24 -d 193.52.245.0/24 -p tcp --sport 1:65535 --dport 23 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 408"
+-A ETH+-ETH4 -s 10.131.19.0/24 -d 193.52.245.0/24 -p tcp --sport 1:65535 --dport 443 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 409"
+-A ETH+-ETH4 -s 10.131.19.0/24 -d 193.52.245.0/24 -p tcp --sport 1:65535 --dport 1040:1060 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 410"
+-A ETH+-ETH4 -s 10.131.19.0/24 -d 193.52.245.0/24 -p tcp --sport 1:65535 --dport 1100 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 411"
+-A ETH+-ETH4 -s 10.131.19.0/24 -d 193.52.245.0/24 -p tcp --sport 1:65535 --dport 1521 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 412"
+-A ETH+-ETH4 -s 10.131.19.0/24 -d 193.52.245.0/24 -p tcp --sport 1:65535 --dport 1534 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 413"
+-A ETH+-ETH4 -s 10.131.19.0/24 -d 193.52.245.0/24 -p tcp --sport 1:65535 --dport 3099 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 414"
+-A ETH+-ETH4 -s 10.131.19.0/24 -d 193.52.245.0/24 -p tcp --sport 1:65535 --dport 3200 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 415"
+-A ETH+-ETH4 -s 10.131.19.0/24 -d 193.52.245.0/24 -p tcp --sport 1:65535 --dport 3389 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 416"
+-A ETH+-ETH4 -s 10.131.19.0/24 -d 193.52.245.0/24 -p tcp --sport 1:65535 --dport 5402 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 417"
+-A ETH+-ETH4 -s 10.131.19.0/24 -d 193.52.245.0/24 -p tcp --sport 1024:65535 --dport 22 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 418"
+-A ETH+-ETH4 -s 10.131.19.0/24 -d 193.52.246.36 -p tcp --sport 1:65535 --dport 23 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 419"
+-A ETH+-ETH4 -s 10.131.19.0/24 -d 193.52.246.36 -p tcp --sport 1:65535 --dport 443 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 420"
+-A ETH+-ETH4 -s 10.131.19.0/24 -d 193.52.246.36 -p tcp --sport 1:65535 --dport 1040:1060 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 421"
+-A ETH+-ETH4 -s 10.131.19.0/24 -d 193.52.246.36 -p tcp --sport 1:65535 --dport 1100 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 422"
+-A ETH+-ETH4 -s 10.131.19.0/24 -d 193.52.246.36 -p tcp --sport 1:65535 --dport 1521 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 423"
+-A ETH+-ETH4 -s 10.131.19.0/24 -d 193.52.246.36 -p tcp --sport 1:65535 --dport 1534 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 424"
+-A ETH+-ETH4 -s 10.131.19.0/24 -d 193.52.246.36 -p tcp --sport 1:65535 --dport 3099 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 425"
+-A ETH+-ETH4 -s 10.131.19.0/24 -d 193.52.246.36 -p tcp --sport 1:65535 --dport 3200 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 426"
+-A ETH+-ETH4 -s 10.131.19.0/24 -d 193.52.246.36 -p tcp --sport 1:65535 --dport 3389 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 427"
+-A ETH+-ETH4 -s 10.131.19.0/24 -d 193.52.246.36 -p tcp --sport 1:65535 --dport 5402 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 428"
+-A ETH+-ETH4 -s 10.131.19.0/24 -d 193.52.246.36 -p tcp --sport 1024:65535 --dport 22 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 429"
+-A ETH+-ETH4 -s 10.131.19.0/24 -d 62.212.120.15 -p tcp --sport 1:65535 --dport 23 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 430"
+-A ETH+-ETH4 -s 10.131.19.0/24 -d 62.212.120.15 -p tcp --sport 1:65535 --dport 443 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 431"
+-A ETH+-ETH4 -s 10.131.19.0/24 -d 62.212.120.15 -p tcp --sport 1:65535 --dport 1040:1060 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 432"
+-A ETH+-ETH4 -s 10.131.19.0/24 -d 62.212.120.15 -p tcp --sport 1:65535 --dport 1100 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 433"
+-A ETH+-ETH4 -s 10.131.19.0/24 -d 62.212.120.15 -p tcp --sport 1:65535 --dport 1521 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 434"
+-A ETH+-ETH4 -s 10.131.19.0/24 -d 62.212.120.15 -p tcp --sport 1:65535 --dport 1534 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 435"
+-A ETH+-ETH4 -s 10.131.19.0/24 -d 62.212.120.15 -p tcp --sport 1:65535 --dport 3099 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 436"
+-A ETH+-ETH4 -s 10.131.19.0/24 -d 62.212.120.15 -p tcp --sport 1:65535 --dport 3200 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 437"
+-A ETH+-ETH4 -s 10.131.19.0/24 -d 62.212.120.15 -p tcp --sport 1:65535 --dport 3389 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 438"
+-A ETH+-ETH4 -s 10.131.19.0/24 -d 62.212.120.15 -p tcp --sport 1:65535 --dport 5402 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 439"
+-A ETH+-ETH4 -s 10.131.19.0/24 -d 62.212.120.15 -p tcp --sport 1024:65535 --dport 22 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #1190: rule 440"
+
+
+# Default decisions
+# -----------------
+# No default drop for chain ETH+-ETH+
+# No default drop for chain ETH+-ETH3.24
+# No default drop for chain ETH+-ETH4
+# No default drop for chain ETH3.24-ETH+
+# No default drop for chain TUNP-ETH+
+-A ETH0-ETH4 -j ULOG --ulog-prefix "F0d:Default DROP for ETH0-ETH4"
+-A ETH0-ETH4 -j DROP -m comment --comment "Default decision"
+-A ETH3.24-ETH4 -j ULOG --ulog-prefix "F0d:Default DROP for ETH3.24-ET"
+-A ETH3.24-ETH4 -j DROP -m comment --comment "Default decision"
+-A INPUT -j ULOG --ulog-prefix "I0d:Default DROP for INPUT"
+-A INPUT -j DROP -m comment --comment "Default decision"
+-A FORWARD -j ULOG --ulog-prefix "F0d:Default DROP for FORWARD"
+-A FORWARD -j DROP -m comment --comment "Default decision"
+-A OUTPUT -j ACCEPT -m comment --comment "Default decision"
+COMMIT
+
+#############
+# nat table #
+#############
+*nat
+:PREROUTING ACCEPT [0:0]
+:POSTROUTING ACCEPT [0:0]
+:OUTPUT ACCEPT [0:0]
+
+# NAT rule #230
+# -------------
+# Généré par l'assistant
+-A PREROUTING -i eth4 -s 0.0.0.0/0 -d 193.52.240.65 -j DNAT --to-destination 10.131.23.8 -m comment --comment "NAT rule #230: rule 1"
+
+# NAT rule #240
+# -------------
+# Généré par l'assistant
+-A PREROUTING -i eth4 -s 0.0.0.0/0 -d 193.52.240.7 -j DNAT --to-destination 10.131.23.7 -m comment --comment "NAT rule #240: rule 1"
+
+# NAT rule #250
+# -------------
+# Généré par l'assistant
+-A PREROUTING -i eth4 -s 0.0.0.0/0 -d 193.52.240.3 -j DNAT --to-destination 10.131.14.27 -m comment --comment "NAT rule #250: rule 1"
+
+# NAT rule #260
+# -------------
+# Généré par l'assistant
+-A PREROUTING -i eth4 -s 0.0.0.0/0 -d 193.52.240.1 -j DNAT --to-destination 194.214.102.10 -m comment --comment "NAT rule #260: rule 1"
+
+# NAT rule #20
+# ------------
+# SNAT EdenWall
+-A POSTROUTING -s 10.43.12.1 -o eth4 -d 0.0.0.0/0 -j SNAT --to-source 193.52.240.236 -m comment --comment "NAT rule #20: rule 1"
+-A POSTROUTING -s 192.168.101.1 -o eth4 -d 0.0.0.0/0 -j SNAT --to-source 193.52.240.236 -m comment --comment "NAT rule #20: rule 2"
+-A POSTROUTING -s 192.168.102.1 -o eth4 -d 0.0.0.0/0 -j SNAT --to-source 193.52.240.236 -m comment --comment "NAT rule #20: rule 3"
+-A POSTROUTING -s 192.168.103.1 -o eth4 -d 0.0.0.0/0 -j SNAT --to-source 193.52.240.236 -m comment --comment "NAT rule #20: rule 4"
+-A POSTROUTING -s 192.168.104.1 -o eth4 -d 0.0.0.0/0 -j SNAT --to-source 193.52.240.236 -m comment --comment "NAT rule #20: rule 5"
+
+# NAT rule #30
+# ------------
+# SNAT Réseau Gestion
+-A POSTROUTING -s 10.131.15.0/24 -o eth4 -d 0.0.0.0/0 -j SNAT --to-source 193.52.240.225 -m comment --comment "NAT rule #30: rule 1"
+
+# NAT rule #40
+# ------------
+# Wizard generated
+-A POSTROUTING -s 10.131.17.0/24 -o eth4 -d 0.0.0.0/0 -j SNAT --to-source 193.52.240.226 -m comment --comment "NAT rule #40: rule 1"
+
+# NAT rule #50
+# ------------
+# Wizard generated
+-A POSTROUTING -s 10.131.12.0/24 -o eth4 -d 0.0.0.0/0 -j SNAT --to-source 193.52.240.227 -m comment --comment "NAT rule #50: rule 1"
+
+# NAT rule #60
+# ------------
+# Wizard generated
+-A POSTROUTING -s 10.131.14.28 -o eth4 -d 0.0.0.0/0 -j SNAT --to-source 193.52.240.225 -m comment --comment "NAT rule #60: rule 1"
+
+# NAT rule #70
+# ------------
+# Wizard generated
+-A POSTROUTING -s 10.131.14.0/24 -o eth4 -d 0.0.0.0/0 -j SNAT --to-source 193.52.240.229 -m comment --comment "NAT rule #70: rule 1"
+
+# NAT rule #80
+# ------------
+# Wizard generated
+-A POSTROUTING -s 10.131.16.0/24 -o eth4 -d 0.0.0.0/0 -j SNAT --to-source 193.52.240.230 -m comment --comment "NAT rule #80: rule 1"
+
+# NAT rule #90
+# ------------
+# Wizard generated
+-A POSTROUTING -s 192.168.32.0/22 -o eth4 -d 0.0.0.0/0 -j SNAT --to-source 193.52.240.231 -m comment --comment "NAT rule #90: rule 1"
+
+# NAT rule #100
+# -------------
+# Wizard generated
+-A POSTROUTING -s 192.168.36.0/24 -o eth4 -d 0.0.0.0/0 -j SNAT --to-source 193.52.240.232 -m comment --comment "NAT rule #100: rule 1"
+
+# NAT rule #110
+# -------------
+# Wizard generated
+-A POSTROUTING -s 192.168.37.0/24 -o eth4 -d 0.0.0.0/0 -j SNAT --to-source 193.52.240.234 -m comment --comment "NAT rule #110: rule 1"
+
+# NAT rule #120
+# -------------
+# Wizard generated
+-A POSTROUTING -s 10.131.24.0/24 -o eth4 -d 0.0.0.0/0 -j SNAT --to-source 193.52.240.237 -m comment --comment "NAT rule #120: rule 1"
+
+# NAT rule #130
+# -------------
+-A POSTROUTING -s 10.131.23.48 -o eth4 -d 0.0.0.0/0 -j SNAT --to-source 193.52.240.225 -m comment --comment "NAT rule #130: rule 1"
+
+# NAT rule #140
+# -------------
+# Wizard generated
+-A POSTROUTING -s 192.168.168.0/24 -o eth4 -d 0.0.0.0/0 -j SNAT --to-source 193.52.240.238 -m comment --comment "NAT rule #140: rule 1"
+
+# NAT rule #150
+# -------------
+-A POSTROUTING -s 10.131.23.8 -o eth4 -d 0.0.0.0/0 -j SNAT --to-source 193.52.240.65 -m comment --comment "NAT rule #150: rule 1"
+
+# NAT rule #160
+# -------------
+# Wizard generated
+-A POSTROUTING -s 10.131.23.0/24 -o eth4 -d 0.0.0.0/0 -j SNAT --to-source 193.52.240.235 -m comment --comment "NAT rule #160: rule 1"
+
+# NAT rule #170
+# -------------
+# Wizard generated
+-A POSTROUTING -s 10.131.20.0/24 -o eth4 -d 0.0.0.0/0 -j SNAT --to-source 193.52.240.239 -m comment --comment "NAT rule #170: rule 1"
+
+# NAT rule #180
+# -------------
+# Wizard generated
+-A POSTROUTING -s 10.131.19.0/24 -o eth4 -d 0.0.0.0/0 -j SNAT --to-source 193.52.240.238 -m comment --comment "NAT rule #180: rule 1"
+
+# NAT rule #190
+# -------------
+# Wizard generated
+-A POSTROUTING -s 192.168.218.0/24 -o eth4 -d 0.0.0.0/0 -j SNAT --to-source 193.52.240.233 -m comment --comment "NAT rule #190: rule 1"
+
+# NAT rule #200
+# -------------
+-A POSTROUTING -s 10.131.23.7 -o eth4 -d 0.0.0.0/0 -j SNAT --to-source 193.52.240.7 -m comment --comment "NAT rule #200: rule 1"
+
+# NAT rule #210
+# -------------
+# Wizard generated
+-A POSTROUTING -s 10.131.13.0/24 -o eth4 -d 0.0.0.0/0 -j SNAT --to-source 193.52.240.228 -m comment --comment "NAT rule #210: rule 1"
+
+COMMIT
+

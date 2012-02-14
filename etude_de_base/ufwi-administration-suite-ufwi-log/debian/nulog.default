@@ -1,0 +1,3 @@
+# set this to NO if you do not want the server to start automatically,
+# or if you are using NuCentral
+START_ON_BOOT="YES"

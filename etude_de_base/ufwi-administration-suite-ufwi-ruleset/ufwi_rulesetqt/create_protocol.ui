@@ -1,0 +1,302 @@
+<ui version="4.0" >
+ <class>Dialog</class>
+ <widget class="QDialog" name="Dialog" >
+  <property name="geometry" >
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>360</width>
+    <height>369</height>
+   </rect>
+  </property>
+  <property name="windowTitle" >
+   <string>Dialog</string>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout_2" >
+   <item>
+    <layout class="QGridLayout" >
+     <item row="0" column="0" >
+      <widget class="QLabel" name="label_2" >
+       <property name="text" >
+        <string>Identifier:</string>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="0" >
+      <widget class="QLabel" name="layer4_label" >
+       <property name="text" >
+        <string>Layer 4:</string>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="1" >
+      <widget class="QLineEdit" name="identifier_edit" />
+     </item>
+     <item row="1" column="1" >
+      <widget class="QComboBox" name="layer4_combo" />
+     </item>
+    </layout>
+   </item>
+   <item>
+    <widget class="QStackedWidget" name="layer4_stack" >
+     <property name="currentIndex" >
+      <number>0</number>
+     </property>
+     <widget class="QWidget" name="page" >
+      <layout class="QGridLayout" name="gridLayout_3" >
+       <item row="0" column="0" >
+        <widget class="QLabel" name="sport_label" >
+         <property name="text" >
+          <string>Source:</string>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="1" >
+        <widget class="QFrame" name="frame_3" >
+         <property name="frameShape" >
+          <enum>QFrame::StyledPanel</enum>
+         </property>
+         <property name="frameShadow" >
+          <enum>QFrame::Raised</enum>
+         </property>
+         <layout class="QGridLayout" name="gridLayout_2" >
+          <item row="0" column="0" >
+           <widget class="QRadioButton" name="sport_single_radio" >
+            <property name="text" >
+             <string>Port:</string>
+            </property>
+            <property name="checked" >
+             <bool>false</bool>
+            </property>
+            <property name="autoExclusive" >
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="1" colspan="2" >
+           <widget class="QSpinBox" name="sport_port_spin" >
+            <property name="minimum" >
+             <number>1</number>
+            </property>
+            <property name="maximum" >
+             <number>65535</number>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="0" >
+           <widget class="QRadioButton" name="sport_range_radio" >
+            <property name="text" >
+             <string>Port range:</string>
+            </property>
+            <property name="checked" >
+             <bool>true</bool>
+            </property>
+            <property name="autoExclusive" >
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="1" >
+           <widget class="QSpinBox" name="sport_first_spin" >
+            <property name="maximum" >
+             <number>65535</number>
+            </property>
+            <property name="value" >
+             <number>1024</number>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="2" >
+           <widget class="QSpinBox" name="sport_last_spin" >
+            <property name="maximum" >
+             <number>65535</number>
+            </property>
+            <property name="value" >
+             <number>65535</number>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="0" colspan="3" >
+           <widget class="QRadioButton" name="sport_any_radio" >
+            <property name="text" >
+             <string>Any port</string>
+            </property>
+            <property name="autoExclusive" >
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item row="1" column="0" >
+        <widget class="QLabel" name="dport_label" >
+         <property name="text" >
+          <string>Destination:</string>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="1" >
+        <widget class="QFrame" name="frame_2" >
+         <property name="frameShape" >
+          <enum>QFrame::StyledPanel</enum>
+         </property>
+         <property name="frameShadow" >
+          <enum>QFrame::Raised</enum>
+         </property>
+         <layout class="QGridLayout" name="gridLayout" >
+          <item row="0" column="0" >
+           <widget class="QRadioButton" name="dport_single_radio" >
+            <property name="text" >
+             <string>Port:</string>
+            </property>
+            <property name="checked" >
+             <bool>true</bool>
+            </property>
+            <property name="autoExclusive" >
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="1" colspan="2" >
+           <widget class="QSpinBox" name="dport_port_spin" >
+            <property name="minimum" >
+             <number>1</number>
+            </property>
+            <property name="maximum" >
+             <number>65535</number>
+            </property>
+            <property name="value" >
+             <number>80</number>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="0" >
+           <widget class="QRadioButton" name="dport_range_radio" >
+            <property name="text" >
+             <string>Port range:</string>
+            </property>
+            <property name="checked" >
+             <bool>false</bool>
+            </property>
+            <property name="autoExclusive" >
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="1" >
+           <widget class="QSpinBox" name="dport_first_spin" >
+            <property name="maximum" >
+             <number>65535</number>
+            </property>
+            <property name="value" >
+             <number>0</number>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="2" >
+           <widget class="QSpinBox" name="dport_last_spin" >
+            <property name="maximum" >
+             <number>65535</number>
+            </property>
+            <property name="value" >
+             <number>0</number>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="0" colspan="3" >
+           <widget class="QRadioButton" name="dport_any_radio" >
+            <property name="text" >
+             <string>Any port</string>
+            </property>
+            <property name="autoExclusive" >
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="page_2" >
+      <layout class="QGridLayout" >
+       <item row="0" column="0" >
+        <widget class="QLabel" name="icmp_type_label" >
+         <property name="text" >
+          <string>ICMP Type:</string>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="1" >
+        <widget class="QLineEdit" name="icmp_type_edit" />
+       </item>
+       <item row="1" column="0" >
+        <widget class="QLabel" name="icmp_code_label" >
+         <property name="text" >
+          <string>ICMP Code:</string>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="1" >
+        <widget class="QLineEdit" name="icmp_code_edit" >
+         <property name="text" >
+          <string/>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+    </widget>
+   </item>
+   <item>
+    <widget class="QDialogButtonBox" name="buttonBox" >
+     <property name="orientation" >
+      <enum>Qt::Horizontal</enum>
+     </property>
+     <property name="standardButtons" >
+      <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
+     </property>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <tabstops>
+  <tabstop>identifier_edit</tabstop>
+  <tabstop>layer4_combo</tabstop>
+  <tabstop>sport_single_radio</tabstop>
+  <tabstop>sport_port_spin</tabstop>
+  <tabstop>sport_range_radio</tabstop>
+  <tabstop>sport_first_spin</tabstop>
+  <tabstop>sport_last_spin</tabstop>
+  <tabstop>sport_any_radio</tabstop>
+  <tabstop>dport_single_radio</tabstop>
+  <tabstop>dport_port_spin</tabstop>
+  <tabstop>dport_range_radio</tabstop>
+  <tabstop>dport_first_spin</tabstop>
+  <tabstop>dport_last_spin</tabstop>
+  <tabstop>dport_any_radio</tabstop>
+  <tabstop>buttonBox</tabstop>
+  <tabstop>icmp_type_edit</tabstop>
+  <tabstop>icmp_code_edit</tabstop>
+ </tabstops>
+ <resources/>
+ <connections>
+  <connection>
+   <sender>buttonBox</sender>
+   <signal>rejected()</signal>
+   <receiver>Dialog</receiver>
+   <slot>reject()</slot>
+   <hints>
+    <hint type="sourcelabel" >
+     <x>185</x>
+     <y>212</y>
+    </hint>
+    <hint type="destinationlabel" >
+     <x>86</x>
+     <y>230</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+</ui>

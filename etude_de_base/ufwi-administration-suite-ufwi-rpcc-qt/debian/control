@@ -1,0 +1,35 @@
+Source: nucentral-edenwall
+Section: net
+Priority: extra
+Maintainer: Pierre Chifflier <pollux@debian.org>
+Build-Depends: debhelper (>= 5),
+  python-support (>= 0.4), python-dev,
+  python-docutils,
+  pyqt4-dev-tools,
+  libqt4-dev, python-twisted-core,
+  python-twisted-web
+Standards-Version: 3.8.0
+
+Package: nucentral-edenwall
+Architecture: all
+Depends: ${python:Depends},
+        python-openssl | python-pyopenssl,
+        nucentral-server (>= 0.2)
+XB-Python-Version: ${python:Versions}
+Description: INL components and service broker (EdenWall files)
+ NuCentral is a component server, allowing registration of
+ services for local or remote calls.
+ .
+ This package provides the common files for EdenWall.
+
+Package: nucentral-edenwall-qt
+Architecture: all
+Depends: ${python:Depends}
+XB-Python-Version: ${python:Versions},
+        nucentral-common
+Description: INL components and service broker (EdenWall files)
+ NuCentral is a component server, allowing registration of
+ services for local or remote calls.
+ .
+ This package provides the common files for EdenWall.
+

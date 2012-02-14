@@ -1,0 +1,14 @@
+README for nuconf
+
+
+Individual licences and copyrights:
+-----------------------------------
+
+- icons icons/status_on.png and icons/status_off.png are GPLv2 and are © Oxygen Project (http://www.oxygen-icons.org/)
+(original names: dialog-close.png dialog-apply.png)
+-same goes for /icons/status_refresh.png, originally view-refresh.png
+-same goes for /icons/status_config.png, originally configure.png
+- icon icons/status_na.png, originally jabber_na.png from debian package kopete v4:3.5.10-2
+- fold-unfold.svn and derivatives (un)fold.png are © INL 2009/Feth AREZKI
+
+- icon icons/warning.png is PD © headwar September 30, 2007 - http://openclipart.org/media/people/headwar

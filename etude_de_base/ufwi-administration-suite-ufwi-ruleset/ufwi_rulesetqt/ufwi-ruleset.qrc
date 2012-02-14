@@ -1,0 +1,5 @@
+<RCC>
+    <qresource prefix="/nuface/locale">
+        <file>ufwi-ruleset.fr.qm</file>
+    </qresource>
+</RCC>

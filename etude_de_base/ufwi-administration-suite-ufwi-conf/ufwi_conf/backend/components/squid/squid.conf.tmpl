@@ -1,0 +1,75 @@
+{% if auth == 'nufw' %}
+external_acl_type nufw %SRC %SRCPORT /usr/bin/squid_nufw_helper -f /etc/squid/squid_nufw_helper.conf -u -U
+acl auth_nufw external nufw
+http_access allow auth_nufw
+{% else %}
+acl our_networks src "/var/lib/squidguard/db/good.iplist"
+http_access allow our_networks
+{% endif %}
+
+{% if transparent %}
+http_port 3128 transparent
+{% else %}
+http_port 3128
+{% endif %}
+
+
+{% if use_antivirus %}
+cache_peer localhost parent 8280 0 no-query no-digest no-netdb-exchange
+cache_peer_access localhost deny !Scan_HTTP
+cache_peer_access localhost allow Scan_HTTP
+never_direct allow Scan_HTTP
+
+acl Scan_HTTP proto HTTP
+{% endif %}
+
+
+hierarchy_stoplist cgi-bin ?
+acl QUERY urlpath_regex cgi-bin \?
+no_cache deny QUERY
+cache_access_log /var/log/squid/access.log
+cache_access_log /var/log/squid/access.log
+hosts_file /etc/hosts
+redirect_program /usr/lib/squid/manyplex -c /etc/squid/manyplex.conf
+redirect_children 10
+
+refresh_pattern ^ftp:		1440	20%	10080
+refresh_pattern ^gopher:	1440	0%	1440
+refresh_pattern .		0	20%	4320
+acl all src 0.0.0.0/0.0.0.0
+acl manager proto cache_object
+acl localhost src 127.0.0.1/255.255.255.255
+acl to_localhost dst 127.0.0.0/8
+acl SSL_ports port 443 563
+acl SSL_ports port 873
+acl Safe_ports port 80
+acl Safe_ports port 21
+acl Safe_ports port 443 563
+acl Safe_ports port 70
+acl Safe_ports port 210
+acl Safe_ports port 1025-65535
+acl Safe_ports port 280
+acl Safe_ports port 488
+acl Safe_ports port 591
+acl Safe_ports port 777
+acl Safe_ports port 631
+acl Safe_ports port 873
+acl Safe_ports port 901
+acl purge method PURGE
+acl CONNECT method CONNECT
+
+
+
+http_access allow manager localhost
+http_access deny manager
+http_access allow purge localhost
+http_access deny purge
+http_access deny !Safe_ports
+http_access deny CONNECT !SSL_ports
+
+http_access allow localhost
+http_access deny all
+http_reply_access allow all
+icp_access allow all
+visible_hostname edenwall
+coredump_dir /var/spool/squid

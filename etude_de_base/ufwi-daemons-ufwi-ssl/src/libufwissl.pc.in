@@ -1,0 +1,13 @@
+prefix=@prefix@
+
+exec_prefix=${prefix}
+libdir=${exec_prefix}/lib
+includedir=${prefix}/include
+
+Name: libufwissl
+Description: UFWI SSL library
+Version: @PACKAGE_VERSION@
+Requires:
+Libs: -L${libdir} -lufwissl
+Libs.private: -ldl -lpthread -lev
+Cflags: -I${includedir}/ufwissl

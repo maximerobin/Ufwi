@@ -1,0 +1,122 @@
+#!/usr/bin/env python
+"""
+Apply NuFace rules, modes:
+ - "init": apply iptables and change IP forward mode
+ - "apply": apply iptables and LDAP rules, change IP forward mode
+"""
+from __future__ import with_statement
+
+from optparse import OptionParser
+from logging import getLogger, StreamHandler, CRITICAL, WARNING, DEBUG
+import pickle
+from sys import exit, stdout
+from errno import ENOENT
+import warnings
+
+from ufwi_rpcd.common.logger import Logger
+from ufwi_rpcd.common.error import writeError
+from ufwi_rpcd.common.transaction import executeTransactions
+
+from ufwi_ruleset.iptables.ip_forward import IPForward
+
+from ufwi_ruleset.forward.ldap_rules import ApplyLdapRules
+from ufwi_ruleset.forward.iptables import ApplyIptablesRules
+from ufwi_ruleset.forward.config import RULES_FILENAME
+
+def applyRules(logger, use_ldap):
+    try:
+        with open(RULES_FILENAME, "rb") as fp:
+            logger.error("Loading the firewall rules")
+            data = pickle.load(fp)
+    except IOError, err:
+        if err.errno == ENOENT:
+            logger.critical("No rules file: do nothing.")
+            return
+        else:
+            raise
+    use_nufw = data['use_nufw']
+    use_ipv6 = data['use_ipv6']
+    is_gateway = data['is_gateway']
+
+    transactions = []
+
+    if use_nufw and use_ldap:
+        ldap_config = data['ldap_config']
+        ldap_rules = data['ldap_rules']
+        ldap = ApplyLdapRules(logger, ldap_config, ldap_rules)
+        transactions.append(ldap)
+
+    # ip forward
+    forward_ipv4 = IPForward(is_gateway, False, logger)
+    transactions.append(forward_ipv4)
+    if use_ipv6:
+        forward_ipv6 = IPForward(is_gateway, True, logger)
+        transactions.append(forward_ipv6)
+    else:
+        # disable FORWARD
+        forward_ipv6 = IPForward(False, True, logger)
+        transactions.append(forward_ipv6)
+
+    # iptables
+    iptables = ApplyIptablesRules(logger, False)
+    transactions.append(iptables)
+    ip6tables = ApplyIptablesRules(logger, True)
+    transactions.append(ip6tables)
+
+    # nuauth_command
+    if use_nufw:
+        from ufwi_ruleset.forward.nuauth import RunNuauthCommand
+        nuauth_command = RunNuauthCommand(logger)
+        transactions.append(nuauth_command)
+
+    logger.critical("Applying the firewall rules")
+    executeTransactions(logger, transactions)
+
+def setupLogging(options):
+    if options.debug:
+        level = DEBUG
+    elif options.verbose:
+        level = WARNING
+    else:
+        level = CRITICAL
+    logger = getLogger()
+    handler = StreamHandler(stdout)
+    logger.addHandler(handler)
+    logger.setLevel(level)
+    return logger
+
+def parseOptions():
+    parser = OptionParser("%prog [options] (init|apply)")
+    parser.add_option("-v", "--verbose",
+        help="Verbose mode (set logging level to WARNING)",
+        action="store_true")
+    parser.add_option("--debug",
+        help="Debug mode (set logging level to DEBUG)",
+        action="store_true")
+    options, arguments = parser.parse_args()
+    if (len(arguments) != 1) \
+    or (arguments[0] not in ("init", "apply")):
+        parser.print_help()
+        exit(1)
+    if options.debug:
+        options.verbose = True
+    return (options, arguments[0])
+
+def main():
+    options, action = parseOptions()
+    if not options.debug:
+        warnings.resetwarnings()
+        warnings.simplefilter("ignore")
+    setupLogging(options)
+    logger = Logger()
+    try:
+        use_ldap = (action == 'apply')
+        applyRules(logger, use_ldap)
+    except Exception, err:
+        writeError(err, "NUFACE ERROR", log_level=CRITICAL, logger=logger)
+        exit(1)
+    exit(0)
+
+if __name__ == "__main__":
+    main()
+

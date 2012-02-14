@@ -1,0 +1,62 @@
+Remarques générales
+-------------------
+
+Pour compiler NuConf, il faut faire un lien symbolique vers le fichier
+menu du module Nuconf de nucentral-modules (à cause de la gestion des
+traductions) :
+
+    ln -s ../../nucentral-modules/trunk/nucentral-modules/nuconf/menu
+
+Le layout par défaut ne fonctionne pas sous Etch mais fonctionne sous
+Lenny. Organisez-le et il sera sauvé automatiquement en quittant
+l'interface, comme pour NuLog.
+
+Erreur lors de la sauvegarde du service DHCP, et problème d'affichage des
+caractères accentués (remplacés par des points d'interrogation) dans la
+zone d'info.
+
+Le bouton Appliquer n'a pas été vraiment codé pour l'instant.
+
+Si le backend ne peut pas sortir sur Internet, le frontend met un temps énorme à apparaître.
+
+Liste des modules (partiellement) codés au niveau frontend
+----------------------------------------------------------
+
+- Réseau
+- Réseau/Addressage
+- Réseau/Routage
+- VPN/VPN nomade
+- Système/DNS
+- Services/DHCP
+
+Réseau/Adressage
+----------------
+
+Pour l'instant, on ne peut ajouter/modifier qu'une adresse IP locale par
+réseau.
+
+Réseau/Routage
+--------------
+
+Bug connu : si on édite un réseau existant en y introduisant une erreur,
+il est supprimé.
+
+Projets concernant l'interface pour après la milestone 1
+--------------------------------------------------------
+
+- Tooltips.
+- Repérage (en rouge) des champs impliqués dans une erreur de
+  configuration.
+- Affichage dans une fenêtre ou zone d'info de la progression du
+  chargement.
+- Affichage synthétique de l'état actuel des services (démarré ou non),
+  dans la fenêtre dockable Contrôleur (Monitor).
+- Correction de l'aspect des formulaires (ajustement, alignement).
+- Ajout d'icônes.
+- Gestion de la reconnexion au serveur NuCentral si celui-ci a été
+  redémarré.
+
+Licences
+--------
+
+- icônes icons/status_on.png et icons/status_off.png sous GPLv2, issues de Oxygen (http://www.oxygen-icons.org/)

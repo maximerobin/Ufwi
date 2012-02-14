@@ -1,0 +1,12 @@
+prefix=@prefix@
+
+exec_prefix=${prefix}
+libdir=${exec_prefix}/lib
+includedir=${prefix}/include
+
+Name: libufwibase
+Description: UFWI base library
+Version: @PACKAGE_VERSION@
+Requires:
+Libs: -L${libdir} -lufwibase
+Cflags: -I${includedir}/ufwibase

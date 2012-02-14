@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>Dialog</class>
+ <widget class="QDialog" name="Dialog">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>415</width>
+    <height>287</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Configure Templates</string>
+  </property>
+  <property name="windowIcon">
+   <iconset resource="../../ufwi-rpcc-qt/resources/ufwi-rpcc-qt.qrc">
+    <normaloff>:icons/appicon.png</normaloff>:icons/appicon.png</iconset>
+  </property>
+  <layout class="QVBoxLayout">
+   <item>
+    <layout class="QHBoxLayout">
+     <item>
+      <widget class="QGroupBox" name="groupBox">
+       <property name="title">
+        <string>Rule Set Templates</string>
+       </property>
+       <layout class="QVBoxLayout">
+        <item>
+         <widget class="QListWidget" name="ruleset_templates"/>
+        </item>
+       </layout>
+      </widget>
+     </item>
+     <item>
+      <widget class="QGroupBox" name="groupBox_2">
+       <property name="title">
+        <string>Available Templates</string>
+       </property>
+       <layout class="QVBoxLayout">
+        <item>
+         <widget class="QListWidget" name="available_templates"/>
+        </item>
+       </layout>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <layout class="QHBoxLayout">
+     <item>
+      <widget class="QPushButton" name="add_template">
+       <property name="text">
+        <string>New Template</string>
+       </property>
+       <property name="icon">
+        <iconset resource="../../ufwi-rpcc-qt/resources/ufwi-rpcc-qt.qrc">
+         <normaloff>:/icons/add.png</normaloff>:/icons/add.png</iconset>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="remove_template">
+       <property name="text">
+        <string>Delete Template</string>
+       </property>
+       <property name="icon">
+        <iconset resource="../../ufwi-rpcc-qt/resources/ufwi-rpcc-qt.qrc">
+         <normaloff>:/icons/delete.png</normaloff>:/icons/delete.png</iconset>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="cancel_button">
+       <property name="text">
+        <string>Cancel</string>
+       </property>
+       <property name="icon">
+        <iconset resource="../../ufwi-rpcc-qt/resources/ufwi-rpcc-qt.qrc">
+         <normaloff>:/icons/wrong.png</normaloff>:/icons/wrong.png</iconset>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+  </layout>
+ </widget>
+ <resources>
+  <include location="../../ufwi-rpcc-qt/resources/ufwi-rpcc-qt.qrc"/>
+ </resources>
+ <connections>
+  <connection>
+   <sender>cancel_button</sender>
+   <signal>clicked()</signal>
+   <receiver>Dialog</receiver>
+   <slot>reject()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>325</x>
+     <y>326</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>264</x>
+     <y>297</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+</ui>

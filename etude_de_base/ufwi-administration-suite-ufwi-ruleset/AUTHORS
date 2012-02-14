@@ -1,0 +1,32 @@
+NuFace authors
+==============
+
+Kévin Baltus <kbaltus AT inl.fr> - decision icons author
+Victor Stinnner <victor.stinner AT inl.fr> - core developer
+
+Icons sources
+=============
+
+Most icons come from the Gnome icon theme (Debian package: gnome-icon-theme),
+authors:
+ * Riccardo Buzzotta <raozuzu@yahoo.it>
+ * Josef Vybíral <cornelius@vybiral.info>
+ * Hylke Bons <h.bons@student.rug.nl>
+ * Ricardo González <rick@jinlabs.com>
+ * Lapo Calamandrei <calamandrei@gmail.com>
+ * Rodney Dawes <dobey@novell.com>
+ * Luca Ferretti <elle.uca@libero.it>
+ * Tuomas Kuosmanen <tigert@gimp.org>
+ * Andreas Nilsson <nisses.mail@home.se>
+ * Jakub Steiner <jimmac@novell.com>
+
+knode.png comes from the Nuvola icon theme for KDE 3.x by David Vignoni
+ * http://www.kde-look.org/content/show.php?content=5358
+
+Linux, Windows and Apple pictures come from:
+ * http://fr.wikipedia.org/wiki/Fichier:Apple_Computer_logo.svg
+ * http://fr.wikipedia.org/wiki/Fichier:Windows_logo.png
+ * http://fr.wikipedia.org/wiki/Fichier:Tux.svg
+
+TCP and UDP icons come from the Firewall Builder project.
+

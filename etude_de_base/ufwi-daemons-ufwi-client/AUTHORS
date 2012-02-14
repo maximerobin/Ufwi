@@ -1,0 +1,44 @@
+Core team
+=========
+
+Éric Leblond (aka regit)
+    regit@inl.fr
+
+Vincent Deffontaines (aka gryzor)
+    http://www.gryzor.com
+
+Laurent Defert (aka lodesi)
+    laurent.defert AT inl.fr
+
+Sébastien Tricaud (aka toady)
+    stricaud AT inl.fr
+
+Victor Stinner (aka haypo)
+    victor.stinner AT inl.fr
+
+Pierre Chifflier
+    pierre.chifflier AT inl.fr
+
+
+Contributors
+============
+
+Andrew Williams aka mistik1 <awilliams AT tsiware.com>
+    fixed Makefile.am of nuauth_command for Gentoo ($DESTDIR)
+
+Francesco Varano <francesco.varano AT winext.eu>
+Gabriele Messineo <gabriele.messineo AT winext.eu>
+    authors of auth_mysql module
+
+Hervé Hénoch <h.henoch AT isc84.org>
+    fixed a regular expression in nuaclgen script
+
+Jean Gillaux
+    author of pam_nufw module
+
+Mikael Berthe (aka McKael)
+    original author of plaintext module
+
+Simon Josefsson
+    getdelim() implentation (used on FreeBSD)
+

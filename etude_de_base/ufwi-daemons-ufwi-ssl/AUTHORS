@@ -1,0 +1,11 @@
+ufwissl: Library to manage SSL using GnuTLS or OpenSSL
+================================================================
+
+Based on libneon code available at: http://www.webdav.org/neon/
+
+Written by:
+- Sebastien Tricaud, <s dot tricaud at inl dot fr>
+- Laurent Defert, <laurent_defert at yahoo do fr>
+- Pierre Chifflier, <chifflier at inl dot fr>
+- Éric Leblond, <eric at regit dot org>
+

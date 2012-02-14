@@ -1,0 +1,269 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
+!_TAG_PROGRAM_VERSION	5.8	//
+ACLS	ha.py	/^    ACLS = {'multisite_transport': set(('setSelf', 'addRemote', 'removeRemote',$/;"	v	class:HAComponent
+ACTIVE_CHECK_TIME	ha.py	/^ACTIVE_CHECK_TIME = 5*60$/;"	v
+AUTO_FAILBACK	ha.py	/^from nuconf.common.ha_cfg import AUTO_FAILBACK, UDP_PORT$/;"	i
+CONFIG_DEPENDS	ha.py	/^    CONFIG_DEPENDS = frozenset(('hostname', 'network', 'site2site'))$/;"	v	class:HAComponent
+CONFIG_NAME	primary/secondary.py	/^    CONFIG_NAME = 'ha.xml'$/;"	v	class:Secondary
+CONFIG_NAME	secondary/primary.py	/^    CONFIG_NAME = "ha_secondary.xml"$/;"	v	class:Primary
+CONFIG_NO_SUCH_FILE	secondary/primary.py	/^from nucentral.backend.error import NuCentralError, CONFIG_NO_SUCH_FILE$/;"	i
+CONNECTED	primary/primary_host.py	/^from nuconf.common.ha_cfg import NOT_REGISTERED, NOT_CONNECTED, CONNECTED$/;"	i
+CONNECTED	secondary/secondary_host.py	/^from nuconf.common.ha_cfg import NOT_REGISTERED, NOT_CONNECTED, CONNECTED$/;"	i
+CREATE_HA_FAILED	error.py	/^CREATE_HA_FAILED = 2$/;"	v
+ComponentError	error.py	/^from nucentral.backend import ComponentError$/;"	i
+ConfigError	ha.py	/^from nucentral.backend.exceptions import ConfigError$/;"	i
+ConfigError	primary/primary_host.py	/^from nucentral.backend.exceptions import ConfigError$/;"	i
+ConfigError	secondary/primary.py	/^from nucentral.backend.exceptions import ConfigError$/;"	i
+ConnectError	primary/primary_host.py	/^from twisted.internet.error import ConnectError$/;"	i
+Context	ha.py	/^from nucentral.core.context import Context$/;"	i
+Context	primary/primary_host.py	/^from nucentral.core.context import Context$/;"	i
+Context	secondary/primary.py	/^from nucentral.core.context import Context$/;"	i
+Context	secondary/secondary_host.py	/^from nucentral.core.context import Context$/;"	i
+CreateHaFailed	error.py	/^class CreateHaFailed(HAError):$/;"	c	inherits:HAError
+CreateHaFailed	ha.py	/^from .error import CreateHaFailed, InvalidConf, InvalidCallDone$/;"	i
+DUPLICATE_CALL	error.py	/^DUPLICATE_CALL = 6$/;"	v
+DuplicateCall	error.py	/^class DuplicateCall(HAError):$/;"	c	inherits:HAError
+ENOHA	ha.py	/^from nuconf.common.ha_statuses import PRIMARY, PENDING_PRIMARY, SECONDARY, PENDING_SECONDARY, ENOHA$/;"	i
+Failure	ha.py	/^from twisted.python.failure import Failure$/;"	i
+Failure	primary/primary_host.py	/^from twisted.python.failure import Failure$/;"	i
+HAComponent	__init__.py	/^from .ha import HAComponent$/;"	i
+HAComponent	ha.py	/^class HAComponent(ConfigServiceComponent):$/;"	c	inherits:ConfigServiceComponent
+HAConf	ha.py	/^from nuconf.common.ha_cfg import HAConf$/;"	i
+HAError	error.py	/^class HAError(ComponentError):$/;"	c	inherits:ComponentError
+HA_CF	ha.py	/^HA_CF = '\/etc\/ha.d\/ha.cf'$/;"	v
+HA_INVALID_CONF	error.py	/^HA_INVALID_CONF = 1$/;"	v
+HA_NET	primary/primary_host.py	/^from nuconf.common.ha_base import HA_NET, PRIMARY_ADDR, SECONDARY_ADDR$/;"	i
+HA_NET	secondary/primary.py	/^from nuconf.common.ha_base import HA_NET, PRIMARY_ADDR$/;"	i
+HA_RESOURCES	ha.py	/^HA_RESOURCES = '\/etc\/ha.d\/haresources'$/;"	v
+HELLO_INTERVAL	secondary/primary.py	/^    HELLO_INTERVAL = 5*60$/;"	v	class:Primary
+INCOHERENT_STATE	error.py	/^INCOHERENT_STATE = 4$/;"	v
+INIT_SCRIPT	ha.py	/^    INIT_SCRIPT = '\/etc\/init.d\/heartbeat'$/;"	v	class:HAComponent
+INVALID_CALL_DONE	error.py	/^INVALID_CALL_DONE = 3$/;"	v
+INVALID_HOSTNAME	error.py	/^INVALID_HOSTNAME = 5$/;"	v
+IP	primary/primary_host.py	/^from IPy import IP$/;"	i
+IP	secondary/primary.py	/^from IPy import IP$/;"	i
+IncoherentState	error.py	/^class IncoherentState(HAError):$/;"	c	inherits:HAError
+IncoherentState	primary/primary_host.py	/^from ..error import IncoherentState$/;"	i
+InvalidCallDone	error.py	/^class InvalidCallDone(HAError):$/;"	c	inherits:HAError
+InvalidCallDone	ha.py	/^from .error import CreateHaFailed, InvalidConf, InvalidCallDone$/;"	i
+InvalidConf	error.py	/^class InvalidConf(HAError):$/;"	c	inherits:HAError
+InvalidConf	ha.py	/^from .error import CreateHaFailed, InvalidConf, InvalidCallDone$/;"	i
+InvalidHostname	error.py	/^class InvalidHostname(HAError):$/;"	c	inherits:HAError
+KERBEROS_AD	ha.py	/^from nuconf.common.user_dir import KERBEROS_AD, NuauthCfg$/;"	i
+Lock	ha.py	/^from threading import Lock$/;"	i
+LoggerChild	primary/primary_host.py	/^from nucentral.common.logger import LoggerChild$/;"	i
+LoggerChild	secondary/primary.py	/^from nucentral.common.logger import LoggerChild$/;"	i
+LoggerChild	secondary/secondary_host.py	/^from nucentral.common.logger import LoggerChild$/;"	i
+LoggerChild	synchro.py	/^from nucentral.common.logger import LoggerChild$/;"	i
+MASTER_KEY	ha.py	/^    MASTER_KEY = NAME$/;"	v	class:HAComponent
+NAME	ha.py	/^    NAME = "ha"$/;"	v	class:HAComponent
+NOT_CONNECTED	primary/primary_host.py	/^from nuconf.common.ha_cfg import NOT_REGISTERED, NOT_CONNECTED, CONNECTED$/;"	i
+NOT_CONNECTED	secondary/secondary_host.py	/^from nuconf.common.ha_cfg import NOT_REGISTERED, NOT_CONNECTED, CONNECTED$/;"	i
+NOT_REGISTERED	ha.py	/^from nuconf.common.ha_cfg import NOT_REGISTERED$/;"	i
+NOT_REGISTERED	primary/primary_host.py	/^from nuconf.common.ha_cfg import NOT_REGISTERED, NOT_CONNECTED, CONNECTED$/;"	i
+NOT_REGISTERED	secondary/secondary_host.py	/^from nuconf.common.ha_cfg import NOT_REGISTERED, NOT_CONNECTED, CONNECTED$/;"	i
+NUCONF	error.py	/^from nucentral.common.error import NUCONF$/;"	i
+NUCONF_HA	error.py	/^from nuconf.common.error import NUCONF_HA$/;"	i
+NuCentralError	primary/primary_host.py	/^from nucentral.backend.error import NuCentralError, exceptionAsUnicode$/;"	i
+NuCentralError	secondary/primary.py	/^from nucentral.backend.error import NuCentralError, CONFIG_NO_SUCH_FILE$/;"	i
+NuCentralError	secondary/secondary_host.py	/^from nucentral.backend.error import NuCentralError$/;"	i
+NuauthCfg	ha.py	/^from nuconf.common.user_dir import KERBEROS_AD, NuauthCfg$/;"	i
+PASSWORD_LENGTH	ha.py	/^PASSWORD_LENGTH = 16$/;"	v
+PENDING_PRIMARY	ha.py	/^from nuconf.common.ha_statuses import PRIMARY, PENDING_PRIMARY, SECONDARY, PENDING_SECONDARY, ENOHA$/;"	i
+PENDING_SECONDARY	ha.py	/^from nuconf.common.ha_statuses import PRIMARY, PENDING_PRIMARY, SECONDARY, PENDING_SECONDARY, ENOHA$/;"	i
+PIDFILE	ha.py	/^    PIDFILE = '\/var\/run\/heartbeat.pid'$/;"	v	class:HAComponent
+PIPE	ha.py	/^from subprocess import PIPE$/;"	i
+PRIMARY	ha.py	/^from nuconf.common.ha_statuses import PRIMARY, PENDING_PRIMARY, SECONDARY, PENDING_SECONDARY, ENOHA$/;"	i
+PRIMARY_ADDR	ha.py	/^from nuconf.common.ha_base import PRIMARY_ADDR, SECONDARY_ADDR$/;"	i
+PRIMARY_ADDR	primary/primary_host.py	/^from nuconf.common.ha_base import HA_NET, PRIMARY_ADDR, SECONDARY_ADDR$/;"	i
+PRIMARY_ADDR	secondary/primary.py	/^from nuconf.common.ha_base import HA_NET, PRIMARY_ADDR$/;"	i
+PRIMARY_PORT	primary/primary_host.py	/^from nuconf.common.ha_cfg import PRIMARY_PORT, SECONDARY_PORT$/;"	i
+PRIMARY_PORT	secondary/primary.py	/^from nuconf.common.ha_cfg import PRIMARY_PORT, SECONDARY_PORT$/;"	i
+Primary	secondary/primary.py	/^class Primary(LoggerChild):$/;"	c	inherits:LoggerChild
+Primary	secondary/secondary_host.py	/^from .primary import Primary$/;"	i
+PrimaryHost	ha.py	/^from .primary.primary_host import PrimaryHost$/;"	i
+PrimaryHost	primary/primary_host.py	/^class PrimaryHost(LoggerChild):$/;"	c	inherits:LoggerChild
+REQUIRES	ha.py	/^    REQUIRES = ('multisite_transport', 'hosts')$/;"	v	class:HAComponent
+ROLES	ha.py	/^    ROLES = {$/;"	v	class:HAComponent
+SECONDARY	ha.py	/^from nuconf.common.ha_statuses import PRIMARY, PENDING_PRIMARY, SECONDARY, PENDING_SECONDARY, ENOHA$/;"	i
+SECONDARY	secondary/primary.py	/^from nuconf.common.ha_statuses import SECONDARY$/;"	i
+SECONDARY_ADDR	ha.py	/^from nuconf.common.ha_base import PRIMARY_ADDR, SECONDARY_ADDR$/;"	i
+SECONDARY_ADDR	primary/primary_host.py	/^from nuconf.common.ha_base import HA_NET, PRIMARY_ADDR, SECONDARY_ADDR$/;"	i
+SECONDARY_PORT	primary/primary_host.py	/^from nuconf.common.ha_cfg import PRIMARY_PORT, SECONDARY_PORT$/;"	i
+SECONDARY_PORT	secondary/primary.py	/^from nuconf.common.ha_cfg import PRIMARY_PORT, SECONDARY_PORT$/;"	i
+SECONDARY_TRANSPORT_ID	primary/primary_host.py	/^SECONDARY_TRANSPORT_ID = 'ha_secondary'$/;"	v
+Secondary	primary/primary_host.py	/^from .secondary import Secondary$/;"	i
+Secondary	primary/secondary.py	/^class Secondary(object):$/;"	c	inherits:object
+SecondaryHost	ha.py	/^from .secondary.secondary_host import SecondaryHost$/;"	i
+SecondaryHost	secondary/secondary_host.py	/^class SecondaryHost(LoggerChild):$/;"	c	inherits:LoggerChild
+ServiceStatusValues	ha.py	/^from nucentral.common.service_status_values import ServiceStatusValues$/;"	i
+Site2SiteCfg	ha.py	/^from nuconf.common.site2site_cfg import Site2SiteCfg$/;"	i
+Synchro	ha.py	/^from .synchro import Synchro$/;"	i
+Synchro	synchro.py	/^class Synchro(LoggerChild):$/;"	c	inherits:LoggerChild
+TRANSPORT_ID	primary/primary_host.py	/^TRANSPORT_ID = 'ha'$/;"	v
+TRANSPORT_ID	secondary/primary.py	/^TRANSPORT_ID = 'ha_secondary'$/;"	v
+TRANSPORT_ID	secondary/secondary_host.py	/^TRANSPORT_ID = 'ha_secondary'$/;"	v
+TRANSPORT_INTERVAL	secondary/primary.py	/^    TRANSPORT_INTERVAL = 1$/;"	v	class:Primary
+UDP_PORT	ha.py	/^from nuconf.common.ha_cfg import AUTO_FAILBACK, UDP_PORT$/;"	i
+VERSION	ha.py	/^    VERSION = "1.0"$/;"	v	class:HAComponent
+VariablesStore	primary/secondary.py	/^from nucentral.backend.variables_store import VariablesStore$/;"	i
+VariablesStore	secondary/primary.py	/^from nucentral.backend.variables_store import VariablesStore$/;"	i
+_IMPORT_INTERVAL	ha.py	/^    _IMPORT_INTERVAL = 1 # second$/;"	v	class:HAComponent
+__addNextConfig	ha.py	/^    def __addNextConfig(self, encoded_file, components):$/;"	m	class:HAComponent	file:	access:private
+__init__	error.py	/^    def __init__(self, *args, **kw):$/;"	m	class:CreateHaFailed	access:public
+__init__	error.py	/^    def __init__(self, *args, **kw):$/;"	m	class:DuplicateCall	access:public
+__init__	error.py	/^    def __init__(self, *args, **kw):$/;"	m	class:HAError	access:public
+__init__	error.py	/^    def __init__(self, *args, **kw):$/;"	m	class:IncoherentState	access:public
+__init__	error.py	/^    def __init__(self, *args, **kw):$/;"	m	class:InvalidCallDone	access:public
+__init__	error.py	/^    def __init__(self, *args, **kw):$/;"	m	class:InvalidConf	access:public
+__init__	error.py	/^    def __init__(self, *args, **kw):$/;"	m	class:InvalidHostname	access:public
+__init__	ha.py	/^    def __init__(self):$/;"	m	class:HAComponent	access:public
+__init__	primary/primary_host.py	/^    def __init__(self, component, core, config):$/;"	m	class:PrimaryHost	access:public
+__init__	primary/secondary.py	/^    def __init__(self, core):$/;"	m	class:Secondary	access:public
+__init__	secondary/primary.py	/^    def __init__(self, secondary):$/;"	m	class:Primary	access:public
+__init__	secondary/secondary_host.py	/^    def __init__(self, component, core, config):$/;"	m	class:SecondaryHost	access:public
+__init__	synchro.py	/^    def __init__(self, logger):$/;"	m	class:Synchro	access:public
+__popNextConfig	ha.py	/^    def __popNextConfig(self):$/;"	m	class:HAComponent	file:	access:private
+__scheduleImportOrIgnore	ha.py	/^    def __scheduleImportOrIgnore(self, force):$/;"	m	class:HAComponent	file:	access:private
+__simpleLockRelease	ha.py	/^    def __simpleLockRelease(self, arg=None):$/;"	m	class:HAComponent	file:	access:private
+_getConf	ha.py	/^    def _getConf(self):$/;"	m	class:HAComponent	access:public
+_haHostFile	ha.py	/^    def _haHostFile(self, result, context):$/;"	m	class:HAComponent	access:public
+_importEndTasks	ha.py	/^    def _importEndTasks(self, arg):$/;"	m	class:HAComponent	access:public
+apply_config	ha.py	/^    def apply_config(self, responsible, *args):$/;"	m	class:HAComponent	access:public
+asctime	primary/primary_host.py	/^from time import asctime$/;"	i
+call	primary/primary_host.py	/^    def call(self, *args, **kwargs):$/;"	m	class:PrimaryHost	access:public
+call	secondary/primary.py	/^    def call(self, *args, **kwargs):$/;"	m	class:Primary	access:public
+checkConfigVersions	primary/primary_host.py	/^    def checkConfigVersions(self, primary_seq_no, secondary_seq_no):$/;"	m	class:PrimaryHost	access:public
+checkHAType	ha.py	/^    def checkHAType(self, ha_type):$/;"	m	class:HAComponent	access:public
+checkTransport	secondary/primary.py	/^    def checkTransport(self, status):$/;"	m	class:Primary	access:public
+check_heartbeat_process	ha.py	/^    def check_heartbeat_process(self):$/;"	m	class:HAComponent	access:public
+configModified	ha.py	/^    def configModified(self, component):$/;"	m	class:HAComponent	access:public
+copyConfiguration	ha.py	/^    def copyConfiguration(self, ctx, data, components, force):$/;"	m	class:HAComponent	access:public
+createHA	ha.py	/^    def createHA(self):$/;"	m	class:HAComponent	access:public
+createProcess	ha.py	/^from nucentral.common.process import createProcess$/;"	i
+createSecondary	primary/primary_host.py	/^    def createSecondary(self):$/;"	m	class:PrimaryHost	access:public
+datetime	ha.py	/^from datetime import datetime$/;"	i
+deferToThread	ha.py	/^from twisted.internet.threads import deferToThread$/;"	i
+deserializeNetCfg	ha.py	/^from nuconf.common.netcfg import deserializeNetCfg$/;"	i
+events	ha.py	/^from nucentral.core import events$/;"	i
+exceptionAsUnicode	ha.py	/^from nucentral.common.error import reraise, exceptionAsUnicode$/;"	i
+exceptionAsUnicode	primary/primary_host.py	/^from nucentral.backend.error import NuCentralError, exceptionAsUnicode$/;"	i
+exists	ha.py	/^from os.path import exists$/;"	i
+filesModified	ha.py	/^    def filesModified(self, components, force):$/;"	m	class:HAComponent	access:public
+genConfigFiles	ha.py	/^    def genConfigFiles(self):$/;"	m	class:HAComponent	access:public
+generateAuthkeys	ha.py	/^    def generateAuthkeys(self, password):$/;"	m	class:HAComponent	access:public
+getActiveState	ha.py	/^    def getActiveState(self):$/;"	m	class:HAComponent	access:public
+getHostnameFormatHA	ha.py	/^from nuconf.backend.ha import getHostnameFormatHA$/;"	i
+getLastError	primary/primary_host.py	/^    def getLastError(self):$/;"	m	class:PrimaryHost	access:public
+getLastError	secondary/secondary_host.py	/^    def getLastError(self):$/;"	m	class:SecondaryHost	access:public
+getState	primary/primary_host.py	/^    def getState(self, ctx):$/;"	m	class:PrimaryHost	access:public
+getState	secondary/secondary_host.py	/^    def getState(self, ctx):$/;"	m	class:SecondaryHost	access:public
+handleError	ha.py	/^    def handleError(self, error):$/;"	m	class:HAComponent	access:public
+hello	secondary/primary.py	/^    def hello(self, *args):$/;"	m	class:Primary	access:public
+helloFailed	secondary/primary.py	/^    def helloFailed(self, err):$/;"	m	class:Primary	access:public
+helloSucceed	secondary/primary.py	/^    def helloSucceed(self):$/;"	m	class:Primary	access:public
+importConfigFile	ha.py	/^    def importConfigFile(self, encoded_file):$/;"	m	class:HAComponent	access:public
+init	ha.py	/^    def init(self, core):$/;"	m	class:HAComponent	access:public
+init_done	ha.py	/^    def init_done(self):$/;"	m	class:HAComponent	access:public
+inlineCallbacks	ha.py	/^from twisted.internet.defer import inlineCallbacks, returnValue$/;"	i
+inlineCallbacks	primary/primary_host.py	/^from twisted.internet.defer import inlineCallbacks$/;"	i
+inlineCallbacks	secondary/primary.py	/^from twisted.internet.defer import inlineCallbacks$/;"	i
+inlineCallbacks	secondary/secondary_host.py	/^from twisted.internet.defer import inlineCallbacks$/;"	i
+isSynchroNeeded	synchro.py	/^    def isSynchroNeeded(self):$/;"	m	class:Synchro	access:public
+keepErrors	ha.py	/^    def keepErrors(self, data):$/;"	m	class:HAComponent	access:public
+lambda_x	ha.py	/^def lambda_x(func, *args):$/;"	f	access:public
+loadConfig	primary/primary_host.py	/^    def loadConfig(self):$/;"	m	class:PrimaryHost	access:public
+loadConfig	primary/secondary.py	/^    def loadConfig(self):$/;"	m	class:Secondary	access:public
+loadConfig	secondary/primary.py	/^    def loadConfig(self, interface_name):$/;"	m	class:Primary	access:public
+loadConfig	secondary/secondary_host.py	/^    def loadConfig(self):$/;"	m	class:SecondaryHost	access:public
+localfwFailed	primary/primary_host.py	/^    def localfwFailed(self, err):$/;"	m	class:PrimaryHost	access:public
+localfwFailed	secondary/primary.py	/^    def localfwFailed(self, err):$/;"	m	class:Primary	access:public
+modifiedComponents	synchro.py	/^    def modifiedComponents(self):$/;"	m	class:Synchro	access:public
+needSynchro	synchro.py	/^    def needSynchro(self, components):$/;"	m	class:Synchro	access:public
+os	primary/secondary.py	/^import os$/;"	i
+os	secondary/primary.py	/^import os$/;"	i
+rand_bytes	ha.py	/^from M2Crypto.Rand import rand_bytes$/;"	i
+readHaType	ha.py	/^from nuconf.backend.ha import readHaType$/;"	i
+read_config	ha.py	/^    def read_config(self, responsible, *args, **kwargs):$/;"	m	class:HAComponent	access:public
+refreshActiveState	ha.py	/^    def refreshActiveState(self):$/;"	m	class:HAComponent	access:public
+register	primary/primary_host.py	/^    def register(self, configuration):$/;"	m	class:PrimaryHost	access:public
+register	secondary/primary.py	/^    def register(self, configuration):$/;"	m	class:Primary	access:public
+register	secondary/secondary_host.py	/^    def register(self, configuration):$/;"	m	class:SecondaryHost	access:public
+remoteCallFailed	primary/primary_host.py	/^    def remoteCallFailed(self, err):$/;"	m	class:PrimaryHost	access:public
+remoteCallSucceeded	primary/primary_host.py	/^    def remoteCallSucceeded(self, err):$/;"	m	class:PrimaryHost	access:public
+reraise	ha.py	/^from nucentral.common.error import reraise, exceptionAsUnicode$/;"	i
+reraise	primary/primary_host.py	/^from nucentral.common.error import reraise$/;"	i
+reraise	secondary/primary.py	/^from nucentral.common.error import reraise$/;"	i
+reraise	secondary/secondary_host.py	/^from nucentral.common.error import reraise$/;"	i
+restartHeartbeatMonitor	ha.py	/^    def restartHeartbeatMonitor(self):$/;"	m	class:HAComponent	access:public
+resume	secondary/primary.py	/^    def resume(self):$/;"	m	class:Primary	access:public
+returnError	ha.py	/^        def returnError(unused, new_err):$/;"	f	function:HAComponent.startFailed	access:public
+returnValue	ha.py	/^from twisted.internet.defer import inlineCallbacks, returnValue$/;"	i
+returnValue	primary/primary_host.py	/^from twisted.internet.defer import returnValue$/;"	i
+runCommand	ha.py	/^from nucentral.backend.process import runCommand$/;"	i
+saveConfig	primary/secondary.py	/^    def saveConfig(self):$/;"	m	class:Secondary	access:public
+saveConfig	secondary/primary.py	/^    def saveConfig(self):$/;"	m	class:Primary	access:public
+saveError	primary/primary_host.py	/^    def saveError(self, err):$/;"	m	class:PrimaryHost	access:public
+saveHaType	ha.py	/^from nuconf.backend.ha import saveHaType$/;"	i
+save_config	ha.py	/^    def save_config(self, message, context=None):$/;"	m	class:HAComponent	access:public
+scheduleHello	secondary/primary.py	/^    def scheduleHello(self, sleep_time):$/;"	m	class:Primary	access:public
+scheduleOnce	ha.py	/^from nucentral.backend.cron import scheduleOnce$/;"	i
+scheduleOnce	primary/primary_host.py	/^from nucentral.backend.cron import scheduleOnce$/;"	i
+scheduleOnce	secondary/primary.py	/^from nucentral.backend.cron import scheduleOnce$/;"	i
+service_bye	ha.py	/^    def service_bye(self, *args):$/;"	m	class:HAComponent	access:public
+service_bye	primary/primary_host.py	/^    def service_bye(self, ctx):$/;"	m	class:PrimaryHost	access:public
+service_callRemote	ha.py	/^    def service_callRemote(self, *args):$/;"	m	class:HAComponent	access:public
+service_callRemote	primary/primary_host.py	/^    def service_callRemote(self, ctx, component, service, *args):$/;"	m	class:PrimaryHost	access:public
+service_callRemote	secondary/secondary_host.py	/^    def service_callRemote(self, ctx, component, service, *args):$/;"	m	class:SecondaryHost	access:public
+service_configureHA	ha.py	/^    def service_configureHA(self, ctx, serialized, message):$/;"	m	class:HAComponent	access:public
+service_end_registration	ha.py	/^    def service_end_registration(self, ctx, *args):$/;"	m	class:HAComponent	access:public
+service_getConfig	ha.py	/^    def service_getConfig(self, ctx):$/;"	m	class:HAComponent	access:public
+service_getHAActive	ha.py	/^    def service_getHAActive(self, ctx):$/;"	m	class:HAComponent	access:public
+service_getHAMode	ha.py	/^    def service_getHAMode(self, ctx):$/;"	m	class:HAComponent	access:public
+service_getLastError	ha.py	/^    def service_getLastError(self, ctx):$/;"	m	class:HAComponent	access:public
+service_getMissingUpgradeNums	ha.py	/^    def service_getMissingUpgradeNums(self, ctx, *args):$/;"	m	class:HAComponent	access:public
+service_getState	ha.py	/^    def service_getState(self, ctx):$/;"	m	class:HAComponent	access:public
+service_hello	ha.py	/^    def service_hello(self, *args):$/;"	m	class:HAComponent	access:public
+service_hello	primary/primary_host.py	/^    def service_hello(self, ctx, config_seq_no):$/;"	m	class:PrimaryHost	access:public
+service_importOrIgnore	ha.py	/^    def service_importOrIgnore(self, context, unused, force=False):$/;"	m	class:HAComponent	access:public
+service_nufaceExport	ha.py	/^    def service_nufaceExport(self, context):$/;"	m	class:HAComponent	access:public
+service_nufaceImport	ha.py	/^    def service_nufaceImport(self, context, url):$/;"	m	class:HAComponent	access:public
+service_register	ha.py	/^    def service_register(self, ctx, configuration):$/;"	m	class:HAComponent	access:public
+service_setConfig	ha.py	/^    def service_setConfig(self, ctx, config_url, components, force=False):$/;"	m	class:HAComponent	access:public
+service_startHA	ha.py	/^    def service_startHA(self, ctx):$/;"	m	class:HAComponent	access:public
+service_unregister	ha.py	/^    def service_unregister(self, ctx):$/;"	m	class:HAComponent	access:public
+setAllComponentCallbacks	ha.py	/^    def setAllComponentCallbacks(self, components):$/;"	m	class:HAComponent	access:public
+setFirewallRules	primary/primary_host.py	/^    def setFirewallRules(self):$/;"	m	class:PrimaryHost	access:public
+setFirewallRules	secondary/primary.py	/^    def setFirewallRules(self, interface_name):$/;"	m	class:Primary	access:public
+setHA	ha.py	/^    def setHA(self, ha):$/;"	m	class:HAComponent	access:public
+setHAReady	ha.py	/^    def setHAReady(self):$/;"	m	class:HAComponent	access:public
+setPort	primary/secondary.py	/^    def setPort(self, port):$/;"	m	class:Secondary	access:public
+setState	ha.py	/^    def setState(self, state):$/;"	m	class:HAComponent	access:public
+setState	primary/secondary.py	/^    def setState(self, state):$/;"	m	class:Secondary	access:public
+setState	secondary/primary.py	/^    def setState(self, state):$/;"	m	class:Primary	access:public
+settings	primary/secondary.py	/^    def settings(self, interface):$/;"	m	class:Secondary	access:public
+should_run	ha.py	/^    def should_run(self):$/;"	m	class:HAComponent	access:public
+startFailed	ha.py	/^    def startFailed(self, err):$/;"	m	class:HAComponent	access:public
+startHeartbeatMonitor	ha.py	/^    def startHeartbeatMonitor(self):$/;"	m	class:HAComponent	access:public
+startTransport	primary/primary_host.py	/^    def startTransport(self):$/;"	m	class:PrimaryHost	access:public
+startTransport	secondary/primary.py	/^    def startTransport(self):$/;"	m	class:Primary	access:public
+stop	primary/primary_host.py	/^    def stop(self):$/;"	m	class:PrimaryHost	access:public
+stop	secondary/secondary_host.py	/^    def stop(self):$/;"	m	class:SecondaryHost	access:public
+succeed	ha.py	/^from twisted.internet.defer import succeed$/;"	i
+successful	synchro.py	/^    def successful(self, components, timestamp):$/;"	m	class:Synchro	access:public
+syncConfig	ha.py	/^    def syncConfig(self, force=False):$/;"	m	class:HAComponent	access:public
+templatesConfiguration	ha.py	/^    def templatesConfiguration(self):$/;"	m	class:HAComponent	access:public
+time	primary/secondary.py	/^import time$/;"	i
+time	synchro.py	/^from time import time$/;"	i
+tr	ha.py	/^from nucentral.backend import tr$/;"	i
+triggerSyncConfig	ha.py	/^    def triggerSyncConfig(self, need_sync):$/;"	m	class:HAComponent	access:public
+unregister	secondary/primary.py	/^    def unregister(self):$/;"	m	class:Primary	access:public
+unregister	secondary/secondary_host.py	/^    def unregister(self):$/;"	m	class:SecondaryHost	access:public
+updateLastSeen	primary/secondary.py	/^    def updateLastSeen(self):$/;"	m	class:Secondary	access:public
+with_statement	ha.py	/^from __future__ import with_statement$/;"	i
+with_statement	primary/secondary.py	/^from __future__ import with_statement$/;"	i
+with_statement	secondary/secondary_host.py	/^from __future__ import with_statement$/;"	i

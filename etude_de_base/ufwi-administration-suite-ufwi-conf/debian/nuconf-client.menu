@@ -1,0 +1,2 @@
+?package(nuconf-client):needs="X11" section="System/Administration"\
+  title="nuconf-client" command="/usr/bin/nuconf-qt"

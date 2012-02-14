@@ -1,0 +1,3 @@
+CHECK_DATA_LOCAL_ACL_FILE = CONFDIR/local_acl.conf
+CHECK_DATA_LOCAL_ACL_SPAM_FILE = CONFDIR/local_acl_antispam.conf
+CHECK_DATA_LOCAL_ACL_VIRUS_FILE = CONFDIR/local_acl_antivirus.conf

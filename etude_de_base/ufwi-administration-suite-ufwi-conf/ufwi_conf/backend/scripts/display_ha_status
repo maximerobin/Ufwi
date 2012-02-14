@@ -1,0 +1,14 @@
+#!/bin/bash
+
+if [ ! -e '/var/lib/nucentral/ha_type' ]; then
+    echo "High Availability is not configured on '${HOSTNAME}'."
+    exit 0
+fi
+
+echo "High Availability configuration on '${HOSTNAME}'"
+echo -e "- node type is:  \t'`cat /var/lib/nucentral/ha_type`'"
+# old versions don't generate ha_status file
+if [ -e '/var/lib/nucentral/ha_status' ]; then
+    echo -e "- node status is:\t'`cat /var/lib/nucentral/ha_status`'"
+fi
+

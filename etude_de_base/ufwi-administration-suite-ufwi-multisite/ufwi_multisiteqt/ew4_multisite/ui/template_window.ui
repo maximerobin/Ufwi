@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>TemplateWindow</class>
+ <widget class="QMainWindow" name="TemplateWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>687</width>
+    <height>478</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Select Template</string>
+  </property>
+  <property name="windowIcon">
+   <iconset resource="../../../../../nucentral-edenwall/trunk/resources/edenwall.qrc">
+    <normaloff>:icons/appicon.png</normaloff>:icons/appicon.png</iconset>
+  </property>
+  <property name="toolButtonStyle">
+   <enum>Qt::ToolButtonTextBesideIcon</enum>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <layout class="QVBoxLayout" name="verticalLayout">
+    <item>
+     <widget class="QFrame" name="filter_frame">
+      <property name="frameShape">
+       <enum>QFrame::StyledPanel</enum>
+      </property>
+      <property name="frameShadow">
+       <enum>QFrame::Raised</enum>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QSplitter" name="splitter">
+      <property name="orientation">
+       <enum>Qt::Horizontal</enum>
+      </property>
+      <widget class="QScrollArea" name="scrollArea">
+       <property name="widgetResizable">
+        <bool>true</bool>
+       </property>
+      </widget>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QStatusBar" name="statusbar"/>
+  <widget class="QToolBar" name="toolBar">
+   <property name="windowTitle">
+    <string>toolBar</string>
+   </property>
+   <attribute name="toolBarArea">
+    <enum>TopToolBarArea</enum>
+   </attribute>
+   <attribute name="toolBarBreak">
+    <bool>false</bool>
+   </attribute>
+   <addaction name="actionRefresh_templates"/>
+   <addaction name="actionUpdate_templates"/>
+   <addaction name="actionEdit_generic_links"/>
+   <addaction name="actionStart_Nuface"/>
+  </widget>
+  <action name="actionUpdate_templates">
+   <property name="icon">
+    <iconset resource="../../../../../nucentral-edenwall/trunk/resources/edenwall.qrc">
+     <normaloff>:/icons/upload.png</normaloff>:/icons/upload.png</iconset>
+   </property>
+   <property name="text">
+    <string>Upload Templates</string>
+   </property>
+  </action>
+  <action name="actionRefresh_templates">
+   <property name="icon">
+    <iconset resource="../../../../../nucentral-edenwall/trunk/resources/edenwall.qrc">
+     <normaloff>:/icons/refresh.png</normaloff>:/icons/refresh.png</iconset>
+   </property>
+   <property name="text">
+    <string>Refresh Templates</string>
+   </property>
+  </action>
+  <action name="actionStart_Nuface">
+   <property name="icon">
+    <iconset resource="../../../../../nucentral-edenwall/trunk/resources/edenwall.qrc">
+     <normaloff>:/icons/application.png</normaloff>:/icons/application.png</iconset>
+   </property>
+   <property name="text">
+    <string>Start the Firewall</string>
+   </property>
+  </action>
+  <action name="actionEdit_generic_links">
+   <property name="icon">
+    <iconset resource="../../../../../nucentral-edenwall/trunk/resources/edenwall.qrc">
+     <normaloff>:/icons/edit.png</normaloff>:/icons/edit.png</iconset>
+   </property>
+   <property name="text">
+    <string>Edit Generic Links</string>
+   </property>
+  </action>
+  <action name="actionUpdate_templates_2">
+   <property name="icon">
+    <iconset resource="../../../../../nucentral-edenwall/trunk/resources/edenwall.qrc">
+     <normaloff>:/icons/upload.png</normaloff>:/icons/upload.png</iconset>
+   </property>
+   <property name="text">
+    <string>Upload Templates</string>
+   </property>
+  </action>
+ </widget>
+ <resources>
+  <include location="../../../../../nucentral-edenwall/trunk/resources/edenwall.qrc"/>
+ </resources>
+ <connections/>
+</ui>

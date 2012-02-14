@@ -1,0 +1,245 @@
+
+################
+# mangle table #
+################
+*mangle
+:PREROUTING ACCEPT [0:0]
+:INPUT ACCEPT [0:0]
+:FORWARD ACCEPT [0:0]
+:OUTPUT ACCEPT [0:0]
+:POSTROUTING ACCEPT [0:0]
+
+-A PREROUTING -j CONNMARK --restore-mark
+-A POSTROUTING -m mark ! --mark 0 -j CONNMARK --save-mark --mask 0x0000ffff
+
+COMMIT
+
+################
+# filter table #
+################
+*filter
+:INPUT DROP [0:0]
+:FORWARD DROP [0:0]
+:OUTPUT DROP [0:0]
+:ETH0-ETH0 - [0:0]
+
+# Default filter rules
+# --------------------
+-A FORWARD -m state --state RELATED,ESTABLISHED -j ACCEPT
+-A INPUT -m state --state RELATED,ESTABLISHED -j ACCEPT
+-A OUTPUT -m state --state RELATED,ESTABLISHED -j ACCEPT
+-A FORWARD -m state --state INVALID -j ULOG --ulog-prefix "Drop INVALID FORWARD"
+-A FORWARD -m state --state INVALID -j DROP
+-A OUTPUT -m state --state INVALID -j ULOG --ulog-prefix "Drop INVALID OUTPUT"
+-A OUTPUT -m state --state INVALID -j DROP
+-A INPUT -i lo -j ACCEPT -m comment --comment "Trust loopback"
+-A OUTPUT -o lo -j ACCEPT -m comment --comment "Trust loopback"
+
+
+# Dispatch FORWARD to the different chains
+# ----------------------------------------
+-A FORWARD -i eth0 -o eth0 -j ETH0-ETH0
+
+# IPv4 rule #340
+# --------------
+-A ETH0-ETH0 -s 192.168.0.0/24 -d 192.168.0.1 -p 9 -j ACCEPT -m comment --comment "IPv4 rule #340: rule 1"
+
+# IPv4 rule #350
+# --------------
+# DHCP Server
+-A INPUT -i eth0 -s 192.168.0.254 -p udp --sport 67 --dport 68 -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #350: rule 1"
+
+# IPv4 rule #360
+# --------------
+# Ping request from the LAN
+-A INPUT -i eth0 -s 192.168.0.0/24 -p icmp --icmp-type 8/0 -j ULOG --ulog-prefix I360a:ping -m comment --comment "IPv4 rule #360: rule 1"
+-A INPUT -i eth0 -s 192.168.0.0/24 -p icmp --icmp-type 8/0 -j ACCEPT -m comment --comment "IPv4 rule #360: rule 2"
+
+# IPv4 rule #370
+# --------------
+# Multicast DNS (input)
+-A INPUT -i eth0 -s 192.168.0.0/24 -p udp --sport 5353 --dport 5353 -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #370: rule 1"
+
+# IPv4 rule #30
+# -------------
+# tcp/8080 en écoute
+-A INPUT -i eth0 -s 0.0.0.0/0 -p tcp --sport 1024:65535 --dport 8080 -m state --state NEW -j ULOG --ulog-prefix "I30a:ACL #30 (ACCEPT)" -m comment --comment "IPv4 rule #30: rule 1"
+-A INPUT -i eth0 -s 0.0.0.0/0 -p tcp --sport 1024:65535 --dport 8080 -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #30: rule 2"
+
+# IPv4 rule #20
+# -------------
+# SSH en écoute IPv4
+-A INPUT -i eth0 -s 192.168.0.0/24 -p tcp --sport 1024:65535 --dport 22 -m state --state NEW -j ULOG --ulog-prefix "I20a:ACL #20 (ACCEPT)" -m comment --comment "IPv4 rule #20: rule 1"
+-A INPUT -i eth0 -s 192.168.0.0/24 -p tcp --sport 1024:65535 --dport 22 -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #20: rule 2"
+
+# IPv4 rule #110
+# --------------
+# Serveur CUPS
+-A INPUT -i eth0 -s 192.168.0.0/24 -p tcp --sport 1024:65535 --dport 631 -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #110: rule 1"
+-A INPUT -i eth0 -s 192.168.0.0/24 -p udp --sport 631 --dport 631 -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #110: rule 2"
+
+# IPv4 rule #260
+# --------------
+# tcp/8080 en écoute
+-A INPUT -i eth0 -s 0.0.0.0/0 -p tcp --sport 1024:65535 --dport 80 -m state --state NEW -j ULOG --ulog-prefix "I260a:ACL #260 (ACCEPT)" -m comment --comment "IPv4 rule #260: rule 1"
+-A INPUT -i eth0 -s 0.0.0.0/0 -p tcp --sport 1024:65535 --dport 80 -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #260: rule 2"
+-A INPUT -i eth0 -s 0.0.0.0/0 -p tcp --sport 1024:65535 --dport 443 -m state --state NEW -j ULOG --ulog-prefix "I260a:ACL #260 (ACCEPT)" -m comment --comment "IPv4 rule #260: rule 3"
+-A INPUT -i eth0 -s 0.0.0.0/0 -p tcp --sport 1024:65535 --dport 443 -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #260: rule 4"
+
+# IPv4 rule #380
+# --------------
+# IPv4 web surf
+-A OUTPUT -o eth0 -d 0.0.0.0/0 -p tcp --sport 1024:65535 --dport 53 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #380: rule 1"
+-A OUTPUT -o eth0 -d 0.0.0.0/0 -p tcp --sport 1024:65535 --dport 80 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #380: rule 2"
+-A OUTPUT -o eth0 -d 0.0.0.0/0 -p tcp --sport 1024:65535 --dport 443 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #380: rule 3"
+-A OUTPUT -o eth0 -d 0.0.0.0/0 -p udp --sport 1024:65535 --dport 53 -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #380: rule 4"
+
+# IPv4 rule #390
+# --------------
+# Send IPv4 ping
+-A OUTPUT -o eth0 -d 0.0.0.0/0 -p icmp --icmp-type 8/0 -j ACCEPT -m comment --comment "IPv4 rule #390: rule 1"
+
+# IPv4 rule #400
+# --------------
+# Multicast DNS (output)
+-A OUTPUT -o eth0 -d 224.0.0.251 -p udp --sport 5353 --dport 5353 -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #400: rule 1"
+
+# IPv4 rule #410
+# --------------
+# Multicast IGMP
+-A OUTPUT -o eth0 -d 224.0.0.22 -p igmp -j ACCEPT -m comment --comment "IPv4 rule #410: rule 1"
+
+# IPv4 rule #420
+# --------------
+# DHCP Client
+-A OUTPUT -o eth0 -d 0.0.0.0 -p udp --sport 68 --dport 67 -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #420: rule 1"
+
+# IPv4 rule #60
+# -------------
+-A OUTPUT -o eth0 -d 212.27.48.4 -p tcp --sport 1024:65535 --dport 25 --syn -m state --state NEW -j ULOG --ulog-prefix "O60a:ACL #60 (ACCEPT)" -m comment --comment "IPv4 rule #60: rule 1"
+-A OUTPUT -o eth0 -d 212.27.48.4 -p tcp --sport 1024:65535 --dport 25 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #60: rule 2"
+
+# IPv4 rule #70
+# -------------
+-A OUTPUT -o eth0 -d 192.168.0.13 -p tcp --sport 1024:65535 --dport 993 --syn -m state --state NEW -j ULOG --ulog-prefix "O70a:ACL #70 (ACCEPT)" -m comment --comment "IPv4 rule #70: rule 1"
+-A OUTPUT -o eth0 -d 192.168.0.13 -p tcp --sport 1024:65535 --dport 993 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #70: rule 2"
+-A OUTPUT -o eth0 -d 87.98.168.81 -p tcp --sport 1024:65535 --dport 993 --syn -m state --state NEW -j ULOG --ulog-prefix "O70a:ACL #70 (ACCEPT)" -m comment --comment "IPv4 rule #70: rule 3"
+-A OUTPUT -o eth0 -d 87.98.168.81 -p tcp --sport 1024:65535 --dport 993 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #70: rule 4"
+-A OUTPUT -o eth0 -d 88.171.131.12 -p tcp --sport 1024:65535 --dport 993 --syn -m state --state NEW -j ULOG --ulog-prefix "O70a:ACL #70 (ACCEPT)" -m comment --comment "IPv4 rule #70: rule 5"
+-A OUTPUT -o eth0 -d 88.171.131.12 -p tcp --sport 1024:65535 --dport 993 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #70: rule 6"
+
+# IPv4 rule #80
+# -------------
+-A OUTPUT -o eth0 -d 0.0.0.0/0 -p tcp --sport 1024:65535 --dport 22 --syn -m state --state NEW -j ULOG --ulog-prefix "O80a:ACL #80 (ACCEPT)" -m comment --comment "IPv4 rule #80: rule 1"
+-A OUTPUT -o eth0 -d 0.0.0.0/0 -p tcp --sport 1024:65535 --dport 22 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #80: rule 2"
+
+# IPv4 rule #120
+# --------------
+-A OUTPUT -o eth0 -d 88.171.131.12 -p tcp --sport 1024:65535 --dport 1194 --syn -m state --state NEW -j ULOG --ulog-prefix "O120a:ACL #120 (ACCEPT)" -m comment --comment "IPv4 rule #120: rule 1"
+-A OUTPUT -o eth0 -d 88.171.131.12 -p tcp --sport 1024:65535 --dport 1194 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #120: rule 2"
+
+# IPv4 rule #130
+# --------------
+-A OUTPUT -o eth0 -d 192.168.0.255 -p tcp --sport 1024:65535 --dport 631 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #130: rule 1"
+-A OUTPUT -o eth0 -d 192.168.0.255 -p udp --sport 631 --dport 631 -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #130: rule 2"
+
+# IPv4 rule #150
+# --------------
+# DHCP Client
+-A OUTPUT -o eth0 -d 192.168.0.254 -p udp --sport 68 --dport 67 -m state --state NEW -j ULOG --ulog-prefix "O150a:ACL #150 (ACCEPT)" -m comment --comment "IPv4 rule #150: rule 1"
+-A OUTPUT -o eth0 -d 192.168.0.254 -p udp --sport 68 --dport 67 -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #150: rule 2"
+
+# IPv4 rule #160
+# --------------
+-A OUTPUT -o eth0 -d 80.248.214.47 -p tcp --sport 1024:65535 --dport 5222 --syn -m state --state NEW -j ULOG --ulog-prefix "O160a:ACL #160 (ACCEPT)" -m comment --comment "IPv4 rule #160: rule 1"
+-A OUTPUT -o eth0 -d 80.248.214.47 -p tcp --sport 1024:65535 --dport 5222 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #160: rule 2"
+-A OUTPUT -o eth0 -d 80.248.214.47 -p tcp --sport 1024:65535 --dport 5223 --syn -m state --state NEW -j ULOG --ulog-prefix "O160a:ACL #160 (ACCEPT)" -m comment --comment "IPv4 rule #160: rule 3"
+-A OUTPUT -o eth0 -d 80.248.214.47 -p tcp --sport 1024:65535 --dport 5223 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #160: rule 4"
+-A OUTPUT -o eth0 -d 88.171.131.12 -p tcp --sport 1024:65535 --dport 5222 --syn -m state --state NEW -j ULOG --ulog-prefix "O160a:ACL #160 (ACCEPT)" -m comment --comment "IPv4 rule #160: rule 5"
+-A OUTPUT -o eth0 -d 88.171.131.12 -p tcp --sport 1024:65535 --dport 5222 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #160: rule 6"
+-A OUTPUT -o eth0 -d 88.171.131.12 -p tcp --sport 1024:65535 --dport 5223 --syn -m state --state NEW -j ULOG --ulog-prefix "O160a:ACL #160 (ACCEPT)" -m comment --comment "IPv4 rule #160: rule 7"
+-A OUTPUT -o eth0 -d 88.171.131.12 -p tcp --sport 1024:65535 --dport 5223 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #160: rule 8"
+
+# IPv4 rule #170
+# --------------
+-A OUTPUT -o eth0 -d 89.16.176.16 -p tcp --sport 1024:65535 --dport 6667 --syn -m state --state NEW -j ULOG --ulog-prefix "O170a:ACL #170 (ACCEPT)" -m comment --comment "IPv4 rule #170: rule 1"
+-A OUTPUT -o eth0 -d 89.16.176.16 -p tcp --sport 1024:65535 --dport 6667 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #170: rule 2"
+-A OUTPUT -o eth0 -d 92.61.33.10 -p tcp --sport 1024:65535 --dport 6667 --syn -m state --state NEW -j ULOG --ulog-prefix "O170a:ACL #170 (ACCEPT)" -m comment --comment "IPv4 rule #170: rule 3"
+-A OUTPUT -o eth0 -d 92.61.33.10 -p tcp --sport 1024:65535 --dport 6667 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #170: rule 4"
+-A OUTPUT -o eth0 -d 128.237.157.136 -p tcp --sport 1024:65535 --dport 6667 --syn -m state --state NEW -j ULOG --ulog-prefix "O170a:ACL #170 (ACCEPT)" -m comment --comment "IPv4 rule #170: rule 5"
+-A OUTPUT -o eth0 -d 128.237.157.136 -p tcp --sport 1024:65535 --dport 6667 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #170: rule 6"
+-A OUTPUT -o eth0 -d 130.237.188.200 -p tcp --sport 1024:65535 --dport 6667 --syn -m state --state NEW -j ULOG --ulog-prefix "O170a:ACL #170 (ACCEPT)" -m comment --comment "IPv4 rule #170: rule 7"
+-A OUTPUT -o eth0 -d 130.237.188.200 -p tcp --sport 1024:65535 --dport 6667 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #170: rule 8"
+-A OUTPUT -o eth0 -d 130.239.18.172 -p tcp --sport 1024:65535 --dport 6667 --syn -m state --state NEW -j ULOG --ulog-prefix "O170a:ACL #170 (ACCEPT)" -m comment --comment "IPv4 rule #170: rule 9"
+-A OUTPUT -o eth0 -d 130.239.18.172 -p tcp --sport 1024:65535 --dport 6667 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #170: rule 10"
+-A OUTPUT -o eth0 -d 140.211.166.3 -p tcp --sport 1024:65535 --dport 6667 --syn -m state --state NEW -j ULOG --ulog-prefix "O170a:ACL #170 (ACCEPT)" -m comment --comment "IPv4 rule #170: rule 11"
+-A OUTPUT -o eth0 -d 140.211.166.3 -p tcp --sport 1024:65535 --dport 6667 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #170: rule 12"
+-A OUTPUT -o eth0 -d 140.211.166.4 -p tcp --sport 1024:65535 --dport 6667 --syn -m state --state NEW -j ULOG --ulog-prefix "O170a:ACL #170 (ACCEPT)" -m comment --comment "IPv4 rule #170: rule 13"
+-A OUTPUT -o eth0 -d 140.211.166.4 -p tcp --sport 1024:65535 --dport 6667 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #170: rule 14"
+-A OUTPUT -o eth0 -d 207.158.1.150 -p tcp --sport 1024:65535 --dport 6667 --syn -m state --state NEW -j ULOG --ulog-prefix "O170a:ACL #170 (ACCEPT)" -m comment --comment "IPv4 rule #170: rule 15"
+-A OUTPUT -o eth0 -d 207.158.1.150 -p tcp --sport 1024:65535 --dport 6667 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #170: rule 16"
+-A OUTPUT -o eth0 -d 207.182.240.74 -p tcp --sport 1024:65535 --dport 6667 --syn -m state --state NEW -j ULOG --ulog-prefix "O170a:ACL #170 (ACCEPT)" -m comment --comment "IPv4 rule #170: rule 17"
+-A OUTPUT -o eth0 -d 207.182.240.74 -p tcp --sport 1024:65535 --dport 6667 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #170: rule 18"
+-A OUTPUT -o eth0 -d 209.177.146.34 -p tcp --sport 1024:65535 --dport 6667 --syn -m state --state NEW -j ULOG --ulog-prefix "O170a:ACL #170 (ACCEPT)" -m comment --comment "IPv4 rule #170: rule 19"
+-A OUTPUT -o eth0 -d 209.177.146.34 -p tcp --sport 1024:65535 --dport 6667 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #170: rule 20"
+-A OUTPUT -o eth0 -d 212.117.163.190 -p tcp --sport 1024:65535 --dport 6667 --syn -m state --state NEW -j ULOG --ulog-prefix "O170a:ACL #170 (ACCEPT)" -m comment --comment "IPv4 rule #170: rule 21"
+-A OUTPUT -o eth0 -d 212.117.163.190 -p tcp --sport 1024:65535 --dport 6667 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #170: rule 22"
+-A OUTPUT -o eth0 -d 213.92.8.4 -p tcp --sport 1024:65535 --dport 6667 --syn -m state --state NEW -j ULOG --ulog-prefix "O170a:ACL #170 (ACCEPT)" -m comment --comment "IPv4 rule #170: rule 23"
+-A OUTPUT -o eth0 -d 213.92.8.4 -p tcp --sport 1024:65535 --dport 6667 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #170: rule 24"
+-A OUTPUT -o eth0 -d 213.161.196.11 -p tcp --sport 1024:65535 --dport 6667 --syn -m state --state NEW -j ULOG --ulog-prefix "O170a:ACL #170 (ACCEPT)" -m comment --comment "IPv4 rule #170: rule 25"
+-A OUTPUT -o eth0 -d 213.161.196.11 -p tcp --sport 1024:65535 --dport 6667 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #170: rule 26"
+-A OUTPUT -o eth0 -d 213.219.249.66 -p tcp --sport 1024:65535 --dport 6667 --syn -m state --state NEW -j ULOG --ulog-prefix "O170a:ACL #170 (ACCEPT)" -m comment --comment "IPv4 rule #170: rule 27"
+-A OUTPUT -o eth0 -d 213.219.249.66 -p tcp --sport 1024:65535 --dport 6667 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #170: rule 28"
+-A OUTPUT -o eth0 -d 213.232.93.3 -p tcp --sport 1024:65535 --dport 6667 --syn -m state --state NEW -j ULOG --ulog-prefix "O170a:ACL #170 (ACCEPT)" -m comment --comment "IPv4 rule #170: rule 29"
+-A OUTPUT -o eth0 -d 213.232.93.3 -p tcp --sport 1024:65535 --dport 6667 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #170: rule 30"
+-A OUTPUT -o eth0 -d 216.155.130.130 -p tcp --sport 1024:65535 --dport 6667 --syn -m state --state NEW -j ULOG --ulog-prefix "O170a:ACL #170 (ACCEPT)" -m comment --comment "IPv4 rule #170: rule 31"
+-A OUTPUT -o eth0 -d 216.155.130.130 -p tcp --sport 1024:65535 --dport 6667 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #170: rule 32"
+-A OUTPUT -o eth0 -d 216.165.191.52 -p tcp --sport 1024:65535 --dport 6667 --syn -m state --state NEW -j ULOG --ulog-prefix "O170a:ACL #170 (ACCEPT)" -m comment --comment "IPv4 rule #170: rule 33"
+-A OUTPUT -o eth0 -d 216.165.191.52 -p tcp --sport 1024:65535 --dport 6667 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #170: rule 34"
+
+# IPv4 rule #290
+# --------------
+# vers EdenWall
+-A OUTPUT -o tun0 -p tcp --sport 1024:65535 --dport 22 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #290: rule 1"
+-A OUTPUT -o tun0 -p tcp --sport 1024:65535 --dport 53 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #290: rule 2"
+-A OUTPUT -o tun0 -p tcp --sport 1024:65535 --dport 80 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #290: rule 3"
+-A OUTPUT -o tun0 -p tcp --sport 1024:65535 --dport 443 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #290: rule 4"
+-A OUTPUT -o tun0 -p udp --sport 1024:65535 --dport 53 -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #290: rule 5"
+
+
+# Default decisions
+# -----------------
+-A ETH0-ETH0 -j ULOG --ulog-prefix "F0d:Default DROP for ETH0-ETH0"
+-A ETH0-ETH0 -j DROP -m comment --comment "Default decision"
+-A INPUT -j ULOG --ulog-prefix "I0d:Default DROP for INPUT"
+-A INPUT -j DROP -m comment --comment "Default decision"
+-A FORWARD -j ULOG --ulog-prefix "F0d:Default DROP for FORWARD"
+-A FORWARD -j DROP -m comment --comment "Default decision"
+-A OUTPUT -j ULOG --ulog-prefix "O0r:Default REJECT for OUTPUT"
+-A OUTPUT -j REJECT -m comment --comment "Default decision"
+COMMIT
+
+#############
+# nat table #
+#############
+*nat
+:PREROUTING ACCEPT [0:0]
+:POSTROUTING ACCEPT [0:0]
+:OUTPUT ACCEPT [0:0]
+
+# NAT rule #10
+# ------------
+# Wizard generated
+-A PREROUTING -i eth0 -s 0.0.0.0/0 -d 192.168.0.0/24 -p tcp --sport 1024:65535 --dport 445 --syn -m state --state NEW -j DNAT --to-destination 88.160.66.91:21 -m comment --comment "NAT rule #10: rule 1"
+
+# NAT rule #20
+# ------------
+# Généré par l'assistant
+-A PREROUTING -i eth0 -s 0.0.0.0/0 -d 10.43.12.1 -j DNAT --to-destination 0.0.0.0 -m comment --comment "NAT rule #20: rule 1"
+-A PREROUTING -i eth0 -s 0.0.0.0/0 -d 192.168.101.1 -j DNAT --to-destination 0.0.0.0 -m comment --comment "NAT rule #20: rule 2"
+-A PREROUTING -i eth0 -s 0.0.0.0/0 -d 192.168.102.1 -j DNAT --to-destination 0.0.0.0 -m comment --comment "NAT rule #20: rule 3"
+-A PREROUTING -i eth0 -s 0.0.0.0/0 -d 192.168.103.1 -j DNAT --to-destination 0.0.0.0 -m comment --comment "NAT rule #20: rule 4"
+-A PREROUTING -i eth0 -s 0.0.0.0/0 -d 192.168.104.1 -j DNAT --to-destination 0.0.0.0 -m comment --comment "NAT rule #20: rule 5"
+
+COMMIT
+

@@ -1,0 +1,708 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>NndDomain</class>
+ <widget class="QDialog" name="NndDomain">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>770</width>
+    <height>652</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Dialog</string>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout_2">
+   <item>
+    <widget class="QLabel" name="label">
+     <property name="font">
+      <font>
+       <weight>75</weight>
+       <bold>true</bold>
+      </font>
+     </property>
+     <property name="text">
+      <string>Domain edition</string>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QWidget" name="widget_4" native="true">
+     <layout class="QHBoxLayout" name="horizontalLayout_3">
+      <item>
+       <widget class="QLabel" name="label_4">
+        <property name="text">
+         <string>Name</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLineEdit" name="name_lineedit"/>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item>
+    <widget class="QGroupBox" name="groupBox">
+     <property name="title">
+      <string>Domain parameters</string>
+     </property>
+     <layout class="QGridLayout" name="gridLayout_3">
+      <item row="0" column="0">
+       <widget class="QWidget" name="widget_3" native="true">
+        <layout class="QHBoxLayout" name="horizontalLayout_2">
+         <item>
+          <widget class="QLabel" name="label_3">
+           <property name="text">
+            <string>Type</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QRadioButton" name="type_AD_radiobutton">
+           <property name="text">
+            <string>Active Directory</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QRadioButton" name="type_LDAP_radiobutton">
+           <property name="text">
+            <string>LDAP</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QRadioButton" name="type_edirectory_radiobutton">
+           <property name="text">
+            <string>eDirectory</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </widget>
+      </item>
+      <item row="1" column="0">
+       <widget class="QWidget" name="widget_5" native="true">
+        <layout class="QGridLayout" name="gridLayout">
+         <item row="0" column="0">
+          <widget class="QLabel" name="label_5">
+           <property name="text">
+            <string>Realm</string>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="1">
+          <widget class="QLineEdit" name="realm_lineedit"/>
+         </item>
+         <item row="2" column="1">
+          <widget class="QLineEdit" name="group_base_dn_lineedit"/>
+         </item>
+         <item row="2" column="0">
+          <widget class="QLabel" name="group_base_dn_label">
+           <property name="text">
+            <string>Base DN for groups</string>
+           </property>
+           <property name="buddy">
+            <cstring>group_base_dn_lineedit</cstring>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="1">
+          <widget class="QLineEdit" name="user_base_dn_lineedit"/>
+         </item>
+         <item row="1" column="0">
+          <widget class="QLabel" name="user_base_dn_label">
+           <property name="text">
+            <string>Base DN for users</string>
+           </property>
+           <property name="buddy">
+            <cstring>user_base_dn_lineedit</cstring>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item>
+    <widget class="QCheckBox" name="expert_checkbox">
+     <property name="text">
+      <string>LDAP settings</string>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <layout class="QHBoxLayout" name="expert_widget">
+     <item>
+      <widget class="QGroupBox" name="groupBox_2">
+       <property name="title">
+        <string>User LDAP object</string>
+       </property>
+       <layout class="QGridLayout" name="gridLayout_4">
+        <item row="0" column="0">
+         <widget class="QCheckBox" name="user_filter_checkbox">
+          <property name="text">
+           <string>User name</string>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="1">
+         <widget class="QLineEdit" name="user_filter_lineedit"/>
+        </item>
+        <item row="1" column="0">
+         <widget class="QCheckBox" name="user_member_attr_checkbox">
+          <property name="text">
+           <string>User groups enumeration attribute</string>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="1">
+         <widget class="QLineEdit" name="user_member_attr_lineedit"/>
+        </item>
+        <item row="3" column="0" colspan="2">
+         <spacer name="verticalSpacer_2">
+          <property name="orientation">
+           <enum>Qt::Vertical</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>20</width>
+            <height>40</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+       </layout>
+      </widget>
+     </item>
+     <item>
+      <widget class="QGroupBox" name="groupBox_3">
+       <property name="title">
+        <string>User group LDAP object</string>
+       </property>
+       <layout class="QGridLayout" name="gridLayout_5">
+        <item row="0" column="0">
+         <widget class="QCheckBox" name="group_attr_name_checkbox">
+          <property name="text">
+           <string>Attribute name</string>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="1">
+         <widget class="QLineEdit" name="group_attr_name_lineedit"/>
+        </item>
+        <item row="1" column="0">
+         <widget class="QCheckBox" name="group_enum_filter_checkbox">
+          <property name="text">
+           <string>LDAP filter for group objects</string>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="1">
+         <widget class="QLineEdit" name="group_enum_filter_lineedit"/>
+        </item>
+        <item row="2" column="0">
+         <widget class="QCheckBox" name="group_filter_checkbox">
+          <property name="text">
+           <string>Attribute containing group name</string>
+          </property>
+         </widget>
+        </item>
+        <item row="2" column="1">
+         <widget class="QLineEdit" name="group_filter_lineedit"/>
+        </item>
+        <item row="3" column="0">
+         <widget class="QCheckBox" name="group_member_attr_checkbox">
+          <property name="text">
+           <string>Group enumeration attribute</string>
+          </property>
+         </widget>
+        </item>
+        <item row="3" column="1">
+         <widget class="QLineEdit" name="group_member_attr_lineedit"/>
+        </item>
+       </layout>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <widget class="QGroupBox" name="groupBox">
+     <property name="title">
+      <string>Servers</string>
+     </property>
+     <layout class="QHBoxLayout" name="horizontalLayout">
+      <item>
+       <widget class="QTableWidget" name="server_table">
+        <property name="editTriggers">
+         <set>QAbstractItemView::NoEditTriggers</set>
+        </property>
+        <attribute name="horizontalHeaderStretchLastSection">
+         <bool>true</bool>
+        </attribute>
+        <attribute name="horizontalHeaderStretchLastSection">
+         <bool>true</bool>
+        </attribute>
+        <column>
+         <property name="text">
+          <string>Server</string>
+         </property>
+        </column>
+        <column>
+         <property name="text">
+          <string>Address (LDAP URI)</string>
+         </property>
+        </column>
+       </widget>
+      </item>
+      <item>
+       <widget class="QWidget" name="widget_8" native="true">
+        <layout class="QVBoxLayout" name="verticalLayout">
+         <item>
+          <widget class="QPushButton" name="add_button">
+           <property name="text">
+            <string>New</string>
+           </property>
+           <property name="icon">
+            <iconset resource="../../../../../nucentral-edenwall/resources/edenwall.qrc">
+             <normaloff>:/icons/add.png</normaloff>:/icons/add.png</iconset>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QPushButton" name="edit_button">
+           <property name="text">
+            <string>Edit</string>
+           </property>
+           <property name="icon">
+            <iconset resource="../../../../../nucentral-edenwall/resources/edenwall.qrc">
+             <normaloff>:/icons/edit.png</normaloff>:/icons/edit.png</iconset>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QPushButton" name="delete_button">
+           <property name="text">
+            <string>Delete</string>
+           </property>
+           <property name="icon">
+            <iconset resource="../../../../../nucentral-edenwall/resources/edenwall.qrc">
+             <normaloff>:/icons/delete.png</normaloff>:/icons/delete.png</iconset>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QPushButton" name="move_up_button">
+           <property name="text">
+            <string>Move up</string>
+           </property>
+           <property name="icon">
+            <iconset resource="../../../../../nucentral-edenwall/resources/edenwall.qrc">
+             <normaloff>:/icons/up.png</normaloff>:/icons/up.png</iconset>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QPushButton" name="move_down_button">
+           <property name="text">
+            <string>Move down</string>
+           </property>
+           <property name="icon">
+            <iconset resource="../../../../../nucentral-edenwall/resources/edenwall.qrc">
+             <normaloff>:/icons/down.png</normaloff>:/icons/down.png</iconset>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item>
+    <spacer name="verticalSpacer">
+     <property name="orientation">
+      <enum>Qt::Vertical</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>20</width>
+       <height>40</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
+   <item>
+    <widget class="QDialogButtonBox" name="buttonBox">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+     <property name="standardButtons">
+      <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
+     </property>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <tabstops>
+  <tabstop>buttonBox</tabstop>
+  <tabstop>name_lineedit</tabstop>
+  <tabstop>type_AD_radiobutton</tabstop>
+  <tabstop>type_LDAP_radiobutton</tabstop>
+  <tabstop>realm_lineedit</tabstop>
+  <tabstop>user_base_dn_lineedit</tabstop>
+  <tabstop>group_base_dn_lineedit</tabstop>
+  <tabstop>expert_checkbox</tabstop>
+  <tabstop>server_table</tabstop>
+  <tabstop>add_button</tabstop>
+  <tabstop>edit_button</tabstop>
+  <tabstop>delete_button</tabstop>
+  <tabstop>move_up_button</tabstop>
+  <tabstop>move_down_button</tabstop>
+ </tabstops>
+ <resources>
+  <include location="../../../../../nucentral-edenwall/resources/edenwall.qrc"/>
+ </resources>
+ <connections>
+  <connection>
+   <sender>buttonBox</sender>
+   <signal>accepted()</signal>
+   <receiver>NndDomain</receiver>
+   <slot>accept()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>257</x>
+     <y>687</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>157</x>
+     <y>274</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>buttonBox</sender>
+   <signal>rejected()</signal>
+   <receiver>NndDomain</receiver>
+   <slot>reject()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>325</x>
+     <y>687</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>286</x>
+     <y>274</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>user_filter_checkbox</sender>
+   <signal>clicked(bool)</signal>
+   <receiver>user_filter_lineedit</receiver>
+   <slot>setEnabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>214</x>
+     <y>299</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>259</x>
+     <y>299</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>user_member_attr_checkbox</sender>
+   <signal>clicked(bool)</signal>
+   <receiver>user_member_attr_lineedit</receiver>
+   <slot>setEnabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>185</x>
+     <y>319</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>318</x>
+     <y>321</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>group_attr_name_checkbox</sender>
+   <signal>clicked(bool)</signal>
+   <receiver>group_attr_name_lineedit</receiver>
+   <slot>setEnabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>545</x>
+     <y>294</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>630</x>
+     <y>296</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>group_enum_filter_checkbox</sender>
+   <signal>clicked(bool)</signal>
+   <receiver>group_enum_filter_lineedit</receiver>
+   <slot>setEnabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>494</x>
+     <y>322</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>662</x>
+     <y>322</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>group_filter_checkbox</sender>
+   <signal>clicked(bool)</signal>
+   <receiver>group_filter_lineedit</receiver>
+   <slot>setEnabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>546</x>
+     <y>351</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>676</x>
+     <y>353</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>group_member_attr_checkbox</sender>
+   <signal>clicked(bool)</signal>
+   <receiver>group_member_attr_lineedit</receiver>
+   <slot>setEnabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>561</x>
+     <y>375</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>619</x>
+     <y>374</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>type_AD_radiobutton</sender>
+   <signal>clicked(bool)</signal>
+   <receiver>user_base_dn_lineedit</receiver>
+   <slot>setHidden(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>238</x>
+     <y>115</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>240</x>
+     <y>180</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>type_AD_radiobutton</sender>
+   <signal>clicked(bool)</signal>
+   <receiver>group_base_dn_lineedit</receiver>
+   <slot>setHidden(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>312</x>
+     <y>110</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>322</x>
+     <y>203</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>type_LDAP_radiobutton</sender>
+   <signal>clicked(bool)</signal>
+   <receiver>user_base_dn_lineedit</receiver>
+   <slot>setShown(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>424</x>
+     <y>113</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>378</x>
+     <y>180</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>type_LDAP_radiobutton</sender>
+   <signal>clicked(bool)</signal>
+   <receiver>group_base_dn_lineedit</receiver>
+   <slot>setShown(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>492</x>
+     <y>118</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>474</x>
+     <y>201</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>type_edirectory_radiobutton</sender>
+   <signal>clicked(bool)</signal>
+   <receiver>user_base_dn_lineedit</receiver>
+   <slot>setShown(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>588</x>
+     <y>111</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>576</x>
+     <y>179</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>type_edirectory_radiobutton</sender>
+   <signal>clicked(bool)</signal>
+   <receiver>group_base_dn_lineedit</receiver>
+   <slot>setShown(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>646</x>
+     <y>115</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>645</x>
+     <y>200</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>type_AD_radiobutton</sender>
+   <signal>clicked(bool)</signal>
+   <receiver>user_base_dn_label</receiver>
+   <slot>setHidden(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>254</x>
+     <y>115</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>96</x>
+     <y>179</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>type_AD_radiobutton</sender>
+   <signal>clicked(bool)</signal>
+   <receiver>group_base_dn_label</receiver>
+   <slot>setHidden(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>285</x>
+     <y>116</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>103</x>
+     <y>205</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>type_LDAP_radiobutton</sender>
+   <signal>clicked(bool)</signal>
+   <receiver>user_base_dn_label</receiver>
+   <slot>setShown(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>444</x>
+     <y>113</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>89</x>
+     <y>180</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>type_LDAP_radiobutton</sender>
+   <signal>clicked(bool)</signal>
+   <receiver>user_base_dn_label</receiver>
+   <slot>setShown(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>456</x>
+     <y>114</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>88</x>
+     <y>178</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>type_LDAP_radiobutton</sender>
+   <signal>clicked(bool)</signal>
+   <receiver>group_base_dn_label</receiver>
+   <slot>setShown(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>416</x>
+     <y>117</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>106</x>
+     <y>205</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>type_edirectory_radiobutton</sender>
+   <signal>clicked(bool)</signal>
+   <receiver>user_base_dn_label</receiver>
+   <slot>setShown(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>621</x>
+     <y>110</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>40</x>
+     <y>181</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>type_edirectory_radiobutton</sender>
+   <signal>clicked(bool)</signal>
+   <receiver>group_base_dn_label</receiver>
+   <slot>setShown(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>690</x>
+     <y>109</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>114</x>
+     <y>200</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+</ui>

@@ -1,0 +1,4 @@
+#!/bin/sh
+
+/usr/sbin/ipset -X nuauth ||:
+/usr/sbin/ipset -N nuauth iphash --hashsize 4096

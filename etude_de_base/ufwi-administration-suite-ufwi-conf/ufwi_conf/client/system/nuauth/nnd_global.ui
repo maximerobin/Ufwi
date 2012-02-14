@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>NndGlobal</class>
+ <widget class="QWidget" name="NndGlobal">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>530</width>
+    <height>430</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Form</string>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout_2">
+   <item>
+    <widget class="QGroupBox" name="groupBox">
+     <property name="title">
+      <string>Domains</string>
+     </property>
+     <layout class="QHBoxLayout" name="horizontalLayout">
+      <item>
+       <widget class="QTableWidget" name="domain_table">
+        <property name="editTriggers">
+         <set>QAbstractItemView::NoEditTriggers</set>
+        </property>
+        <property name="columnCount">
+         <number>3</number>
+        </property>
+        <attribute name="horizontalHeaderStretchLastSection">
+         <bool>true</bool>
+        </attribute>
+        <attribute name="horizontalHeaderStretchLastSection">
+         <bool>true</bool>
+        </attribute>
+        <column>
+         <property name="text">
+          <string>Domain name</string>
+         </property>
+        </column>
+        <column>
+         <property name="text">
+          <string>Default</string>
+         </property>
+        </column>
+        <column>
+         <property name="text">
+          <string>Summary</string>
+         </property>
+        </column>
+       </widget>
+      </item>
+      <item>
+       <layout class="QVBoxLayout" name="verticalLayout">
+        <item>
+         <widget class="QPushButton" name="add_button">
+          <property name="text">
+           <string>New</string>
+          </property>
+          <property name="icon">
+           <iconset resource="../../../../../../../nucentral-edenwall/resources/edenwall.qrc">
+            <normaloff>:/icons/add.png</normaloff>:/icons/add.png</iconset>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="edit_button">
+          <property name="text">
+           <string>Edit</string>
+          </property>
+          <property name="icon">
+           <iconset resource="../../../../../../../nucentral-edenwall/resources/edenwall.qrc">
+            <normaloff>:/icons/edit.png</normaloff>:/icons/edit.png</iconset>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="delete_button">
+          <property name="text">
+           <string>Delete</string>
+          </property>
+          <property name="icon">
+           <iconset resource="../../../../../../../nucentral-edenwall/resources/edenwall.qrc">
+            <normaloff>:/icons/delete.png</normaloff>:/icons/delete.png</iconset>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="define_as_default_button">
+          <property name="text">
+           <string>Define as default</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+     </layout>
+     <zorder>domain_table</zorder>
+     <zorder>domain_table</zorder>
+     <zorder></zorder>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <resources>
+  <include location="../../../../../../../nucentral-edenwall/resources/edenwall.qrc"/>
+ </resources>
+ <connections/>
+</ui>

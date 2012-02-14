@@ -1,0 +1,29 @@
++++++++++++++++++++++++++++++++++++++
+Changes between NuFace 2 and NuFace 3
++++++++++++++++++++++++++++++++++++++
+
+New features
+------------
+
+ * IPv6 support
+ * Unicode support (object names and comments)
+ * Qt interface instead of a web interface
+ * A network is attached to an interface: accept the same the networks on
+   different interfaces (eg. 10.0.0.0/8 on eth0 and eth3)
+ * Create hostname object which can be refreshed after its creation (get the
+   new IP addresses)
+ * All actions in the GUI are undoable
+ * Apply firewall is now really atomic: iptables and LDAP rules are restored on
+   error. NuFace2 doesn't restore LDAP rules on error.
+ * ACL order is now global, and not specific to a bichain
+ * An ACL can have multiple user groups
+ * NuFace has a builtin protocol library (non editable protocols)
+ * Info box: just click on an object to get all informations
+
+Removed features
+----------------
+
+ * No more local rules (INPUT and OUPUT)
+ * The ACL sources are all in the same interface, same rule for the
+   destinations
+

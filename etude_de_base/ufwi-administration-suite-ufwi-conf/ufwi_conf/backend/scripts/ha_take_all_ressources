@@ -1,0 +1,2 @@
+#!/bin/bash
+/usr/share/heartbeat/hb_takeover all

@@ -1,0 +1,2 @@
+{% for domain in custom_blacklist_domains %}{{domain}}
+{% endfor %}

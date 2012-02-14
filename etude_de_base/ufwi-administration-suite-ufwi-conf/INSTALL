@@ -1,0 +1,20 @@
+See INSTALL.client to install the frontend (Qt client).
+
+Requierements
+=============
+
+ - Python 2.5+
+ - Python Jinja
+ - IPy Python module version 0.42+
+ - ufwi-rpcd server
+
+Debian command: apt-get install python-jinja python-ipy
+
+
+Install files
+=============
+
+Use this command as root:
+
+   make install
+

@@ -1,0 +1,4 @@
+usr/lib/python*/site-packages/nucentral/console_access
+usr/lib/python*/site-packages/nucentral/logger
+usr/lib/python*/site-packages/nucentral/multisite/transport
+usr/lib/python*/site-packages/nucentral/util

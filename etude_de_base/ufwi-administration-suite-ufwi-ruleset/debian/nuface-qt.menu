@@ -1,0 +1,2 @@
+?package(nuface-qt):needs="X11" section="System/Administration"\
+  title="nuface" command="/usr/bin/nuface-qt"

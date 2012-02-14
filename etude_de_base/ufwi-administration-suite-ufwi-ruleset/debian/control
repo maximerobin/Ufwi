@@ -1,0 +1,78 @@
+Source: nuface
+Section: net
+Priority: extra
+Maintainer: Pierre Chifflier <pollux@debian.org>
+Build-Depends: debhelper (>= 7),
+        python-support (>= 0.4), python-dev,
+        pyqt4-dev-tools
+XS-Python-Version: all
+Standards-Version: 3.8.0
+
+Package: nuface-common
+Architecture: all
+Depends: ${python:Depends},
+        python-ipy
+XB-Python-Version: ${python:Versions}
+Description: A firewall administration Qt interface [common files]
+ NuFace is an intuitive firewall configuration interface for NuFW as
+ well as for Netfilter. It lets you use high level objects, agglomerate objects
+ into ACLs, and deals with generating Netfilter rules as well as LDAP Acls for
+ NuFW.
+ NuFace works with pure Netfilter firewalls as well as for authenticating
+ NuFW firewalls.
+ .
+ This package provides the common files for NuFace.
+
+Package: nuface-forward
+Architecture: all
+Depends: ${python:Depends},
+        nuface-common,
+        nucentral-server,
+        python-ldap,
+        python-ipy,
+        nuconf-common,
+        nuconf-backend
+Suggests: nulog
+XB-Python-Version: ${python:Versions}
+Description: A firewall administration Qt interface [nucentral module]
+ NuFace is an intuitive firewall configuration interface for NuFW as
+ well as for Netfilter. It lets you use high level objects, agglomerate objects
+ into ACLs, and deals with generating Netfilter rules as well as LDAP Acls for
+ NuFW.
+ NuFace works with pure Netfilter firewalls as well as for authenticating
+ NuFW firewalls.
+ .
+ This package provides the NuCentral forward module.
+
+Package: nuface-localfw
+Architecture: all
+Depends: ${python:Depends},
+        nuface-forward
+XB-Python-Version: ${python:Versions}
+Description: A firewall administration Qt interface [localfw module]
+ NuFace is an intuitive firewall configuration interface for NuFW as
+ well as for Netfilter. It lets you use high level objects, agglomerate objects
+ into ACLs, and deals with generating Netfilter rules as well as LDAP Acls for
+ NuFW.
+ NuFace works with pure Netfilter firewalls as well as for authenticating
+ NuFW firewalls.
+ .
+ This package provides the NuCentral localfw module.
+
+Package: nuface-qt
+Architecture: all
+Depends: ${python:Depends},
+        nucentral-edenwall-qt,
+        nuface-common,
+        python-qt4
+Suggests: nulog-qt
+XB-Python-Version: ${python:Versions}
+Description: A firewall administration Qt interface
+ NuFace is an intuitive firewall configuration interface for NuFW as
+ well as for Netfilter. It lets you use high level objects, agglomerate objects
+ into ACLs, and deals with generating Netfilter rules as well as LDAP Acls for
+ NuFW.
+ NuFace works with pure Netfilter firewalls as well as for authenticating
+ NuFW firewalls.
+ .
+ This package provides the graphical interface for NuFace

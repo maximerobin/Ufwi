@@ -1,0 +1,84 @@
+#!/bin/sh
+
+# Edenwall script
+# - store ha status in file
+# - send mail when start / stop is called
+#
+#	usage: $0 {start|stop|status|monitor|usage}
+
+unset LANG; export LANG
+LC_ALL=C
+export LC_ALL
+
+. /etc/ha.d/resource.d/hto-mapfuncs
+
+usage() {
+  log_and_print "usage: $0 $LEGAL_ACTIONS"
+}
+
+if [ $# != 1 ]; then
+    usage
+    exit 1
+fi
+
+STATUS_FILENAME="/var/lib/nucentral/ha_status"
+start="ACTIVE"
+# update /etc/init.d/heartbeat_edw if INACTIVE modified
+stop="INACTIVE"
+
+EMAIL_FILENAME="/etc/aliases"
+
+save_status() {
+    # save status (ACTIVE / INACTIVE) in $STATUS_FILENAME
+    STATUS_CMD="echo \$$1 > ${STATUS_FILENAME}"
+    log_and_print ${STATUS_CMD}
+    eval ${STATUS_CMD}
+}
+
+mail_status() {
+    EMAIL_CMD="sed '/^root: */!d; s///;q' ${EMAIL_FILENAME}"
+    log_and_print "INFO: ${EMAIL_CMD}"
+    dest_email=`eval ${EMAIL_CMD}`
+    if [ -n "${dest_email}" ]; then
+        subject="EdenWall `hostname` - High Availability: $1"
+        if [ "$1" = "start" ]; then
+            new_status="active"
+            old_status="inactive"
+        else
+            new_status="inactive"
+            old_status="active"
+        fi
+        mail -s "${subject}" "${dest_email}"  <<EOF
+'`hostname`' node status changed to ${new_status} (`date`).
+
+If you have just edited the cluster network configuration, the primary node will
+be in an 'inactive' state for a few seconds, which is a normal behavior.
+
+'`hostname`' node IP:
+`ip -f inet a | grep -o "inet.*" | cut -d ' ' -f 2`
+EOF
+        log_and_print "INFO: mail sent to '${dest_email}'"
+    else
+        log_and_print "INFO: empty email address, email not sent"
+    fi
+}
+
+case "$1" in
+  start|stop)
+    save_status $1
+    mail_status $1
+    ;;
+  status|monitor)
+    log_and_print "INFO: Running OK";
+    exit 0
+  ;;
+  usage)
+    usage
+  ;;
+  *)
+    log_and_print "ERROR: unknown parameter '$1'"
+    usage
+    exit 1
+    ;;
+esac
+

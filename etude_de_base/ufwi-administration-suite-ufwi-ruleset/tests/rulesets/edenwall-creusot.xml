@@ -1,0 +1,608 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<ruleset name="Creusot" timestamp="2010-01-08 17:51:36" version="3.0.1">
+   <resources>
+      <interface id="Any" name="eth+">
+         <network address="10.131.0.0/16" id="10.131.0.0/16 (Any)">
+            <host address="10.131.23.50" id="srv DNS IUT" />
+         </network>
+         <network address="192.168.0.0/16" id="192.168.0.0/16 (Any)" />
+         <network address="193.52.240.0/24" id="193.52.240.0/24 (Any)" />
+         <network address="0.0.0.0/0" id="Internet (Any)">
+            <host address="193.50.50.6" id="srv DNS Univ Bourgogne" />
+         </network>
+         <group id="srvs DNS">
+            <host>srv DNS IUT</host>
+            <host>srv DNS Univ Bourgogne</host>
+         </group>
+      </interface>
+      <interface id="My Networks" name="eth+">
+         <network address="10.131.0.0/16" id="10.131.0.0/16">
+            <network address="10.131.22.0/24" id="Bornes WIFI" />
+            <network address="10.131.23.0/24" id="DMZ Privée">
+               <host address="10.131.23.8" id="AuthCreusot" />
+               <host address="10.131.23.7" id="NS Creusot" />
+               <host address="10.131.23.48" id="TSgestion" />
+               <host address="10.131.23.32" id="srv CRI" />
+            </network>
+            <network address="10.131.20.0/24" id="Matériel" />
+            <network address="10.131.12.0/24" id="Personnel" />
+            <network address="10.131.19.0/24" id="Plateforme 3D" />
+            <network address="10.131.40.0/24" id="VO IP" />
+            <network address="10.131.17.0/24" id="eduroam" />
+            <network address="10.131.15.0/24" id="gestion">
+               <host address="10.131.15.52" id="PC a.trapet" />
+               <host address="10.131.15.7" id="PC g.souciet" />
+               <host address="10.131.15.50" id="PC gestion-reseau" />
+               <host address="10.131.15.11" id="PC l.belaid" />
+               <host address="10.131.15.10" id="PC l.rives" />
+               <host address="10.131.15.51" id="PC p.gorria" />
+               <host address="10.131.15.8" id="PC p.nguyen" />
+               <host address="10.131.15.6" id="PC s.sanders" />
+            </network>
+            <network address="10.131.13.0/24" id="le2i">
+               <host address="10.131.13.234" id="srv Fractale" />
+            </network>
+            <network address="10.131.14.0/24" id="ltm">
+               <host address="10.131.14.27" id="Impresion xlab" />
+               <host address="10.131.14.28" id="PC njankowski" />
+            </network>
+            <network address="10.131.16.0/24" id="nomade" />
+            <host address="10.131.23.50" id="srv AD DNS" />
+            <host address="10.131.23.36" id="srv Anti-Virus" />
+            <host address="10.131.23.20" id="srv Intranet" />
+            <host address="10.131.23.17" id="srv OCS" />
+            <host address="10.131.23.48" id="srv Superman" />
+            <host address="10.131.23.36" id="srv Supervision" />
+            <host address="10.131.23.71" id="srv Windows Update" />
+         </network>
+         <network address="192.168.0.0/16" id="192.168.0.0/16">
+            <network address="192.168.210.0/24" id="EAR" />
+            <network address="192.168.168.0/24" id="Ecrans" />
+            <network address="192.168.40.0/30" id="Pédagogie" />
+            <host address="192.168.36.6" id="srv AD Pedago CDT" />
+            <host address="192.168.32.6" id="srv AD Pedago IUT" />
+         </network>
+         <network address="193.52.240.0/24" id="193.52.240.0/24">
+            <network address="193.52.240.96/27" id="DMZ publique" />
+            <host address="193.52.240.1" id="IP DNAT Firewall" />
+            <host address="193.52.240.3" id="IP DNAT Impression xlab" />
+            <host address="193.52.240.233" id="IP SNAT Crous" />
+            <host address="193.52.240.235" id="IP SNAT DMZ PRivée" />
+            <host address="193.52.240.238" id="IP SNAT Ecrans" />
+            <host address="193.52.240.236" id="IP SNAT Firewall" />
+            <host address="193.52.240.225" id="IP SNAT Gestion" />
+            <host address="193.52.240.239" id="IP SNAT Matériel" />
+            <host address="193.52.240.227" id="IP SNAT Personnels" />
+            <host address="193.52.240.238" id="IP SNAT Plateforme 3D" />
+            <host address="193.52.240.225" id="IP SNAT TSGestion" />
+            <host address="193.52.240.226" id="IP SNAT eduroam" />
+            <host address="193.52.240.228" id="IP SNAT le2i" />
+            <host address="193.52.240.229" id="IP SNAT ltm" />
+            <host address="193.52.240.225" id="IP SNAT njankowski" />
+            <host address="193.52.240.230" id="IP SNAT nomade" />
+            <host address="193.52.240.232" id="IP SNAT pedagocdt" />
+            <host address="193.52.240.231" id="IP SNAT pedagoiut" />
+            <host address="193.52.240.234" id="IP SNAT pedagowifi" />
+            <host address="193.52.240.237" id="IP SNAT preprod" />
+            <host address="193.52.240.7" id="IP SNAT-DNAT NS Creusot" />
+            <host address="193.52.240.65" id="IP SNAT-DNAT authCreusot" />
+            <network address="193.52.240.32/27" id="Visioconférence" />
+            <host address="193.52.240.103" id="srv TSI" />
+            <host address="193.52.240.114" id="srv Vision" />
+         </network>
+         <group id="GRP Matériels privés">
+            <network>Bornes WIFI</network>
+            <network>DMZ Privée</network>
+            <network>EAR</network>
+            <network>Ecrans</network>
+            <network>Matériel</network>
+            <network>Pédagogie</network>
+         </group>
+         <group id="GRP Matériels publiques">
+            <network>DMZ publique</network>
+            <network>VO IP</network>
+            <network>Visioconférence</network>
+         </group>
+         <group id="Grp Applis Gestion">
+            <network>Personnel</network>
+            <network>Plateforme 3D</network>
+            <network>eduroam</network>
+            <network>gestion</network>
+            <network>le2i</network>
+            <network>ltm</network>
+            <network>nomade</network>
+            <host>srv Superman</host>
+         </group>
+         <group id="Grp Personnels">
+            <network>Personnel</network>
+            <network>Plateforme 3D</network>
+            <network>eduroam</network>
+            <network>gestion</network>
+            <network>le2i</network>
+            <network>ltm</network>
+            <network>nomade</network>
+         </group>
+         <group id="PCs CRI">
+            <host>PC g.souciet</host>
+            <host>PC gestion-reseau</host>
+            <host>PC l.belaid</host>
+            <host>PC l.rives</host>
+            <host>PC p.nguyen</host>
+            <host>PC s.sanders</host>
+         </group>
+         <group id="srvs AD">
+            <host>srv AD DNS</host>
+            <host>srv AD Pedago CDT</host>
+            <host>srv AD Pedago IUT</host>
+         </group>
+         <group id="srvs le2i">
+            <host>srv Fractale</host>
+            <host>srv Vision</host>
+         </group>
+      </interface>
+      <interface id="VPN Nomade (client)" name="tunp">
+         <network address="10.131.18.0/24" id="VPNCLIENT" />
+      </interface>
+      <interface id="eth0" name="eth0">
+         <network address="192.168.218.0/24" id="Crous" />
+         <network address="192.168.36.0/24" id="pedagocdt" />
+         <network address="192.168.32.0/22" id="pedagoiut" />
+         <network address="192.168.37.0/24" id="pedagowifi" />
+      </interface>
+      <interface id="eth3.24" name="eth3.24">
+         <network address="10.131.24.0/24" id="preprod" />
+      </interface>
+      <interface id="eth4" name="eth4">
+         <network address="194.214.102.8/30" id="Interco Firewall">
+            <host address="194.214.102.10" id="IP Publique Firewall" />
+         </network>
+         <network address="0.0.0.0/0" id="Internet IPv4">
+            <network address="193.52.245.0/24" id="Net Gestion Univ Bourgogne">
+               <host address="193.52.245.234" id="srv Planning" />
+            </network>
+            <host address="193.52.26.20" id="srv Win BU" />
+            <host address="193.52.26.1" id="srv Win BU2" />
+            <host address="62.212.120.15" id="srv btechno" />
+            <host address="193.52.246.36" id="srv xlab" />
+         </network>
+         <network address="2000::/3" id="Internet IPv6" />
+         <network address="fe80::/64" id="Local link IPv6" />
+         <network address="ff02::/16" id="Local multicast IPv6" />
+      </interface>
+   </resources>
+   <protocols>
+      <group id="ADECLIENT">
+         <tcp>ADECLIENT (3099)</tcp>
+         <tcp>ADECLIENT (5402)</tcp>
+      </group>
+      <tcp dport="3099">ADECLIENT (3099)</tcp>
+      <tcp dport="5402">ADECLIENT (5402)</tcp>
+      <tcp dport="1534">ATER</tcp>
+      <group id="Anti-Virus">
+         <tcp>HTTP</tcp>
+         <tcp>Symantec CE (tcp)</tcp>
+         <udp>Symantec CE (udp)</udp>
+      </group>
+      <group id="CNX_AD">
+         <tcp>DNS (tcp)</tcp>
+         <udp>DNS (udp)</udp>
+         <tcp>Dynamic (tcp)</tcp>
+         <udp>Dynamic (udp)</udp>
+         <tcp>EPMAP (tcp)</tcp>
+         <udp>EPMAP (udp)</udp>
+         <tcp>KERBEROS_PASSWD (tcp)</tcp>
+         <udp>KERBEROS_PASSWD (udp)</udp>
+         <tcp>Kerberos (tcp)</tcp>
+         <udp>Kerberos (udp)</udp>
+         <tcp>LDAP</tcp>
+         <tcp>MICROSOFT_DS_AD</tcp>
+         <tcp>MSFTGC (tcp)</tcp>
+         <udp>MSFTGC (udp)</udp>
+         <udp>NTP</udp>
+         <tcp>NetBIOS (tcp)</tcp>
+         <udp>NetBIOS (udp)</udp>
+         <udp>Netbios Datagram Service</udp>
+         <udp>Netbios Name Service</udp>
+      </group>
+      <tcp dport="49152:65535">Dynamic (tcp)</tcp>
+      <udp dport="49152:65535">Dynamic (udp)</udp>
+      <tcp dport="135">EPMAP (tcp)</tcp>
+      <udp dport="135">EPMAP (udp)</udp>
+      <tcp dport="587">Email Submit</tcp>
+      <group id="Gestion">
+         <tcp>ADECLIENT (3099)</tcp>
+         <tcp>ADECLIENT (5402)</tcp>
+         <tcp>ATER</tcp>
+         <tcp>Oracle</tcp>
+         <tcp>RDP</tcp>
+         <tcp>SIFAC</tcp>
+         <tcp>SSH</tcp>
+         <tcp>Telnet</tcp>
+         <tcp>Winbu (1040-1060)</tcp>
+         <tcp>Winbu (1100)</tcp>
+         <tcp>xlab (https)</tcp>
+      </group>
+      <group id="Intranet">
+         <tcp>HTTP</tcp>
+         <tcp>tcp_81</tcp>
+      </group>
+      <tcp dport="464">KERBEROS_PASSWD (tcp)</tcp>
+      <udp dport="464">KERBEROS_PASSWD (udp)</udp>
+      <group id="Kerberos">
+         <tcp>Kerberos (tcp)</tcp>
+         <udp>Kerberos (udp)</udp>
+      </group>
+      <tcp dport="88">Kerberos (tcp)</tcp>
+      <udp dport="88">Kerberos (udp)</udp>
+      <tcp dport="445">MICROSOFT_DS_AD</tcp>
+      <tcp dport="3268">MSFTGC (tcp)</tcp>
+      <udp dport="3268">MSFTGC (udp)</udp>
+      <group id="Messagerie">
+         <tcp>Email Submit</tcp>
+         <tcp>IMAP</tcp>
+         <tcp>IMAPS</tcp>
+         <tcp>POP3</tcp>
+         <tcp>POP3S</tcp>
+         <tcp>SMTP</tcp>
+      </group>
+      <tcp dport="139">NetBIOS (tcp)</tcp>
+      <udp dport="139">NetBIOS (udp)</udp>
+      <tcp dport="1521">Oracle</tcp>
+      <tcp dport="995">POP3S</tcp>
+      <group id="Partage">
+         <tcp>MICROSOFT_DS_AD</tcp>
+         <tcp>NetBIOS (tcp)</tcp>
+         <udp>NetBIOS (udp)</udp>
+         <udp>Netbios Name Service</udp>
+      </group>
+      <tcp dport="3389">RDP</tcp>
+      <group id="Remote APP">
+         <tcp>HTTP</tcp>
+         <tcp>HTTPS</tcp>
+         <tcp>RDP</tcp>
+      </group>
+      <tcp dport="3200">SIFAC</tcp>
+      <tcp dport="81">SharePoint le2i</tcp>
+      <tcp dport="2967">Symantec CE (tcp)</tcp>
+      <udp dport="2967">Symantec CE (udp)</udp>
+      <tcp dport="23">Telnet</tcp>
+      <tcp dport="8085">WebPlanning</tcp>
+      <tcp dport="1040:1060">Winbu (1040-1060)</tcp>
+      <tcp dport="1100">Winbu (1100)</tcp>
+      <tcp dport="8530">Windows Update</tcp>
+      <tcp dport="81">tcp_81</tcp>
+      <tcp dport="443">xlab (https)</tcp>
+   </protocols>
+   <user_groups>
+      <group id="Auth Utilisateurs">
+         <user_group>auth Utilisateurs (10009)</user_group>
+         <user_group>auth Utlisateurs (10065)</user_group>
+      </group>
+      <user_group group="10009">auth Utilisateurs (10009)</user_group>
+      <user_group group="10065">auth Utlisateurs (10065)</user_group>
+   </user_groups>
+   <acls_ipv4 next_id="140">
+      <acl decision="ACCEPT" id="133" log="0">
+         <source>Any</source>
+         <protocol>SharePoint le2i</protocol>
+         <destination>srv Vision</destination>
+      </acl>
+      <acl decision="ACCEPT" id="139" log="0">
+         <source>Any</source>
+         <protocol>Remote APP</protocol>
+         <destination>srv TSI</destination>
+      </acl>
+      <acl decision="ACCEPT" id="121" log="0">
+         <source>Any</source>
+         <protocol>Websurf</protocol>
+         <destination>DMZ publique</destination>
+      </acl>
+      <acl decision="ACCEPT" id="126" log="0">
+         <source>Any</source>
+         <protocol>Any IPv4</protocol>
+         <destination>Visioconférence</destination>
+      </acl>
+      <acl decision="ACCEPT" id="104" log="0">
+         <source>My Networks</source>
+         <protocol>Any ICMP</protocol>
+         <destination>Any</destination>
+      </acl>
+      <acl decision="ACCEPT" id="124" log="0">
+         <source>PCs CRI</source>
+         <protocol>Any IPv4</protocol>
+         <destination>Any</destination>
+      </acl>
+      <acl decision="ACCEPT" id="118" log="0">
+         <source>My Networks</source>
+         <protocol>DNS</protocol>
+         <destination>srvs DNS</destination>
+      </acl>
+      <acl decision="ACCEPT" id="125" log="0">
+         <source>Visioconférence</source>
+         <protocol>Any IPv4</protocol>
+         <destination>Any</destination>
+      </acl>
+      <acl decision="ACCEPT" id="113" log="0">
+         <source>My Networks</source>
+         <protocol>Any IPv4</protocol>
+         <destination>Matériel</destination>
+         <comment>Accès aux Imprimantes</comment>
+      </acl>
+      <acl decision="ACCEPT" id="106" log="0">
+         <source>My Networks</source>
+         <protocol>CNX_AD</protocol>
+         <destination>srvs AD</destination>
+         <comment>Accès aux serveurs DNS/AD et Synchro inter-AD</comment>
+      </acl>
+      <acl decision="ACCEPT" id="109" log="0">
+         <source>My Networks</source>
+         <protocol>Windows Update</protocol>
+         <destination>srv Windows Update</destination>
+      </acl>
+      <acl decision="ACCEPT" id="110" log="0">
+         <source>My Networks</source>
+         <protocol>HTTP</protocol>
+         <destination>srv OCS</destination>
+      </acl>
+      <acl decision="ACCEPT" id="111" log="0">
+         <source>My Networks</source>
+         <protocol>SNMP</protocol>
+         <destination>srv Supervision</destination>
+      </acl>
+      <acl decision="ACCEPT" id="112" log="0">
+         <source>My Networks</source>
+         <protocol>Anti-Virus</protocol>
+         <destination>srv Anti-Virus</destination>
+      </acl>
+      <acl decision="ACCEPT" id="116" log="0">
+         <source>Grp Personnels</source>
+         <protocol>Intranet</protocol>
+         <destination>srv Intranet</destination>
+      </acl>
+      <acl decision="ACCEPT" id="120" log="0">
+         <source>Grp Applis Gestion</source>
+         <protocol>Gestion</protocol>
+         <destination>srv Superman</destination>
+      </acl>
+      <acl decision="ACCEPT" id="131" log="0">
+         <source>gestion</source>
+         <protocol>Partage</protocol>
+         <destination>DMZ publique</destination>
+      </acl>
+      <acl decision="ACCEPT" id="130" log="0">
+         <source>PC p.gorria</source>
+         <source>le2i</source>
+         <protocol>Partage</protocol>
+         <destination>srvs le2i</destination>
+      </acl>
+      <acl decision="ACCEPT" id="132" log="0">
+         <source>My Networks</source>
+         <protocol>Partage</protocol>
+         <destination>srv CRI</destination>
+      </acl>
+      <acl decision="ACCEPT" id="134" log="0">
+         <source>PC a.trapet</source>
+         <protocol>Partage</protocol>
+         <protocol>RDP</protocol>
+         <protocol>VNC</protocol>
+         <destination>DMZ publique</destination>
+      </acl>
+      <acl decision="ACCEPT" id="138" log="0">
+         <source>PCs CRI</source>
+         <protocol>Any IPv4</protocol>
+         <destination>preprod</destination>
+      </acl>
+      <acl decision="ACCEPT" id="105" log="0">
+         <source>My Networks</source>
+         <protocol>NTP</protocol>
+         <destination>Internet IPv4</destination>
+      </acl>
+      <acl decision="ACCEPT" id="115" log="0">
+         <source>Grp Personnels</source>
+         <protocol>Websurf</protocol>
+         <destination>Internet IPv4</destination>
+      </acl>
+      <acl decision="ACCEPT" id="117" log="0">
+         <source>Grp Personnels</source>
+         <protocol>Messagerie</protocol>
+         <destination>Internet IPv4</destination>
+      </acl>
+      <acl decision="ACCEPT" id="127" log="0">
+         <source>GRP Matériels privés</source>
+         <source>GRP Matériels publiques</source>
+         <protocol>Messagerie</protocol>
+         <destination>Internet IPv4</destination>
+      </acl>
+      <acl decision="ACCEPT" id="135" log="0">
+         <source>GRP Matériels privés</source>
+         <source>GRP Matériels publiques</source>
+         <protocol>HTTP</protocol>
+         <destination>Internet IPv4</destination>
+      </acl>
+      <acl decision="ACCEPT" id="114" log="0">
+         <source>My Networks</source>
+         <protocol>WebPlanning</protocol>
+         <destination>srv Planning</destination>
+      </acl>
+      <acl decision="ACCEPT" id="119" log="0">
+         <source>Grp Applis Gestion</source>
+         <protocol>Gestion</protocol>
+         <destination>Net Gestion Univ Bourgogne</destination>
+         <destination>srv Win BU</destination>
+         <destination>srv Win BU2</destination>
+         <destination>srv btechno</destination>
+         <destination>srv xlab</destination>
+      </acl>
+      <acl decision="ACCEPT" id="128" log="0">
+         <source>VPNCLIENT</source>
+         <protocol>RDP</protocol>
+         <destination>My Networks</destination>
+         <user_group>Auth Utilisateurs</user_group>
+      </acl>
+      <acl decision="ACCEPT" id="122" log="0">
+         <source>pedagocdt</source>
+         <source>pedagoiut</source>
+         <protocol>Websurf</protocol>
+         <destination>Internet IPv4</destination>
+      </acl>
+      <acl decision="ACCEPT" id="123" log="0">
+         <source>pedagowifi</source>
+         <protocol>Websurf</protocol>
+         <destination>Internet IPv4</destination>
+         <user_group>Auth Utilisateurs</user_group>
+      </acl>
+      <acl decision="ACCEPT" id="136" log="0">
+         <source>preprod</source>
+         <protocol>DNS</protocol>
+         <destination>srvs DNS</destination>
+      </acl>
+      <acl decision="ACCEPT" id="137" log="0">
+         <source>preprod</source>
+         <protocol>HTTP</protocol>
+         <destination>Internet IPv4</destination>
+      </acl>
+   </acls_ipv4>
+   <nats next_id="27">
+      <nat id="2">
+         <source>Firewall</source>
+         <destination>Internet IPv4</destination>
+         <nated_source>IP SNAT Firewall</nated_source>
+         <comment>SNAT EdenWall</comment>
+      </nat>
+      <nat id="3">
+         <source>gestion</source>
+         <destination>Internet IPv4</destination>
+         <nated_source>IP SNAT Gestion</nated_source>
+         <comment>SNAT Réseau Gestion</comment>
+      </nat>
+      <nat id="4">
+         <source>eduroam</source>
+         <destination>Internet IPv4</destination>
+         <nated_source>IP SNAT eduroam</nated_source>
+         <comment>Wizard generated</comment>
+      </nat>
+      <nat id="5">
+         <source>Personnel</source>
+         <destination>Internet IPv4</destination>
+         <nated_source>IP SNAT Personnels</nated_source>
+         <comment>Wizard generated</comment>
+      </nat>
+      <nat id="6">
+         <source>PC njankowski</source>
+         <destination>Internet IPv4</destination>
+         <nated_source>IP SNAT njankowski</nated_source>
+         <comment>Wizard generated</comment>
+      </nat>
+      <nat id="7">
+         <source>ltm</source>
+         <destination>Internet IPv4</destination>
+         <nated_source>IP SNAT ltm</nated_source>
+         <comment>Wizard generated</comment>
+      </nat>
+      <nat id="8">
+         <source>nomade</source>
+         <destination>Internet IPv4</destination>
+         <nated_source>IP SNAT nomade</nated_source>
+         <comment>Wizard generated</comment>
+      </nat>
+      <nat id="9">
+         <source>pedagoiut</source>
+         <destination>Internet IPv4</destination>
+         <nated_source>IP SNAT pedagoiut</nated_source>
+         <comment>Wizard generated</comment>
+      </nat>
+      <nat id="10">
+         <source>pedagocdt</source>
+         <destination>Internet IPv4</destination>
+         <nated_source>IP SNAT pedagocdt</nated_source>
+         <comment>Wizard generated</comment>
+      </nat>
+      <nat id="11">
+         <source>pedagowifi</source>
+         <destination>Internet IPv4</destination>
+         <nated_source>IP SNAT pedagowifi</nated_source>
+         <comment>Wizard generated</comment>
+      </nat>
+      <nat id="12">
+         <source>preprod</source>
+         <destination>Internet IPv4</destination>
+         <nated_source>IP SNAT preprod</nated_source>
+         <comment>Wizard generated</comment>
+      </nat>
+      <nat id="13">
+         <source>TSgestion</source>
+         <destination>Internet IPv4</destination>
+         <nated_source>IP SNAT TSGestion</nated_source>
+      </nat>
+      <nat id="14">
+         <source>Ecrans</source>
+         <destination>Internet IPv4</destination>
+         <nated_source>IP SNAT Ecrans</nated_source>
+         <comment>Wizard generated</comment>
+      </nat>
+      <nat id="15">
+         <source>AuthCreusot</source>
+         <destination>Internet IPv4</destination>
+         <nated_source>IP SNAT-DNAT authCreusot</nated_source>
+      </nat>
+      <nat id="16">
+         <source>DMZ Privée</source>
+         <destination>Internet IPv4</destination>
+         <nated_source>IP SNAT DMZ PRivée</nated_source>
+         <comment>Wizard generated</comment>
+      </nat>
+      <nat id="17">
+         <source>Matériel</source>
+         <destination>Internet IPv4</destination>
+         <nated_source>IP SNAT Matériel</nated_source>
+         <comment>Wizard generated</comment>
+      </nat>
+      <nat id="18">
+         <source>Plateforme 3D</source>
+         <destination>Internet IPv4</destination>
+         <nated_source>IP SNAT Plateforme 3D</nated_source>
+         <comment>Wizard generated</comment>
+      </nat>
+      <nat id="19">
+         <source>Crous</source>
+         <destination>Internet IPv4</destination>
+         <nated_source>IP SNAT Crous</nated_source>
+         <comment>Wizard generated</comment>
+      </nat>
+      <nat id="20">
+         <source>NS Creusot</source>
+         <destination>Internet IPv4</destination>
+         <nated_source>IP SNAT-DNAT NS Creusot</nated_source>
+      </nat>
+      <nat id="21">
+         <source>le2i</source>
+         <destination>Internet IPv4</destination>
+         <nated_source>IP SNAT le2i</nated_source>
+         <comment>Wizard generated</comment>
+      </nat>
+      <nat id="23">
+         <source>Internet IPv4</source>
+         <destination>IP SNAT-DNAT authCreusot</destination>
+         <nated_destination>AuthCreusot</nated_destination>
+         <comment>Généré par l'assistant</comment>
+      </nat>
+      <nat id="24">
+         <source>Internet IPv4</source>
+         <destination>IP SNAT-DNAT NS Creusot</destination>
+         <nated_destination>NS Creusot</nated_destination>
+         <comment>Généré par l'assistant</comment>
+      </nat>
+      <nat id="25">
+         <source>Internet IPv4</source>
+         <destination>IP DNAT Impression xlab</destination>
+         <nated_destination>Impresion xlab</nated_destination>
+         <comment>Généré par l'assistant</comment>
+      </nat>
+      <nat id="26">
+         <source>Internet IPv4</source>
+         <destination>IP DNAT Firewall</destination>
+         <nated_destination>IP Publique Firewall</nated_destination>
+         <comment>Généré par l'assistant</comment>
+      </nat>
+   </nats>
+</ruleset>

@@ -1,0 +1,8 @@
+all:
+	qmake && make && python configure.py && make
+
+clean:
+	rm -f *.so
+	rm -f *.o
+	rm -f sip* *.sbf pynuwidgetsconfig.py *.exp
+	rm -f Makefile

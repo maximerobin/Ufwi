@@ -1,0 +1,12 @@
+prefix=@prefix@
+
+exec_prefix=${prefix}
+libdir=${exec_prefix}/lib
+includedir=${prefix}/include
+
+Name: libufwiconfparser
+Description: UFWI configuration parser library
+Version: @PACKAGE_VERSION@
+Requires:
+Libs: -L${libdir} -lufwiconfparser
+Cflags: -I${includedir}/ufwiconfparser

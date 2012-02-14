@@ -1,0 +1,121 @@
+#! /bin/sh
+
+#SCRIPT IMPORTED from edenwall generation 3.
+#On EW4 this setup was succesfully tested towards:
+# - Windows 2003 SP1.
+# - <FILL IN, please>
+
+#
+# Copyright 2006,2007 INL
+#
+# join Active Directory domain
+# ./script admin mypass DOMAIN.COMPANY.COM
+#
+
+# Warning: the output of this script will be displayed to the user on the
+# admin web interface in case of error.
+
+user="$1"
+pass="$2"
+realm="$3"
+block_iptables="$4"
+my_fqdn="$(cat /etc/hostname).$(echo $realm | tr 'A-Z' 'a-z')"
+ntp_servers=$(grep "^server[[:space:]]" /etc/ntp.conf | awk '{print $2}')
+
+TMPFILE=''
+IPTABLES='/sbin/iptables'
+IPTABLES_NAMED_CHAIN="JOIN_REJECT_TCP_53"
+vexit=0
+
+if [ $# -lt 3 ]; then
+    exit 10
+fi
+
+function iptables_begin(){
+	#iptables block: initialization
+	# Create a named rule to prevent the 'net' program from trying to
+	# register us on the DNS server (it hardly ever works, and often is as long as the TCP timeout
+	# because we are dropped somewhere)
+
+	#create chain
+	#if the chain existed before, this returns nonzero, but we don't care
+	$IPTABLES -N ${IPTABLES_NAMED_CHAIN} 2>/dev/null
+
+	#configure the chain
+	$IPTABLES -A ${IPTABLES_NAMED_CHAIN} -j REJECT
+
+	#use the chain
+	$IPTABLES -I OUTPUT -p tcp --dport 53 -j ${IPTABLES_NAMED_CHAIN} 2>/dev/null
+}
+
+function iptables_end(){
+	#iptables block: remove rule
+	# Delete the named rule seen above
+
+	#remove usage of chain
+	$IPTABLES -D OUTPUT -p tcp --dport 53 -j ${IPTABLES_NAMED_CHAIN}
+
+	#flush chain
+	$IPTABLES -F ${IPTABLES_NAMED_CHAIN} 2>/dev/null
+
+	#delete chain
+	$IPTABLES -X ${IPTABLES_NAMED_CHAIN} 2>/dev/null
+}
+
+do_exit(){
+    rm -f -- "$TMPFILE"
+    if [ "x$block_iptables" != "xno" ]
+    then
+        iptables_end
+    fi
+    if [ "a$1" != "a" ]; then
+        exit $1
+    fi
+    exit $vexit
+}
+
+# Synchronize time before trying to join the domain:
+invoke-rc.d ntp stop > /dev/null 2>&1
+ntpdate $ntp_servers > /dev/null 2>&1
+invoke-rc.d ntp start > /dev/null 2>&1
+
+TMPFILE=`mktemp`
+echo $pass > $TMPFILE || do_exit 1
+
+# Add or update fully qualified domain name for 127.0.0.1 in AD domain:
+sed -i "s/^127.0.0.1[ 	]*[^ 	]*[ 	]\+localhost.localdomain/127.0.0.1	$my_fqdn localhost.localdomain/" /etc/hosts
+
+if [ "x$block_iptables" != "xno" ]
+then
+    iptables_begin
+fi
+
+/etc/init.d/winbind stop > /dev/null 2>&1
+killall -9 winbind ||:
+rm -Rf /var/lib/samba /var/cache/samba /var/run/samba
+mkdir -p -m 0755 /var/lib/samba  /var/cache/samba /var/run/samba
+/etc/init.d/winbind start > /dev/null 2>&1
+
+# First, silently try NT4 (without kinit):
+if ! net join -U "$user"%"$pass" >/dev/null 2>&1; then
+    # If failure, try kinit and net ads join:
+
+    # get kerberos ticket
+    # Hide output and show error on &1:
+    #kinit "$user"@"$realm" < $TMPFILE 2>&1 >/dev/null || vexit=2
+    kinit '--password-file='$TMPFILE "$user"@"$realm" 2>&1 >/dev/null || vexit=2
+
+    # join domain
+    if [ "$vexit" = 2 ]; then
+        # kinit failed, we won't show error messages from net ads join:
+        net ads join -U "$user"%"$pass" >/dev/null 2>&1 && vexit=0 || net rpc join -U "$user"%"$pass" 2>&1 || do_exit $vexit
+    else
+        # kinit succeeded, we will show error messages from net ads join if any:
+	#WARNING: if this takes _ages_, then your DNS server might be unreachable in TCP
+	#(I mean authoritative DNS): REJECT or ACCEPT connections, don't DROP :-)
+        net ads join -U "$user"%"$pass" 2>&1 && vexit=0 || do_exit 4
+    fi
+
+fi  # NT4 attempt.
+
+do_exit

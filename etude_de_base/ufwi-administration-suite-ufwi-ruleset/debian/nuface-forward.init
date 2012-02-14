@@ -1,0 +1,28 @@
+#!/bin/sh
+
+### BEGIN INIT INFO
+# Provides:          nuface-forward
+# Required-Start:    $syslog $network
+# Required-Stop:     $syslog
+# Should-Start:      $local_fs
+# Should-Stop:       $local_fs
+# Default-Start:     2 3 4 5
+# Default-Stop:      0 1 6
+# Short-Description: Load EdenWall firewall rules
+# Description:       Setup iptables and LDAP firewall rules created
+### END INIT INFO
+
+NUFACE=/usr/sbin/nuface
+
+case "$1" in
+    start|restart|force-reload)
+        $NUFACE init
+        ;;
+    stop)
+        # do nothing
+        ;;
+    *)
+        echo "Usage: $0 {start|stop}" >&2
+        exit 2
+        ;;
+esac

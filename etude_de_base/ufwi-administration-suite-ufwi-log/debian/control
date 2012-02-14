@@ -1,0 +1,74 @@
+Source: ufwi_log
+Section: net
+Priority: extra
+XS-Python-Version: all
+Homepage: http://software.inl.fr/trac/wiki/EdenWall/NuLog
+Maintainer: Pierre Chifflier <pollux@debian.org>
+Build-Depends: debhelper (>= 5),
+  python-support (>= 0.4), python-dev,
+  python-docutils,
+  pyqt4-dev-tools
+Standards-Version: 3.8.0
+
+Package: ufwi_log
+Architecture: all
+Depends: ${python:Depends}, ${shlibs:Depends}, ${misc:Depends},
+  nucentral-server (>= 0.2-1),
+  python-twisted-snmp,
+  python-reportlab,
+  python-cairo,
+  python-imaging,
+  python-mysqldb,
+  python-adns
+Recommends: mysql-server-5.0
+Suggests: ulogd, ulogd-mysql, nufw
+XB-Python-Version: ${python:Versions}
+Description: Graphical firewall log analysis interface
+ NuLog is an interface to netfilter logs, when stored in a database
+ using ulog.
+ .
+ The features currently include:
+  * Index page with a summary of firewall activity.
+  * Packet dropped per host, UDP/TCP port, of per user. (NuFW only)
+  * Fully browsable tables.
+  * Search engine.
+  * Graphing capabilities (display clickable array, histogram, pie or curve).
+  * IPv6 support.
+  * Customizable pages (index page, etc).
+  * Special pages for user, ip and ports.
+  * CSV export.
+  * Real-time graphs.
+  * Interact with OCS Inventory.
+  * Connection tracking frontend.
+  * Nuauth frontend.
+ .
+ This package provides the module for NuCentral.
+
+Package: ufwi_log-qt
+Architecture: all
+Depends: ${python:Depends}, ${shlibs:Depends}, ${misc:Depends},
+  nucentral-edenwall-qt (>= 0.1-1),
+  python-qt4
+Suggests: ufwi_log, nucentral, nuface-qt
+XB-Python-Version: ${python:Versions}
+Description: Graphical firewall log analysis interface
+ NuLog is an interface to netfilter logs, when stored in a database
+ using ulog.
+ .
+ The features currently include:
+  * Index page with a summary of firewall activity.
+  * Packet dropped per host, UDP/TCP port, of per user. (NuFW only)
+  * Fully browsable tables.
+  * Search engine.
+  * Graphing capabilities (display clickable array, histogram, pie or curve).
+  * IPv6 support.
+  * Customizable pages (index page, etc).
+  * Special pages for user, ip and ports.
+  * CSV export.
+  * Real-time graphs.
+  * Interact with OCS Inventory.
+  * Connection tracking frontend.
+  * Nuauth frontend.
+ .
+ This package provides the graphical Qt application for NuLog.
+

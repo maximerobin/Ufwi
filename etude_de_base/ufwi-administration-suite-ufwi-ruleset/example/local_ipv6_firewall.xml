@@ -1,0 +1,99 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<ruleset name="local_ipv6_firewall" timestamp="2009-12-10 19:31:38" version="3.0.0">
+   <include library="nuface" />
+   <include template="local_ipv4_firewall" />
+   <resources>
+      <interface reference="Interface">
+         <network address="2000::/3" id="Internet IPv6" />
+         <network address_type="IPv6" id="LAN IPv6" />
+         <network address="ff02::/16" id="Local Multicast IPv6" />
+         <network address="fe80::/64" id="Local link IPv6" />
+      </interface>
+   </resources>
+   <acls_ipv6 next_id="13">
+      <default_decisions>
+         <input decision="DROP" log="1" />
+         <output decision="REJECT" log="1" />
+      </default_decisions>
+      <acl decision="ACCEPT" id="1" log="1" log_prefix="Ping IPv6 depuis local/internet">
+         <source>Internet IPv6</source>
+         <source>Local link IPv6</source>
+         <protocol>Echo Request</protocol>
+         <destination>Firewall</destination>
+         <comment>Ping IPv6</comment>
+      </acl>
+      <acl decision="ACCEPT" id="2" log="0">
+         <source>Local link IPv6</source>
+         <protocol>Router advertisement</protocol>
+         <destination>Firewall</destination>
+         <comment>Router advertisement</comment>
+      </acl>
+      <acl decision="ACCEPT" id="3" log="0">
+         <source>Internet IPv6</source>
+         <source>Local link IPv6</source>
+         <protocol>Neighbor Advertisement</protocol>
+         <protocol>Neighbor Solicitation</protocol>
+         <destination>Firewall</destination>
+         <comment>Neighbor Solicitation/Advertisement</comment>
+      </acl>
+      <acl decision="ACCEPT" id="4" log="0">
+         <source>Local link IPv6</source>
+         <protocol>Echo Reply</protocol>
+         <destination>Firewall</destination>
+         <comment>Ping IPv6 from the local link</comment>
+      </acl>
+      <acl decision="ACCEPT" id="12" log="1">
+         <source>LAN IPv6</source>
+         <protocol>mDNS</protocol>
+         <destination>Firewall</destination>
+      </acl>
+      <acl decision="ACCEPT" id="5" log="0">
+         <source>Firewall</source>
+         <protocol>DNS</protocol>
+         <protocol>HTTP</protocol>
+         <protocol>HTTPS</protocol>
+         <destination>Internet IPv6</destination>
+         <comment>IPv6 web surf</comment>
+      </acl>
+      <acl decision="ACCEPT" id="6" log="0">
+         <source>Firewall</source>
+         <protocol>Echo Request</protocol>
+         <destination>Internet IPv6</destination>
+         <destination>Local Multicast IPv6</destination>
+         <destination>Local link IPv6</destination>
+         <comment>Send IPv6 ping</comment>
+      </acl>
+      <acl decision="ACCEPT" id="7" log="0">
+         <source>Firewall</source>
+         <protocol>Neighbor Solicitation</protocol>
+         <destination>Internet IPv6</destination>
+         <destination>Local link IPv6</destination>
+         <comment>Neighbor Solicitation</comment>
+      </acl>
+      <acl decision="ACCEPT" id="8" log="0">
+         <source>Firewall</source>
+         <protocol>Neighbor Advertisement</protocol>
+         <destination>Internet IPv6</destination>
+         <destination>Local Multicast IPv6</destination>
+         <destination>Local link IPv6</destination>
+         <comment>Neighbor Advertisement</comment>
+      </acl>
+      <acl decision="ACCEPT" id="9" log="0">
+         <source>Firewall</source>
+         <protocol>Router solicitation</protocol>
+         <destination>Local Multicast IPv6</destination>
+         <comment>Router solicitation</comment>
+      </acl>
+      <acl decision="ACCEPT" id="10" log="0">
+         <source>Firewall</source>
+         <protocol>Multicast Listener Report v2</protocol>
+         <destination>Local Multicast IPv6</destination>
+         <comment>Multicast Listener Report</comment>
+      </acl>
+      <acl decision="ACCEPT" id="11" log="1">
+         <source>Firewall</source>
+         <protocol>mDNS</protocol>
+         <destination>Local Multicast IPv6</destination>
+      </acl>
+   </acls_ipv6>
+</ruleset>

@@ -20,6 +20,8 @@
 	Mise en place d'une méthode d'externalisation de logs avec Nulog vers une base de données MySQL
 
 
-
+[2012-02-15 -> 17 ]
+	Réinstallation de tous les modules avec l'aide de M.SIMON.
+	Envoie d'un patch corrigeant une erreur survenu lors de la compilation du mode ufwi-administration-ufwi-base à l'équipe gérant le projet sur ufwi.org.
 
 

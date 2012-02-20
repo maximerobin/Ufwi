@@ -1,0 +1,175 @@
+<ruleset version="3.0.1" name="nuface">
+
+   <protocols>
+      <ipv4>Any IPv4</ipv4>
+      <ipv6>Any IPv6</ipv6>
+
+      <icmp>Any ICMP</icmp>
+      <icmpv6>Any ICMPv6</icmpv6>
+
+      <igmp>IGMP</igmp>
+
+      <!-- IP encapsulated in IP (officially "IP") -->
+      <layer4 layer4="4">IP-ENCAP</layer4>
+      <!-- Exterior Gateway Protocol -->
+      <layer4 layer4="8">EGP</layer4>
+      <!-- any private interior gateway (Cisco) -->
+      <layer4 layer4="9">IGP</layer4>
+      <!-- General Routing Encapsulation -->
+      <layer4 layer4="47">GRE</layer4>
+      <!-- Encap Security Payload [RFC2406] -->
+      <layer4 layer4="50">ESP</layer4>
+      <!-- Authentication Header [RFC2402] -->
+      <layer4 layer4="51">AH</layer4>
+      <!-- Enhanced Interior Routing Protocol (Cisco) -->
+      <layer4 layer4="88">EIGRP</layer4>
+      <!-- Open Shortest Path First IGP -->
+      <layer4 layer4="89">OSPF</layer4>
+      <!-- IP-within-IP Encapsulation Protocol -->
+      <layer4 layer4="94">IPIP</layer4>
+      <!-- Virtual Router Redundancy Protocol -->
+      <layer4 layer4="112">VRRP</layer4>
+      <!-- Layer Two Tunneling Protocol [RFC2661] -->
+      <layer4 layer4="115">L2TP</layer4>
+      <!-- Stream Control Transmission Protocol -->
+      <layer4 layer4="132">SCTP</layer4>
+
+      <icmp code="0" type="8">ICMP ping</icmp>
+      <icmp code="0" type="0">ICMP pong</icmp>
+
+      <icmpv6 code="0" type="128">Echo Request</icmpv6>
+      <icmpv6 code="0" type="129">Echo Reply</icmpv6>
+      <icmpv6 code="0" type="133">Router solicitation</icmpv6>
+      <icmpv6 code="0" type="134">Router advertisement</icmpv6>
+      <icmpv6 code="0" type="135">Neighbor Advertisement</icmpv6>
+      <icmpv6 code="0" type="136">Neighbor Solicitation</icmpv6>
+      <!-- RFC 3810 -->
+      <icmpv6 code="0" type="143">Multicast Listener Report v2</icmpv6>
+
+      <!--
+      Microsoft Windows TCP/UDP ports:
+      http://support.microsoft.com/kb/179442
+
+      Official NetBIOS name is written "NetBIOS", not "Netbios" (udp/137, udp/138):
+      but keep "Netbios" for backward nuface compatibility.
+      -->
+      <tcp>Any TCP</tcp>
+      <tcp dport="21" sport="1024:65535">FTP</tcp>
+      <tcp dport="22" sport="1024:65535">SSH</tcp>
+      <tcp dport="23" sport="1024:65535">Telnet</tcp>
+      <tcp dport="25" sport="1024:65535">SMTP</tcp>
+      <tcp dport="53" sport="1024:65535">DNS (tcp)</tcp>
+      <tcp dport="80" sport="1024:65535">HTTP</tcp>
+      <tcp dport="88" sport="1024:65535">Kerberos (tcp)</tcp>
+      <tcp dport="110" sport="1024:65535">POP3</tcp>
+      <tcp dport="119" sport="1024:65535">NNTP</tcp>
+      <tcp dport="135" sport="1024:65535">EPMAP</tcp>
+      <tcp dport="139" sport="1024:65535">NetBIOS Session Service</tcp>
+      <tcp dport="143" sport="1024:65535">IMAP</tcp>
+      <tcp dport="389" sport="1024:65535">LDAP</tcp>
+      <tcp dport="443" sport="1024:65535">HTTPS</tcp>
+      <tcp dport="445" sport="1024:65535">CIFS</tcp>
+      <tcp dport="631" sport="1024:65535">IPP (tcp)</tcp>
+      <tcp dport="993" sport="1024:65535">IMAPS</tcp>
+      <tcp dport="995" sport="1024:65535">POP3S</tcp>
+      <tcp dport="1194" sport="1024:65535">OpenVPN</tcp>
+      <tcp dport="1521" sport="1024:65535">Oracle</tcp>
+      <tcp dport="3128" sport="1024:65535">Web proxy (3128)</tcp>
+      <tcp dport="3306" sport="1024:65535">MySQL</tcp>
+      <tcp dport="4129" sport="1024:65535">Nuauth</tcp>
+      <tcp dport="5900" sport="1024:65535">VNC</tcp>
+      <tcp dport="6667" sport="1024:65535">IRC</tcp>
+      <tcp dport="8080" sport="1024:65535">Web proxy (8080)</tcp>
+      <tcp dport="8530" sport="1024:65535">Windows Server Update Service</tcp>
+
+      <udp>Any UDP</udp>
+      <udp dport="67" sport="68">DHCP Client</udp>
+      <udp dport="68" sport="67">DHCP Server</udp>
+      <udp dport="53" sport="1024:65535">DNS (udp)</udp>
+      <udp dport="88">Kerberos (udp)</udp>
+      <udp dport="123">NTP</udp>
+      <udp dport="137" sport="137">Netbios Name Service</udp>
+      <udp dport="138" sport="138">Netbios Datagram Service</udp>
+      <udp dport="161" sport="1024:65535">SNMP</udp>
+      <udp dport="631" sport="631">IPP (udp)</udp>
+      <udp dport="5353" sport="5353">mDNS</udp>
+
+      <group id="DNS">
+         <tcp>DNS (tcp)</tcp>
+         <udp>DNS (udp)</udp>
+      </group>
+      <group id="IPP">
+         <tcp>IPP (tcp)</tcp>
+         <udp>IPP (udp)</udp>
+      </group>
+      <group id="Websurf">
+         <tcp>HTTP</tcp>
+         <tcp>HTTPS</tcp>
+      </group>
+      <group id="Kerberos">
+         <tcp>Kerberos (tcp)</tcp>
+         <udp>Kerberos (udp)</udp>
+      </group>
+   </protocols>
+
+   <operating_systems>
+      <operating_system name="Windows" version="95-950-">Windows 95</operating_system>
+      <operating_system name="Windows" version="1998">Windows 98</operating_system>
+      <operating_system name="Windows" version="2222">Windows 98 SE</operating_system>
+      <operating_system name="Windows" version="3000.1">Windows Me</operating_system>
+      <operating_system name="Windows" version="1381">Windows NT4</operating_system>
+      <operating_system name="Windows" version="2195">Windows 2000</operating_system>
+      <operating_system name="Windows" version="2600">Windows XP</operating_system>
+      <operating_system name="Windows" version="3790">Windows Server 2003</operating_system>
+      <operating_system name="Windows" version="6000">Windows Vista</operating_system>
+      <operating_system name="Windows" version="6001">Windows Vista SP1</operating_system>
+      <operating_system name="Linux" release="2.4*">Linux 2.4</operating_system>
+      <operating_system name="Linux" release="2.6*">Linux 2.6</operating_system>
+      <operating_system name="Darwin" release="8.0*">Mac OS X</operating_system>
+
+      <group id="Windows 9x/Me">
+         <operating_system>Windows 95</operating_system>
+         <operating_system>Windows 98</operating_system>
+         <operating_system>Windows 98 SE</operating_system>
+         <operating_system>Windows Me</operating_system>
+      </group>
+
+      <group id="Windows NT4..Vista SP1">
+         <operating_system>Windows NT4</operating_system>
+         <operating_system>Windows 2000</operating_system>
+         <operating_system>Windows XP</operating_system>
+         <operating_system>Windows Server 2003</operating_system>
+         <operating_system>Windows Vista</operating_system>
+         <operating_system>Windows Vista SP1</operating_system>
+      </group>
+
+      <operating_system name="Windows">Windows (any version)</operating_system>
+      <operating_system name="Linux">Linux (any version)</operating_system>
+   </operating_systems>
+
+   <applications>
+      <application path="*\firefox.exe">Firefox Windows</application>
+      <application path="/usr/lib/firefox/firefox-bin">Firefox Linux/BSD</application>
+      <application path="/usr/lib/iceweasel/firefox-bin">Iceweasel</application>
+
+      <application path="*\iexplore.exe">Internet Explorer</application>
+      <application path="*\explorer.exe">explorer.exe</application>
+
+      <group id="Firefox">
+         <application>Firefox Windows</application>
+         <application>Firefox Linux/BSD</application>
+         <application>Iceweasel</application>
+      </group>
+   </applications>
+
+   <durations>
+      <duration seconds="86400">One day</duration>
+      <duration seconds="3600">One hour</duration>
+   </durations>
+
+   <periodicities>
+      <periodicity day_from="5" day_to="6" hour_from="0" hour_to="24">Week ends</periodicity>
+      <periodicity day_from="0" day_to="4" hour_from="8" hour_to="18">Work hours</periodicity>
+   </periodicities>
+
+</ruleset>

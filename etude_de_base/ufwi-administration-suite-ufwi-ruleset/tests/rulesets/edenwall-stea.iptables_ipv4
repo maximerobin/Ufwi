@@ -1,0 +1,566 @@
+
+################
+# mangle table #
+################
+*mangle
+:PREROUTING ACCEPT [0:0]
+:INPUT ACCEPT [0:0]
+:FORWARD ACCEPT [0:0]
+:OUTPUT ACCEPT [0:0]
+:POSTROUTING ACCEPT [0:0]
+
+-A PREROUTING -j CONNMARK --restore-mark
+-A POSTROUTING -m mark ! --mark 0 -j CONNMARK --save-mark --mask 0x0000ffff
+
+COMMIT
+
+################
+# filter table #
+################
+*filter
+:INPUT DROP [0:0]
+:FORWARD DROP [0:0]
+:OUTPUT ACCEPT [0:0]
+:BOND0.1-BOND0.11 - [0:0]
+:BOND0.1-BOND0.12 - [0:0]
+:BOND0.1-BOND0.301 - [0:0]
+:BOND0.1-BOND0.510 - [0:0]
+:BOND0.11-BOND0.510 - [0:0]
+:BOND0.12-BOND0.510 - [0:0]
+:BOND0.301-BOND0.12 - [0:0]
+:BOND0.301-BOND0.510 - [0:0]
+:BOND0.510-BOND0.1 - [0:0]
+:BOND0.510-BOND0.12 - [0:0]
+:BOND0.510-BOND0.301 - [0:0]
+
+# Default filter rules
+# --------------------
+-A FORWARD -m state --state RELATED,ESTABLISHED -j ACCEPT
+-A INPUT -m state --state RELATED,ESTABLISHED -j ACCEPT
+-A OUTPUT -m state --state RELATED,ESTABLISHED -j ACCEPT
+-A FORWARD -m state --state INVALID -j ULOG --ulog-prefix "Drop INVALID FORWARD"
+-A FORWARD -m state --state INVALID -j DROP
+-A OUTPUT -m state --state INVALID -j ULOG --ulog-prefix "Drop INVALID OUTPUT"
+-A OUTPUT -m state --state INVALID -j DROP
+-A INPUT -i lo -j ACCEPT -m comment --comment "Trust loopback"
+-A OUTPUT -o lo -j ACCEPT -m comment --comment "Trust loopback"
+
+
+# Dispatch FORWARD to the different chains
+# ----------------------------------------
+-A FORWARD -i bond0.1 -o bond0.11 -j BOND0.1-BOND0.11
+-A FORWARD -i bond0.1 -o bond0.12 -j BOND0.1-BOND0.12
+-A FORWARD -i bond0.1 -o bond0.301 -j BOND0.1-BOND0.301
+-A FORWARD -i bond0.1 -o bond0.510 -j BOND0.1-BOND0.510
+-A FORWARD -i bond0.11 -o bond0.510 -j BOND0.11-BOND0.510
+-A FORWARD -i bond0.12 -o bond0.510 -j BOND0.12-BOND0.510
+-A FORWARD -i bond0.301 -o bond0.12 -j BOND0.301-BOND0.12
+-A FORWARD -i bond0.301 -o bond0.510 -j BOND0.301-BOND0.510
+-A FORWARD -i bond0.510 -o bond0.1 -j BOND0.510-BOND0.1
+-A FORWARD -i bond0.510 -o bond0.12 -j BOND0.510-BOND0.12
+-A FORWARD -i bond0.510 -o bond0.301 -j BOND0.510-BOND0.301
+
+# IPv4 rule #230
+# --------------
+# COSWIN
+-A BOND0.1-BOND0.11 -s 10.30.0.0/16 -d 75.10.150.51 -p tcp --sport 1024:65535 --dport 137 --syn -m state --state NEW -j NFQUEUE -m comment --comment "IPv4 rule #230: rule 1"
+-A BOND0.1-BOND0.11 -s 10.30.0.0/16 -d 75.10.150.51 -p tcp --sport 1024:65535 --dport 138 --syn -m state --state NEW -j NFQUEUE -m comment --comment "IPv4 rule #230: rule 2"
+-A BOND0.1-BOND0.11 -s 10.30.0.0/16 -d 75.10.150.51 -p tcp --sport 1024:65535 --dport 139 --syn -m state --state NEW -j NFQUEUE -m comment --comment "IPv4 rule #230: rule 3"
+-A BOND0.1-BOND0.11 -s 10.30.0.0/16 -d 75.10.150.51 -p tcp --sport 1024:65535 --dport 445 --syn -m state --state NEW -j NFQUEUE -m comment --comment "IPv4 rule #230: rule 4"
+-A BOND0.1-BOND0.11 -s 10.30.0.0/16 -d 75.10.150.51 -p tcp --sport 1024:65535 --dport 1521 --syn -m state --state NEW -j NFQUEUE -m comment --comment "IPv4 rule #230: rule 5"
+
+# IPv4 rule #360
+# --------------
+# GAASPAR
+-A BOND0.1-BOND0.11 -s 10.30.0.0/16 -d 10.30.160.0/24 -p icmp -j ACCEPT -m comment --comment "IPv4 rule #360: rule 1"
+
+# IPv4 rule #830
+# --------------
+# GAASPAR
+-A BOND0.1-BOND0.11 -s 10.30.0.0/16 -d 10.30.160.0/24 -p tcp --sport 1024:65535 --dport 5001 --syn -m state --state NEW -j NFQUEUE -m comment --comment "IPv4 rule #830: rule 1"
+
+# IPv4 rule #160
+# --------------
+# Bind9 pour STEA
+-A BOND0.1-BOND0.510 -s 10.30.0.0/16 -d 10.30.15.146 -p tcp --sport 1024:65535 --dport 53 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #160: rule 1"
+-A BOND0.1-BOND0.510 -s 10.30.0.0/16 -d 10.30.15.146 -p udp --sport 1024:65535 --dport 53 -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #160: rule 2"
+-A BOND0.1-BOND0.510 -s 10.30.0.0/16 -d 10.30.15.145 -p tcp --sport 1024:65535 --dport 53 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #160: rule 3"
+-A BOND0.1-BOND0.510 -s 10.30.0.0/16 -d 10.30.15.145 -p udp --sport 1024:65535 --dport 53 -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #160: rule 4"
+-A BOND0.1-BOND0.510 -s 10.30.0.0/16 -d 10.30.15.155 -p tcp --sport 1024:65535 --dport 53 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #160: rule 5"
+-A BOND0.1-BOND0.510 -s 10.30.0.0/16 -d 10.30.15.155 -p udp --sport 1024:65535 --dport 53 -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #160: rule 6"
+-A BOND0.1-BOND0.510 -s 10.30.0.0/16 -d 10.30.15.147 -p tcp --sport 1024:65535 --dport 53 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #160: rule 7"
+-A BOND0.1-BOND0.510 -s 10.30.0.0/16 -d 10.30.15.147 -p udp --sport 1024:65535 --dport 53 -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #160: rule 8"
+-A BOND0.1-BOND0.510 -s 10.30.0.0/16 -d 10.30.15.149 -p tcp --sport 1024:65535 --dport 53 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #160: rule 9"
+-A BOND0.1-BOND0.510 -s 10.30.0.0/16 -d 10.30.15.149 -p udp --sport 1024:65535 --dport 53 -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #160: rule 10"
+
+# IPv4 rule #410
+# --------------
+# ISC DHCP
+-A BOND0.1-BOND0.510 -s 10.30.0.0/16 -d 10.30.15.146 -p tcp --sport 1024:65535 --dport 67 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #410: rule 1"
+-A BOND0.1-BOND0.510 -s 10.30.0.0/16 -d 10.30.15.147 -p tcp --sport 1024:65535 --dport 67 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #410: rule 2"
+-A BOND0.1-BOND0.510 -s 10.30.0.0/16 -d 10.30.15.149 -p tcp --sport 1024:65535 --dport 67 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #410: rule 3"
+
+# IPv4 rule #150
+# --------------
+# BackupPC
+-A BOND0.1-BOND0.510 -s 10.30.0.0/16 -d 10.30.15.128 -p tcp --sport 1024:65535 --dport 443 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #150: rule 1"
+-A BOND0.1-BOND0.510 -s 10.30.0.0/16 -d 10.30.15.136 -p tcp --sport 1024:65535 --dport 443 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #150: rule 2"
+-A BOND0.1-BOND0.510 -s 10.30.0.0/16 -d 10.30.15.127 -p tcp --sport 1024:65535 --dport 443 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #150: rule 3"
+
+# IPv4 rule #200
+# --------------
+# Business Objects
+-A BOND0.1-BOND0.510 -s 10.30.0.0/16 -d 10.30.15.117 -p tcp --sport 1024:65535 --dport 8080 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #200: rule 1"
+-A BOND0.1-BOND0.510 -s 10.30.0.0/16 -d 10.30.15.121 -p tcp --sport 1024:65535 --dport 8080 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #200: rule 2"
+
+# IPv4 rule #220
+# --------------
+# CERC
+-A BOND0.1-BOND0.510 -s 10.30.0.0/16 -d 10.30.15.53 -p tcp --sport 1024:65535 --dport 80 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #220: rule 1"
+-A BOND0.1-BOND0.510 -s 10.30.0.0/16 -d 10.30.15.53 -p tcp --sport 1024:65535 --dport 443 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #220: rule 2"
+-A BOND0.1-BOND0.510 -s 10.30.0.0/16 -d 10.30.15.54 -p tcp --sport 1024:65535 --dport 80 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #220: rule 3"
+-A BOND0.1-BOND0.510 -s 10.30.0.0/16 -d 10.30.15.54 -p tcp --sport 1024:65535 --dport 443 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #220: rule 4"
+
+# IPv4 rule #300
+# --------------
+# DesqEau
+-A BOND0.1-BOND0.510 -s 10.30.0.0/16 -d 10.30.15.59 -p tcp --sport 1024:65535 --dport 443 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #300: rule 1"
+-A BOND0.1-BOND0.510 -s 10.30.0.0/16 -d 10.30.15.58 -p tcp --sport 1024:65535 --dport 443 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #300: rule 2"
+-A BOND0.1-BOND0.510 -s 10.30.0.0/16 -d 10.30.15.51 -p tcp --sport 1024:65535 --dport 443 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #300: rule 3"
+
+# IPv4 rule #370
+# --------------
+# GLPI
+-A BOND0.1-BOND0.510 -s 10.30.0.0/16 -d 10.30.15.191 -p tcp --sport 1024:65535 --dport 443 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #370: rule 1"
+-A BOND0.1-BOND0.510 -s 10.30.0.0/16 -d 10.30.15.192 -p tcp --sport 1024:65535 --dport 443 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #370: rule 2"
+
+# IPv4 rule #380
+# --------------
+# GOsa
+-A BOND0.1-BOND0.510 -s 10.30.0.0/16 -d 10.30.15.193 -p tcp --sport 1024:65535 --dport 443 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #380: rule 1"
+-A BOND0.1-BOND0.510 -s 10.30.0.0/16 -d 10.30.15.194 -p tcp --sport 1024:65535 --dport 443 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #380: rule 2"
+
+# IPv4 rule #420
+# --------------
+# Intranet QSE
+-A BOND0.1-BOND0.510 -s 10.30.0.0/16 -d 10.30.15.145 -p tcp --sport 1024:65535 --dport 80 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #420: rule 1"
+-A BOND0.1-BOND0.510 -s 10.30.0.0/16 -d 10.30.15.145 -p tcp --sport 1024:65535 --dport 443 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #420: rule 2"
+-A BOND0.1-BOND0.510 -s 10.30.0.0/16 -d 10.30.15.155 -p tcp --sport 1024:65535 --dport 80 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #420: rule 3"
+-A BOND0.1-BOND0.510 -s 10.30.0.0/16 -d 10.30.15.155 -p tcp --sport 1024:65535 --dport 443 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #420: rule 4"
+
+# IPv4 rule #510
+# --------------
+# Mediawiki
+-A BOND0.1-BOND0.510 -s 10.30.0.0/16 -d 10.30.15.181 -p tcp --sport 1024:65535 --dport 443 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #510: rule 1"
+-A BOND0.1-BOND0.510 -s 10.30.0.0/16 -d 10.30.15.182 -p tcp --sport 1024:65535 --dport 443 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #510: rule 2"
+
+# IPv4 rule #620
+# --------------
+# OCS Inventory NG
+-A BOND0.1-BOND0.510 -s 10.30.0.0/16 -d 10.30.15.185 -p tcp --sport 1024:65535 --dport 80 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #620: rule 1"
+-A BOND0.1-BOND0.510 -s 10.30.0.0/16 -d 10.30.15.185 -p tcp --sport 1024:65535 --dport 443 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #620: rule 2"
+-A BOND0.1-BOND0.510 -s 10.30.0.0/16 -d 10.30.15.186 -p tcp --sport 1024:65535 --dport 80 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #620: rule 3"
+-A BOND0.1-BOND0.510 -s 10.30.0.0/16 -d 10.30.15.186 -p tcp --sport 1024:65535 --dport 443 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #620: rule 4"
+-A BOND0.1-BOND0.510 -s 10.30.0.0/16 -d 10.30.15.156 -p tcp --sport 1024:65535 --dport 80 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #620: rule 5"
+-A BOND0.1-BOND0.510 -s 10.30.0.0/16 -d 10.30.15.156 -p tcp --sport 1024:65535 --dport 443 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #620: rule 6"
+
+# IPv4 rule #740
+# --------------
+# Subversion
+-A BOND0.1-BOND0.510 -s 10.30.0.0/16 -d 10.30.15.195 -p tcp --sport 1024:65535 --dport 443 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #740: rule 1"
+-A BOND0.1-BOND0.510 -s 10.30.0.0/16 -d 10.30.15.196 -p tcp --sport 1024:65535 --dport 443 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #740: rule 2"
+
+# IPv4 rule #770
+# --------------
+# TIGRE 5
+-A BOND0.1-BOND0.510 -s 10.30.0.0/16 -d 10.30.15.123 -p tcp --sport 1024:65535 --dport 80 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #770: rule 1"
+-A BOND0.1-BOND0.510 -s 10.30.0.0/16 -d 10.30.15.123 -p tcp --sport 1024:65535 --dport 443 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #770: rule 2"
+-A BOND0.1-BOND0.510 -s 10.30.0.0/16 -d 10.30.15.116 -p tcp --sport 1024:65535 --dport 80 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #770: rule 3"
+-A BOND0.1-BOND0.510 -s 10.30.0.0/16 -d 10.30.15.116 -p tcp --sport 1024:65535 --dport 443 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #770: rule 4"
+-A BOND0.1-BOND0.510 -s 10.30.0.0/16 -d 10.30.15.115 -p tcp --sport 1024:65535 --dport 80 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #770: rule 5"
+-A BOND0.1-BOND0.510 -s 10.30.0.0/16 -d 10.30.15.115 -p tcp --sport 1024:65535 --dport 443 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #770: rule 6"
+
+# IPv4 rule #780
+# --------------
+# Zabbix (web)
+-A BOND0.1-BOND0.510 -s 10.30.0.0/16 -d 10.30.15.183 -p tcp --sport 1024:65535 --dport 80 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #780: rule 1"
+-A BOND0.1-BOND0.510 -s 10.30.0.0/16 -d 10.30.15.183 -p tcp --sport 1024:65535 --dport 443 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #780: rule 2"
+-A BOND0.1-BOND0.510 -s 10.30.0.0/16 -d 10.30.15.184 -p tcp --sport 1024:65535 --dport 80 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #780: rule 3"
+-A BOND0.1-BOND0.510 -s 10.30.0.0/16 -d 10.30.15.184 -p tcp --sport 1024:65535 --dport 443 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #780: rule 4"
+
+# IPv4 rule #110
+# --------------
+# AWStats
+-A BOND0.1-BOND0.510 -s 10.30.0.0/16 -d 10.30.15.0/24 -p tcp --sport 1024:65535 --dport 443 --syn -m state --state NEW -j NFQUEUE -m comment --comment "IPv4 rule #110: rule 1"
+
+# IPv4 rule #390
+# --------------
+# Horde
+-A BOND0.1-BOND0.510 -s 10.30.0.0/16 -d 10.30.15.56 -p tcp --sport 1024:65535 --dport 443 --syn -m state --state NEW -j NFQUEUE -m comment --comment "IPv4 rule #390: rule 1"
+
+# IPv4 rule #660
+# --------------
+# PhpMyAdmin
+-A BOND0.1-BOND0.510 -s 10.30.0.0/16 -d 10.30.15.199 -p tcp --sport 1024:65535 --dport 443 --syn -m state --state NEW -j NFQUEUE -m comment --comment "IPv4 rule #660: rule 1"
+-A BOND0.1-BOND0.510 -s 10.30.0.0/16 -d 10.30.15.200 -p tcp --sport 1024:65535 --dport 443 --syn -m state --state NEW -j NFQUEUE -m comment --comment "IPv4 rule #660: rule 2"
+
+# IPv4 rule #750
+# --------------
+# Suivi d activite
+-A BOND0.1-BOND0.510 -s 10.30.0.0/16 -d 10.30.15.50 -p tcp --sport 1024:65535 --dport 80 --syn -m state --state NEW -j NFQUEUE -m comment --comment "IPv4 rule #750: rule 1"
+-A BOND0.1-BOND0.510 -s 10.30.0.0/16 -d 10.30.15.50 -p tcp --sport 1024:65535 --dport 443 --syn -m state --state NEW -j NFQUEUE -m comment --comment "IPv4 rule #750: rule 2"
+
+# IPv4 rule #760
+# --------------
+# Suivi d activite recette
+-A BOND0.1-BOND0.510 -s 10.30.0.0/16 -d 10.30.15.52 -p tcp --sport 1024:65535 --dport 80 --syn -m state --state NEW -j NFQUEUE -m comment --comment "IPv4 rule #760: rule 1"
+-A BOND0.1-BOND0.510 -s 10.30.0.0/16 -d 10.30.15.52 -p tcp --sport 1024:65535 --dport 443 --syn -m state --state NEW -j NFQUEUE -m comment --comment "IPv4 rule #760: rule 2"
+
+# IPv4 rule #100
+# --------------
+# ARCS
+-A BOND0.1-BOND0.510 -s 10.30.0.0/16 -d 10.30.15.57 -p tcp --sport 1024:65535 --dport 5432 --syn -m state --state NEW -j NFQUEUE -m comment --comment "IPv4 rule #100: rule 1"
+
+# IPv4 rule #210
+# --------------
+# CARINE
+-A BOND0.1-BOND0.510 -s 10.30.0.0/16 -d 10.30.15.125 -p tcp --sport 1024:65535 --dport 1521 --syn -m state --state NEW -j NFQUEUE -m comment --comment "IPv4 rule #210: rule 1"
+
+# IPv4 rule #310
+# --------------
+# DesqEau Dyn
+-A BOND0.1-BOND0.510 -s 10.30.0.0/16 -d 10.30.15.125 -p tcp --sport 1024:65535 --dport 1521 --syn -m state --state NEW -j NFQUEUE -m comment --comment "IPv4 rule #310: rule 1"
+
+# IPv4 rule #320
+# --------------
+# Devis
+-A BOND0.1-BOND0.510 -s 10.30.0.0/16 -d 10.30.15.146 -p tcp --sport 1024:65535 --dport 3306 --syn -m state --state NEW -j NFQUEUE -m comment --comment "IPv4 rule #320: rule 1"
+-A BOND0.1-BOND0.510 -s 10.30.0.0/16 -d 10.30.15.147 -p tcp --sport 1024:65535 --dport 3306 --syn -m state --state NEW -j NFQUEUE -m comment --comment "IPv4 rule #320: rule 2"
+-A BOND0.1-BOND0.510 -s 10.30.0.0/16 -d 10.30.15.149 -p tcp --sport 1024:65535 --dport 3306 --syn -m state --state NEW -j NFQUEUE -m comment --comment "IPv4 rule #320: rule 3"
+
+# IPv4 rule #580
+# --------------
+# MySQL
+-A BOND0.1-BOND0.510 -s 10.30.0.0/16 -d 10.30.15.156 -p tcp --sport 1024:65535 --dport 3306 --syn -m state --state NEW -j NFQUEUE -m comment --comment "IPv4 rule #580: rule 1"
+-A BOND0.1-BOND0.510 -s 10.30.0.0/16 -d 10.30.15.147 -p tcp --sport 1024:65535 --dport 3306 --syn -m state --state NEW -j NFQUEUE -m comment --comment "IPv4 rule #580: rule 2"
+-A BOND0.1-BOND0.510 -s 10.30.0.0/16 -d 10.30.15.141 -p tcp --sport 1024:65535 --dport 3306 --syn -m state --state NEW -j NFQUEUE -m comment --comment "IPv4 rule #580: rule 3"
+-A BOND0.1-BOND0.510 -s 10.30.0.0/16 -d 10.30.15.50 -p tcp --sport 1024:65535 --dport 3306 --syn -m state --state NEW -j NFQUEUE -m comment --comment "IPv4 rule #580: rule 4"
+-A BOND0.1-BOND0.510 -s 10.30.0.0/16 -d 10.30.15.53 -p tcp --sport 1024:65535 --dport 3306 --syn -m state --state NEW -j NFQUEUE -m comment --comment "IPv4 rule #580: rule 5"
+-A BOND0.1-BOND0.510 -s 10.30.0.0/16 -d 10.30.15.149 -p tcp --sport 1024:65535 --dport 3306 --syn -m state --state NEW -j NFQUEUE -m comment --comment "IPv4 rule #580: rule 6"
+-A BOND0.1-BOND0.510 -s 10.30.0.0/16 -d 10.30.15.146 -p tcp --sport 1024:65535 --dport 3306 --syn -m state --state NEW -j NFQUEUE -m comment --comment "IPv4 rule #580: rule 7"
+-A BOND0.1-BOND0.510 -s 10.30.0.0/16 -d 10.30.15.54 -p tcp --sport 1024:65535 --dport 3306 --syn -m state --state NEW -j NFQUEUE -m comment --comment "IPv4 rule #580: rule 8"
+
+# IPv4 rule #650
+# --------------
+# Oracle Database
+-A BOND0.1-BOND0.510 -s 10.30.0.0/16 -d 10.30.15.120 -p tcp --sport 1024:65535 --dport 1521 --syn -m state --state NEW -j NFQUEUE -m comment --comment "IPv4 rule #650: rule 1"
+-A BOND0.1-BOND0.510 -s 10.30.0.0/16 -d 10.30.15.125 -p tcp --sport 1024:65535 --dport 1521 --syn -m state --state NEW -j NFQUEUE -m comment --comment "IPv4 rule #650: rule 2"
+
+# IPv4 rule #680
+# --------------
+# PostgreSQL
+-A BOND0.1-BOND0.510 -s 10.30.0.0/16 -d 10.30.15.57 -p tcp --sport 1024:65535 --dport 5432 --syn -m state --state NEW -j NFQUEUE -m comment --comment "IPv4 rule #680: rule 1"
+
+# IPv4 rule #720
+# --------------
+# Sequoia (SCOP prod)
+-A BOND0.1-BOND0.510 -s 10.30.0.0/16 -d 10.30.15.125 -p tcp --sport 1024:65535 --dport 1521 --syn -m state --state NEW -j NFQUEUE -m comment --comment "IPv4 rule #720: rule 1"
+
+# IPv4 rule #730
+# --------------
+# Sequoia (SCOP test)
+-A BOND0.1-BOND0.510 -s 10.30.0.0/16 -d 10.30.15.120 -p tcp --sport 1024:65535 --dport 1521 --syn -m state --state NEW -j NFQUEUE -m comment --comment "IPv4 rule #730: rule 1"
+
+# IPv4 rule #490
+# --------------
+# TIGRE Maj (Oracle)
+-A BOND0.1-BOND0.510 -s 10.30.0.0/16 -d 10.30.15.125 -p tcp --sport 1024:65535 --dport 1521 --syn -m state --state NEW -j NFQUEUE -m comment --comment "IPv4 rule #490: rule 1"
+
+# IPv4 rule #140
+# --------------
+# Atftpd
+-A BOND0.1-BOND0.510 -s 10.128.0.0/16 -d 10.30.15.141 -p udp --sport 1024:65535 --dport 69 -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #140: rule 1"
+-A BOND0.1-BOND0.510 -s 10.30.0.0/16 -d 10.30.15.141 -p udp --sport 1024:65535 --dport 69 -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #140: rule 2"
+
+# IPv4 rule #290
+# --------------
+# Cyrus IMAP
+-A BOND0.1-BOND0.510 -s 10.30.0.0/16 -d 10.30.15.56 -p tcp --sport 1024:65535 --dport 110 --syn -m state --state NEW -j NFQUEUE -m comment --comment "IPv4 rule #290: rule 1"
+-A BOND0.1-BOND0.510 -s 10.30.0.0/16 -d 10.30.15.56 -p tcp --sport 1024:65535 --dport 143 --syn -m state --state NEW -j NFQUEUE -m comment --comment "IPv4 rule #290: rule 2"
+-A BOND0.1-BOND0.510 -s 10.30.0.0/16 -d 10.30.15.56 -p tcp --sport 1024:65535 --dport 993 --syn -m state --state NEW -j NFQUEUE -m comment --comment "IPv4 rule #290: rule 3"
+-A BOND0.1-BOND0.510 -s 10.30.0.0/16 -d 10.30.15.56 -p tcp --sport 1024:65535 --dport 995 --syn -m state --state NEW -j NFQUEUE -m comment --comment "IPv4 rule #290: rule 4"
+-A BOND0.1-BOND0.510 -s 10.30.0.0/16 -d 10.30.15.56 -p tcp --sport 1024:65535 --dport 2000 --syn -m state --state NEW -j NFQUEUE -m comment --comment "IPv4 rule #290: rule 5"
+
+# IPv4 rule #270
+# --------------
+# CyViewer
+-A BOND0.1-BOND0.510 -s 10.30.0.0/16 -d 75.0.30.63 -p tcp --sport 1024:65535 --dport 8943 --syn -m state --state NEW -j NFQUEUE -m comment --comment "IPv4 rule #270: rule 1"
+
+# IPv4 rule #340
+# --------------
+# FreeRADIUS
+-A BOND0.1-BOND0.510 -s 10.30.0.0/16 -d 10.30.15.146 -p tcp --sport 1024:65535 --dport 1812 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #340: rule 1"
+-A BOND0.1-BOND0.510 -s 10.30.0.0/16 -d 10.30.15.146 -p tcp --sport 1024:65535 --dport 1813 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #340: rule 2"
+-A BOND0.1-BOND0.510 -s 10.30.0.0/16 -d 10.30.15.147 -p tcp --sport 1024:65535 --dport 1812 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #340: rule 3"
+-A BOND0.1-BOND0.510 -s 10.30.0.0/16 -d 10.30.15.147 -p tcp --sport 1024:65535 --dport 1813 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #340: rule 4"
+-A BOND0.1-BOND0.510 -s 10.30.0.0/16 -d 10.30.15.149 -p tcp --sport 1024:65535 --dport 1812 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #340: rule 5"
+-A BOND0.1-BOND0.510 -s 10.30.0.0/16 -d 10.30.15.149 -p tcp --sport 1024:65535 --dport 1813 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #340: rule 6"
+
+# IPv4 rule #460
+# --------------
+# JFFNMS snmptrap
+-A BOND0.1-BOND0.510 -d 10.30.15.141 -p tcp --sport 1024:65535 --dport 162 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #460: rule 1"
+
+# IPv4 rule #560
+# --------------
+# Microsoft Outlook
+-A BOND0.1-BOND0.510 -s 10.30.0.0/16 -d 75.0.30.184 -p tcp --sport 1024:65535 --dport 135 --syn -m state --state NEW -j NFQUEUE -m comment --comment "IPv4 rule #560: rule 1"
+
+# IPv4 rule #570
+# --------------
+# Microsoft Terminal Services
+-A BOND0.1-BOND0.510 -s 10.30.0.0/16 -d 75.0.30.0/24 -p tcp --sport 1024:65535 --dport 3389 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #570: rule 1"
+-A BOND0.1-BOND0.510 -s 10.30.0.0/16 -d 10.30.15.0/24 -p tcp --sport 1024:65535 --dport 3389 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #570: rule 2"
+
+# IPv4 rule #630
+# --------------
+# OpenLDAP
+-A BOND0.1-BOND0.510 -s 10.30.0.0/16 -d 10.30.15.146 -p tcp --sport 1024:65535 --dport 636 --syn -m state --state NEW -j NFQUEUE -m comment --comment "IPv4 rule #630: rule 1"
+-A BOND0.1-BOND0.510 -s 10.30.0.0/16 -d 10.30.15.147 -p tcp --sport 1024:65535 --dport 636 --syn -m state --state NEW -j NFQUEUE -m comment --comment "IPv4 rule #630: rule 2"
+-A BOND0.1-BOND0.510 -s 10.30.0.0/16 -d 10.30.15.149 -p tcp --sport 1024:65535 --dport 636 --syn -m state --state NEW -j NFQUEUE -m comment --comment "IPv4 rule #630: rule 3"
+
+# IPv4 rule #640
+# --------------
+# OpenSSH
+-A BOND0.1-BOND0.510 -s 10.30.0.0/16 -d 10.30.15.0/24 -p tcp --sport 1024:65535 --dport 22 --syn -m state --state NEW -j ULOG --ulog-prefix F640a:OpenSSH -m comment --comment "IPv4 rule #640: rule 1"
+-A BOND0.1-BOND0.510 -s 10.30.0.0/16 -d 10.30.15.0/24 -p tcp --sport 1024:65535 --dport 22 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #640: rule 2"
+
+# IPv4 rule #670
+# --------------
+# Postfix
+-A BOND0.1-BOND0.510 -s 10.30.0.0/16 -d 10.30.15.56 -p tcp --sport 1024:65535 --dport 25 --syn -m state --state NEW -j NFQUEUE -m comment --comment "IPv4 rule #670: rule 1"
+-A BOND0.1-BOND0.510 -s 10.30.0.0/16 -d 10.30.15.56 -p tcp --sport 1024:65535 --dport 465 --syn -m state --state NEW -j NFQUEUE -m comment --comment "IPv4 rule #670: rule 2"
+
+# IPv4 rule #710
+# --------------
+# Samba
+-A BOND0.1-BOND0.510 -s 10.30.0.0/16 -d 10.30.15.146 -p tcp --sport 1024:65535 --dport 137 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #710: rule 1"
+-A BOND0.1-BOND0.510 -s 10.30.0.0/16 -d 10.30.15.146 -p tcp --sport 1024:65535 --dport 138 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #710: rule 2"
+-A BOND0.1-BOND0.510 -s 10.30.0.0/16 -d 10.30.15.146 -p tcp --sport 1024:65535 --dport 139 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #710: rule 3"
+-A BOND0.1-BOND0.510 -s 10.30.0.0/16 -d 10.30.15.146 -p tcp --sport 1024:65535 --dport 445 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #710: rule 4"
+-A BOND0.1-BOND0.510 -s 10.30.0.0/16 -d 10.30.15.147 -p tcp --sport 1024:65535 --dport 137 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #710: rule 5"
+-A BOND0.1-BOND0.510 -s 10.30.0.0/16 -d 10.30.15.147 -p tcp --sport 1024:65535 --dport 138 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #710: rule 6"
+-A BOND0.1-BOND0.510 -s 10.30.0.0/16 -d 10.30.15.147 -p tcp --sport 1024:65535 --dport 139 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #710: rule 7"
+-A BOND0.1-BOND0.510 -s 10.30.0.0/16 -d 10.30.15.147 -p tcp --sport 1024:65535 --dport 445 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #710: rule 8"
+-A BOND0.1-BOND0.510 -s 10.30.0.0/16 -d 10.30.15.149 -p tcp --sport 1024:65535 --dport 137 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #710: rule 9"
+-A BOND0.1-BOND0.510 -s 10.30.0.0/16 -d 10.30.15.149 -p tcp --sport 1024:65535 --dport 138 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #710: rule 10"
+-A BOND0.1-BOND0.510 -s 10.30.0.0/16 -d 10.30.15.149 -p tcp --sport 1024:65535 --dport 139 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #710: rule 11"
+-A BOND0.1-BOND0.510 -s 10.30.0.0/16 -d 10.30.15.149 -p tcp --sport 1024:65535 --dport 445 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #710: rule 12"
+
+# IPv4 rule #500
+# --------------
+# TIGRE Maj (lecteur réseau)
+-A BOND0.1-BOND0.510 -s 10.30.0.0/16 -d 10.30.15.123 -p tcp --sport 1024:65535 --dport 137 --syn -m state --state NEW -j NFQUEUE -m comment --comment "IPv4 rule #500: rule 1"
+-A BOND0.1-BOND0.510 -s 10.30.0.0/16 -d 10.30.15.123 -p tcp --sport 1024:65535 --dport 138 --syn -m state --state NEW -j NFQUEUE -m comment --comment "IPv4 rule #500: rule 2"
+-A BOND0.1-BOND0.510 -s 10.30.0.0/16 -d 10.30.15.123 -p tcp --sport 1024:65535 --dport 139 --syn -m state --state NEW -j NFQUEUE -m comment --comment "IPv4 rule #500: rule 3"
+-A BOND0.1-BOND0.510 -s 10.30.0.0/16 -d 10.30.15.123 -p tcp --sport 1024:65535 --dport 445 --syn -m state --state NEW -j NFQUEUE -m comment --comment "IPv4 rule #500: rule 4"
+
+# IPv4 rule #610
+# --------------
+# NTP server depuis serveurs toip
+-A BOND0.301-BOND0.12 -s 85.0.30.0/24 -d 10.0.0.0/8 -p tcp --sport 1024:65535 --dport 119 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #610: rule 1"
+-A BOND0.301-BOND0.12 -s 85.0.30.0/24 -d 10.0.0.0/8 -p udp --sport 1:65535 --dport 123 -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #610: rule 2"
+
+# IPv4 rule #180
+# --------------
+# Bind9 pour DSTI
+-A BOND0.12-BOND0.510 -d 10.30.15.146 -p tcp --sport 1024:65535 --dport 53 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #180: rule 1"
+-A BOND0.12-BOND0.510 -d 10.30.15.146 -p udp --sport 1024:65535 --dport 53 -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #180: rule 2"
+-A BOND0.12-BOND0.510 -d 10.30.15.145 -p tcp --sport 1024:65535 --dport 53 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #180: rule 3"
+-A BOND0.12-BOND0.510 -d 10.30.15.145 -p udp --sport 1024:65535 --dport 53 -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #180: rule 4"
+-A BOND0.12-BOND0.510 -d 10.30.15.155 -p tcp --sport 1024:65535 --dport 53 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #180: rule 5"
+-A BOND0.12-BOND0.510 -d 10.30.15.155 -p udp --sport 1024:65535 --dport 53 -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #180: rule 6"
+-A BOND0.12-BOND0.510 -d 10.30.15.147 -p tcp --sport 1024:65535 --dport 53 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #180: rule 7"
+-A BOND0.12-BOND0.510 -d 10.30.15.147 -p udp --sport 1024:65535 --dport 53 -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #180: rule 8"
+-A BOND0.12-BOND0.510 -d 10.30.15.149 -p tcp --sport 1024:65535 --dport 53 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #180: rule 9"
+-A BOND0.12-BOND0.510 -d 10.30.15.149 -p udp --sport 1024:65535 --dport 53 -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #180: rule 10"
+
+# IPv4 rule #550
+# --------------
+# Microsoft Exchange Server 5.5
+-A BOND0.12-BOND0.510 -s 10.0.0.0/8 -d 75.0.30.184 -p tcp --sport 1024:65535 --dport 25 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #550: rule 1"
+-A BOND0.12-BOND0.510 -s 10.0.0.0/8 -d 75.0.30.184 -p tcp --sport 1024:65535 --dport 102 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #550: rule 2"
+
+# IPv4 rule #430
+# --------------
+# JFFNMS poller
+-A BOND0.510-BOND0.1 -s 10.30.15.141 -j ACCEPT -m comment --comment "IPv4 rule #430: rule 1"
+
+# IPv4 rule #790
+# --------------
+# Zabbix poller
+-A BOND0.510-BOND0.1 -s 10.30.15.156 -p icmp -j ACCEPT -m comment --comment "IPv4 rule #790: rule 1"
+
+# IPv4 rule #250
+# --------------
+# Cisco Call Manager vers munich
+-A BOND0.301-BOND0.510 -s 85.0.30.240 -d 10.30.15.137 -p tcp --sport 1024:65535 --dport 5080 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #250: rule 1"
+-A BOND0.301-BOND0.510 -s 85.0.30.241 -d 10.30.15.137 -p tcp --sport 1024:65535 --dport 5080 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #250: rule 2"
+
+# IPv4 rule #170
+# --------------
+# Bind9 pour GAASPAR
+-A BOND0.11-BOND0.510 -d 10.30.15.146 -p tcp --sport 1024:65535 --dport 53 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #170: rule 1"
+-A BOND0.11-BOND0.510 -d 10.30.15.146 -p udp --sport 1024:65535 --dport 53 -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #170: rule 2"
+-A BOND0.11-BOND0.510 -d 10.30.15.145 -p tcp --sport 1024:65535 --dport 53 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #170: rule 3"
+-A BOND0.11-BOND0.510 -d 10.30.15.145 -p udp --sport 1024:65535 --dport 53 -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #170: rule 4"
+-A BOND0.11-BOND0.510 -d 10.30.15.155 -p tcp --sport 1024:65535 --dport 53 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #170: rule 5"
+-A BOND0.11-BOND0.510 -d 10.30.15.155 -p udp --sport 1024:65535 --dport 53 -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #170: rule 6"
+-A BOND0.11-BOND0.510 -d 10.30.15.147 -p tcp --sport 1024:65535 --dport 53 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #170: rule 7"
+-A BOND0.11-BOND0.510 -d 10.30.15.147 -p udp --sport 1024:65535 --dport 53 -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #170: rule 8"
+-A BOND0.11-BOND0.510 -d 10.30.15.149 -p tcp --sport 1024:65535 --dport 53 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #170: rule 9"
+-A BOND0.11-BOND0.510 -d 10.30.15.149 -p udp --sport 1024:65535 --dport 53 -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #170: rule 10"
+
+# IPv4 rule #280
+# --------------
+# Cycos MRS
+-A BOND0.510-BOND0.301 -s 75.0.30.63 -d 85.0.30.240 -j ACCEPT -m comment --comment "IPv4 rule #280: rule 1"
+-A BOND0.510-BOND0.301 -s 75.0.30.63 -d 85.0.30.241 -j ACCEPT -m comment --comment "IPv4 rule #280: rule 2"
+
+# IPv4 rule #350
+# --------------
+# FreeSWITCH
+-A BOND0.510-BOND0.301 -s 10.30.15.137 -d 85.0.30.240 -p tcp --sport 1024:65535 --dport 5060 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #350: rule 1"
+-A BOND0.510-BOND0.301 -s 10.30.15.137 -d 85.0.30.241 -p tcp --sport 1024:65535 --dport 5060 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #350: rule 2"
+
+# IPv4 rule #440
+# --------------
+# JFFNMS poller Serveurs toip
+-A BOND0.510-BOND0.301 -s 10.30.15.141 -j ACCEPT -m comment --comment "IPv4 rule #440: rule 1"
+
+# IPv4 rule #260
+# --------------
+# Cisco Call Manager (depuis PC)
+-A BOND0.1-BOND0.301 -s 10.30.0.0/16 -d 85.0.30.240 -p tcp --sport 1024:65535 --dport 2000 --syn -m state --state NEW -j ULOG --ulog-prefix "F260a:PC CCM" -m comment --comment "IPv4 rule #260: rule 1"
+-A BOND0.1-BOND0.301 -s 10.30.0.0/16 -d 85.0.30.240 -p tcp --sport 1024:65535 --dport 2000 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #260: rule 2"
+-A BOND0.1-BOND0.301 -s 10.30.0.0/16 -d 85.0.30.241 -p tcp --sport 1024:65535 --dport 2000 --syn -m state --state NEW -j ULOG --ulog-prefix "F260a:PC CCM" -m comment --comment "IPv4 rule #260: rule 3"
+-A BOND0.1-BOND0.301 -s 10.30.0.0/16 -d 85.0.30.241 -p tcp --sport 1024:65535 --dport 2000 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #260: rule 4"
+
+# IPv4 rule #400
+# --------------
+# IPMA
+-A BOND0.1-BOND0.301 -s 10.30.0.0/16 -d 85.0.30.240 -p tcp --sport 1024:65535 --dport 389 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #400: rule 1"
+-A BOND0.1-BOND0.301 -s 10.30.0.0/16 -d 85.0.30.240 -p tcp --sport 1024:65535 --dport 8111 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #400: rule 2"
+-A BOND0.1-BOND0.301 -s 10.30.0.0/16 -d 85.0.30.240 -p tcp --sport 1024:65535 --dport 8666 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #400: rule 3"
+-A BOND0.1-BOND0.301 -s 10.30.0.0/16 -d 85.0.30.241 -p tcp --sport 1024:65535 --dport 389 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #400: rule 4"
+-A BOND0.1-BOND0.301 -s 10.30.0.0/16 -d 85.0.30.241 -p tcp --sport 1024:65535 --dport 8111 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #400: rule 5"
+-A BOND0.1-BOND0.301 -s 10.30.0.0/16 -d 85.0.30.241 -p tcp --sport 1024:65535 --dport 8666 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #400: rule 6"
+
+# IPv4 rule #520
+# --------------
+# Microsoft DHCP server (toip)
+-A BOND0.1-BOND0.301 -s 10.128.0.0/16 -d 85.0.30.240 -p tcp --sport 1024:65535 --dport 67 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #520: rule 1"
+-A BOND0.1-BOND0.301 -s 10.128.0.0/16 -d 85.0.30.241 -p tcp --sport 1024:65535 --dport 67 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #520: rule 2"
+
+# IPv4 rule #530
+# --------------
+# Microsoft DNS server(toip)
+-A BOND0.1-BOND0.301 -s 10.128.0.0/16 -d 85.0.30.240 -p tcp --sport 1024:65535 --dport 53 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #530: rule 1"
+-A BOND0.1-BOND0.301 -s 10.128.0.0/16 -d 85.0.30.240 -p udp --sport 1024:65535 --dport 53 -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #530: rule 2"
+-A BOND0.1-BOND0.301 -s 10.128.0.0/16 -d 85.0.30.241 -p tcp --sport 1024:65535 --dport 53 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #530: rule 3"
+-A BOND0.1-BOND0.301 -s 10.128.0.0/16 -d 85.0.30.241 -p udp --sport 1024:65535 --dport 53 -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #530: rule 4"
+
+# IPv4 rule #800
+# --------------
+# Cisco Call Manager (STEA toip -> Serveurs tel
+-A BOND0.1-BOND0.301 -s 10.128.0.0/16 -d 85.0.30.240 -p tcp --sport 1024:65535 --dport 2000 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #800: rule 1"
+-A BOND0.1-BOND0.301 -s 10.128.0.0/16 -d 85.0.30.241 -p tcp --sport 1024:65535 --dport 2000 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #800: rule 2"
+
+# IPv4 rule #240
+# --------------
+# CTV
+-A BOND0.1-BOND0.12 -s 10.30.0.0/16 -d 10.167.16.2 -p tcp --sport 1024:65535 --dport 443 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #240: rule 1"
+
+# IPv4 rule #700
+# --------------
+# RH21
+-A BOND0.1-BOND0.12 -s 10.30.0.0/16 -d 10.165.6.1 -p tcp --sport 1024:65535 --dport 80 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #700: rule 1"
+-A BOND0.1-BOND0.12 -s 10.30.0.0/16 -d 10.165.6.1 -p tcp --sport 1024:65535 --dport 443 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #700: rule 2"
+
+# IPv4 rule #690
+# --------------
+# Proxy DSTI (depuis STEA)
+-A BOND0.1-BOND0.12 -s 10.30.0.0/16 -d 10.160.26.10 -p tcp --sport 1024:65535 --dport 80 --syn -m state --state NEW -j NFQUEUE -m comment --comment "IPv4 rule #690: rule 1"
+
+# IPv4 rule #590
+# --------------
+# NTP server depuis STEA
+-A BOND0.1-BOND0.12 -s 10.30.0.0/16 -d 10.0.0.0/8 -p tcp --sport 1024:65535 --dport 119 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #590: rule 1"
+-A BOND0.1-BOND0.12 -s 10.30.0.0/16 -d 10.0.0.0/8 -p udp --sport 1:65535 --dport 123 -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #590: rule 2"
+
+# IPv4 rule #190
+# --------------
+# Bind9 vers DSTI
+-A BOND0.510-BOND0.12 -s 10.30.15.0/24 -p tcp --sport 1024:65535 --dport 53 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #190: rule 1"
+-A BOND0.510-BOND0.12 -s 10.30.15.0/24 -p udp --sport 1024:65535 --dport 53 -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #190: rule 2"
+
+# IPv4 rule #540
+# --------------
+# Microsoft Exchange Server 5.5
+-A BOND0.510-BOND0.12 -s 75.0.30.184 -d 10.0.0.0/8 -p tcp --sport 1024:65535 --dport 25 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #540: rule 1"
+-A BOND0.510-BOND0.12 -s 75.0.30.184 -d 10.0.0.0/8 -p tcp --sport 1024:65535 --dport 102 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #540: rule 2"
+
+# IPv4 rule #600
+# --------------
+# NTP server depuis serveurs
+-A BOND0.510-BOND0.12 -d 10.0.0.0/8 -p tcp --sport 1024:65535 --dport 119 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #600: rule 1"
+-A BOND0.510-BOND0.12 -d 10.0.0.0/8 -p udp --sport 1:65535 --dport 123 -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #600: rule 2"
+
+# IPv4 rule #810
+# --------------
+# Proxy DSTI (depuis Serveurs)
+-A BOND0.510-BOND0.12 -s 10.30.15.0/24 -d 10.160.26.10 -p tcp --sport 1024:65535 --dport 80 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv4 rule #810: rule 1"
+
+
+# Default decisions
+# -----------------
+-A BOND0.1-BOND0.11 -j ULOG --ulog-prefix "F0d:Default DROP for BOND0.1-BO"
+-A BOND0.1-BOND0.11 -j DROP -m comment --comment "Default decision"
+-A BOND0.1-BOND0.12 -j ULOG --ulog-prefix "F0d:Default DROP for BOND0.1-BO"
+-A BOND0.1-BOND0.12 -j DROP -m comment --comment "Default decision"
+-A BOND0.1-BOND0.301 -j ULOG --ulog-prefix "F0d:Default DROP for BOND0.1-BO"
+-A BOND0.1-BOND0.301 -j DROP -m comment --comment "Default decision"
+-A BOND0.1-BOND0.510 -j ULOG --ulog-prefix "F0d:Default DROP for BOND0.1-BO"
+-A BOND0.1-BOND0.510 -j DROP -m comment --comment "Default decision"
+-A BOND0.11-BOND0.510 -j ULOG --ulog-prefix "F0a:Default ACCEPT for BOND0.11"
+-A BOND0.11-BOND0.510 -j ACCEPT -m comment --comment "Default decision"
+-A BOND0.12-BOND0.510 -j ULOG --ulog-prefix "F0d:Default DROP for BOND0.12-B"
+-A BOND0.12-BOND0.510 -j DROP -m comment --comment "Default decision"
+-A BOND0.301-BOND0.12 -j ULOG --ulog-prefix "F0d:Default DROP for BOND0.301-"
+-A BOND0.301-BOND0.12 -j DROP -m comment --comment "Default decision"
+-A BOND0.301-BOND0.510 -j ULOG --ulog-prefix "F0d:Default DROP for BOND0.301-"
+-A BOND0.301-BOND0.510 -j DROP -m comment --comment "Default decision"
+-A BOND0.510-BOND0.1 -j ULOG --ulog-prefix "F0d:Default DROP for BOND0.510-"
+-A BOND0.510-BOND0.1 -j DROP -m comment --comment "Default decision"
+-A BOND0.510-BOND0.12 -j ULOG --ulog-prefix "F0d:Default DROP for BOND0.510-"
+-A BOND0.510-BOND0.12 -j DROP -m comment --comment "Default decision"
+-A BOND0.510-BOND0.301 -j ULOG --ulog-prefix "F0d:Default DROP for BOND0.510-"
+-A BOND0.510-BOND0.301 -j DROP -m comment --comment "Default decision"
+-A INPUT -j ULOG --ulog-prefix "I0d:Default DROP for INPUT"
+-A INPUT -j DROP -m comment --comment "Default decision"
+-A FORWARD -j ULOG --ulog-prefix "F0d:Default DROP for FORWARD"
+-A FORWARD -j DROP -m comment --comment "Default decision"
+-A OUTPUT -j ACCEPT -m comment --comment "Default decision"
+COMMIT
+
+#############
+# nat table #
+#############
+*nat
+:PREROUTING ACCEPT [0:0]
+:POSTROUTING ACCEPT [0:0]
+:OUTPUT ACCEPT [0:0]
+
+
+COMMIT
+

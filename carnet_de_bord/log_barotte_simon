@@ -1,4 +1,25 @@
 [2012-02-02] - Ajout du dossier ufwi-authd et commencement de l'étude du daemon
 			 - Installation de ufwi sur ma machine perso. L'installation se passe correctement.
-			   Mais je n'arrive as à lancer le client ufwi_rpcd_client. Même erreur que maxime:
+			   Mais je n'arrive pas à lancer le client ufwi_rpcd_client. Même erreur que maxime:
 			2012-02-02 16:44:40,636: Connection error: [socket.error] Unable to connect to https://192.168.1.1:8443/RPC2: No route to host (error #113)
+
+[2012-02-07] - Début de l'étude fichier de conf authd.conf et de la rédaction d'un document expliquant celui-ci
+
+[2012-02-10] - Fin étude du fichier authd.conf et upload des résultat sur github
+
+[2012-02-11] - Début de la rédaction du rapport.
+			 - Ajout de la partie concernant mon daemon (introduction et installation)
+
+[2012-02-13] - Installation de mon daemon (ufwi-authd)
+				| 1er erreur, lors du lancement de configure, impossible de trouver libufwibase
+			 - Installation du daemon ufwi-base afin de remédier à la 1er erreur
+				| Tout ce passe bien jusqu'au make install qui me génére des erreurs
+					make[2]: *** [install-includeHEADERS] Erreur 1
+					make[2]: quittant le répertoire « /root/ufwi-daemons-ufwi-base/src »
+					make[1]: *** [install-am] Erreur 2
+					make[1]: quittant le répertoire « /root/ufwi-daemons-ufwi-base/src »
+					make: *** [install-recursive] Erreur 1
+
+
+
+

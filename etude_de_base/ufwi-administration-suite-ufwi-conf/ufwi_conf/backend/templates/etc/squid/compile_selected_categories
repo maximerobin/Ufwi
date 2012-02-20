@@ -1,0 +1,18 @@
+#!/bin/sh
+
+# Compile selected blacklist categories for squidGuard.
+
+blacklists_dir=/var/lib/squidguard/db/blacklists
+
+{% for category_name in conf.categories_blacklist %}
+for filetype in domains expressions urls; do
+    if [ -f "$blacklists_dir/{{ category_name }}/$filetype.db" ]; then
+        newer=$(find "$blacklists_dir/{{ category_name }}/$filetype" -newer "$blacklists_dir/{{ category_name }}/$filetype.db")
+        if [ -z "$newer" ]; then
+            continue
+        fi
+    fi
+    squidGuard -C "blacklists/{{ category_name }}/$filetype"
+done
+{% endfor %}
+

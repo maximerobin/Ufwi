@@ -1,0 +1,36 @@
+#!/usr/bin/env python
+from sys import argv, exit, stderr
+from ufwi_rpcd.qt.application import create_ufwi_rpcc_application, setGlobalStatusBar
+
+def main():
+    module = None
+    for arg in argv[1:]:
+        if arg in ("services", "system"):
+            module = arg
+            break
+    if not module:
+        print "usage: %s [options] services" % argv[0]
+        print "   or: %s [options] system" % argv[0]
+        exit(1)
+    module = argv.pop(1)
+
+    app, client = create_ufwi_rpcc_application(
+        name='ufwi-conf',
+        resource="system.rcc",
+        locale=':/locale/system',
+    )
+
+    if module == "services":
+        from ufwi_conf.client.services.main_window import MainWindow
+    else:
+        from ufwi_conf.client.system.main_window import MainWindow
+    window = MainWindow(app, client)
+    setGlobalStatusBar(window.statusBar())
+    window.load()
+    window.show()
+    return app.exec_()
+
+if __name__ == "__main__":
+    code = main()
+    exit(code)
+

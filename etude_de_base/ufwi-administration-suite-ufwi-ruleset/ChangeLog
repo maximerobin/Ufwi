@@ -1,0 +1,135 @@
+RC version
+==========
+
+Common:
+
+ * Add auth_quality field to ACLs
+ * objectModify() service now keeps existing attributes (if the new value is
+   not set). If you would like to delete an attribute (eg. user_groups), you
+   have to define it with an empty value ({'user_groups': []})
+ * Accept filename with only one character
+
+
+Beta version
+============
+
+Common:
+
+ * Split IPv4 and IPv6 in two separated lists. It's not more possible to create
+   an IPv4 and IPv6 ACL, you have to create two ACLs.
+ * Rechange minimum identifier length to 1 character (instead of 3 characters)
+
+Backend:
+
+ * Rules are validated on apply rules, not when loading the ruleset.
+   So global options can now be changed while a ruleset is open!
+
+GUI:
+
+ * Full screen mode (disabled by default)
+ * Add filters to each library and to the rule lists
+
+
+June branch
+===========
+
+Backend:
+
+ * Fix rule identifier in ruleset XML export (divide identifier number by 10)
+ * Service updates are grouped by domain by the server instead of the client
+ * Create lastRulesetApplied(), getMissingLinks() and applyMultisite() services
+ * Fix hostname XML export: don't export addresses twice
+ * Support IGMP protocol
+
+GUI:
+
+ * Create command line command --new
+ * Fix MainWindow.refreshMultiple(): reorder updates to refresh objects
+   in the right order, but keep the original order to highlight the first
+   updated object
+ * Click on a rule title opens the rule editor
+ * Redisplay the generic links dialog if the modification failed to allow the
+   user to fix its mistakes
+ * Add an icon to nuface-qt
+ * Add icons to contextual menu actions
+
+
+Nuface 3.0 milestone 4 (2009-04-24)
+===================================
+
+ * Change duration format: rename "duration" attribute to "seconds"
+ * Change periodicity format: rename attributes date_from, date_to, time_from,
+   time_to to day_from, day_to, hour_from, hour_to
+ * Store ACL/NAT rules identifier in the XML file
+ * Rule identifier is now composed of two parts: rule identifier and ruleset
+   identifier. Eg. ACL #291 is the 29 th ACL of the template #1 (the current
+   ruleset is always the ruleset #0)
+ * Set XML format version to "3.0dev5"
+ * Drop support of file format "3.0" (milestone 1 and milestone 2)
+ * Custom (iptables) rules are only supported for a ruleset, not in a template
+ * Set license to GNU GPLv3
+
+
+Nuface 3.0 template 1 (2009-03-18)
+==================================
+
+ * Support ICMPv6 protocol
+ * Support ruleset templates:
+
+   - create generic interfaces, networks, hosts
+   - create a ruleset template
+   - create a "network configuration" (physical interfaces and networks)
+   - link generic and physical interfaces/networks
+   - a ruleset can reuse a network object from a template ruleset
+   - an object can be converted to a template
+   - a new ruleset can be based on a template ruleset
+
+ * Support NAT:
+
+   - create rules: compiled to iptables
+   - create NAT wizard for easy creation of NAT rules
+
+ * Change identifier regex: min/max length is now 3/100 characters
+   (instead of 1/30)
+ * Create periodicity and duration objects
+ * Support INPUT and OUTPUT rules ("local rules")
+ * Compute object references: an object can not be removed if it's still
+   used by a rule or a group
+ * library.xml:
+
+   - Rename POP to POP3
+   - Set ICMP code (0) of ping and pong protocols
+   - Change NTP protocol source port (1024:65535 => 123)
+   - Add more protocols: mDNS, ICMPv6 messages (echo, neighbor, router,
+     multicast, ...), IMAPS, IPP, Netbios Name/Datagram ServiceOpenVPN,
+     Web proxy (3128)
+
+ * iptables: change log prefix format, use lower case for the decision letter
+   (a: ACCEPT, d: DROP, r: REJECT) when the decision is taken by iptables
+   (instead of NuFW)
+ * Set XML format version to "3.0m3"
+ * Support custom (iptables) rules
+
+
+Nuface 3.0 milestone 2 (2008-12-18)
+===================================
+
+ * Create user groups, applications, operating systems
+ * Create object groups
+ * ACL are organized in chains (eg. eth0=>eth2)
+ * Backend:
+
+   - Create a LDAP backend
+   - Iptables backend support NuFW (-j NFQUEUE)
+
+ * GUI:
+
+   - The ACL list is now read-only: ACL edition in done in a separated view
+   - Validate dialogs
+
+
+Nuface 3.0 milestone 1 (2008-09-26)
+===================================
+
+ * First release
+

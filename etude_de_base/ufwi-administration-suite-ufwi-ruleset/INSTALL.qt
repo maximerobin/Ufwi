@@ -1,0 +1,34 @@
+See INSTALL to install the backend (nucentral component).
+
+Prerequisites
+=============
+
+Runtime
+-------
+
+ - Python 2.5+
+ - IPy Python module version 0.42+
+ - nucentral.client Python module
+ - PyQt 4.4+:
+   http://www.riverbankcomputing.co.uk/software/pyqt/intro
+
+Debian packages: apt-get install python-ipy  python-qt4
+
+Installation
+------------
+
+For make:
+
+ - Qt4 development tools (lrelease).
+ - PyQt4 development tools (pyuic4).
+  
+Debian packages: qt4-dev-tools pyqt4-dev-tools
+
+
+Install
+=======
+
+Run this command as root:
+
+    make install_qt
+

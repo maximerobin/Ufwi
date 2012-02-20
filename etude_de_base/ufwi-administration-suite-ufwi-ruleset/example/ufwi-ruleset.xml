@@ -1,0 +1,50 @@
+<ruleset version="3.0">
+  <resources>
+    <interface id="eth0">
+      <network ipv4="195.101.59.0/24">INTERNET</network>
+      <network ipv4="195.101.59.0/28">INTERNET petit</network>
+      <network ipv4="81.80.101.96/27">INTERNETALIàS</network>
+      <network ipv4="a:b:c:d::/64">IPV6LAN</network>
+    </interface><interface id="eth1">
+      <network ipv4="192.168.33.0/25">DMZ</network>
+    </interface><interface id="eth2">
+      <network ipv4="192.168.33.128/25">INTRANET</network>
+    </interface><interface id="tun0">
+      <network ipv4="10.8.0.0/26">INL</network>
+      <network ipv4="10.8.0.0/24">OPENVPN</network>
+      <host ipv4="10.8.0.4">hébus</host>
+    </interface>
+  </resources><protocols>
+    <icmp>Any ICMP</icmp>
+    <udp dport="53">DNS</udp>
+    <tcp dport="21">FTP</tcp>
+    <tcp dport="80">HTTP</tcp>
+    <tcp dport="443">HTTPS</tcp>
+    <tcp dport="143">IMAP</tcp>
+    <tcp dport="389">LDAP</tcp>
+    <tcp dport="3306">MySQL</tcp>
+    <tcp dport="119">NNTP</tcp>
+    <udp dport="123">NTP</udp>
+    <tcp dport="4129">Nuauth</tcp>
+    <tcp dport="110">POP</tcp>
+    <icmp>Ping (ICMP)</icmp>
+    <tcp dport="25">SMTP</tcp>
+    <udp dport="161">SNMP</udp>
+    <tcp dport="22">SSH</tcp>
+    <tcp dport="5900">VNC</tcp>
+    <tcp dport="3128">Web proxy (3128)</tcp>
+    <tcp dport="8080">Web proxy (8080)</tcp>
+  </protocols><acls>
+    <acl output="eth0" decision="ACCEPT" enabled="1" input="eth0">
+      <source>INTERNET</source>
+      <destination>INTERNET</destination>
+      <destination>INTERNETALIàS</destination>
+      <protocol>HTTP</protocol>
+      <comment>on</comment>
+    </acl><acl output="eth1" decision="DROP" enabled="0" input="eth1">
+      <source>DMZ</source>
+      <destination>DMZ</destination>
+      <protocol>MySQL</protocol>
+    </acl>
+  </acls>
+</ruleset>

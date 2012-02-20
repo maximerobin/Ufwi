@@ -1,0 +1,5 @@
+<RCC>
+  <qresource prefix="/ufwi_log/locale" >
+    <file>ufwi_log.fr.qm</file>
+  </qresource>
+</RCC>

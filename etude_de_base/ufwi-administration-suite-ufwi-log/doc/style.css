@@ -1,0 +1,132 @@
+body {
+        font: 12pt/16pt Tahoma, Verdana, arial;
+        color: #555753;
+        background: #aca4ff;
+        margin: 0px;
+        margin-top: 5px;
+        margin-bottom: 5px;
+}
+
+.document {
+        margin: auto;
+        padding: 0px;
+        padding-top: 40px;
+        background: #fff;
+        border-width: 1px;
+        border-style: solid;
+        border-color: #666;
+        width: 60em;
+        padding-right: 14px;
+        padding-left: 15px;
+}
+
+.foot {
+        background-color: #F7F7F7;
+        border-width: 1px 0px 1px 0px;
+        border-style: solid;
+        border-color: #E0E0E0;
+        text-align: center;
+        padding-right: 0px;
+}
+
+h1, h2, pre, body, strong {
+/* font-size: large;
+ font-weight: normal;*/
+ font-family: monospace;
+}
+
+h1 {
+ color: #6e3eff;
+ text-align: left;
+}
+
+h3 {
+	padding-top: 20px;
+}
+
+pre {
+    border: 1pt solid #55AAAA;
+    white-space: pre;
+    overflow: auto;
+    padding: 0.5em 0;
+    padding-left: 10px;
+    margin-left: 30px;
+    background : #FBFFFE;
+    color : #555555;
+}
+
+p {
+        padding-left: 1em;
+}
+
+a:link {
+        font-weight: bold;
+        text-decoration: none;
+        color: #6e3eff;
+}
+
+a:visited {
+        font-weight: bold;
+        text-decoration: none;
+        color: #6e3eff;
+}
+
+a:hover, a:active {
+        text-decoration: none;
+        color: #A00;
+}
+/*
+table {
+    border: none;
+}
+*/
+table {
+    border-collapse: collapse;
+    border-color: #909090;
+}
+td {
+    padding: 0.1em 0.3em;
+}
+thead {
+    font-weight: bold;
+    text-align: center;
+    background: #ded4ff;
+/*    background: lightgreen;*/
+}
+
+.license {
+        font-weight: bold;
+        text-align: center;
+}
+
+.OS {
+        font-style: italic;
+        text-align: center;
+}
+
+.version {
+        font-weight: bold;
+        font-style: italic;
+        /*text-align: center*/
+}
+
+.title {
+        text-align: center;
+}
+
+img {
+	border: none;
+}
+
+fieldset {
+        border: 1px gray solid;
+        padding: 5px;
+        width: 70%;
+        text-align: center;
+        margin-left: auto;
+        margin-right: auto;
+}
+
+li {
+	list-style-type: none;
+}

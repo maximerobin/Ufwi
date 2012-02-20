@@ -1,0 +1,229 @@
+#!/bin/sh
+#
+# iproute - OCF script 
+#
+#
+# possible OCF parameters:
+# OCF_RESKEY_network (required)
+# OCF_RESKEY_router (required)
+# OCF_RESKEY_type
+# OCF_RESKEY_netmask 
+
+#######################################################################
+# Initialization:
+
+#. /usr/lib/heartbeat/ocf-shellfuncs
+. /usr/lib/ocf/resource.d/heartbeat/.ocf-shellfuncs
+
+#######################################################################
+debug="`date` : $*"
+#######################################################################
+
+: ${OCF_RESKEY_type="host"}
+
+meta_data() {
+cat <<END
+<?xml version="1.0"?>
+<!DOCTYPE resource-agent SYSTEM "ra-api-1.dtd">
+<resource-agent name="iproute">
+<version>0.1</version>
+
+<longdesc lang="en">
+Resource Agent for the linux routing table
+</longdesc>
+<shortdesc lang="en">iproute resource agent</shortdesc>
+
+<parameters>
+
+<parameter name="network" unique="0" required="1">
+<longdesc lang="en">
+The network to be routed
+</longdesc>
+<shortdesc lang="en">The network to be routed</shortdesc>
+<content type="string" default="" />
+</parameter>
+
+
+<parameter name="router" unique="0" required="1">
+<longdesc lang="en">
+The gateway-ip the routed network should be routed to
+</longdesc>
+<shortdesc lang="en">The gateway-ip</shortdesc>
+<content type="string" default="" />
+</parameter>
+
+
+<parameter name="netmask" unique="0" required="0">
+<longdesc lang="en">
+The netmask of the routed net
+</longdesc>
+<shortdesc lang="en">The netmask of the net</shortdesc>
+<content type="string" default="" />
+</parameter>
+
+
+<parameter name="type" unique="0" required="0">
+<longdesc lang="en">
+Type of route, host or net. Default is host
+</longdesc>
+<shortdesc lang="en">Type of route, host or net</shortdesc>
+<content type="string" default="" />
+</parameter>
+
+</parameters>
+
+<actions>
+<action name="start" timeout="5s" />
+<action name="stop" timeout="5s" />
+<action name="monitor" depth="0" timeout="20s" interval="10s" start-delay="5s" />
+<action name="meta-data" timeout="5s" />
+<action name="validate-all" timeout="5s" />
+</actions>
+</resource-agent>
+END
+}
+
+
+
+#######################################################################
+
+iproute_usage() {
+    cat <<END
+usage: $0 {start|stop|monitor|validate-all|meta-data}
+
+Expects to have a fully populated OCF RA-compliant environment set.
+END
+}
+
+iproute_exit() {
+    if [ $1 -ne 0 ]; then
+        ocf_log info "DEBUG $OCF_RESKEY_network $OCF_RESKEY_router --> iproute_exit (ExitCode: $1) <--"
+    fi
+    exit $1
+}
+
+iproute_start() {
+ 
+    iproute_monitor
+    rc=$?
+
+    if [ $rc == $OCF_SUCCESS ]; then
+        ocf_log info "iproute $OCF_RESKEY_network/$OCF_RESKEY_netmask - $OCF_RESKEY_router already running"
+        return $OCF_SUCCESS
+    else
+        if [ "$OCF_RESKEY_netmask" = "" ] ; then
+            CMD="/sbin/route add -$OCF_RESKEY_type $OCF_RESKEY_network gw $OCF_RESKEY_router"
+            ocf_log info "$CMD"
+            eval $CMD
+            rc=$?
+        else
+            CMD="/sbin/route add -$OCF_RESKEY_type $OCF_RESKEY_network netmask $OCF_RESKEY_netmask gw $OCF_RESKEY_router"
+            ocf_log info "$CMD"
+            eval $CMD
+            rc=$?
+        fi
+        if [ $rc -ne 0 ] ; then
+            return $OCF_ERR_PERM
+        else
+           return $OCF_SUCCESS
+        fi
+    fi
+}
+
+iproute_stop() {
+
+    ### EdenWall ###
+    # this files contains list of routes which are handled by nuconf
+    # heartbeat must not delete any of this route
+    NUCONF_ROUTES='/var/lib/nucentral/nuconf/ha/Routes'
+
+    if [ ! -e "${NUCONF_ROUTES}" ]; then
+        ocf_log warn "Can not found routes handled by nuconf ('${NUCONF_ROUTES}' not found)"
+    else    
+        DELETE="grep ' iproute::$OCF_RESKEY_network::$OCF_RESKEY_router::$OCF_RESKEY_type::$OCF_RESKEY_netmask ' ${NUCONF_ROUTES}"
+
+        ocf_log info "${DELETE}"
+        RES=`eval ${DELETE} 2>&1`
+
+        if [ $? -eq 0 ]; then
+            ocf_log info "Route $OCF_RESKEY_network::$OCF_RESKEY_router::$OCF_RESKEY_type::$OCF_RESKEY_netmask was found in ${NUCONF_ROUTES}, cancel deletion"
+            return $OCF_SUCCESS
+        else
+            if [ -n "${RES}" ]; then
+                ocf_log info "${RES}"
+            fi
+            ocf_log info "Route $OCF_RESKEY_network::$OCF_RESKEY_router::$OCF_RESKEY_type::$OCF_RESKEY_netmask was not found in ${NUCONF_ROUTES}"
+            # and continue
+        fi
+    fi
+    ### EdenWall ###
+
+    iproute_monitor
+    rc=$?
+
+    if [ $rc == $OCF_SUCCESS ]; then
+        CMD="/sbin/route -n del -$OCF_RESKEY_type $OCF_RESKEY_network gw $OCF_RESKEY_router netmask $OCF_RESKEY_netmask"
+        ocf_log info "$CMD"
+        eval $CMD
+    else
+        ocf_log info "iproute $OCF_RESKEY_network/$OCF_RESKEY_netmask - $OCF_RESKEY_router already stopped"
+        return $OCF_SUCCESS
+    fi
+}
+
+iproute_monitor() {
+
+    FIND_NET_CMD="/sbin/route -n | grep $OCF_RESKEY_network"
+    ocf_log info "$FIND_NET_CMD"
+    FIND_NET=`eval $FIND_NET_CMD`
+    ocf_log info "$FIND_NET"
+    if [ "$FIND_NET" = "" ] ; then
+        return $OCF_NOT_RUNNING
+    else
+        FIND_ROUTER_CMD="echo $FIND_NET | grep $OCF_RESKEY_router"
+        ocf_log info "$FIND_ROUTER_CMD"
+        FIND_ROUTER=`eval $FIND_ROUTER_CMD`
+        ocf_log info "$FIND_ROUTER"
+        if [ "$FIND_ROUTER" = "" ] ; then
+            return $OCF_NOT_RUNNING
+        else
+            return $OCF_SUCCESS
+        fi
+    fi
+}
+
+iproute_validate() {
+    exit $OC_ERR_UNIMPLEMENTED
+}
+
+
+case $__OCF_ACTION in
+meta-data)
+        meta_data
+        exit $OCF_SUCCESS
+        ;;
+start)  iproute_start
+        iproute_exit $?
+        ;;
+stop)   
+        iproute_stop
+        iproute_exit $?
+        ;;
+monitor)
+        iproute_monitor
+        iproute_exit $?
+        ;;
+validate-all)
+        iproute_validate
+        iproute_exit $?
+        ;;
+usage|help)
+        iproute_usage
+        exit $OCF_SUCCESS
+        ;;
+*)      
+        iproute_usage
+        exit $OCF_ERR_UNIMPLEMENTED
+        ;;
+esac
+

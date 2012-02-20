@@ -1,0 +1,9 @@
+  * network.py: Added label of network devices in interface dictionary,
+    read from /etc/edenwall/hardware/network_devices (e.g. GbE0 for eth0).
+  * openvpn.py: Added importCert and importKey services to import
+    certificate and key for the server (transmitted as strings).
+  * nuconf/: Added a component called Nuconf to serve the definition of
+    the menu and the specifications of the pages in the NuConf frontend.
+
+0.2 (2008-07-18)
+  * Initial revision for EdenWall 4.

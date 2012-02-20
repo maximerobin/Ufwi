@@ -1,0 +1,48 @@
+=======================
+Nulog v3 : Installation
+=======================
+
+SQL Schema
+----------
+
+To use NuLog3, you have to use ulogd with netfilter and/or NuFW.
+
+The following commands may have to be changed, depending on your MySQL version. They
+are just provided as examples.
+
+Create database for NuLog ::
+
+    $ mysql -uroot -prootpassword mysql
+    > CREATE DATABASE dbname;
+
+You should also create a user for this database ::
+
+    > GRANT ALL PRIVILEGES ON dbname.* TO user IDENTIFIED BY 'pass';
+
+To create a ulog+ufwi_log SQL schema, go in the /usr/share/doc/ufwi_log/scripts/ directory and run this script ::
+
+    $ cat ipv4.sql | mysql -uuser -ppass dbname
+
+If you have an ipv6 network, and a netfilter version which support ipt6_ULOG module, you
+can run ipv6.sql script instead of ipv4.sql.
+
+Configure iptables to create rules to log with ULOG.
+
+To get performances, you can use triggers to copy data in other tables
+(usersstats, offenders, tcp_ports and udp_ports).
+You have to execute script/triggers.sql script in your database to
+create triggers ::
+
+    $ ./triggers.py | mysql -uuser -ppass dbname
+
+Nulog-core
+----------
+
+This is the backend module for NuCentral, enable it with with :
+# nucentral_enmod ufwi_log
+# /etc/init.d/nucentral restart
+
+Nulog-qt
+---------
+
+Run ufwi_log-qt, enter connection information, and click on "Settings" to configure ufwi_log.

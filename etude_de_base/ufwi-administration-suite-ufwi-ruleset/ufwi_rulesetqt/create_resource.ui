@@ -1,0 +1,238 @@
+<ui version="4.0" >
+ <class>CreateResource</class>
+ <widget class="QDialog" name="CreateResource" >
+  <property name="geometry" >
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>342</width>
+    <height>233</height>
+   </rect>
+  </property>
+  <property name="windowTitle" >
+   <string>Dialog</string>
+  </property>
+  <layout class="QVBoxLayout" >
+   <item>
+    <layout class="QGridLayout" >
+     <item row="0" column="0" >
+      <widget class="QLabel" name="identifier_label" >
+       <property name="text" >
+        <string>Identifier:</string>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="1" >
+      <widget class="QLineEdit" name="identifier_text" />
+     </item>
+     <item row="1" column="0" >
+      <widget class="QLabel" name="type_label_2" >
+       <property name="text" >
+        <string>Type:</string>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="1" >
+      <widget class="QComboBox" name="type_combo" >
+       <item>
+        <property name="text" >
+         <string>Network</string>
+        </property>
+       </item>
+       <item>
+        <property name="text" >
+         <string>IPsec network</string>
+        </property>
+       </item>
+       <item>
+        <property name="text" >
+         <string>IP address</string>
+        </property>
+       </item>
+       <item>
+        <property name="text" >
+         <string>Hostname</string>
+        </property>
+       </item>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <widget class="QStackedWidget" name="stack" >
+     <property name="layoutDirection" >
+      <enum>Qt::LeftToRight</enum>
+     </property>
+     <property name="currentIndex" >
+      <number>4</number>
+     </property>
+     <widget class="QWidget" name="page_5" >
+      <layout class="QHBoxLayout" >
+       <item>
+        <widget class="QLabel" name="name_label" >
+         <property name="text" >
+          <string>Name:</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLineEdit" name="name_text" />
+       </item>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="page" >
+      <layout class="QHBoxLayout" >
+       <item>
+        <widget class="QLabel" name="network_label" >
+         <property name="text" >
+          <string>Address:</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLineEdit" name="network_text" />
+       </item>
+       <item>
+        <widget class="QSpinBox" name="network_spin" >
+         <property name="minimum" >
+          <number>0</number>
+         </property>
+         <property name="maximum" >
+          <number>128</number>
+         </property>
+         <property name="singleStep" >
+          <number>1</number>
+         </property>
+         <property name="value" >
+          <number>24</number>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="page_2" >
+      <layout class="QHBoxLayout" >
+       <item>
+        <widget class="QLabel" name="address_label" >
+         <property name="text" >
+          <string>Address:</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLineEdit" name="address_text" />
+       </item>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="page_3" >
+      <layout class="QHBoxLayout" >
+       <item>
+        <widget class="QLabel" name="hostname_label" >
+         <property name="text" >
+          <string>Hostname:</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLineEdit" name="hostname_text" />
+       </item>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="page_6" >
+      <layout class="QVBoxLayout" name="verticalLayout" >
+       <item>
+        <layout class="QGridLayout" name="gridLayout" >
+         <item row="0" column="0" >
+          <widget class="QLabel" name="label" >
+           <property name="text" >
+            <string>Remote address:</string>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="0" >
+          <widget class="QLabel" name="label_2" >
+           <property name="text" >
+            <string>Remote gateway:</string>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="1" >
+          <widget class="QLineEdit" name="ipsec_network_text" />
+         </item>
+         <item row="1" column="1" colspan="2" >
+          <widget class="QLineEdit" name="ipsec_gateway_text" />
+         </item>
+         <item row="0" column="2" >
+          <widget class="QSpinBox" name="ipsec_network_spin" />
+         </item>
+        </layout>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="page_4" >
+      <layout class="QHBoxLayout" >
+       <item>
+        <widget class="QTextEdit" name="textEdit" >
+         <property name="frameShape" >
+          <enum>QFrame::NoFrame</enum>
+         </property>
+         <property name="frameShadow" >
+          <enum>QFrame::Plain</enum>
+         </property>
+         <property name="readOnly" >
+          <bool>true</bool>
+         </property>
+         <property name="html" >
+          <string>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd">
+&lt;html>&lt;head>&lt;meta name="qrichtext" content="1" />&lt;style type="text/css">
+p, li { white-space: pre-wrap; }
+&lt;/style>&lt;/head>&lt;body style=" font-family:'Sans Serif'; font-size:9pt; font-weight:400; font-style:normal;">
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">The physical address can be configured in the generic links dialog.&lt;/p>&lt;/body>&lt;/html></string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+    </widget>
+   </item>
+   <item>
+    <widget class="QDialogButtonBox" name="buttonBox" >
+     <property name="orientation" >
+      <enum>Qt::Horizontal</enum>
+     </property>
+     <property name="standardButtons" >
+      <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
+     </property>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <tabstops>
+  <tabstop>identifier_text</tabstop>
+  <tabstop>type_combo</tabstop>
+  <tabstop>network_text</tabstop>
+  <tabstop>network_spin</tabstop>
+  <tabstop>buttonBox</tabstop>
+  <tabstop>address_text</tabstop>
+  <tabstop>hostname_text</tabstop>
+ </tabstops>
+ <resources/>
+ <connections>
+  <connection>
+   <sender>buttonBox</sender>
+   <signal>rejected()</signal>
+   <receiver>CreateResource</receiver>
+   <slot>reject()</slot>
+   <hints>
+    <hint type="sourcelabel" >
+     <x>294</x>
+     <y>178</y>
+    </hint>
+    <hint type="destinationlabel" >
+     <x>212</x>
+     <y>157</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+</ui>

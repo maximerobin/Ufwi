@@ -1,0 +1,4 @@
+usr/lib/python*/site-packages/nuconf/backend
+usr/share/nucentral/templates
+usr/share/nucentral/scripts
+etc/sv

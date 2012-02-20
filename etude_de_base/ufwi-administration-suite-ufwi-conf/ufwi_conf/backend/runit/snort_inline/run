@@ -1,0 +1,2 @@
+#!/bin/sh
+exec /usr/bin/snort_inline -m 027 -d -H 1 -Q -l /var/log/snort -c /etc/snort_inline/snort_inline.conf

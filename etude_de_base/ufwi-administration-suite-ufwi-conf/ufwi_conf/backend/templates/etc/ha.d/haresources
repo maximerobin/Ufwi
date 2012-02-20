@@ -1,0 +1,6 @@
+# generated {{ _generation_time_ }} by EdenWall
+{{PRIMARY_HOSTNAME}} \
+{{ ha_ip_definitions }}{{ ha_routes_definitions }}    conntrackd \
+    omshell_dhcpd::127.0.0.1 ipsec {% if ad_is_used %} winbind {%- endif %} \
+    ha_nudpi
+

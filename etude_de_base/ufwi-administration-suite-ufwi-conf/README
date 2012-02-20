@@ -1,0 +1,64 @@
+++++++
+ufwi-conf
+++++++
+
+Introduction
+============
+
+ufwi-conf is a package of different applications to configure a Linux server:
+configure networks, web proxy, mail server, etc.
+
+ufwi-conf backend is based on the ufwi-rpcd server.
+
+
+Components
+==========
+
+All components, except ufwi_conf itself, depend on the "ufwi_conf" component which
+manages the edit lock.
+
+Components:
+
+ * access: manage service access network per network
+ * antispam: configure SpamAssassin
+ * auth_cert: set nuauth CA and certificate, see also nuauth component
+ * bind: configure Bind (DNS server)
+ * contact: configure the contact email address, see also exim component
+ * hostname: get and set the host name
+ * hosts: manage the /etc/hosts file, see also the resolv component
+ * httpout: setup the HTTP proxy
+ * network: manage interfaces, networks and routes
+ * ntp: manage the NTP server
+ * nuauth: manage the nuauth daemon (NuFW server)
+ * nuauth_command: control the nuauth daemon, see also nuauth component
+ * ocs: manage OCS Inventory
+ * resolv: manage the /etc/resolv.conf file, see also the hosts component
+ * status: get the status of all services (up/down)
+ * system: get/set language, time zone, web proxy, and list user groups
+ * system_info: get EdenWall model, type, versions and serial number
+ * tools: traceroute, arp table, routing table, reboot or halt system, etc.
+ * update: install system updates
+
+Non free components:
+
+ * ha: High availability
+ * antivirus: configure ClamAV
+ * dhcp: configure the DHCP server
+ * exim: configure Exim (Mail Transfert Agent)
+ * havp: configure havp (ClamAV proxy), see also the antivirus component
+ * ids_ips: manage Snort-Inline
+ * license: manage EdenWall license
+ * openvpn: manage the OpenVPN server
+ * openvpn_command: send commands to the OpenVPN server, see also
+   the openvpn component
+ * quagga: manage Quagga
+ * site2site: manage IPsec using pluto
+ * snmpd: manage the SNMP daemon
+ * squid: manage the Squid server, see also squidguard component
+
+
+Installation
+============
+
+See INSTALL for the backend and INSTALL.client for the frontend.
+

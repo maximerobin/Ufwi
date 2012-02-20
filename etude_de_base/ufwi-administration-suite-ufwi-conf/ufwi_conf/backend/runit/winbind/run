@@ -1,0 +1,8 @@
+#!/bin/sh
+PIDDIR=/var/run/samba
+[ -r /etc/default/winbind ] && . /etc/default/winbind
+mkdir -p /var/run/samba/winbindd_privileged || return 1
+chgrp winbindd_priv $PIDDIR/winbindd_privileged/ || return 1
+chmod 0750 $PIDDIR/winbindd_privileged/ || return 1
+sleep 2
+exec /usr/sbin/winbindd -F -- $WINBINDD_OPTS

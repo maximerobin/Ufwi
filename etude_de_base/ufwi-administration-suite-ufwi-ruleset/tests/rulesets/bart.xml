@@ -1,0 +1,360 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<ruleset name="bart.all" timestamp="2010-04-14 12:06:09" version="3.0.1">
+   <resources>
+      <interface id="Interface" name="eth0">
+         <network address="0.0.0.0/0" id="Internet IPv4">
+            <host address="0.0.0.0" id="0.0.0.0" />
+            <hostname address_type="IPv4" hostname="fydelkass.inl.fr" id="fydelkass.inl.fr">
+               <address>88.171.131.12</address>
+            </hostname>
+            <hostname address_type="IPv4" hostname="hachoir.org" id="hachoir.org">
+               <address>88.160.66.91</address>
+            </hostname>
+            <hostname address_type="IPv4" hostname="im.apinc.org" id="im.apinc.org">
+               <address>80.248.214.47</address>
+            </hostname>
+            <hostname address_type="IPv4" hostname="im.inl.fr" id="im.inl.fr">
+               <address>88.171.131.12</address>
+            </hostname>
+            <hostname address_type="IPv4" hostname="imap.alwaysdata.com" id="imap.alwaysdata.com">
+               <address>87.98.168.81</address>
+            </hostname>
+            <hostname address_type="IPv4" hostname="irc.freenode.net" id="irc.freenode.net">
+               <address>89.16.176.16</address>
+               <address>92.61.33.10</address>
+               <address>128.237.157.136</address>
+               <address>130.237.188.200</address>
+               <address>130.239.18.172</address>
+               <address>140.211.166.3</address>
+               <address>140.211.166.4</address>
+               <address>207.158.1.150</address>
+               <address>207.182.240.74</address>
+               <address>209.177.146.34</address>
+               <address>212.117.163.190</address>
+               <address>213.92.8.4</address>
+               <address>213.161.196.11</address>
+               <address>213.219.249.66</address>
+               <address>213.232.93.3</address>
+               <address>216.155.130.130</address>
+               <address>216.165.191.52</address>
+            </hostname>
+            <hostname address_type="IPv4" hostname="mail.inl.fr" id="mail.inl.fr">
+               <address>88.171.131.12</address>
+            </hostname>
+            <hostname address_type="IPv4" hostname="smtp.free.fr" id="smtp.free.fr">
+               <address>212.27.48.4</address>
+            </hostname>
+         </network>
+         <network address="2000::/3" id="Internet IPv6">
+            <hostname address_type="IPv6" hostname="imap.alwaysdata.com" id="imap.alwaysdata.com (IPv6)">
+               <address>2001:41d0:1:934a::1</address>
+            </hostname>
+         </network>
+         <network address="192.168.0.0/24" id="LAN">
+            <host address="192.168.0.255" id="LAN Broadcast" />
+            <host address="192.168.0.254" id="LAN Router" />
+            <host address="192.168.0.13" id="lisa" />
+         </network>
+         <network address="2a01:e35:8a47:f7c0::/64" id="LAN IPv6" />
+         <network address="224.0.0.0/24" id="Local Multicast IPv4">
+            <host address="224.0.0.22" id="IGMPv3 membership" />
+            <host address="224.0.0.251" id="Multicast DNS" />
+         </network>
+         <network address="ff02::/16" id="Local Multicast IPv6" />
+         <network address="fe80::/64" id="Local link IPv6" />
+      </interface>
+      <interface id="eth0" name="eth0">
+         <network address="192.168.0.0/24" id="LAN IPv4">
+            <host address="192.168.0.1" id="192.168.0.1" />
+         </network>
+         <network address="2a01:e35:8a47:f7c0::/64" id="LAN IPv6-2" />
+      </interface>
+      <interface id="openvpn" name="tun0">
+         <network address="192.168.33.0/24" id="LAN INL">
+            <host address="192.168.33.2" id="hebus.inl.fr" />
+         </network>
+         <network address="192.168.35.0/24" id="LAN INL dev" />
+      </interface>
+   </resources>
+   <protocols>
+      <tcp dport="5222" sport="1024:65535">Jabber</tcp>
+      <tcp dport="5223" sport="1024:65535">Jabber SSL</tcp>
+      <tcp dport="4129" sport="1024:65535">NuFW</tcp>
+      <tcp dport="24800" sport="1024:65535">Synergy</tcp>
+   </protocols>
+   <periodicities>
+      <periodicity day_from="0" day_to="0" hour_from="1" hour_to="3">plop</periodicity>
+   </periodicities>
+   <operating_systems>
+      <operating_system name="freebsd" release="1.2.4*">FreeBSD</operating_system>
+   </operating_systems>
+   <user_groups>
+      <user_group group="10">abcv</user_group>
+      <group id="ensemble">
+         <user_group>abcv</user_group>
+         <user_group>réponse</user_group>
+      </group>
+      <user_group group="42">réponse</user_group>
+   </user_groups>
+   <acls_ipv4 next_id="43">
+      <default_decisions>
+         <input decision="DROP" log="1" />
+         <output decision="REJECT" log="1" />
+      </default_decisions>
+      <acl decision="ACCEPT" id="34" log="0">
+         <source>LAN IPv4</source>
+         <protocol>IGP</protocol>
+         <destination>192.168.0.1</destination>
+      </acl>
+      <acl decision="ACCEPT" id="35" log="0">
+         <source>LAN Router</source>
+         <protocol>DHCP Server</protocol>
+         <destination>Firewall</destination>
+         <comment>DHCP Server</comment>
+      </acl>
+      <acl decision="ACCEPT" id="36" log="1" log_prefix="ping">
+         <source>LAN</source>
+         <protocol>ICMP ping</protocol>
+         <destination>Firewall</destination>
+         <comment>Ping request from the LAN</comment>
+      </acl>
+      <acl decision="ACCEPT" id="37" log="0">
+         <source>LAN</source>
+         <protocol>mDNS</protocol>
+         <destination>Firewall</destination>
+         <comment>Multicast DNS (input)</comment>
+      </acl>
+      <acl decision="ACCEPT" id="3" log="1">
+         <source>Internet IPv4</source>
+         <protocol>Web proxy (8080)</protocol>
+         <destination>Firewall</destination>
+         <comment>tcp/8080 en écoute</comment>
+      </acl>
+      <acl decision="ACCEPT" id="2" log="1">
+         <source>LAN</source>
+         <protocol>SSH</protocol>
+         <destination>Firewall</destination>
+         <comment>SSH en écoute IPv4</comment>
+      </acl>
+      <acl decision="ACCEPT" id="11" log="0">
+         <source>LAN</source>
+         <protocol>IPP</protocol>
+         <destination>Firewall</destination>
+         <comment>Serveur CUPS</comment>
+      </acl>
+      <acl decision="ACCEPT" id="26" log="1">
+         <source>Internet IPv4</source>
+         <protocol>Websurf</protocol>
+         <destination>Firewall</destination>
+         <comment>tcp/8080 en écoute</comment>
+      </acl>
+      <acl decision="ACCEPT" id="38" log="0">
+         <source>Firewall</source>
+         <protocol>DNS</protocol>
+         <protocol>HTTP</protocol>
+         <protocol>HTTPS</protocol>
+         <destination>Internet IPv4</destination>
+         <comment>IPv4 web surf</comment>
+      </acl>
+      <acl decision="ACCEPT" id="39" log="0">
+         <source>Firewall</source>
+         <protocol>ICMP ping</protocol>
+         <destination>Internet IPv4</destination>
+         <comment>Send IPv4 ping</comment>
+      </acl>
+      <acl decision="ACCEPT" id="40" log="0">
+         <source>Firewall</source>
+         <protocol>mDNS</protocol>
+         <destination>Multicast DNS</destination>
+         <comment>Multicast DNS (output)</comment>
+      </acl>
+      <acl decision="ACCEPT" id="41" log="0">
+         <source>Firewall</source>
+         <protocol>IGMP</protocol>
+         <destination>IGMPv3 membership</destination>
+         <comment>Multicast IGMP</comment>
+      </acl>
+      <acl decision="ACCEPT" id="42" log="0">
+         <source>Firewall</source>
+         <protocol>DHCP Client</protocol>
+         <destination>0.0.0.0</destination>
+         <comment>DHCP Client</comment>
+      </acl>
+      <acl decision="ACCEPT" id="6" log="1">
+         <source>Firewall</source>
+         <protocol>SMTP</protocol>
+         <destination>smtp.free.fr</destination>
+      </acl>
+      <acl decision="ACCEPT" id="7" log="1">
+         <source>Firewall</source>
+         <protocol>IMAPS</protocol>
+         <destination>imap.alwaysdata.com</destination>
+         <destination>lisa</destination>
+         <destination>mail.inl.fr</destination>
+      </acl>
+      <acl decision="ACCEPT" id="8" log="1">
+         <source>Firewall</source>
+         <protocol>SSH</protocol>
+         <destination>Internet IPv4</destination>
+      </acl>
+      <acl decision="ACCEPT" id="12" log="1">
+         <source>Firewall</source>
+         <protocol>OpenVPN</protocol>
+         <destination>fydelkass.inl.fr</destination>
+      </acl>
+      <acl decision="ACCEPT" id="13" log="0">
+         <source>Firewall</source>
+         <protocol>IPP</protocol>
+         <destination>LAN Broadcast</destination>
+      </acl>
+      <acl decision="ACCEPT" enabled="0" id="14" log="1">
+         <source>Firewall</source>
+         <protocol>NuFW</protocol>
+         <destination>hebus.inl.fr</destination>
+      </acl>
+      <acl decision="ACCEPT" id="15" log="1">
+         <source>Firewall</source>
+         <protocol>DHCP Client</protocol>
+         <destination>LAN Router</destination>
+         <comment>DHCP Client</comment>
+      </acl>
+      <acl decision="ACCEPT" id="16" log="1">
+         <source>Firewall</source>
+         <protocol>Jabber</protocol>
+         <protocol>Jabber SSL</protocol>
+         <destination>im.apinc.org</destination>
+         <destination>im.inl.fr</destination>
+      </acl>
+      <acl decision="ACCEPT" id="17" log="1">
+         <source>Firewall</source>
+         <protocol>IRC</protocol>
+         <destination>irc.freenode.net</destination>
+      </acl>
+      <acl decision="ACCEPT" enabled="0" id="18" log="1">
+         <source>Firewall</source>
+         <protocol>SSH</protocol>
+         <destination>LAN INL</destination>
+      </acl>
+      <acl decision="ACCEPT" id="29" log="0">
+         <source>Firewall</source>
+         <protocol>DNS</protocol>
+         <protocol>HTTP</protocol>
+         <protocol>HTTPS</protocol>
+         <protocol>SSH</protocol>
+         <destination>openvpn</destination>
+         <comment>vers EdenWall</comment>
+      </acl>
+   </acls_ipv4>
+   <acls_ipv6 next_id="15">
+      <default_decisions>
+         <input decision="DROP" log="1" />
+         <output decision="REJECT" log="1" />
+      </default_decisions>
+      <acl decision="ACCEPT" id="3" log="1" log_prefix="Ping IPv6 depuis local/internet">
+         <source>Internet IPv6</source>
+         <source>Local link IPv6</source>
+         <protocol>Echo Request</protocol>
+         <destination>Firewall</destination>
+         <comment>Ping IPv6</comment>
+      </acl>
+      <acl decision="ACCEPT" id="4" log="0">
+         <source>Local link IPv6</source>
+         <protocol>Router advertisement</protocol>
+         <destination>Firewall</destination>
+         <comment>Router advertisement</comment>
+      </acl>
+      <acl decision="ACCEPT" id="5" log="0">
+         <source>Internet IPv6</source>
+         <source>Local link IPv6</source>
+         <protocol>Neighbor Advertisement</protocol>
+         <protocol>Neighbor Solicitation</protocol>
+         <destination>Firewall</destination>
+         <comment>Neighbor Solicitation/Advertisement</comment>
+      </acl>
+      <acl decision="ACCEPT" id="6" log="0">
+         <source>Local link IPv6</source>
+         <protocol>Echo Reply</protocol>
+         <destination>Firewall</destination>
+         <comment>Ping IPv6 from the local link</comment>
+      </acl>
+      <acl decision="ACCEPT" id="7" log="1">
+         <source>LAN IPv6</source>
+         <protocol>mDNS</protocol>
+         <destination>Firewall</destination>
+      </acl>
+      <acl decision="ACCEPT" id="8" log="0">
+         <source>Firewall</source>
+         <protocol>DNS</protocol>
+         <protocol>HTTP</protocol>
+         <protocol>HTTPS</protocol>
+         <destination>Internet IPv6</destination>
+         <comment>IPv6 web surf</comment>
+      </acl>
+      <acl decision="ACCEPT" id="9" log="0">
+         <source>Firewall</source>
+         <protocol>Echo Request</protocol>
+         <destination>Internet IPv6</destination>
+         <destination>Local Multicast IPv6</destination>
+         <destination>Local link IPv6</destination>
+         <comment>Send IPv6 ping</comment>
+      </acl>
+      <acl decision="ACCEPT" id="10" log="0">
+         <source>Firewall</source>
+         <protocol>Neighbor Solicitation</protocol>
+         <destination>Internet IPv6</destination>
+         <destination>Local link IPv6</destination>
+         <comment>Neighbor Solicitation</comment>
+      </acl>
+      <acl decision="ACCEPT" id="11" log="0">
+         <source>Firewall</source>
+         <protocol>Neighbor Advertisement</protocol>
+         <destination>Internet IPv6</destination>
+         <destination>Local Multicast IPv6</destination>
+         <destination>Local link IPv6</destination>
+         <comment>Neighbor Advertisement</comment>
+      </acl>
+      <acl decision="ACCEPT" id="12" log="0">
+         <source>Firewall</source>
+         <protocol>Router solicitation</protocol>
+         <destination>Local Multicast IPv6</destination>
+         <comment>Router solicitation</comment>
+      </acl>
+      <acl decision="ACCEPT" id="13" log="0">
+         <source>Firewall</source>
+         <protocol>Multicast Listener Report v2</protocol>
+         <destination>Local Multicast IPv6</destination>
+         <comment>Multicast Listener Report</comment>
+      </acl>
+      <acl decision="ACCEPT" id="14" log="1">
+         <source>Firewall</source>
+         <protocol>mDNS</protocol>
+         <destination>Local Multicast IPv6</destination>
+      </acl>
+      <acl decision="ACCEPT" id="1" log="1">
+         <source>Firewall</source>
+         <protocol>SSH</protocol>
+         <destination>Internet IPv6</destination>
+      </acl>
+      <acl decision="ACCEPT" id="2" log="0">
+         <source>Firewall</source>
+         <protocol>IMAPS</protocol>
+         <destination>imap.alwaysdata.com (IPv6)</destination>
+      </acl>
+   </acls_ipv6>
+   <nats next_id="3">
+      <nat id="1">
+         <source>Internet IPv4</source>
+         <destination>LAN</destination>
+         <filter>CIFS</filter>
+         <nated_destination>hachoir.org</nated_destination>
+         <nated_filter>FTP</nated_filter>
+         <comment>Wizard generated</comment>
+      </nat>
+      <nat id="2">
+         <source>Internet IPv4</source>
+         <destination>Firewall</destination>
+         <nated_destination>0.0.0.0</nated_destination>
+         <comment>Généré par l'assistant</comment>
+      </nat>
+   </nats>
+</ruleset>

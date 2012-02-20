@@ -1,0 +1,698 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<ruleset name="dorian" timestamp="2009-10-30 12:21:18" version="3.0.0">
+   <include library="nuface" />
+   <resources>
+      <interface id="eth0" name="eth0">
+         <network address="10.0.0.0/24" id="INTERCO">
+            <host address="10.0.0.254" id="IP EW4" />
+            <host address="10.0.0.1" id="fydelkass" />
+         </network>
+         <network address="0.0.0.0/0" id="Internet IPv4">
+            <network address="192.168.33.0/25" id="DMZ">
+               <host address="192.168.33.6" id="Bacula" />
+               <host address="192.168.33.4" id="gros" />
+               <host address="192.168.33.2" id="hebus" />
+               <host address="192.168.33.9" id="nagios3" />
+               <host address="192.168.33.7" id="prelude" />
+            </network>
+            <network address="192.168.35.0/24" id="DMZINT">
+               <host address="192.168.35.37" id="Alfresco" />
+               <host address="192.168.35.41" id="Buildmaster" />
+               <host address="192.168.35.137" id="EWT-TSE" />
+               <host address="192.168.35.133" id="OpenERP" />
+               <host address="192.168.35.3" id="Xivo" />
+               <host address="192.168.35.34" id="edw.inl.fr" />
+               <host address="192.168.35.40" id="git-dev" />
+               <host address="192.168.35.129" id="packages ew" />
+               <host address="192.168.35.130" id="packages.inl.fr" />
+               <host address="192.168.35.228" id="sql-new" />
+            </network>
+            <host address="88.164.127.124" id="IP Victor" />
+            <host address="62.210.173.4" id="Jabber Violet" />
+            <network address="192.168.32.0/24" id="LANCOMM">
+               <host address="192.168.32.168" id="brick" />
+               <host address="192.168.32.241" id="poste harmony" />
+               <host address="192.168.32.11" id="printers.inl.fr" />
+            </network>
+            <network address="10.8.0.0/24" id="OpenVPN" />
+            <host address="82.226.58.44" id="adsl yoann" />
+            <host address="192.168.33.10" id="elrond" />
+            <hostname address_type="IPv4" hostname="www.google.fr" id="www.google.fr">
+               <address>209.85.229.99</address>
+               <address>209.85.229.103</address>
+               <address>209.85.229.104</address>
+               <address>209.85.229.105</address>
+               <address>209.85.229.106</address>
+               <address>209.85.229.147</address>
+            </hostname>
+         </network>
+         <network address="2000::/3" id="Internet IPv6" />
+         <network address="fe80::/64" id="Local link IPv6" />
+         <network address="ff02::/16" id="Local multicast IPv6" />
+      </interface>
+      <interface id="eth1" name="eth1">
+         <network address="192.168.33.128/25" id="LANTECH">
+            <host address="192.168.33.170" id="EMF test" />
+            <host address="192.168.33.236" id="Forums NuFW" />
+            <host address="192.168.33.222" id="OCS-INL" />
+            <host address="192.168.33.181" id="Piche" />
+            <host address="192.168.33.184" id="Piche2" />
+            <host address="192.168.33.146" id="Prewikka demo" />
+            <host address="192.168.33.199" id="Tetram" />
+            <host address="192.168.33.225" id="Toro" />
+            <host address="192.168.33.148" id="Windows 148" />
+            <host address="192.168.33.218" id="buildd" />
+            <host address="192.168.33.213" id="buildd-i386" />
+            <hostname address_type="IPv4" hostname="im.inl.fr" id="im.inl.fr">
+               <address>192.168.33.232</address>
+            </hostname>
+            <host address="192.168.33.231" id="ldap part" />
+            <host address="192.168.33.209" id="pki" />
+            <host address="192.168.33.237" id="request-tracker" />
+            <host address="192.168.33.228" id="sql" />
+            <host address="192.168.33.245" id="ssh-ext" />
+            <host address="192.168.33.186" id="tyneth" />
+            <host address="192.168.33.210" id="vz-software" />
+         </network>
+         <group id="Serveurs LANTECH">
+            <host>Piche</host>
+            <host>Piche2</host>
+            <host>Toro</host>
+         </group>
+      </interface>
+      <interface id="eth2" name="eth2">
+         <network address="192.168.36.0/24" id="LANPART">
+            <host address="192.168.36.2" id="ew4 partenaires" />
+         </network>
+         <network address="10.0.36.0/24" id="Partenaires nomades" />
+      </interface>
+      <interface id="eth3" name="eth3">
+         <network address="192.168.1.0/24" id="WIFI">
+            <host address="192.168.1.129" id="Nabaztag" />
+         </network>
+      </interface>
+      <interface id="eth4" name="eth4" />
+      <interface id="eth5" name="eth5" />
+      <interface id="eth6" name="eth6" />
+      <interface id="eth7" name="eth7" />
+      <interface id="eth8" name="eth8" />
+      <interface id="eth9" name="eth9" />
+      <interface id="tunp" name="tunp">
+         <network address="10.1.0.0/24" id="10.1.0.0" />
+      </interface>
+   </resources>
+   <protocols>
+      <group id="AD">
+         <tcp>LDAP</tcp>
+         <udp>UDP_135_139</udp>
+         <tcp>tcp_139</tcp>
+         <tcp>tcp_445</tcp>
+      </group>
+      <tcp dport="9102" sport="1024:65535">Bacula-fd</tcp>
+      <tcp dport="9989" sport="1024:65535">Buildbot</tcp>
+      <tcp dport="8010" sport="1024:65535">Buildweb</tcp>
+      <tcp dport="5154" sport="1024:65535">Bzflag</tcp>
+      <tcp dport="631" sport="1024:65535">CUPS</tcp>
+      <tcp dport="2401" sport="1024:65535">CVS</tcp>
+      <tcp dport="38443" sport="1024:65535">EW Victor</tcp>
+      <tcp dport="8443" sport="1024:65535">EW4</tcp>
+      <udp dport="8080" sport="1024:65535">EW4 Stream</udp>
+      <group id="Full LDAP">
+         <tcp>LDAP</tcp>
+         <tcp>LDAPs</tcp>
+      </group>
+      <tcp dport="9418" sport="1024:65535">Git</tcp>
+      <tcp dport="5190" sport="1024:65535">ICQ</tcp>
+      <tcp dport="5222" sport="1024:65535">Jabber</tcp>
+      <tcp dport="5223" sport="1024:65535">Jabber SSL</tcp>
+      <tcp dport="636" sport="1024:65535">LDAPs</tcp>
+      <tcp dport="3307" sport="1024:65535">MySQL-alt</tcp>
+      <tcp dport="8070" sport="1024:65535">OpenERP</tcp>
+      <tcp dport="5432" sport="1024:65535">PostgreSQL</tcp>
+      <group id="Prelude">
+         <tcp>prelude 4690</tcp>
+         <tcp>prelude 5553</tcp>
+      </group>
+      <group id="Proto Victor">
+         <tcp>EW Victor</tcp>
+         <tcp>SSH Victor</tcp>
+         <udp>Stream Victor</udp>
+      </group>
+      <tcp dport="2222" sport="1024:65535">SSH 2222</tcp>
+      <tcp dport="30022" sport="1024:65535">SSH Victor</tcp>
+      <tcp dport="2000" sport="1024:65535">Sieve</tcp>
+      <udp dport="38080" sport="1024:65535">Stream Victor</udp>
+      <tcp dport="38080" sport="1024:65535">Streaming Victor</tcp>
+      <udp dport="135:139">UDP_135_139</udp>
+      <udp dport="8844" sport="1024:65535">VPN EMF</udp>
+      <tcp dport="5050" sport="1024:65535">Yahoo</tcp>
+      <tcp dport="9101" sport="1024:65535">bacula-dir</tcp>
+      <tcp dport="9103" sport="1024:65535">bacula-sd</tcp>
+      <tcp dport="7000" sport="1024:65535">irc-alt</tcp>
+      <group id="kerberos">
+         <tcp>kerberos-tcp</tcp>
+         <udp>kerberos-udp</udp>
+      </group>
+      <tcp dport="88">kerberos-tcp</tcp>
+      <udp dport="88">kerberos-udp</udp>
+      <tcp dport="1495" sport="1024:65535">openvpn partenaires</tcp>
+      <tcp dport="4690" sport="1024:65535">prelude 4690</tcp>
+      <tcp dport="5553" sport="1024:65535">prelude 5553</tcp>
+      <tcp dport="3389" sport="1024:65535">rdesktop</tcp>
+      <tcp dport="139" sport="1024">tcp_139</tcp>
+      <tcp dport="445">tcp_445</tcp>
+      <tcp dport="8000" sport="1024:65535">web 8000</tcp>
+      <tcp dport="5003" sport="1024:65535">xivo</tcp>
+   </protocols>
+   <user_groups>
+      <user_group group="10043">Compta</user_group>
+      <user_group group="516">Debian</user_group>
+      <user_group group="10049">Dev EdenWall</user_group>
+      <user_group group="10000">Techniques</user_group>
+      <user_group group="513">Users</user_group>
+   </user_groups>
+   <acls_ipv4 next_id="96">
+      <acl decision="ACCEPT" id="16" log="0">
+         <comment>Proxy pour les paquets</comment>
+         <source>hebus</source>
+         <protocol>HTTP</protocol>
+         <destination>tyneth</destination>
+      </acl>
+      <acl decision="ACCEPT" id="17" log="1">
+         <source>OpenVPN</source>
+         <protocol>SSH</protocol>
+         <destination>LANTECH</destination>
+      </acl>
+      <acl decision="ACCEPT" id="18" log="1">
+         <source>OpenVPN</source>
+         <protocol>Websurf</protocol>
+         <destination>LANTECH</destination>
+      </acl>
+      <acl decision="ACCEPT" id="19" log="0">
+         <comment>todo: limitation à liste de machines</comment>
+         <source>hebus</source>
+         <protocol>HTTP</protocol>
+         <protocol>HTTPS</protocol>
+         <destination>LANTECH</destination>
+      </acl>
+      <acl decision="ACCEPT" id="20" log="0">
+         <source>hebus</source>
+         <protocol>SMTP</protocol>
+         <destination>buildd</destination>
+         <destination>buildd-i386</destination>
+      </acl>
+      <acl decision="ACCEPT" id="21" log="0">
+         <source>gros</source>
+         <protocol>ICMP ping</protocol>
+         <protocol>SNMP</protocol>
+         <destination>Serveurs LANTECH</destination>
+      </acl>
+      <acl decision="ACCEPT" id="22" log="0">
+         <source>Bacula</source>
+         <protocol>Bacula-fd</protocol>
+         <destination>LANTECH</destination>
+      </acl>
+      <acl decision="ACCEPT" id="23" log="0">
+         <source>nagios3</source>
+         <protocol>HTTP</protocol>
+         <protocol>ICMP ping</protocol>
+         <protocol>SNMP</protocol>
+         <destination>LANTECH</destination>
+      </acl>
+      <acl decision="ACCEPT" id="53" log="0">
+         <source>nagios3</source>
+         <protocol>SSH</protocol>
+         <destination>Toro</destination>
+      </acl>
+      <acl decision="ACCEPT" id="25" log="0">
+         <source>hebus</source>
+         <protocol>Websurf</protocol>
+         <destination>vz-software</destination>
+      </acl>
+      <acl decision="ACCEPT" id="26" log="1">
+         <source>OpenVPN</source>
+         <protocol>Prelude</protocol>
+         <destination>LANTECH</destination>
+      </acl>
+      <acl decision="ACCEPT" id="27" log="1">
+         <source>OpenVPN</source>
+         <protocol>rdesktop</protocol>
+         <destination>Windows 148</destination>
+      </acl>
+      <acl decision="ACCEPT" id="28" log="0">
+         <source>edw.inl.fr</source>
+         <protocol>PostgreSQL</protocol>
+         <destination>sql</destination>
+      </acl>
+      <acl decision="ACCEPT" id="29" log="1">
+         <source>hebus</source>
+         <protocol>MySQL</protocol>
+         <destination>sql</destination>
+      </acl>
+      <acl decision="ACCEPT" id="30" log="0">
+         <source>packages ew</source>
+         <protocol>PostgreSQL</protocol>
+         <destination>sql</destination>
+      </acl>
+      <acl decision="ACCEPT" id="31" log="1">
+         <source>Internet IPv4</source>
+         <protocol>SSH</protocol>
+         <destination>ssh-ext</destination>
+      </acl>
+      <acl decision="ACCEPT" id="33" log="1">
+         <source>LANCOMM</source>
+         <protocol>Jabber</protocol>
+         <protocol>Jabber SSL</protocol>
+         <destination>im.inl.fr</destination>
+      </acl>
+      <acl decision="ACCEPT" id="39" log="1">
+         <source>Internet IPv4</source>
+         <protocol>Jabber</protocol>
+         <protocol>Jabber SSL</protocol>
+         <destination>im.inl.fr</destination>
+      </acl>
+      <acl decision="ACCEPT" id="34" log="0">
+         <source>Alfresco</source>
+         <protocol>MySQL</protocol>
+         <destination>sql</destination>
+      </acl>
+      <acl decision="ACCEPT" id="35" log="1">
+         <source>LANCOMM</source>
+         <protocol>PostgreSQL</protocol>
+         <destination>sql</destination>
+      </acl>
+      <acl decision="ACCEPT" id="36" log="0">
+         <source>OpenERP</source>
+         <protocol>PostgreSQL</protocol>
+         <destination>sql</destination>
+      </acl>
+      <acl decision="ACCEPT" id="37" log="1">
+         <source>DMZ</source>
+         <source>DMZINT</source>
+         <source>LANCOMM</source>
+         <protocol>HTTP</protocol>
+         <protocol>HTTPS</protocol>
+         <destination>OCS-INL</destination>
+      </acl>
+      <acl decision="ACCEPT" id="54" log="0">
+         <source>fydelkass</source>
+         <protocol>SSH</protocol>
+         <destination>LANTECH</destination>
+      </acl>
+      <acl decision="ACCEPT" id="59" log="0">
+         <source>LANCOMM</source>
+         <protocol>Bzflag</protocol>
+         <destination>Tetram</destination>
+      </acl>
+      <acl decision="ACCEPT" id="64" log="1">
+         <source>OpenVPN</source>
+         <protocol>EW4</protocol>
+         <protocol>EW4 Stream</protocol>
+         <destination>LANTECH</destination>
+      </acl>
+      <acl decision="ACCEPT" id="66" log="1" log_prefix="Access test EW4">
+         <source>LANCOMM</source>
+         <protocol>EW4</protocol>
+         <protocol>EW4 Stream</protocol>
+         <destination>LANTECH</destination>
+      </acl>
+      <acl decision="ACCEPT" id="68" log="1">
+         <source>hebus</source>
+         <protocol>web 8000</protocol>
+         <destination>Prewikka demo</destination>
+      </acl>
+      <acl decision="ACCEPT" id="69" log="0">
+         <source>elrond</source>
+         <protocol>MySQL-alt</protocol>
+         <destination>sql</destination>
+      </acl>
+      <acl decision="ACCEPT" id="82" log="1" log_prefix="Tests EMF">
+         <source>IP Victor</source>
+         <protocol>EW4</protocol>
+         <protocol>VPN EMF</protocol>
+         <destination>EMF test</destination>
+      </acl>
+      <acl decision="ACCEPT" id="86" log="1" log_prefix="Ovpn partenaires">
+         <source>Internet IPv4</source>
+         <protocol>openvpn partenaires</protocol>
+         <destination>ew4 partenaires</destination>
+      </acl>
+      <acl auth_quality="0" decision="ACCEPT" id="3" log="1">
+         <source>LANTECH</source>
+         <protocol>IMAPS</protocol>
+         <protocol>Sieve</protocol>
+         <destination>hebus</destination>
+         <user_group>Users</user_group>
+      </acl>
+      <acl decision="ACCEPT" id="63" log="0">
+         <source>buildd</source>
+         <source>buildd-i386</source>
+         <protocol>SSH</protocol>
+         <destination>packages.inl.fr</destination>
+      </acl>
+      <acl auth_quality="0" decision="ACCEPT" id="2" log="1">
+         <source>LANTECH</source>
+         <protocol>SSH</protocol>
+         <protocol>SSH 2222</protocol>
+         <destination>Internet IPv4</destination>
+         <user_group>Techniques</user_group>
+      </acl>
+      <acl decision="ACCEPT" id="4" log="1">
+         <source>LANTECH</source>
+         <protocol>SMTP</protocol>
+         <protocol>Web proxy (3128)</protocol>
+         <destination>hebus</destination>
+      </acl>
+      <acl decision="ACCEPT" id="6" log="0">
+         <source>LANTECH</source>
+         <protocol>ICMP ping</protocol>
+         <destination>Internet IPv4</destination>
+      </acl>
+      <acl decision="REJECT" id="77" log="1" log_prefix="Debian drop">
+         <comment>Debian explicit drop</comment>
+         <source>LANTECH</source>
+         <protocol>HTTP</protocol>
+         <destination>www.google.fr</destination>
+         <user_group>Debian</user_group>
+      </acl>
+      <acl auth_quality="0" decision="ACCEPT" id="5" log="1">
+         <source>LANTECH</source>
+         <protocol>HTTP</protocol>
+         <protocol>HTTPS</protocol>
+         <destination>DMZ</destination>
+         <user_group>Users</user_group>
+      </acl>
+      <acl decision="ACCEPT" id="8" log="1">
+         <source>LANTECH</source>
+         <protocol>Nuauth</protocol>
+         <destination>hebus</destination>
+      </acl>
+      <acl decision="ACCEPT" id="9" log="1">
+         <source>LANTECH</source>
+         <protocol>IRC</protocol>
+         <protocol>Jabber</protocol>
+         <protocol>Jabber SSL</protocol>
+         <protocol>irc-alt</protocol>
+         <destination>Internet IPv4</destination>
+         <user_group>Users</user_group>
+      </acl>
+      <acl decision="ACCEPT" id="7" log="1" log_prefix="Debian authorized">
+         <comment>Debian access</comment>
+         <source>LANTECH</source>
+         <protocol>HTTP</protocol>
+         <destination>Internet IPv4</destination>
+         <user_group>Debian</user_group>
+      </acl>
+      <acl decision="ACCEPT" id="10" log="1">
+         <source>LANTECH</source>
+         <protocol>LDAP</protocol>
+         <protocol>LDAPs</protocol>
+         <destination>elrond</destination>
+         <destination>hebus</destination>
+      </acl>
+      <acl decision="ACCEPT" id="61" log="0">
+         <source>LANTECH</source>
+         <protocol>kerberos</protocol>
+         <destination>elrond</destination>
+      </acl>
+      <acl decision="ACCEPT" id="11" log="0">
+         <source>LANTECH</source>
+         <protocol>DNS (udp)</protocol>
+         <destination>hebus</destination>
+      </acl>
+      <acl decision="ACCEPT" id="46" log="0">
+         <source>LANTECH</source>
+         <protocol>Prelude</protocol>
+         <destination>prelude</destination>
+      </acl>
+      <acl decision="ACCEPT" id="12" log="0">
+         <source>LANTECH</source>
+         <protocol>NTP</protocol>
+         <destination>hebus</destination>
+      </acl>
+      <acl decision="DROP" id="44" log="0">
+         <comment>drop ntp traffic silently</comment>
+         <source>LANTECH</source>
+         <protocol>NTP</protocol>
+         <destination>Internet IPv4</destination>
+      </acl>
+      <acl decision="ACCEPT" id="13" log="1">
+         <source>LANTECH</source>
+         <protocol>CVS</protocol>
+         <destination>Internet IPv4</destination>
+         <user_group>Techniques</user_group>
+      </acl>
+      <acl decision="ACCEPT" id="15" log="1">
+         <source>LANTECH</source>
+         <protocol>HTTPS</protocol>
+         <destination>edw.inl.fr</destination>
+         <user_group>Techniques</user_group>
+      </acl>
+      <acl decision="ACCEPT" enabled="0" id="14" log="1">
+         <source>LANTECH</source>
+         <protocol>HTTPS</protocol>
+         <destination>edw.inl.fr</destination>
+         <user_group>Users</user_group>
+      </acl>
+      <acl decision="ACCEPT" id="1" log="1">
+         <source>LANTECH</source>
+         <protocol>Websurf</protocol>
+         <destination>Internet IPv4</destination>
+         <user_group>Users</user_group>
+      </acl>
+      <acl decision="ACCEPT" id="32" log="1">
+         <source>LANTECH</source>
+         <protocol>CUPS</protocol>
+         <destination>brick</destination>
+      </acl>
+      <acl decision="ACCEPT" id="40" log="0">
+         <source>vz-software</source>
+         <protocol>Git</protocol>
+         <destination>git-dev</destination>
+      </acl>
+      <acl decision="ACCEPT" id="41" log="0">
+         <source>Piche2</source>
+         <protocol>bacula-dir</protocol>
+         <destination>Bacula</destination>
+      </acl>
+      <acl decision="ACCEPT" id="42" log="0">
+         <source>Toro</source>
+         <source>sql</source>
+         <protocol>bacula-sd</protocol>
+         <destination>Bacula</destination>
+      </acl>
+      <acl decision="ACCEPT" id="43" log="1">
+         <source>LANTECH</source>
+         <protocol>IMAPS</protocol>
+         <destination>Internet IPv4</destination>
+         <user_group>Users</user_group>
+      </acl>
+      <acl decision="ACCEPT" id="45" log="0">
+         <source>LANTECH</source>
+         <protocol>Buildbot</protocol>
+         <destination>Buildmaster</destination>
+      </acl>
+      <acl decision="DROP" id="47" log="1">
+         <source>LANTECH</source>
+         <protocol>FTP</protocol>
+         <destination>DMZ</destination>
+         <destination>DMZINT</destination>
+         <destination>LANCOMM</destination>
+         <user_group>Users</user_group>
+      </acl>
+      <acl decision="ACCEPT" id="49" log="1">
+         <source>LANTECH</source>
+         <protocol>FTP</protocol>
+         <destination>Internet IPv4</destination>
+         <user_group>Users</user_group>
+      </acl>
+      <acl decision="ACCEPT" id="50" log="0">
+         <source>LANTECH</source>
+         <protocol>Yahoo</protocol>
+         <destination>Internet IPv4</destination>
+         <user_group>Compta</user_group>
+      </acl>
+      <acl decision="ACCEPT" id="51" log="0">
+         <source>LANTECH</source>
+         <protocol>ICQ</protocol>
+         <destination>Internet IPv4</destination>
+         <user_group>Compta</user_group>
+      </acl>
+      <acl decision="ACCEPT" id="52" log="0">
+         <source>LANTECH</source>
+         <protocol>xivo</protocol>
+         <destination>Xivo</destination>
+         <user_group>Techniques</user_group>
+      </acl>
+      <acl decision="ACCEPT" id="55" log="0">
+         <source>LANTECH</source>
+         <protocol>CUPS</protocol>
+         <destination>printers.inl.fr</destination>
+      </acl>
+      <acl decision="ACCEPT" id="56" log="1" log_prefix="https fydelkass">
+         <source>LANTECH</source>
+         <protocol>HTTPS</protocol>
+         <destination>fydelkass</destination>
+         <user_group>Techniques</user_group>
+      </acl>
+      <acl decision="ACCEPT" id="57" log="0">
+         <source>LANTECH</source>
+         <protocol>Git</protocol>
+         <destination>git-dev</destination>
+      </acl>
+      <acl decision="ACCEPT" id="58" log="0">
+         <source>LANTECH</source>
+         <protocol>OpenERP</protocol>
+         <destination>OpenERP</destination>
+         <user_group>Users</user_group>
+      </acl>
+      <acl decision="ACCEPT" id="60" log="0">
+         <source>LANTECH</source>
+         <protocol>Full LDAP</protocol>
+         <destination>elrond</destination>
+         <user_group>Techniques</user_group>
+      </acl>
+      <acl decision="ACCEPT" id="62" log="0">
+         <source>LANTECH</source>
+         <protocol>Git</protocol>
+         <destination>Internet IPv4</destination>
+         <user_group>Techniques</user_group>
+      </acl>
+      <acl decision="ACCEPT" id="65" log="0">
+         <source>LANTECH</source>
+         <protocol>AD</protocol>
+         <protocol>DNS</protocol>
+         <protocol>Full LDAP</protocol>
+         <protocol>kerberos</protocol>
+         <destination>elrond</destination>
+      </acl>
+      <acl decision="ACCEPT" id="70" log="0">
+         <source>sql</source>
+         <protocol>MySQL</protocol>
+         <protocol>PostgreSQL</protocol>
+         <destination>sql-new</destination>
+      </acl>
+      <acl decision="ACCEPT" id="72" log="0">
+         <source>vz-software</source>
+         <protocol>PostgreSQL</protocol>
+         <destination>sql-new</destination>
+      </acl>
+      <acl decision="ACCEPT" id="73" log="0">
+         <source>request-tracker</source>
+         <protocol>MySQL</protocol>
+         <destination>sql-new</destination>
+      </acl>
+      <acl decision="ACCEPT" id="74" log="0">
+         <source>pki</source>
+         <protocol>PostgreSQL</protocol>
+         <destination>sql-new</destination>
+      </acl>
+      <acl decision="ACCEPT" id="75" log="0">
+         <source>Forums NuFW</source>
+         <protocol>MySQL</protocol>
+         <destination>sql-new</destination>
+      </acl>
+      <acl decision="ACCEPT" id="76" log="1">
+         <source>LANTECH</source>
+         <protocol>PostgreSQL</protocol>
+         <destination>sql-new</destination>
+         <user_group>Techniques</user_group>
+      </acl>
+      <acl decision="ACCEPT" id="80" log="1" log_prefix="TSE">
+         <source>LANTECH</source>
+         <protocol>rdesktop</protocol>
+         <destination>EWT-TSE</destination>
+         <user_group>Users</user_group>
+      </acl>
+      <acl decision="ACCEPT" id="81" log="1">
+         <source>LANTECH</source>
+         <protocol>web 8000</protocol>
+         <destination>adsl yoann</destination>
+         <user_group>Dev EdenWall</user_group>
+      </acl>
+      <acl decision="ACCEPT" id="83" log="1" log_prefix="Tests EMF">
+         <source>LANTECH</source>
+         <protocol>Proto Victor</protocol>
+         <destination>IP Victor</destination>
+      </acl>
+      <acl decision="DROP" id="78" log="1" log_prefix="Auth drop">
+         <comment>Auth drop</comment>
+         <source>LANTECH</source>
+         <protocol>Any TCP</protocol>
+         <destination>Internet IPv4</destination>
+         <user_group>Users</user_group>
+      </acl>
+      <acl decision="ACCEPT" id="87" log="1">
+         <source>LANTECH</source>
+         <protocol>EW4</protocol>
+         <protocol>EW4 Stream</protocol>
+         <protocol>SSH</protocol>
+         <destination>ew4 partenaires</destination>
+      </acl>
+      <acl decision="ACCEPT" id="88" log="1" log_prefix="WIFI access">
+         <source>LANTECH</source>
+         <protocol>HTTP</protocol>
+         <protocol>HTTPS</protocol>
+         <destination>WIFI</destination>
+         <user_group>Techniques</user_group>
+      </acl>
+      <acl decision="ACCEPT" id="93" log="1" log_prefix="Acces forum">
+         <source>Partenaires nomades</source>
+         <protocol>HTTP</protocol>
+         <destination>Forums NuFW</destination>
+      </acl>
+      <acl decision="ACCEPT" id="94" log="0">
+         <source>ew4 partenaires</source>
+         <protocol>LDAP</protocol>
+         <destination>ldap part</destination>
+      </acl>
+      <acl decision="ACCEPT" id="95" log="1" log_prefix="Acces forum">
+         <source>Partenaires nomades</source>
+         <protocol>ICMP ping</protocol>
+         <destination>Forums NuFW</destination>
+      </acl>
+      <acl decision="ACCEPT" id="91" log="0">
+         <source>Nabaztag</source>
+         <protocol>Jabber</protocol>
+         <destination>Jabber Violet</destination>
+      </acl>
+      <acl decision="ACCEPT" id="89" log="0">
+         <source>Nabaztag</source>
+         <protocol>Web proxy (3128)</protocol>
+         <destination>hebus</destination>
+      </acl>
+      <acl decision="ACCEPT" id="92" log="1" log_prefix="web access">
+         <source>WIFI</source>
+         <protocol>Web proxy (3128)</protocol>
+         <destination>hebus</destination>
+      </acl>
+      <acl decision="ACCEPT" id="67" log="1" log_prefix="Essai openvpn">
+         <comment>a retirer !!! ou mettre une authentification</comment>
+         <source>tunp</source>
+         <protocol>SSH</protocol>
+         <destination>LANTECH</destination>
+         <user_group>Techniques</user_group>
+      </acl>
+   </acls_ipv4>
+   <acls_ipv6 next_id="2">
+      <acl decision="DROP" id="1" log="1" log_prefix="Drop IPv6">
+         <source>Internet IPv6</source>
+         <protocol>Any TCP</protocol>
+         <destination>eth0</destination>
+      </acl>
+   </acls_ipv6>
+   <nats next_id="4">
+      <nat id="3">
+         <comment>Wizard generated</comment>
+         <source>LANPART</source>
+         <destination>Internet IPv4</destination>
+         <nated_source>Firewall</nated_source>
+      </nat>
+      <nat id="2">
+         <source>LANTECH</source>
+         <destination>hebus</destination>
+         <filter>Nuauth</filter>
+         <nated_destination>IP EW4</nated_destination>
+      </nat>
+   </nats>
+</ruleset>

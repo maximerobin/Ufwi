@@ -1,0 +1,14 @@
+#!/bin/sh
+
+if test "x$SURE" = "x" ; then
+    echo "Aborting. Set the env variable \$SURE to something for this script to do actually something" >&2
+    echo "to debug, here, the env:"
+    env | xargs echo
+    exit 1
+fi
+
+set -e
+
+find . |prename -f "s/foss_version_//"
+
+set +x

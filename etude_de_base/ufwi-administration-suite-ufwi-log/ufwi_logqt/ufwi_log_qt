@@ -1,0 +1,39 @@
+#!/usr/bin/env python
+#coding: utf-8
+
+"""
+Copyright (C) 2008-2011 EdenWall Technologies
+Written by Romain Bignon <romain AT inl.fr>
+
+This file is part of NuFirewall.
+
+ NuFirewall is free software: you can redistribute it and/or modify
+ it under the terms of the GNU General Public License as published by
+ the Free Software Foundation, version 3 of the License.
+
+ NuFirewall is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ GNU General Public License for more details.
+
+ You should have received a copy of the GNU General Public License
+ along with NuFirewall.  If not, see <http://www.gnu.org/licenses/>
+"""
+
+from sys import exit,path
+path.append('.')
+from ufwi_rpcc_qt.application import create_ufwi_rpcd_application
+
+if __name__ == "__main__":
+
+    app, client = create_ufwi_rpcd_application(
+        name="ufwi_log",
+        resource="ufwi_log3.rcc",
+        locale=":/ufwi_log/locale/ufwi_log")
+
+    from ufwi_rpcc_qt.central_window import STANDALONE
+    from ufwi_log.client.qt.ufwi_log_window import UfwiLogMainWindow
+    window = UfwiLogMainWindow(app, client, standalone=STANDALONE)
+    window.load()
+    window.show()
+    exit(app.exec_())

@@ -1,0 +1,21 @@
+#!/bin/sh
+
+. /etc/ha.d/resource.d//hto-mapfuncs
+
+export OCF_RESKEY_network="$1"
+export OCF_RESKEY_router="$2"
+
+if [[ $# > 3 ]] ; then
+	export OCF_RESKEY_type="$3"
+fi
+
+if [[ $# > 4 ]] ; then
+	export OCF_RESKEY_netmask="$4"
+fi
+
+export OCF_TYPE=iproute
+export OCF_RESOURCE_INSTANCE="route_$1"
+
+# start ra_execocf with the last argument (ie. ra_execocf start)
+ra_execocf ${!#}
+

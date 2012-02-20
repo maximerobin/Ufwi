@@ -1,0 +1,75 @@
+Source: nuconf
+Section: net
+Priority: extra
+Maintainer: Feth Arezki <farezki@edenwall.com>
+Uploaders: Pierre-Louis Bonicoli <plbonicoli@edenwall.com>, Francois Toussenel <ftoussenel@edenwall.com>
+XS-Python-Version: all
+Build-Depends:  python-support (>= 0.4), debhelper (>= 4)
+Standards-Version: 3.7.3
+
+Package: nuconf-common
+Architecture: all
+XB-Python-Version: ${python:Versions}
+Depends:
+    ${python:Depends},
+    ${shlibs:Depends},
+    ${misc:Depends},
+    python-ipy
+Description: Libraries shared between front- and back- ends of nuconf
+ Libraries shared between front- and back- ends of nuconf
+
+Package: nuconf-backend
+Architecture: all
+XB-Python-Version: ${python:Versions}
+Depends:
+    ${python:Depends},
+    ${shlibs:Depends},
+    ${misc:Depends},
+    nuface-localfw,
+    nuconf-common,
+    python-jinja (>= 1.0),
+    python-twisted-core,
+    python-twisted-mail,
+    iproute,
+    ethtool,
+    python-ipy,
+    runit,
+    sasl2-bin,
+    libsasl2-modules-gssapi-heimdal,
+    dnsutils,
+    bind9,
+    clamav-daemon,
+    dhcp3-server,
+    ntp,
+    openswan,
+    snmpd,
+    squid,
+    spamassassin,
+    nucentral-server,
+    heimdal-clients,
+    libpam-krb5-migrate-heimdal,
+    libpam-heimdal,
+    vlan,
+    ifenslave-2.6,
+    bridge-utils,
+    nurestore,
+    tdb-tools,
+    freeradius-utils,
+    libpam-radius-auth,
+    python-atlee-pam,
+    nufw-nss-client
+Recommends: nuauth, winbind, samba, nuauth-utils (>= 2.2.16)
+Description: Meta package installing all nuconf modules for NuCentral
+ Meta package installing all nuconf modules for NuCentral
+
+Package: nuconf-client
+Architecture: all
+XB-Python-Version: ${python:Versions}
+Depends: ${python:Depends}, ${shlibs:Depends}, ${misc:Depends},
+    nuconf-common,
+    python-qt4,
+    nucentral-admin,
+    nucentral-edenwall-qt,
+    nupki-qt
+Description: Qt frontend for nuconf
+ Qt frontend for nuconf

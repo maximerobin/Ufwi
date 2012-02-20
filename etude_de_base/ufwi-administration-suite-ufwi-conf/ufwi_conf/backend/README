@@ -1,0 +1,11 @@
+=================
+NuCentral modules
+=================
+
+Those modules for NuCentral are mainly used by NuConf.
+
+Requirements
+------------
+
+- NuCentral (server)
+- jinja, at least at version 1.0.

@@ -1,0 +1,3 @@
+MIN_GROUP = 0
+MAX_GROUP = 2**32 - 1
+

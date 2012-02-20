@@ -1,0 +1,21 @@
+See INSTALL to install the backend (ufwi-rpcd component).
+
+Requierements
+=============
+
+ - Python 2.5+
+ - ufwi_rpcd.client Python module
+ - PyQt 4.4+
+   http://www.riverbankcomputing.co.uk/software/pyqt/intro
+ - IPy Python module version 0.42+
+
+Debian packages: apt-get install python-ipy python-qt4
+
+
+Install files
+=============
+
+Use this command as root:
+
+   make install_qt
+

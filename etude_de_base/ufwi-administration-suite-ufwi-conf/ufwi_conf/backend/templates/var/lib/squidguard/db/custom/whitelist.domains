@@ -1,0 +1,2 @@
+{% for domain in custom_whitelist_domains %}{{domain}}
+{% endfor %}

@@ -1,0 +1,20 @@
+Frontend:
+- Handle categories types and categories description
+- Tooltip to erase the filter field
+- Fix the status cell tooltip
+- Change the type of filter (use a combo box to select online/offline firwalls...)
+- Display the number of firewalls listed and the total number of firewalls(without the filter)
+- Tooltips in the toolbox
+- Add a Save/Reset button
+- add background colours to show the status of firewalls (red/green)
+- Translation
+
+Backend:
+- Store the state of applying rules to retry applying after restarting
+
+Cosmetic:
+- Add tooltips
+- Add keyboard shortcuts
+
+Bugs:
+- Groupping triggers a refresh of cells which makes services to be group grouped with a value of "polling"

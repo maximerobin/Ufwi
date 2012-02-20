@@ -1,0 +1,77 @@
+TODO:
+Remove this file and create tickets instead.
+
+Roadmap
+=======
+
+ * Check rules (ruleset) consistency: make sure that no rule overlaps another
+ * VPN
+ * Optimize display, especially moving an ACL (up/down) is very slow:
+
+   - create event: insertRow()
+   - delete event: removeRow()
+
+ * localfw.apply(): call to reapplyLastRuleset() should be included in
+   applyRulesThread() to ensure the production ruleset consistency (restore old
+   files on error)
+ * Create directly a generic user group
+ * New network dialog: force IP version depending on the current tab
+ * Test HTTP (Squid) transparent proxy: create an ACL
+
+Misc:
+
+ * Fix XML tag name: <periodicitie> => <periodicity> !
+ * Download a ruleset: prefill the filename in the file dialog
+
+Later
+=====
+
+ * Authenticating proxy
+ * Layer7
+ * Quality of service (QoS)
+
+
+Backend
+=======
+
+ * Generic links: create "ignore" value and force user to define all keys
+ * Resource groups
+ * Make it work without the network component (without nuconf)
+ * Store firewall addresses in the XML file
+ * Import/Export: support multiple files (eg. ruleset+template+library)
+ * Clone an ACL should create the new ACL just after the new one (instead of
+   creating it at the end)
+ * iptables and LDAP regressions tests
+ * Be able to enable/disable multiple ACLs at the same time: create ACLs groups?
+   Example: the multicast DNS needs two ACLs (INPUT and OUTPUT)
+ * Use GIT/Mercurial/... to save all ruleset revisions and keep the history
+   all changes by the different users
+ * Anti-spoofing option
+ * Block packet fragmentation (for one ACL or all ACLs?)
+
+
+GUI
+===
+
+ * Create an option to set default log value for new ACL/NAT rule
+   (eg. disable log by default)
+ * Use message box to display some errors (error when saving the ruleset)?
+ * Create a dialog to save a ruleset as a template
+ * Network dialog: generate the identifier using the network address/hostname
+ * User group dialog: add field to filter user groups for very long user list
+   (more than 1000 user groups)
+ * Icon library: allow to use custom icons for all objects
+ * Network contextual menu:
+
+   - replace "Create" by "Create a network", "Create a subnetwork or an host",
+     "Create an hostname", etc.
+   - and/or only active "Create an interface" if no object is selected
+
+ * ACL list: add "Create before" / "Create after" to contextual menu
+ * NAT wizard: create simple dialog to add an host, especially when there is no
+   host (eg. new ruleset)
+ * Interaction with NuLog (create an ACL from a log line)
+ * In ACL dialog: bind <enter> to the selected button, bind <esc> to the cancel button
+ * Check NFS compatibility (as it uses weird ports)
+ * Support drag & drop of multiple objects
+

@@ -1,0 +1,376 @@
+nufw (2.3.0-1) unstable; urgency=low
+
+  * New upstream release
+  * Add nuauth-command script to nuauth-utils
+  * Use python-support for nuauth-utils
+  * Update nuauth-utils dependencies
+  * Split libnuclient3 to create libnuclient-dev
+  * Enable Prelude module
+  * Do not use --enable-debug, so it does not flood the log with debug
+    messages
+
+ -- Pierre Chifflier <pollux@debian.org>  Sun, 28 Oct 2007 10:14:57 +0100
+
+nufw (2.2.3-2) unstable; urgency=low
+
+  * Fix init script (Closes: #436958)
+  * Move system files to nuauth (Closes: #427973)
+  * Add --retry to really wait for script exit
+
+ -- Pierre Chifflier <chifflier@inl.fr>  Mon, 13 Aug 2007 15:05:02 +0200
+
+nufw (2.2.3-1) unstable; urgency=low
+
+  * New upstream release
+  * Add watch file
+  * Update my mail address
+
+ -- Pierre Chifflier <pollux@debian.org>  Sun, 05 Aug 2007 22:28:35 +0200
+
+nufw (2.2.2-2) unstable; urgency=low
+
+  * Also move system backend to nuauth (Closes: #427973)
+
+ -- Pierre Chifflier <chifflier@inl.fr>  Wed, 04 Jul 2007 11:30:30 +0200
+
+nufw (2.2.2-1) stable; urgency=low
+
+  * New upstream release
+
+ -- Pierre Chifflier <chifflier@inl.fr>  Tue, 19 Jun 2007 09:30:56 +0200
+
+nufw (2.2.1-1) stable; urgency=low
+
+  * New upstream release
+
+ -- Eric Leblond <eric@inl.fr>  Tue,  5 Jun 2007 18:48:58 +0200
+
+nufw (2.2.0-2) stable; urgency=low
+
+  * Conflicts/Replaces package libnuclient (for upgrades)
+
+ -- Pierre Chifflier <chifflier@inl.fr>  Tue, 05 Jun 2007 15:03:35 +0200
+
+nufw (2.2.0-1) stable; urgency=low
+
+  * New upstream release 
+  * Set myself as maintainer, with previous maintainer agreement
+  * Update libnuclient files location
+  * Update copyright file
+  * Update dependencies on debconf
+  * Spell check packages descriptions
+  * Add LSB sections to init scripts
+  * Remove dependencies on libnetfilter*, detected by dh_shlibdeps
+  * Rename all -20 packages to simple name (e.g nuauth20 -> nuauth)
+  * Rename libnuclient to libnuclient3
+  * Remove debconf stuff, not needed
+  * Use ucf for nuauth.conf
+
+ -- Pierre Chifflier <chifflier@inl.fr>  Wed, 28 Mar 2007 10:12:36 +0200
+
+nufw20 (2.2.0~rc1-1) stable; urgency=low
+
+  * New upstream release
+
+ -- Eric Leblond <eric@inl.fr>  Sat,  3 Mar 2007 01:54:23 +0100
+
+nufw20 (2.1.1-3) stable; urgency=low
+
+  * Fix nutcpc binary path in nutcpc20.install
+
+ -- Victor Stinner <haypo@inl.fr>  Wed, 20 Dec 2006 16:16:14 +0100
+
+nufw20 (2.1.1-2) stable; urgency=low
+
+  * Add mark_uid, session_expire and mark_group modules to nuauth20
+
+ -- Eric Leblond <regit@inl.fr>  Wed, 13 Dec 2006 15:52:19 +0100
+
+nufw20 (2.1.1-1) stable; urgency=low
+
+  * New upstream release
+
+ -- Eric Leblond <regit@inl.fr>  Mon, 11 Dec 2006 16:00:51 +0100
+
+nufw20 (2.0.11-1) stable; urgency=low
+
+  * New upstream release
+  * New packaging system : generate nufw20-nfqueue package
+
+ -- Vincent Deffontaines <gryzor@inl.fr>  Mon, 20 Nov 2006 23:29:38 +0100
+
+nufw20 (2.0.9-1) stable; urgency=low
+
+  * New upstream release
+
+ -- Eric Leblond <regit@inl.fr>  Tue,  5 Sep 2006 10:05:47 +0200
+
+nufw20 (2.0.8-1) stable; urgency=low
+
+  * new upstream release
+
+ -- Eric Leblond <regit@inl.fr>  Fri, 11 Aug 2006 10:39:36 +0200
+
+nufw20 (2.0.7-1) stable; urgency=low
+
+  * New upstream release
+
+ -- Eric Leblond <regit@inl.fr>  Mon, 31 Jul 2006 23:46:47 +0200
+
+nufw20 (2.0.6-1) stable;  urgency=low
+
+  * New upstream release
+
+ -- Eric Leblond <regit@inl.fr>  Thu,  6 Jul 2006 19:05:49 +0200
+
+nufw20 (2.0.5-1) stable; urgency=low
+
+  * New upstream release
+
+ -- Eric Leblond <regit@inl.fr>  Thu,  6 Jul 2006 15:18:35 +0200
+
+nufw20 (2.0.4-1) stable; urgency=low
+
+  * New upstream release
+
+ -- Regit <regit@inl.fr>  Tue,  4 Jul 2006 15:26:08 +0200
+
+nufw20 (2.0.3-1) stable; urgency=low
+
+  * New upstream release
+
+ -- Vincent Deffontaines <gryzor@inl.fr>  Fri, 23 Jun 2006 22:37:38 +0200
+
+nufw20 (2.0.2-1) stable; urgency=low
+
+  * New Upstream release
+  * Two fixes in the nuauth20 package
+
+ -- Eric Leblond <regit@inl.fr>  Tue,  6 Jun 2006 22:41:45 +0200
+
+nufw20 (2.0.1-2) stable; urgency=low
+
+  * New Upstream release
+
+ -- Regit <regit@inl.fr>  Wed, 24 May 2006 19:35:53 +0200
+
+nufw20 (2.0-1) stable; urgency=low
+
+  * New Upstream release
+
+ -- Regit <regit@inl.fr>  Fri, 19 May 2006 12:27:35 +0200
+
+nufw20 (2.0_rc2-1) stable; urgency=low
+
+  * New Upstream release
+
+ -- Eric Leblond <regit@inl.fr>  Thu, 11 May 2006 23:30:25 +0200
+
+nufw20 (2.0_rc1-1) stable; urgency=low
+
+  * New Upstream release
+
+ -- Eric Leblond <regit@inl.fr>  Thu,  4 May 2006 22:57:50 +0200
+
+nufw20 (2.0_beta2-1) stable; urgency=low
+
+  * New Upstream release
+
+ -- Eric Leblond <regit@inl.fr>  Thu, 27 Apr 2006 22:28:22 +0200
+
+nufw20 (2.0_beta1-1) stable; urgency=low
+
+  * New Upstream release
+
+ -- Regit <regit@inl.fr>  Mon,  3 Apr 2006 13:52:43 +0200
+
+nufw (1.1.3-1) stable; urgency=low
+
+  * New release
+
+ -- Regit <regit@inl.fr>  Mon,  2 Jan 2006 18:16:00 +0100
+
+nufw (1.1.2-1) stable; urgency=low
+
+  * New svn release
+
+ -- Regit <regit@inl.fr>  Fri, 16 Dec 2005 10:41:52 +0100
+
+nufw (1.1.1-1) stable; urgency=low
+
+  * New upstream release
+
+ -- Regit <regit@inl.fr>  Wed, 14 Dec 2005 14:19:23 +0100
+
+nufw (1.1.0-1) unstable; urgency=low
+
+  * New upstream release
+
+ -- Eric Leblond <regit@inl.fr>  Tue,  6 Dec 2005 15:31:05 +0100
+
+nufw (1.0.11-1) unstable; urgency=low
+
+  * Add the Vietnamese translation for debconf.
+  (closes: #316322)
+  * Add the French translation for debconf.
+  (closes: #307763)
+  * Add the Czech translation for debconf.
+  (closes: #310700)
+
+ -- Jean-Michel Kelbert <kelbert@debian.org>  Fri,  2 Sep 2005 22:02:12 +0200
+
+nufw (1.0.10-1) stable; urgency=low
+
+  * new upstream release
+
+ -- Eric Leblond <regit@inl.fr>  Mon,  4 Jul 2005 11:32:01 +0200
+
+nufw (1.0.8-1) unstable; urgency=low
+
+  * new upstream release
+
+ -- Eric Leblond <regit@inl.fr>  Fri, 10 Jun 2005 15:46:35 +0200
+
+nufw (1.0.7-1) unstable; urgency=low
+
+  * new upstream release
+
+ -- Eric Leblond <regit@inl.fr>  Wed,  8 Jun 2005 09:46:42 +0200
+
+nufw (1.0.6-1) unstable; urgency=low
+
+  * new upstream release
+
+ -- Eric Leblond <regit@inl.fr>  Thu,  2 Jun 2005 21:56:16 +0200
+
+nufw (1.0.5-1) unstable; urgency=low
+
+  * new upstream release
+
+ -- Eric Leblond <regit@inl.fr>  Thu, 12 May 2005 12:20:42 +0200
+
+nufw (1.0.3-1) unstable; urgency=low
+
+  * new upstream release
+
+ -- Eric Leblond <regit@inl.fr>  Wed, 20 Apr 2005 09:17:25 +0200
+
+nufw (1.0.2-1) unstable; urgency=low
+
+  * new upstream release
+
+ -- Eric Leblond <regit@inl.fr>  Tue, 29 Mar 2005 07:16:56 +0200
+
+nufw (1.0.1-1) unstable; urgency=low
+
+  * New upstream release.
+
+ -- Eric Leblond <eric@inl.fr>  Tue, 15 Mar 2005 23:22:12 +0100
+
+nufw (1.0-1) unstable; urgency=low
+
+  * New upstream release.
+  * Add --with-system-auth to configure in debian/rules to support PAM+NSS
+    authentication.
+  * Add --with-ldap to support LDAP directory for users and acl lookup.
+  * Add --with-gdbm to support gdbm users lookup.
+  * Add --with-ident to support support ident users authentication.
+  * Add libgcrypt11-dev, libgnutls11-dev, libident-dev, libpam-dev to
+    Build-Depends.
+  * Add postrm and preinst for nuauth.
+
+ -- Jean-Michel Kelbert <kelbert@debian.org>  Tue, 22 Feb 2005 22:53:22 +0100
+
+nufw (0.8.5-3) unstable; urgency=low
+
+  * Change debian/copyright to reflect changes made by upstreams to the
+    license.
+  * Initial upload in Debian. Thanks to Vincent Deffontaines for packaging the
+    package before me.
+  (closes: #258746)
+
+ -- Jean-Michel Kelbert <kelbert@debian.org>  Mon, 20 Dec 2004 22:23:16 +0100
+
+nufw (0.8.5-1) unstable; urgency=low
+
+  * New upstream release.
+  * Upstream add an exception to the GPL which allows linking with OpenSSL.
+
+ -- Jean-Michel Kelbert <kelbert@debian.org>  Wed,  1 Sep 2004 23:03:10 +0200
+
+nufw (0.8.2-1) unstable; urgency=low
+
+  * Update Description in debian/control. Thanks to Brandon Robinson.
+  * Switch to gettext for the debconf templates.
+  * Change the way of packaging.
+  * Correct minor policy violations.
+
+ -- Jean-Michel Kelbert <kelbert@debian.org>  Fri, 30 Jul 2004 13:41:25 +0200
+
+nufw (0.8.1-1) unstable; urgency=low
+
+  * New upstream version. Adds a paquet for libnuclient, the client
+  authentication library.
+
+ -- Vincent Deffontaines <vincent@gryzor.com>  Mon,  19 Jul 2004 21:23:13 +0200
+
+nufw (0.8.0-1) unstable; urgency=low
+
+  * New upstream version. Adds the strict logs update option, together with
+    some scaling bugfix, that would cause nuauth to grow heavily on some
+    particular [DoS] conditions.
+
+ -- Vincent Deffontaines <vincent@gryzor.com>  Mon,  5 Jul 2004 21:23:13 +0200
+
+nufw (0.7.1-1) unstable; urgency=low
+
+  * New upstream version. Fixes some bug that would rarely memleak nuauth.
+    Adds the SQL sync option.
+
+ -- Vincent Deffontaines <vincent@gryzor.com>  Fri, 11 Jun 2004 18:08:19 +0200
+
+nufw (0.7.0-1) unstable; urgency=low
+
+  * New upstream version. 0.7.0 is the first release with SSL connections all
+    the way.
+
+ -- Vincent Deffontaines <vincent@gryzor.com>  Tue, 30 Mar 2004 21:18:37 +0200
+
+nufw (0.6.5-1) unstable; urgency=low
+
+  * New upstream version
+
+ -- Vincent Deffontaines <vincent@gryzor.com>  Sun, 14 Mar 2004 18:52:38 +0100
+
+nufw (0.6.4-1) unstable; urgency=low
+
+  * New upstream version
+  * Splitted debian nuauth packages into 3, so that modules support is ...
+    modular
+
+ -- Vincent Deffontaines <vincent@gryzor.com>  Wed,  7 Jan 2004 23:49:34 +0100
+
+nufw (0.6.3-1) unstable; urgency=low
+
+  * Nesw upstream version
+
+ -- Vincent Deffontaines <vincent@gryzor.com>  Wed,  7 Jan 2004 00:33:47 +0100
+
+nufw (0.6.2-1) unstable; urgency=low
+
+  * Upstream changed to 0.6.2
+
+ -- Vincent Deffontaines <vincent@gryzor.com>  Sun,  4 Jan 2004 23:42:57 +0100
+
+nufw (0.6.1-1) unstable; urgency=low
+
+  * Upstream changed to 0.6.1
+
+ -- Vincent Deffontaines <vincent@gryzor.com>  Mon, 22 Dec 2003 15:55:24 +0100
+
+nufw (0.5.4-1) unstable; urgency=low
+
+  * Initial Release.
+
+ -- Vincent Deffontaines <vincent@gryzor.com>  Thu, 13 Nov 2003 13:03:54 +0100
+

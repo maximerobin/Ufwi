@@ -1,0 +1,3 @@
+usr/bin/nuconf-qt
+usr/lib/python*/site-packages/nuconf/client
+usr/share/nucentral/resources/*.rcc

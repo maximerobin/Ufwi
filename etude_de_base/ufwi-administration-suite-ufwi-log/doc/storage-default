@@ -1,0 +1,750 @@
+[F:TCPTable]
+title = TCP ports
+background_color = 15852287
+args = {}
+pos = 0
+type = TCPTable
+view = pie
+
+[F:TCPTable_496430]
+title = Ports used
+background_color = 16182015
+args = {}
+pos = 0
+type = TCPTable
+view = pie
+
+[V:host_misc]
+frags = IPsrcTable_327306 IPsrcTable_726087 TrafficStream_289865 IPsrcTable_881375
+args = {}
+display = 
+title = General
+
+[F:IPsrcTable_397707]
+title = Active hosts
+background_color = 15204328
+args = {'state': 4}
+pos = 0
+type = IPsrcTable
+view = table
+
+[S:printer]
+footer = 1
+title = 
+content_table = 0
+enterprise = 
+header = 1
+logo = 
+
+[F:TrafficStream_273053]
+title = Traffic stream
+background_color = 15466487
+args = {'interval': 1}
+pos = 0
+type = TrafficStream
+view = line
+
+[S:pages]
+1 = User user_misc user_drop user_accept
+0 = General main last_packets nutrack
+3 = Hosts host_misc host_drop host_accept
+2 = Application app_misc app_drop app_accept
+5 = Bookmarks
+4 = Reports report1 report2 report3 report4 report5
+6 = History
+
+[F:PacketTable_963426]
+title = Last packets
+background_color = 15788799
+args = {}
+pos = 0
+type = PacketTable
+view = table
+
+[F:UserTable_651757]
+title = Most dropped users
+background_color = 16766179
+args = {'sort': 'DESC', 'state': 0, 'sortby': 'packets'}
+pos = 0
+type = UserTable
+view = histo
+
+[F:PacketInfo]
+title = Packet info
+background_color = 16777215
+args = {}
+pos = 0
+type = PacketInfo
+view = packetinfo
+
+[F:AppTable_442661]
+title = Last used applications
+background_color = 15198719
+args = {'state': 3}
+pos = 0
+type = AppTable
+view = histo
+
+[F:TrafficStream_829909]
+title = Traffic stream
+background_color = 15597552
+args = {'interval': 1}
+pos = 0
+type = TrafficStream
+view = line
+
+[F:TrafficStream_289865]
+title = Traffic stream
+background_color = 16777215
+args = {'interval': 1}
+pos = 0
+type = TrafficStream
+view = line
+
+[V:report2]
+frags = 
+args = {}
+title = 
+
+[F:UserAppTable_901271]
+title = Most allowed user applications
+background_color = 14614505
+args = {'state': 3}
+pos = 0
+type = UserAppTable
+view = table
+
+[F:AppTable_767765]
+title = Dropped applications (1h)
+background_color = 16768746
+args = {'sort': 'DESC', 'state': 0, 'interval': 3600, 'sortby': 'packets'}
+pos = 0
+type = AppTable
+view = histo
+
+[F:AppTable_767766]
+title = Dropped applications (1d)
+background_color = 16768746
+args = {'sort': 'DESC', 'state': 0, 'interval': 86400, 'sortby': 'packets'}
+pos = 0
+type = AppTable
+view = histo
+
+[F:AppTable_767767]
+title = Dropped applications (1w)
+background_color = 16768746
+args = {'sort': 'DESC', 'state': 0, 'interval': 604800, 'sortby': 'packets'}
+pos = 0
+type = AppTable
+view = histo
+
+[F:AppTable_602272]
+title = Applications currently used
+background_color = 15335407
+args = {'state': 4}
+pos = 0
+type = AppTable
+view = table
+
+[F:TrafficStream]
+title = Traffic
+background_color = 15466469
+args = {'interval': 1}
+pos = 0
+type = TrafficStream
+view = line
+
+[V:user_misc]
+frags = ConUserTable UserTable_783390 TrafficStream_374966 UserTable_504733
+args = {}
+display = 
+title = General
+
+[F:PacketTable]
+title = Packet list
+background_color = 16774378
+args = {}
+pos = 0
+type = PacketTable
+view = table
+
+[F:LastPacketsStream_615804]
+title = Last packets
+background_color = 16770557
+args = {'interval': 1}
+pos = 0
+type = LastPacketsStream
+view = line
+
+[F:PacketTable_573306]
+title = Last packets
+background_color = 15853567
+args = {}
+pos = 0
+type = PacketTable
+view = table
+
+[F:UserAppTable_926772]
+title = Accepted user applications
+background_color = 15198207
+args = {'state': 3}
+pos = 0
+type = UserAppTable
+view = table
+
+[V:nutrack]
+frags = ConntrackTable
+args = {}
+title = Connection tracking
+
+[F:ConUserTable_406069]
+title = Connected users
+background_color = 15204329
+args = {}
+pos = 0
+type = ConUserTable
+view = table
+
+[F:UserAppTable_295649]
+title = Most dropped user applications
+background_color = 16768498
+args = {'state': 0}
+pos = 0
+type = UserAppTable
+view = table
+
+[F:IPsrcTable_130309]
+title = Most accepted hosts (1w)
+background_color = 15397887
+args = {'sort': 'DESC', 'state': 3, 'interval': 604800, 'sortby': 'packets'}
+pos = 0
+type = IPsrcTable
+view = histo
+
+[F:LastPacketsStream]
+title = Traffic
+background_color = 15400943
+args = {'interval': 1}
+pos = 0
+type = LastPacketsStream
+view = line
+
+[F:UserTable_783390]
+title = Last active users
+background_color = 16507391
+args = {}
+pos = 0
+type = UserTable
+view = histo
+
+[V:ip_daddr]
+frags = PacketTable_800016 TCPTable_776553 TrafficStream_625911 LastPacketsStream_773759
+args = {}
+title = Host
+
+[F:UserTable]
+title = Most dropped users
+background_color = 16769770
+args = {'sort': 'DESC', 'start': 0, 'state': 0, 'sortby': 'packets'}
+pos = 0
+type = UserTable
+view = histo
+
+[F:ConUserTable]
+title = Connected users
+background_color = 16121838
+args = {}
+pos = 0
+type = ConUserTable
+view = table
+
+[F:UserAppTable_976441]
+title = Accepted user applications
+background_color = 15329279
+args = {'state': 3}
+pos = 0
+type = UserAppTable
+view = table
+
+[V:app_accept]
+frags = AppTable_542130 AppTable_231633,AppTable_231634,AppTable_231635 UserAppTable_926772
+args = {}
+display = 
+title = Accepted
+
+[F:UserTable_880160]
+title = Most dropped users (1w)
+background_color = 16769778
+args = {'sort': 'DESC', 'state': 0, 'interval': 604800, 'sortby': 'packets'}
+pos = 0
+type = UserTable
+view = histo
+
+[F:HostPortTable_64928]
+title = Hosts port connections
+background_color = 14739711
+args = {'state': 3, 'proto': 'tcp'}
+pos = 0
+type = HostPortTable
+view = table
+
+[F:IPsrcTable_699870]
+title = Most dropped hosts (1d)
+background_color = 16770537
+args = {'sort': 'DESC', 'state': 0, 'interval': 86400, 'sortby': 'packets'}
+pos = 0
+type = IPsrcTable
+view = histo
+
+[F:IPsrcTable_699871]
+title = Most dropped hosts (1w)
+background_color = 16770537
+args = {'sort': 'DESC', 'state': 0, 'interval': 604800, 'sortby': 'packets'}
+pos = 0
+type = IPsrcTable
+view = histo
+
+[V:dport]
+frags = 
+args = {}
+title = Port
+
+[F:AppTable_837145]
+title = Actually used applications
+background_color = 14876646
+args = {'state': 4}
+pos = 0
+type = AppTable
+view = table
+
+[F:HostPortTable]
+title = Dropped hosts ports connections
+background_color = 16770802
+args = {'state': 0}
+pos = 0
+type = HostPortTable
+view = table
+
+[F:IPsrcTable_699869]
+title = Most dropped hosts (1h)
+background_color = 16770537
+args = {'sort': 'DESC', 'state': 0, 'interval': 3600, 'sortby': 'packets'}
+pos = 0
+type = IPsrcTable
+view = histo
+
+[F:LastPacketsStream_773759]
+title = Dropped packets to this host
+background_color = 16771053
+args = {'state': 0, 'interval': 5}
+pos = 0
+type = LastPacketsStream
+view = line
+
+[F:AppTable_542130]
+title = Applications currently used
+background_color = 15728621
+args = {'state': 2}
+pos = 0
+type = AppTable
+view = table
+
+[V:app_misc]
+frags = AppTable_602272 AppTable_442661 TrafficStream_273053 AppTable_95010
+args = {}
+display = 
+title = General
+
+[V:report3]
+frags = 
+args = {}
+title = 
+
+[V:host_drop]
+frags = IPsrcTable_149734 IPsrcTable_699869,IPsrcTable_699870,IPsrcTable_699871 HostPortTable
+args = {}
+display = 
+title = Dropped
+
+[V:report1]
+frags = UserTable_651757 UserTable_722168 UserAppTable_295649,UserAppTable_901271 AppTable_805434
+args = {}
+title = User report
+
+[V:host_accept]
+frags = IPsrcTable_397707 IPsrcTable_130307,IPsrcTable_130308,IPsrcTable_130309 HostPortTable_64928
+args = {}
+display = 
+title = Accepted
+
+[V:report5]
+frags = 
+args = {}
+title = 
+
+[V:report4]
+frags = 
+args = {}
+title = 
+
+[V:app_drop]
+frags = AppTable_837145 AppTable_767765,AppTable_767766,AppTable_767767 UserAppTable
+args = {}
+display = 
+title = Dropped
+
+[F:PacketTable_800016]
+title = Last packets
+background_color = 16443135
+args = {}
+pos = 0
+type = PacketTable
+view = table
+
+[F:UserTable_667447]
+title = Users
+background_color = 15655423
+args = {}
+pos = 0
+type = UserTable
+view = pie
+
+[F:TrafficStream_936070]
+title = Traffic stream
+background_color = 15138791
+args = {'interval': 1}
+pos = 0
+type = TrafficStream
+view = line
+
+[V:sport]
+frags = 
+args = {}
+title = Port
+
+[S:links]
+username = username
+client_app = client_app
+ip_daddr = ip_daddr
+ip_saddr = ip_saddr
+packet_id = packet_id
+dport = dport
+sport = sport
+
+[F:IPsrcTable_726087]
+title = Last active hosts
+background_color = 15199231
+args = {}
+pos = 0
+type = IPsrcTable
+view = histo
+
+[F:IPdstTable]
+title = Destination IP
+background_color = 15918591
+args = {}
+pos = 0
+type = IPdstTable
+view = pie
+
+[F:AppTable_511987]
+title = Applications in use
+background_color = 15333631
+args = {}
+pos = 0
+type = AppTable
+view = histo
+
+[F:LastPacketsStream_984068]
+title = Dropped packets
+background_color = 16771565
+args = {'state': 0, 'interval': 5}
+pos = 0
+type = LastPacketsStream
+view = line
+
+[F:UserTable_368969]
+title = Users
+background_color = 15597553
+args = {}
+pos = 0
+type = UserTable
+view = table
+
+[F:AppTable_231634]
+title = Most accepted applications (1d)
+background_color = 15330815
+args = {'sort': 'DESC', 'state': 3, 'interval': 86400, 'sortby': 'packets'}
+pos = 0
+type = AppTable
+view = histo
+
+[F:AppTable_231635]
+title = Most accepted applications (1w)
+background_color = 15263743
+args = {'sort': 'DESC', 'state': 3, 'interval': 604800, 'sortby': 'packets'}
+pos = 0
+type = AppTable
+view = histo
+
+[F:AppTable_231633]
+title = Most accepted applications (1h)
+background_color = 15462655
+args = {'sort': 'DESC', 'state': 3, 'interval': 3600, 'sortby': 'packets'}
+pos = 0
+type = AppTable
+view = histo
+
+[V:user_drop]
+frags = ConUserTable_171893 UserTable_880158,UserTable_880159,UserTable_880160 UserAppTable_801892
+args = {}
+display = 
+title = Dropped
+
+[V:user_accept]
+frags = ConUserTable_406069 UserTable_443131,UserTable_443132,UserTable_443133 UserAppTable_976441
+args = {}
+display = 
+title = Accepted
+
+[F:TCPTable_776553]
+title = TCP ports
+background_color = 14872575
+args = {}
+pos = 0
+type = TCPTable
+view = pie
+
+[F:ConntrackTable]
+title = Conntrack
+background_color = 15728621
+args = {}
+pos = 0
+type = ConntrackTable
+view = table
+
+[F:LastPacketsStream_360163]
+title = Dropped packets
+background_color = 16762068
+args = {'state': 0, 'interval': 1}
+pos = 0
+type = LastPacketsStream
+view = line
+
+[F:UserAppTable]
+title = Dropped user applications
+background_color = 16769512
+args = {'state': 0}
+pos = 0
+type = UserAppTable
+view = table
+
+[F:PacketTable_251998]
+title = Last packets
+background_color = 16772095
+args = {}
+pos = 0
+type = PacketTable
+view = table
+
+[F:LastPacketsStream_444370]
+title = Dropped packets
+background_color = 16771819
+args = {'state': 0, 'interval': 5}
+pos = 0
+type = LastPacketsStream
+view = line
+
+[F:AppTable_95010]
+title = Last dropped applications
+background_color = 16771825
+args = {'state': 0}
+pos = 0
+type = AppTable
+view = histo
+
+[F:UserTable_504733]
+title = Last dropped users
+background_color = 16760511
+args = {'sort': 'DESC', 'state': 0, 'sortby': 'end_time'}
+pos = 0
+type = UserTable
+view = histo
+
+[F:ConUserTable_171893]
+title = Connected users
+background_color = 15335399
+args = {}
+pos = 0
+type = ConUserTable
+view = table
+
+[F:TrafficStream_374966]
+title = Traffic stream
+background_color = 14876641
+args = {'interval': 1}
+pos = 0
+type = TrafficStream
+view = line
+
+[F:TrafficStream_625911]
+title = Traffic stream
+background_color = 15204320
+args = {'interval': 1}
+pos = 0
+type = TrafficStream
+view = line
+
+[F:IPsrcTable_881375]
+title = Last dropped hosts
+background_color = 16772081
+args = {'state': 0}
+pos = 0
+type = IPsrcTable
+view = table
+
+[F:UserTable_722168]
+title = Most active users
+background_color = 15335405
+args = {'sort': 'DESC', 'sortby': 'packets'}
+pos = 0
+type = UserTable
+view = histo
+
+[V:username]
+frags = PacketTable_573306 AppTable_511987 IPdstTable TrafficStream_829909,LastPacketsStream_444370
+args = {}
+display = 
+title = User
+
+[F:IPsrcTable_130308]
+title = Most accepted hosts (1d)
+background_color = 15397887
+args = {'sort': 'DESC', 'state': 3, 'interval': 86400, 'sortby': 'packets'}
+pos = 0
+type = IPsrcTable
+view = histo
+
+[V:main]
+frags = AppTable UserTable TrafficStream,LastPacketsStream_360163,LastPacketsStream_615804 IPsrcTable
+args = {}
+display = 
+title = Main page
+
+[V:packet_id]
+frags = PacketInfo
+args = {}
+title = Packet information
+
+[V:client_app]
+frags = PacketTable_963426 UserTable_667447 TCPTable_496430 TrafficStream_936070,LastPacketsStream_984068
+args = {}
+display = 
+title = Application
+
+[F:IPsrcTable_130307]
+title = Most accepted hosts (1h)
+background_color = 15397887
+args = {'sort': 'DESC', 'state': 3, 'interval': 3600, 'sortby': 'packets'}
+pos = 0
+type = IPsrcTable
+view = histo
+
+[F:IPsrcTable]
+title = Dropped hosts
+background_color = 16768739
+args = {'state': 0}
+pos = 0
+type = IPsrcTable
+view = table
+
+[F:UserTable_443131]
+title = Most accepted users (1h)
+background_color = 15330815
+args = {'state': 3, 'interval': 3600}
+pos = 0
+type = UserTable
+view = histo
+
+[F:UserTable_443133]
+title = Most accepted users (1w)
+background_color = 15001343
+args = {'state': 3}
+pos = 0
+type = UserTable
+view = histo
+
+[F:UserTable_443132]
+title = Most accepted users (1d)
+background_color = 14803455
+args = {'state': 3, 'interval': 8640}
+pos = 0
+type = UserTable
+view = histo
+
+[V:last_packets]
+frags = PacketTable
+args = {}
+title = Last packets
+
+[F:AppTable]
+title = Dropped applications
+background_color = 16770798
+args = {'sort': 'DESC', 'state': 0, 'sortby': 'packets'}
+pos = 0
+type = AppTable
+view = pie
+
+[F:UserAppTable_801892]
+title = Dropped user applications
+background_color = 16770795
+args = {'state': 0}
+pos = 0
+type = UserAppTable
+view = table
+
+[F:AppTable_805434]
+title = Most dropped applications
+background_color = 16770800
+args = {'sort': 'DESC', 'state': 0, 'sortby': 'packets'}
+pos = 0
+type = AppTable
+view = pie
+
+[F:IPsrcTable_327306]
+title = Active hosts
+background_color = 15466476
+args = {'state': 4}
+pos = 0
+type = IPsrcTable
+view = table
+
+[V:ip_saddr]
+frags = PacketTable_251998 TCPTable UserTable_368969 LastPacketsStream
+args = {}
+title = Host
+
+[F:IPsrcTable_149734]
+title = Active hosts
+background_color = 15400940
+args = {'state': 4}
+pos = 0
+type = IPsrcTable
+view = table
+
+[F:UserTable_880158]
+title = Most dropped users (1h)
+background_color = 16769778
+args = {'sort': 'DESC', 'state': 0, 'interval': 3600, 'sortby': 'packets'}
+pos = 0
+type = UserTable
+view = histo
+
+[F:UserTable_880159]
+title = Most dropped users (1d)
+background_color = 16769778
+args = {'sort': 'DESC', 'state': 0, 'interval': 86400, 'sortby': 'packets'}
+pos = 0
+type = UserTable
+view = histo
+

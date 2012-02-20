@@ -1,0 +1,29 @@
+#!/bin/sh
+
+if [ -f /var/run/vpn-support.status ]; then
+    status=''
+else
+    status='not running'
+fi
+if [ "$status" = 'not running' ]; then
+    if [ -f /etc/vpn-support/support-key.pem ]; then
+        echo "$status"
+    else
+        echo "disabled"
+    fi
+    echo "N/A"
+    exit 0
+fi
+
+# If still here, then the status is "running" if we have an IP, or "pending"
+# otherwise.
+
+ip=$(ip route show |grep "dev support" |grep src |awk '{print $9}')
+
+if [ -z "$ip" ]; then
+    echo pending
+    echo "N/A"
+else
+    echo running
+    echo "$ip"
+fi

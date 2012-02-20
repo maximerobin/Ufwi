@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>Dialog</class>
+ <widget class="QDialog" name="Dialog">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>369</width>
+    <height>300</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Generic Links</string>
+  </property>
+  <property name="windowIcon">
+   <iconset resource="../../ufwi-rpcc-qt/resources/ufwi-rpcc-qt.qrc">
+    <normaloff>:icons/appicon.png</normaloff>:icons/appicon.png</iconset>
+  </property>
+  <layout class="QGridLayout">
+   <item row="0" column="0" colspan="2">
+    <layout class="QHBoxLayout">
+     <item>
+      <widget class="QComboBox" name="hosts_combo"/>
+     </item>
+     <item>
+      <widget class="QPushButton" name="copyto_button">
+       <property name="text">
+        <string>Copy To ...</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item row="2" column="0" colspan="2">
+    <layout class="QHBoxLayout">
+     <item>
+      <widget class="QTableWidget" name="table">
+       <column>
+        <property name="text">
+         <string>Host</string>
+        </property>
+       </column>
+       <column>
+        <property name="text">
+         <string>New Column</string>
+        </property>
+       </column>
+       <column>
+        <property name="text">
+         <string>Generic</string>
+        </property>
+       </column>
+       <column>
+        <property name="text">
+         <string>Physical</string>
+        </property>
+       </column>
+      </widget>
+     </item>
+     <item>
+      <layout class="QVBoxLayout">
+       <property name="spacing">
+        <number>0</number>
+       </property>
+       <item>
+        <widget class="QToolButton" name="delete_button">
+         <property name="text">
+          <string>...</string>
+         </property>
+         <property name="icon">
+          <iconset resource="../../ufwi-rpcc-qt/resources/ufwi-rpcc-qt.qrc">
+           <normaloff>:/icons/delete.png</normaloff>:/icons/delete.png</iconset>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </item>
+    </layout>
+   </item>
+   <item row="4" column="0" colspan="2">
+    <widget class="QDialogButtonBox" name="buttonBox">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+     <property name="standardButtons">
+      <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
+     </property>
+    </widget>
+   </item>
+   <item row="3" column="0" colspan="2">
+    <widget class="QCheckBox" name="hide_defined">
+     <property name="text">
+      <string>Hide defined links</string>
+     </property>
+     <property name="checked">
+      <bool>true</bool>
+     </property>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <resources>
+  <include location="ufwi-ruleset.qrc"/>
+  <include location="../../ufwi-rpcc-qt/resources/ufwi-rpcc-qt.qrc"/>
+ </resources>
+ <connections>
+  <connection>
+   <sender>buttonBox</sender>
+   <signal>accepted()</signal>
+   <receiver>Dialog</receiver>
+   <slot>accept()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>248</x>
+     <y>254</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>157</x>
+     <y>274</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>buttonBox</sender>
+   <signal>rejected()</signal>
+   <receiver>Dialog</receiver>
+   <slot>reject()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>316</x>
+     <y>260</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>286</x>
+     <y>274</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+</ui>

@@ -1,0 +1,134 @@
+
+################
+# mangle table #
+################
+*mangle
+:PREROUTING ACCEPT [0:0]
+:INPUT ACCEPT [0:0]
+:FORWARD ACCEPT [0:0]
+:OUTPUT ACCEPT [0:0]
+:POSTROUTING ACCEPT [0:0]
+
+-A PREROUTING -j CONNMARK --restore-mark
+-A POSTROUTING -m mark ! --mark 0 -j CONNMARK --save-mark --mask 0x0000ffff
+
+COMMIT
+
+################
+# filter table #
+################
+*filter
+:INPUT DROP [0:0]
+:FORWARD DROP [0:0]
+:OUTPUT DROP [0:0]
+
+# Default filter rules
+# --------------------
+-A FORWARD -m state --state RELATED,ESTABLISHED -j ACCEPT
+-A INPUT -m state --state RELATED,ESTABLISHED -j ACCEPT
+-A OUTPUT -m state --state RELATED,ESTABLISHED -j ACCEPT
+-A FORWARD ! -p icmpv6 -m state --state INVALID -j LOG --log-prefix "Drop INVALID FORWARD "
+-A FORWARD ! -p icmpv6 -m state --state INVALID -j DROP
+-A OUTPUT ! -p icmpv6 -m state --state INVALID -j LOG --log-prefix "Drop INVALID OUTPUT "
+-A OUTPUT ! -p icmpv6 -m state --state INVALID -j DROP
+-A INPUT -i lo -j ACCEPT -m comment --comment "Trust loopback"
+-A OUTPUT -o lo -j ACCEPT -m comment --comment "Trust loopback"
+
+
+# Dispatch FORWARD to the different chains
+# ----------------------------------------
+
+# IPv6 rule #30
+# -------------
+# Ping IPv6
+-A INPUT -i eth0 -s fe80::/64 -p icmpv6 --icmpv6-type 128/0 -j LOG --log-prefix "I30a:Ping IPv6 depuis local/ " -m comment --comment "IPv6 rule #30: rule 1"
+-A INPUT -i eth0 -s fe80::/64 -p icmpv6 --icmpv6-type 128/0 -j ACCEPT -m comment --comment "IPv6 rule #30: rule 2"
+-A INPUT -i eth0 -s 2000::/3 -p icmpv6 --icmpv6-type 128/0 -j LOG --log-prefix "I30a:Ping IPv6 depuis local/ " -m comment --comment "IPv6 rule #30: rule 3"
+-A INPUT -i eth0 -s 2000::/3 -p icmpv6 --icmpv6-type 128/0 -j ACCEPT -m comment --comment "IPv6 rule #30: rule 4"
+
+# IPv6 rule #40
+# -------------
+# Router advertisement
+-A INPUT -i eth0 -s fe80::/64 -p icmpv6 --icmpv6-type 134/0 -j ACCEPT -m comment --comment "IPv6 rule #40: rule 1"
+
+# IPv6 rule #50
+# -------------
+# Neighbor Solicitation/Advertisement
+-A INPUT -i eth0 -s fe80::/64 -p icmpv6 --icmpv6-type 135/0 -j ACCEPT -m comment --comment "IPv6 rule #50: rule 1"
+-A INPUT -i eth0 -s fe80::/64 -p icmpv6 --icmpv6-type 136/0 -j ACCEPT -m comment --comment "IPv6 rule #50: rule 2"
+-A INPUT -i eth0 -s 2000::/3 -p icmpv6 --icmpv6-type 135/0 -j ACCEPT -m comment --comment "IPv6 rule #50: rule 3"
+-A INPUT -i eth0 -s 2000::/3 -p icmpv6 --icmpv6-type 136/0 -j ACCEPT -m comment --comment "IPv6 rule #50: rule 4"
+
+# IPv6 rule #60
+# -------------
+# Ping IPv6 from the local link
+-A INPUT -i eth0 -s fe80::/64 -p icmpv6 --icmpv6-type 129/0 -j ACCEPT -m comment --comment "IPv6 rule #60: rule 1"
+
+# IPv6 rule #70
+# -------------
+-A INPUT -i eth0 -s 2a01:e35:8a47:f7c0::/64 -p udp --sport 5353 --dport 5353 -m state --state NEW -j LOG --log-prefix "I70a:ACL #70 (ACCEPT) " -m comment --comment "IPv6 rule #70: rule 1"
+-A INPUT -i eth0 -s 2a01:e35:8a47:f7c0::/64 -p udp --sport 5353 --dport 5353 -m state --state NEW -j ACCEPT -m comment --comment "IPv6 rule #70: rule 2"
+
+# IPv6 rule #80
+# -------------
+# IPv6 web surf
+-A OUTPUT -o eth0 -d 2000::/3 -p tcp --sport 1024:65535 --dport 53 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv6 rule #80: rule 1"
+-A OUTPUT -o eth0 -d 2000::/3 -p tcp --sport 1024:65535 --dport 80 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv6 rule #80: rule 2"
+-A OUTPUT -o eth0 -d 2000::/3 -p tcp --sport 1024:65535 --dport 443 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv6 rule #80: rule 3"
+-A OUTPUT -o eth0 -d 2000::/3 -p udp --sport 1024:65535 --dport 53 -m state --state NEW -j ACCEPT -m comment --comment "IPv6 rule #80: rule 4"
+
+# IPv6 rule #90
+# -------------
+# Send IPv6 ping
+-A OUTPUT -o eth0 -d fe80::/64 -p icmpv6 --icmpv6-type 128/0 -j ACCEPT -m comment --comment "IPv6 rule #90: rule 1"
+-A OUTPUT -o eth0 -d ff02::/16 -p icmpv6 --icmpv6-type 128/0 -j ACCEPT -m comment --comment "IPv6 rule #90: rule 2"
+-A OUTPUT -o eth0 -d 2000::/3 -p icmpv6 --icmpv6-type 128/0 -j ACCEPT -m comment --comment "IPv6 rule #90: rule 3"
+
+# IPv6 rule #100
+# --------------
+# Neighbor Solicitation
+-A OUTPUT -o eth0 -d fe80::/64 -p icmpv6 --icmpv6-type 136/0 -j ACCEPT -m comment --comment "IPv6 rule #100: rule 1"
+-A OUTPUT -o eth0 -d 2000::/3 -p icmpv6 --icmpv6-type 136/0 -j ACCEPT -m comment --comment "IPv6 rule #100: rule 2"
+
+# IPv6 rule #110
+# --------------
+# Neighbor Advertisement
+-A OUTPUT -o eth0 -d fe80::/64 -p icmpv6 --icmpv6-type 135/0 -j ACCEPT -m comment --comment "IPv6 rule #110: rule 1"
+-A OUTPUT -o eth0 -d ff02::/16 -p icmpv6 --icmpv6-type 135/0 -j ACCEPT -m comment --comment "IPv6 rule #110: rule 2"
+-A OUTPUT -o eth0 -d 2000::/3 -p icmpv6 --icmpv6-type 135/0 -j ACCEPT -m comment --comment "IPv6 rule #110: rule 3"
+
+# IPv6 rule #120
+# --------------
+# Router solicitation
+-A OUTPUT -o eth0 -d ff02::/16 -p icmpv6 --icmpv6-type 133/0 -j ACCEPT -m comment --comment "IPv6 rule #120: rule 1"
+
+# IPv6 rule #130
+# --------------
+# Multicast Listener Report
+-A OUTPUT -o eth0 -d ff02::/16 -p icmpv6 --icmpv6-type 143/0 -j ACCEPT -m comment --comment "IPv6 rule #130: rule 1"
+
+# IPv6 rule #140
+# --------------
+-A OUTPUT -o eth0 -d ff02::/16 -p udp --sport 5353 --dport 5353 -m state --state NEW -j LOG --log-prefix "O140a:ACL #140 (ACCEPT) " -m comment --comment "IPv6 rule #140: rule 1"
+-A OUTPUT -o eth0 -d ff02::/16 -p udp --sport 5353 --dport 5353 -m state --state NEW -j ACCEPT -m comment --comment "IPv6 rule #140: rule 2"
+
+# IPv6 rule #10
+# -------------
+-A OUTPUT -o eth0 -d 2000::/3 -p tcp --sport 1024:65535 --dport 22 --syn -m state --state NEW -j LOG --log-prefix "O10a:ACL #10 (ACCEPT) " -m comment --comment "IPv6 rule #10: rule 1"
+-A OUTPUT -o eth0 -d 2000::/3 -p tcp --sport 1024:65535 --dport 22 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv6 rule #10: rule 2"
+
+# IPv6 rule #20
+# -------------
+-A OUTPUT -o eth0 -d 2001:41d0:1:934a::1 -p tcp --sport 1024:65535 --dport 993 --syn -m state --state NEW -j ACCEPT -m comment --comment "IPv6 rule #20: rule 1"
+
+
+# Default decisions
+# -----------------
+-A INPUT -j LOG --log-prefix "I0d:Default DROP for INPUT "
+-A INPUT -j DROP -m comment --comment "Default decision"
+-A FORWARD -j LOG --log-prefix "F0d:Default DROP for FORWARD "
+-A FORWARD -j DROP -m comment --comment "Default decision"
+-A OUTPUT -j LOG --log-prefix "O0r:Default REJECT for OUTPU "
+-A OUTPUT -j REJECT -m comment --comment "Default decision"
+COMMIT
+

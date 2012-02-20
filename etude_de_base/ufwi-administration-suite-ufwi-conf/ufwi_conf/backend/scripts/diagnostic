@@ -1,0 +1,100 @@
+#!/bin/sh
+
+# Warning: do not use pipes directly with section function.
+# See du_var example.
+
+export LANG=C
+
+tmp_dir=$(mktemp -d -p /dev/shm)
+main_basedir="diagnostic_$(hostname)_$(date '+%Y-%m-%d_%H-%M-%S')"
+main_dir="$tmp_dir/$main_basedir"
+# Print temporary path for our caller:
+echo "$tmp_dir"
+
+section() {
+  name=$1
+  shift
+  echo "$@" >"$name.command"
+  "$@" 2>&1 >"$name.txt"
+}
+
+complex_section() {
+  name=$1
+  command_string=$2
+  shift 2
+  echo "$command_string" >"$name.command"
+  "$@" 2>&1 >"$name.txt"
+}
+
+du_var() {
+  /usr/bin/du /var/ |grep -v '[04]	/var/spool/squid/'
+}
+
+# Clear-text zones:
+mkdir -p "$main_dir/diag_1"
+cd "$main_dir/diag_1"
+section date date
+section uptime /usr/bin/uptime
+section cmdline /bin/cat /proc/cmdline
+section applied /bin/cat /var/lib/nucentral/update/applied
+section free /usr/bin/free -m
+section meminfo /bin/cat /proc/meminfo
+section ps /bin/ps aux
+section ldap ls -al /var/lib/ldap
+section mount /bin/mount
+section partitions /bin/cat /proc/partitions
+section df /bin/df
+section df-i /bin/df -i
+section netstat-panu /bin/netstat -panu
+section netstat-pant /bin/netstat -pant
+section iptables-save /sbin/iptables-save -c
+section ip6tables-save /sbin/ip6tables-save -c
+section ip_addr_list /sbin/ip addr list
+section ip_route_list /sbin/ip route list table all
+section ip_rules_list /sbin/ip rule list
+
+for i in 0 1 2 3 4 5 6 7 8 9 10 11 12 13; do
+    section ethtool$i /usr/sbin/ethtool eth$i
+done
+
+mkdir -p "$main_dir/diag_2"
+cd "$main_dir/diag_2"
+complex_section du_var "/usr/bin/du /var/ |grep -v '[04]	/var/spool/squid/'" du_var
+section route_cache /sbin/ip route list cache
+section arp /usr/sbin/arp -n
+section ha_log cat /var/log/ha-log
+section dmesg dmesg
+
+# Encrypted zone:
+mkdir -p "$main_dir/diag_last"
+cd "$main_dir/diag_last"
+section daemon.log tail -n 10000 /var/log/daemon.log
+section nucentral_log cat /var/log/nucentral.log
+section syslog tail -n 10000 /var/log/syslog
+section postgresql tail -n 10000 /var/log/postgresql/postgresql-8.3-main.log
+section ulogd tail -n 10000 /var/log/ulogd.log
+section upgrade_log cat /var/lib/nucentral/update/upgrade.log
+section upgrade_after_factory cat /var/log/apply_upgrades_after_factory.log
+section configuration tar -C /var/lib/nucentral/versionned/ -zc --exclude .svn configuration
+section ha_takeover cat /var/log/ha-takeover
+section ha_status cat /var/lib/nucentral/ha_status
+section ha_type cat /var/lib/nucentral/ha_type
+section nnd_log cat /var/log/nnd/nnd.log
+section supervisor cat /var/lib/nucentral/supervisor.xml
+for i in $(seq 9); do
+    section upgrade_log_$i cat /var/lib/nucentral/update/upgrade.log.$i
+done
+for f in /var/log/edenwall/*.log; do
+    name=$(basename "$f")
+    name=${name%.log}
+    section edenwall_log_"$name" tail -n 10000 "$f"
+done
+cd "$main_dir"
+tar -zcf diag_last.tar.gz diag_last
+gpg --batch --homedir /var/lib/nucentral/diag_gpg --default-recipient Diagnostic -e diag_last.tar.gz
+rm diag_last.tar.gz
+rm -fr "$main_dir/diag_last"
+
+# Make the archive:
+cd "$tmp_dir"
+tar -zcf "$tmp_dir/diagnostic.tar.gz" "$main_basedir"

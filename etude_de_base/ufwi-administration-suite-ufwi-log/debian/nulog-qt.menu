@@ -1,0 +1,2 @@
+?package(ufwi_log-qt):needs="X11" section="Applications/System/Administration"\
+  title="ufwi_log" command="/usr/bin/ufwi_log-qt"

@@ -1,4 +1,15 @@
-[2012-02-02]- Installation du module ufwi-rpcd sur la machine dans le repertoire /root. Je n'ai pas encore réussi à lancer le client "ufwi_rpcd_client".
-	Erreur retourner au lancement du client :
+[2012-02-02]
+	- Installation du module ufwi-rpcd sur la machine dans le repertoire /root. Je n'ai pas encore réussi à lancer le client "ufwi_rpcd_client".
+	- Erreur retourner au lancement du client :
 	2012-02-02 15:33:27,943: Connection error: [socket.error] Unable to connect to https://192.168.1.1:8443/RPC2: No route to host (error #113)
+[2012-02-13]
+	- Copie du fichier de conf de /etc/ufwi-rcpd/default-ufwi-rcpd.conf en /etc/ufwi-rcpd/ufwi-rcpd.conf
+	- Configuration du fichier de conf (/etc/ufwi-rcpd/ufwi-rcpd.conf)
+	- Tentative de lancement du module avec "twistd -n -y /usr/sbin/ufwi-rpcd.tac -l /var/log/ufwi-rpcd-twisted.log" mais rien ne se produit.
+	- Test du fonctionnement du module "ufwi_rpcd_client --host 127.0.0.1 --cleartext -u admin -p admin" erreur retourner, connexion refuser
+	- J'ai passé l'après midi sur mon module (5h environ) et je suis toujours bloqué. Je n'arrive pas a lancer rpcd. Je vois pas d'ou peut venir le problème.
+[2012-02-14]
+	- Je commence a modifier le code source python de rpcd pour trouver la bug de lancement.
+	- Le probleme ne viendrai pas du code source mais d'un paquet manquant (http://code.google.com/p/trash-cli/issues/detail?id=35)
+	- Je ne vois toujours pas d'ou vien le probleme, d'un paquet manquant, d'un probleme de permission, d'une erreur dans le code source ...
 

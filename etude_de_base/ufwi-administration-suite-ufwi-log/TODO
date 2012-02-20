@@ -1,0 +1,75 @@
+Use "make todo" in trunk/ repositery to find all 'TODO' in source code.
+
+[ ] = TODO
+[x] = DONE
+
+* Now:
+- [ ] BUG - fixer le problème concernant le redimentionnement des fragments, pour l'histoire du positionnement des tables (voir widget.table_view.setPadding)
+- [ ] BUG - il y a un problème avec le curseur dans les tableaux, qui reste en “main” dans les headers
+- [ ] pouvoir filtrer sur le user_id dans nuconntrack
+- [ ] utiliser la barre d'etat pour dire que si on clique là ça fait ça
+- [ ] indiquer l'heure à laquelle la table des connexions à été dumpé dans le fragment conntrack
+- [ ] Ne plus utiliser rowcount dans les réponses de ufwi_log-core, et virer cet attribut
+-  `- Trouver un moyen de savoir le nombre total d'entrées d'une requête, sans utiliser les pseudo-curseurs de libmysql ou count(*).
+- [ ] Détecter si le schéma est IPv4 ou IPv6, plutôt que de laisser l'user le définir tout seul.
+- [ ] Versionner les sessions utilisateur
+- [x] Gérer l'historique dans la navigation entre les pages (bouton prev/next)
+- [ ] Meilleur affichage de la légende dans les lineviews
+- [x] Lorsque la sélection est multiple dans le tableview, copier le texte de toute la sélection, et pas uniquement celle qui a été cliquée.
+- [x] Quand l'appel de service a foiré niveau streaming, envoyer par UDP le message d'erreur
+- [ ] Ticket #74:
+  `- [ ] le tableau ne doit pas par défaut afficher le port source.
+     [ ] le tableau ne doit pas afficher la colonne qui constitue le critère de filtre (attention en mode "exploration", le filtre peut être composé).
+     [x] Si le user est vide, mettre "N/A".
+     [ ] à tenter : on enlève la colonne "Prefix", on met un tooltip à la place. Dans le futur, menu contextuel au clic droit pour aller sur l'acl nuface.
+     [x] Colonne time : si le paquet est d'aujourd'hui, ne pas afficher la date mais juste l'heure.
+     [x] Si le filtre ne porte pas sur l'utilisateur ou la source, merger les deux : si le user est défini, afficher le user, sinon afficher la source.
+         Le tooltip dans ce cas doit afficher séparément user et source. Si on clique sur ce champ, on va selon l'afficher sur le user ou sur la source concernée.
+     [x] Le titre "Destination" à aligner à gauche.
+     [x] Quand je demande la résolution du nom lié à une IP :
+	 a/ pas de résolution : il faut me le dire (popup?) (dans la zone d'info plutôt)
+	 b/ la résolution foncitonne : propager l'affichage partout, pour une durée de N minutes (N = 10, paramètrable dans un menu tout au fond)
+- [ ] dans le cas d'un tri sur la colonne ip_(s|d)addr, si la résolution automatique est active, demander à l'utilisateur pour la desactiver,
+      sinon ne pas trier
+- [x] dans le cas où on clique sur un filtre et qu'on ouvre une nouvelle page, si le filtre contient une valeur différente pour label et value,
+      afficher « label (value) »
+- [ ] handle KeyboardInterrupt
+- [ ] mode anonymous: pouvoir remonter une entité suspecte avec un système d'alarme à un admin compétent. (ça existe ?)
+- [ ] anonymiser nuconntrack et nuauth_command
+- [ ] QObject: Do not delete object, 'unnamed', during its event handler! (base de données déconnectée)
+
+* After:
+- [ ] Trouver un moyen de faire marcher le streaming avec les callRemotes
+- [ ] ne pas afficher les fleches quand on est à la dernière plage (mais on a plus le nombre total d'entrées)
+- [ ] afficher à quelle plage on est (1/5), même remarque qu'au dessus
+- [ ] problèmes de redimentionnement des fragments
+- [ ] réutiliser pyctd et un petit module nucentral
+- [ ] couleur des lignes par critère (utilisateur dans le conntrack, etc)
+- [ ] mise en gras de la colonne triée
+- [ ] Gérer la possibilité de grapher sur telle ou telle colonne d'une table
+- [ ] Afficher l'interval de la table ulog (voir script cron)
+- [ ] Pouvoir marquer une entité
+- [ ] Faire un système de filtres avancé (pouvoir mettre plusieurs valeurs, des NOT, peut-être des OR, etc)
+
+* Milestone 4
+- [x] Anonymiser les données
+- [x] Support Ulogd2
+- [x] Ajout d'un cache sur le client
+- [ ] Pouvoir exporter et importer la base dans des fichiers
+
+* Later:
+- [ ] dans le cas d'une selection d'une ligne, highlighter toutes les cases avec un critère en commun
+- [ ] Régler les problèmes liés à la sécurité dans le système de streaming (envoie de données depuis
+      une entité qui se fait passer pour un NuCentral, interception des données, etc.)
+
+* QT bugs:
+- Etch:
+    - no style sheet (table views can't be centered)
+    - table views get resized when sorting is changed
+    - la compilation de ufwi_log_ui.py ne fonctionne pas
+    - indicateur de tri n'est pas bon au démarrage
+    - QGridLayout ne gère pas setLeftMargin(), setTopMargin() ...
+- Lenny:
+    - infinite loop when resizing a table view (resize_event->stylesheet->resize_event-> ...)
+    - indicateur de tri n'est pas bon au démarrage
+

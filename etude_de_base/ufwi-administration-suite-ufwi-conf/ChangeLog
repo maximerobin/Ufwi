@@ -1,0 +1,11 @@
+  * Winbind is now started by runit.
+
+0.1.1 (2009-09-16)
+  * client: a lot of fixes in network GUI. pollux changed resources handling,
+  uppressed QPixmap.scale() calls.
+  * backend: implement vlan over bonding in /etc/network/interfaces; assume
+  nscd is not installed. Suppress calls to apply() in backends
+  * common:
+  * client: fix network/bonding editor
+0.1 (2009-02-19)
+  * initial grouping of all nuconf parts

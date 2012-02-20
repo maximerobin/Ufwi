@@ -1,0 +1,222 @@
+<ui version="4.0" >
+ <class>AuthWindow</class>
+ <widget class="QDialog" name="AuthWindow" >
+  <property name="geometry" >
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>520</width>
+    <height>512</height>
+   </rect>
+  </property>
+  <property name="sizePolicy" >
+   <sizepolicy vsizetype="Minimum" hsizetype="Preferred" >
+    <horstretch>0</horstretch>
+    <verstretch>0</verstretch>
+   </sizepolicy>
+  </property>
+  <property name="windowTitle" >
+   <string>EdenWall Authentication</string>
+  </property>
+  <property name="windowIcon" >
+   <iconset>
+    <normaloff>:icons/appicon.png</normaloff>:icons/appicon.png</iconset>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout" >
+   <item>
+    <layout class="QHBoxLayout" name="horizontalLayout" >
+     <item>
+      <widget class="QLabel" name="label" >
+       <property name="text" >
+        <string/>
+       </property>
+       <property name="pixmap" >
+        <pixmap resource="../../resources/edenwall.qrc" >:/images/login_logo.png</pixmap>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <layout class="QGridLayout" name="gridLayout" >
+       <item row="0" column="0" >
+        <widget class="QLabel" name="label_2" >
+         <property name="text" >
+          <string>Host:</string>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="0" >
+        <widget class="QLabel" name="label_3" >
+         <property name="text" >
+          <string>Login:</string>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="0" >
+        <widget class="QLabel" name="label_4" >
+         <property name="text" >
+          <string>Password:</string>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="1" >
+        <widget class="QComboBox" name="host_edit" >
+         <property name="editable" >
+          <bool>true</bool>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="1" >
+        <widget class="QLineEdit" name="login_edit" />
+       </item>
+       <item row="2" column="1" >
+        <widget class="QLineEdit" name="password_edit" >
+         <property name="echoMode" >
+          <enum>QLineEdit::Password</enum>
+         </property>
+        </widget>
+       </item>
+       <item row="4" column="1" >
+        <widget class="QDialogButtonBox" name="buttonBox" >
+         <property name="orientation" >
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="standardButtons" >
+          <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
+         </property>
+        </widget>
+       </item>
+       <item row="4" column="0" >
+        <widget class="QPushButton" name="bt_advanced" >
+         <property name="text" >
+          <string>Advanced</string>
+         </property>
+         <property name="checkable" >
+          <bool>true</bool>
+         </property>
+         <property name="checked" >
+          <bool>false</bool>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <widget class="QFrame" name="frame" >
+     <property name="frameShape" >
+      <enum>QFrame::StyledPanel</enum>
+     </property>
+     <property name="frameShadow" >
+      <enum>QFrame::Raised</enum>
+     </property>
+     <layout class="QGridLayout" name="gridLayout_2" >
+      <item row="0" column="0" >
+       <widget class="QLabel" name="label_5" >
+        <property name="text" >
+         <string>Options:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="0" >
+       <widget class="QLabel" name="label_6" >
+        <property name="text" >
+         <string>Protocol:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="1" >
+       <widget class="QComboBox" name="protocol_combo" >
+        <item>
+         <property name="text" >
+          <string>secure</string>
+         </property>
+        </item>
+        <item>
+         <property name="text" >
+          <string>cleartext</string>
+         </property>
+        </item>
+       </widget>
+      </item>
+      <item row="3" column="0" >
+       <widget class="QLabel" name="label_7" >
+        <property name="text" >
+         <string>Port:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="3" column="1" >
+       <layout class="QGridLayout" >
+        <item row="0" column="0" colspan="2" >
+         <widget class="QRadioButton" name="default_radio" >
+          <property name="text" >
+           <string>&amp;Default</string>
+          </property>
+          <property name="checked" >
+           <bool>true</bool>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="0" >
+         <widget class="QRadioButton" name="custom_radio" >
+          <property name="text" >
+           <string>C&amp;ustom:</string>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="1" >
+         <widget class="QSpinBox" name="port_spinbox" >
+          <property name="enabled" >
+           <bool>false</bool>
+          </property>
+          <property name="minimum" >
+           <number>1</number>
+          </property>
+          <property name="maximum" >
+           <number>65535</number>
+          </property>
+          <property name="value" >
+           <number>8443</number>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+      <item row="4" column="0" >
+       <widget class="QLabel" name="label_8" >
+        <property name="text" >
+         <string>Streaming port:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="4" column="1" >
+       <widget class="QSpinBox" name="streaming_spinbox" >
+        <property name="minimum" >
+         <number>1</number>
+        </property>
+        <property name="maximum" >
+         <number>65535</number>
+        </property>
+        <property name="value" >
+         <number>8080</number>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="1" >
+       <widget class="QPushButton" name="configure_ssl" >
+        <property name="text" >
+         <string>SSL C&amp;onfiguration...</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <resources>
+  <include location="../../resources/edenwall.qrc" />
+ </resources>
+ <connections/>
+</ui>

@@ -1,8 +1,11 @@
-This is pdfTeX, Version 3.1415926-1.40.10 (TeX Live 2009/Debian) (format=pdflatex 2011.11.29)  10 FEB 2012 09:55
+This is pdfTeX, Version 3.1415926-1.40.10 (TeX Live 2009/Debian) (format=pdflatex 2011.11.2)  13 FEB 2012 15:45
 entering extended mode
  %&-line parsing enabled.
-**\nonstopmode \input{"/root/UFWI/Ufwi/rapport/rapport.tex"}
-(/root/UFWI/Ufwi/rapport/rapport.tex
+**rapport.tex
+(./rapport.tex
+LaTeX2e <2009/09/24>
+Babel <v3.8l> and hyphenation patterns for english, usenglishmax, dumylang, noh
+yphenation, french, basque, loaded.
 (/usr/share/texmf-texlive/tex/latex/base/report.cls
 Document Class: report 2007/10/19 v1.4h Standard LaTeX document class
 (/usr/share/texmf-texlive/tex/latex/base/size12.clo
@@ -249,12 +252,6 @@ File: babel.def 2008/07/06 v3.8l Babel common definitions
 \babel@savecnt=\count88
 \U@D=\dimen103
 )
-
-Package babel Warning: No hyphenation patterns were loaded for
-(babel)                the language `French'
-(babel)                I will use the patterns loaded for \language=0 instead.
-
-\l@french = a dialect from \language0
 Package babel Info: Making : an active character on input line 120.
 Package babel Info: Making ; an active character on input line 121.
 Package babel Info: Making ! an active character on input line 122.
@@ -263,6 +260,7 @@ Package babel Info: Making ? an active character on input line 123.
 \std@mcc=\count89
 \dec@mcc=\count90
 \parindentFFN=\dimen105
+
 *************************************
 * Local config file frenchb.cfg used
 *
@@ -348,8 +346,7 @@ Package ifvtex Info: VTeX not detected.
 \f@ncyO@erf=\skip53
 \f@ncyO@olf=\skip54
 \f@ncyO@orf=\skip55
-)
-(/root/UFWI/Ufwi/rapport/rapport.aux)
+) (./rapport.aux)
 \openout1 = `rapport.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 45.
@@ -424,8 +421,14 @@ driver: pdftex
 -----------------------
 [1
 
-{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}]
-(/root/UFWI/Ufwi/rapport/rapport.toc)
+{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}] (./rapport.toc
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <12> on input line 6.
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <8> on input line 6.
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <6> on input line 6.
+)
 \tf@toc=\write3
 \openout3 = `rapport.toc'.
 
@@ -448,12 +451,6 @@ Package Fancyhdr Warning: \headheight is too small (12.0pt):
 
 ]
  3.
-LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <12> on input line 93.
-LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <8> on input line 93.
-LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <6> on input line 93.
 
 ! Package inputenc Error: Unicode char \u8:  not set up for use with LaTeX.
 
@@ -576,8 +573,8 @@ or  <return>  to continue without it.
 
 
 Overfull \hbox (50.54788pt too wide) in paragraph at lines 123--129
-[]\T1/cmr/m/n/12 paragraphe ^^S[MYSQL]^^T ligne 59 : ta-ble=''ulog'' pass=''pas
-sulog'' user=''ulog'' db=''ulog'' host=''172.20.8.2'' 
+[]\T1/cmr/m/n/12 paragraphe ^^S[MYSQL]^^T ligne 59 : table=''ulog'' pass=''pass
+ulog'' user=''ulog'' db=''ulog'' host=''172.20.8.2'' 
  []
 
 
@@ -706,24 +703,109 @@ Your command was ignored.
 Type  I <command> <return>  to replace it with another command,
 or  <return>  to continue without it.
 
-[6] (/root/UFWI/Ufwi/rapport/rapport.aux) ) 
+[6]
+ 4.
+<images/auth.png, id=26, 355.3275pt x 411.03563pt>
+File: images/auth.png Graphic file (type png)
+ <use images/auth.png>
+
+! Package inputenc Error: Unicode char \u8:  not set up for use with LaTeX.
+
+See the inputenc package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.220 Pré-requis 
+                   :
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
+
+[7
+
+ <./images/auth.png (PNG copy)>]
+
+! Package inputenc Error: Unicode char \u8:  not set up for use with LaTeX.
+
+See the inputenc package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.222 Script autogen.sh 
+                         :
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
+
+
+! Package inputenc Error: Unicode char \u8:  not set up for use with LaTeX.
+
+See the inputenc package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.226 Compilation Nufw 
+                        :
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
+
+[8] [9]
+ 5.
+
+! Package inputenc Error: Unicode char \u8:  not set up for use with LaTeX.
+
+See the inputenc package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.312 Pré-requis 
+                   :
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
+
+[10
+
+] [11]
+ 6.
+
+Underfull \hbox (badness 10000) in paragraph at lines 368--370
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 376--378
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 385--387
+
+ []
+
+[12
+
+] [13] (./rapport.aux) ) 
 Here is how much of TeX's memory you used:
- 2618 strings out of 495061
- 32209 string characters out of 1182620
- 92352 words of memory out of 3000000
- 5784 multiletter control sequences out of 15000+50000
- 9462 words of font info for 27 fonts, out of 3000000 for 9000
+ 2629 strings out of 495028
+ 32161 string characters out of 1181229
+ 95274 words of memory out of 3000000
+ 5798 multiletter control sequences out of 15000+50000
+ 12550 words of font info for 31 fonts, out of 3000000 for 9000
  28 hyphenation exceptions out of 8191
- 26i,11n,43p,350b,281s stack positions out of 5000i,500n,10000p,200000b,50000s
- </root/.texmf-var/fonts/pk/ljfour/j
-knappen/ec/ecbx1200.600pk> </root/.texmf-var/fonts/pk/ljfour/jknappen/ec/ecbx24
-88.600pk> </root/.texmf-var/fonts/pk/ljfour/jknappen/ec/ecrm1200.600pk></usr/sh
-are/texmf-texlive/fonts/type1/public/amsfonts/cm/cmmi12.pfb></usr/share/texmf-t
-exlive/fonts/type1/public/amsfonts/cm/cmmi8.pfb></usr/share/texmf-texlive/fonts
-/type1/public/amsfonts/cm/cmr12.pfb>
-Output written on rapport.pdf (6 pages, 91083 bytes).
+ 25i,11n,43p,615b,343s stack positions out of 5000i,500n,10000p,200000b,50000s
+ </home/maxime/.texmf-var/fonts/pk/ljfour/jknappen/ec/e
+cbx1440.600pk> </home/maxime/.texmf-var/fonts/pk/ljfour/jknappen/ec/ecbx1728.60
+0pk> </home/maxime/.texmf-var/fonts/pk/ljfour/jknappen/ec/ecbx1200.600pk> </hom
+e/maxime/.texmf-var/fonts/pk/ljfour/jknappen/ec/ecbx2488.600pk> </home/maxime/.
+texmf-var/fonts/pk/ljfour/jknappen/ec/ecrm1200.600pk></usr/share/texmf-texlive/
+fonts/type1/public/amsfonts/cm/cmmi12.pfb></usr/share/texmf-texlive/fonts/type1
+/public/amsfonts/cm/cmmi8.pfb></usr/share/texmf-texlive/fonts/type1/public/amsf
+onts/cm/cmr12.pfb>
+Output written on rapport.pdf (13 pages, 249094 bytes).
 PDF statistics:
- 193 PDF objects out of 1000 (max. 8388607)
+ 290 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
- 1 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 6 words of extra memory for PDF output out of 10000 (max. 10000000)
 

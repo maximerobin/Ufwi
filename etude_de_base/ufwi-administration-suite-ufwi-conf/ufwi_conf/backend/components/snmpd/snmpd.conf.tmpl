@@ -1,0 +1,24 @@
+com2sec paranoid  localhost         inl4nufw
+com2sec client  0.0.0.0/0   {{ community }}
+
+group MyROSystem v1        paranoid
+group MyROSystem v2c       paranoid
+group MyROSystem usm       paranoid
+
+group MyROGroup v1         client
+group MyROGroup v2c        client
+group MyROGroup usm        client
+
+view all    included  .1
+
+view system included  .iso.org.dod.internet.mgmt.mib-2.system
+
+view ifMIB  included  .1.3.6.1.2.1.2.2
+
+access MyROSystem ""     any       noauth    exact  ifMIB none   none
+
+access MyROGroup ""      any       noauth    exact  ifMIB    none   none
+
+syslocation EdenWall
+syscontact Root {{ root_email }}
+

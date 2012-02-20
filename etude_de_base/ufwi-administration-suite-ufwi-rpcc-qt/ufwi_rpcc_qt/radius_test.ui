@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>radius_test</class>
+ <widget class="QDialog" name="radius_test">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>520</width>
+    <height>401</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Test a radius setup</string>
+  </property>
+  <layout class="QGridLayout" name="gridLayout_3">
+   <item row="0" column="0" colspan="2">
+    <widget class="QGroupBox" name="common_box">
+     <property name="styleSheet">
+      <string notr="true">QGroupBox {
+border: 0px;
+}</string>
+     </property>
+     <property name="title">
+      <string/>
+     </property>
+     <layout class="QGridLayout" name="gridLayout_2">
+      <item row="0" column="0">
+       <widget class="QLabel" name="server_label">
+        <property name="locale">
+         <locale language="English" country="UnitedStates"/>
+        </property>
+        <property name="text">
+         <string>Server</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="1">
+       <widget class="QLineEdit" name="server">
+        <property name="locale">
+         <locale language="English" country="UnitedStates"/>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="0">
+       <widget class="QLabel" name="port_label">
+        <property name="locale">
+         <locale language="English" country="UnitedStates"/>
+        </property>
+        <property name="text">
+         <string>Server port</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="1">
+       <widget class="QLineEdit" name="port">
+        <property name="locale">
+         <locale language="English" country="UnitedStates"/>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="0">
+       <widget class="QLabel" name="shared_secret_label">
+        <property name="locale">
+         <locale language="English" country="UnitedStates"/>
+        </property>
+        <property name="text">
+         <string>Shared secret</string>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="1">
+       <widget class="QLineEdit" name="shared_secret">
+        <property name="locale">
+         <locale language="English" country="UnitedStates"/>
+        </property>
+       </widget>
+      </item>
+      <item row="3" column="0">
+       <widget class="QLabel" name="timeout_label">
+        <property name="locale">
+         <locale language="English" country="UnitedStates"/>
+        </property>
+        <property name="text">
+         <string>Timeout</string>
+        </property>
+       </widget>
+      </item>
+      <item row="3" column="1">
+       <widget class="QLineEdit" name="timeout">
+        <property name="locale">
+         <locale language="English" country="UnitedStates"/>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item row="1" column="0" colspan="2">
+    <widget class="QGroupBox" name="groupBox">
+     <property name="title">
+      <string/>
+     </property>
+     <layout class="QVBoxLayout" name="verticalLayout">
+      <item>
+       <layout class="QGridLayout" name="gridLayout">
+        <item row="0" column="0">
+         <widget class="QLabel" name="timeout_label_2">
+          <property name="locale">
+           <locale language="English" country="UnitedStates"/>
+          </property>
+          <property name="text">
+           <string>Tested user name</string>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="1">
+         <widget class="QLineEdit" name="username">
+          <property name="locale">
+           <locale language="English" country="UnitedStates"/>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="0">
+         <widget class="QLabel" name="timeout_label_3">
+          <property name="locale">
+           <locale language="English" country="UnitedStates"/>
+          </property>
+          <property name="text">
+           <string>Password</string>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="1">
+         <widget class="QLineEdit" name="password">
+          <property name="locale">
+           <locale language="English" country="UnitedStates"/>
+          </property>
+          <property name="echoMode">
+           <enum>QLineEdit::PasswordEchoOnEdit</enum>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item row="2" column="0" colspan="2">
+    <widget class="QGroupBox" name="results_box">
+     <property name="title">
+      <string>Test results</string>
+     </property>
+     <layout class="QVBoxLayout" name="verticalLayout_2">
+      <item>
+       <widget class="QTextEdit" name="results_text">
+        <property name="textInteractionFlags">
+         <set>Qt::TextSelectableByKeyboard|Qt::TextSelectableByMouse</set>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item row="3" column="0">
+    <widget class="QPushButton" name="testbutton">
+     <property name="text">
+      <string>Test</string>
+     </property>
+    </widget>
+   </item>
+   <item row="3" column="1">
+    <widget class="QPushButton" name="closebutton">
+     <property name="text">
+      <string>Close</string>
+     </property>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <resources/>
+ <connections>
+  <connection>
+   <sender>closebutton</sender>
+   <signal>clicked()</signal>
+   <receiver>radius_test</receiver>
+   <slot>hide()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>510</x>
+     <y>391</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>259</x>
+     <y>132</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+</ui>

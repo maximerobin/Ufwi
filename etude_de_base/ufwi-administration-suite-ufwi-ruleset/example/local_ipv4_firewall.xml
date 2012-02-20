@@ -1,0 +1,74 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<ruleset name="local_ipv4_firewall" timestamp="2009-12-10 19:32:00" version="3.0.0">
+   <include library="nuface" />
+   <resources>
+      <interface id="Interface">
+         <network address="0.0.0.0/0" id="Internet IPv4">
+            <host address="0.0.0.0" id="0.0.0.0" />
+         </network>
+         <network address_type="IPv4" id="LAN">
+            <host address_type="IPv4" id="LAN Router" />
+         </network>
+         <network address="224.0.0.0/24" id="Local Multicast IPv4">
+            <host address="224.0.0.22" id="IGMPv3 membership" />
+            <host address="224.0.0.251" id="Multicast DNS" />
+         </network>
+      </interface>
+   </resources>
+   <acls_ipv4 next_id="9">
+      <default_decisions>
+         <input decision="DROP" log="1" />
+         <output decision="REJECT" log="1" />
+      </default_decisions>
+      <acl decision="ACCEPT" id="1" log="0">
+         <source>LAN Router</source>
+         <protocol>DHCP Server</protocol>
+         <destination>Firewall</destination>
+         <comment>DHCP Server</comment>
+      </acl>
+      <acl decision="ACCEPT" id="2" log="1" log_prefix="ping">
+         <source>LAN</source>
+         <protocol>ICMP ping</protocol>
+         <destination>Firewall</destination>
+         <comment>Ping request from the LAN</comment>
+      </acl>
+      <acl decision="ACCEPT" id="3" log="0">
+         <source>LAN</source>
+         <protocol>mDNS</protocol>
+         <destination>Firewall</destination>
+         <comment>Multicast DNS (input)</comment>
+      </acl>
+      <acl decision="ACCEPT" id="4" log="0">
+         <source>Firewall</source>
+         <protocol>DNS</protocol>
+         <protocol>HTTP</protocol>
+         <protocol>HTTPS</protocol>
+         <destination>Internet IPv4</destination>
+         <comment>IPv4 web surf</comment>
+      </acl>
+      <acl decision="ACCEPT" id="5" log="0">
+         <source>Firewall</source>
+         <protocol>ICMP ping</protocol>
+         <destination>Internet IPv4</destination>
+         <comment>Send IPv4 ping</comment>
+      </acl>
+      <acl decision="ACCEPT" id="6" log="0">
+         <source>Firewall</source>
+         <protocol>mDNS</protocol>
+         <destination>Multicast DNS</destination>
+         <comment>Multicast DNS (output)</comment>
+      </acl>
+      <acl decision="ACCEPT" id="7" log="0">
+         <source>Firewall</source>
+         <protocol>IGMP</protocol>
+         <destination>IGMPv3 membership</destination>
+         <comment>Multicast IGMP</comment>
+      </acl>
+      <acl decision="ACCEPT" id="8" log="0">
+         <source>Firewall</source>
+         <protocol>DHCP Client</protocol>
+         <destination>0.0.0.0</destination>
+         <comment>DHCP Client</comment>
+      </acl>
+   </acls_ipv4>
+</ruleset>

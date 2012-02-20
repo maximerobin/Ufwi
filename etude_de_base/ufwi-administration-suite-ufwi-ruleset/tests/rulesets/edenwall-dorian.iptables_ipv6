@@ -1,0 +1,59 @@
+
+################
+# mangle table #
+################
+*mangle
+:PREROUTING ACCEPT [0:0]
+:INPUT ACCEPT [0:0]
+:FORWARD ACCEPT [0:0]
+:OUTPUT ACCEPT [0:0]
+:POSTROUTING ACCEPT [0:0]
+
+-A PREROUTING -j CONNMARK --restore-mark
+-A POSTROUTING -m mark ! --mark 0 -j CONNMARK --save-mark --mask 0x0000ffff
+
+COMMIT
+
+################
+# filter table #
+################
+*filter
+:INPUT DROP [0:0]
+:FORWARD DROP [0:0]
+:OUTPUT ACCEPT [0:0]
+:ETH0-ETH0 - [0:0]
+
+# Default filter rules
+# --------------------
+-A FORWARD -m state --state RELATED,ESTABLISHED -j ACCEPT
+-A INPUT -m state --state RELATED,ESTABLISHED -j ACCEPT
+-A OUTPUT -m state --state RELATED,ESTABLISHED -j ACCEPT
+-A FORWARD ! -p icmpv6 -m state --state INVALID -j LOG --log-prefix "Drop INVALID FORWARD "
+-A FORWARD ! -p icmpv6 -m state --state INVALID -j DROP
+-A OUTPUT ! -p icmpv6 -m state --state INVALID -j LOG --log-prefix "Drop INVALID OUTPUT "
+-A OUTPUT ! -p icmpv6 -m state --state INVALID -j DROP
+-A INPUT -i lo -j ACCEPT -m comment --comment "Trust loopback"
+-A OUTPUT -o lo -j ACCEPT -m comment --comment "Trust loopback"
+
+
+# Dispatch FORWARD to the different chains
+# ----------------------------------------
+-A FORWARD -i eth0 -o eth0 -j ETH0-ETH0
+
+# IPv6 rule #10
+# -------------
+-A ETH0-ETH0 -s 2000::/3 -p tcp --sport 1:65535 --dport 1:65535 --syn -m state --state NEW -j LOG --log-prefix "F10d:Drop IPv6 " -m comment --comment "IPv6 rule #10: rule 1"
+-A ETH0-ETH0 -s 2000::/3 -p tcp --sport 1:65535 --dport 1:65535 --syn -m state --state NEW -j DROP -m comment --comment "IPv6 rule #10: rule 2"
+
+
+# Default decisions
+# -----------------
+-A ETH0-ETH0 -j LOG --log-prefix "F0d:Default DROP for ETH0-ET "
+-A ETH0-ETH0 -j DROP -m comment --comment "Default decision"
+-A INPUT -j LOG --log-prefix "I0d:Default DROP for INPUT "
+-A INPUT -j DROP -m comment --comment "Default decision"
+-A FORWARD -j LOG --log-prefix "F0d:Default DROP for FORWARD "
+-A FORWARD -j DROP -m comment --comment "Default decision"
+-A OUTPUT -j ACCEPT -m comment --comment "Default decision"
+COMMIT
+

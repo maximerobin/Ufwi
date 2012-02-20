@@ -1,0 +1,297 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>Dialog</class>
+ <widget class="QDialog" name="Dialog">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>490</width>
+    <height>358</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Rule Set List</string>
+  </property>
+  <property name="windowIcon">
+   <iconset resource="../../ufwi-rpcc-qt/resources/ufwi-rpcc-qt.qrc">
+    <normaloff>:icons/appicon.png</normaloff>:icons/appicon.png</iconset>
+  </property>
+  <layout class="QVBoxLayout">
+   <item>
+    <layout class="QHBoxLayout">
+     <item>
+      <widget class="QTabWidget" name="ruleset_tab">
+       <property name="currentIndex">
+        <number>0</number>
+       </property>
+       <widget class="QWidget" name="tab">
+        <attribute name="title">
+         <string>Rule Sets</string>
+        </attribute>
+        <layout class="QVBoxLayout">
+         <item>
+          <widget class="QTableWidget" name="ruleset_table">
+           <property name="verticalScrollBarPolicy">
+            <enum>Qt::ScrollBarAsNeeded</enum>
+           </property>
+           <property name="horizontalScrollBarPolicy">
+            <enum>Qt::ScrollBarAsNeeded</enum>
+           </property>
+           <property name="autoScroll">
+            <bool>false</bool>
+           </property>
+           <property name="editTriggers">
+            <set>QAbstractItemView::NoEditTriggers</set>
+           </property>
+           <property name="alternatingRowColors">
+            <bool>true</bool>
+           </property>
+           <property name="selectionMode">
+            <enum>QAbstractItemView::SingleSelection</enum>
+           </property>
+           <property name="selectionBehavior">
+            <enum>QAbstractItemView::SelectRows</enum>
+           </property>
+           <property name="textElideMode">
+            <enum>Qt::ElideRight</enum>
+           </property>
+           <property name="horizontalScrollMode">
+            <enum>QAbstractItemView::ScrollPerItem</enum>
+           </property>
+           <property name="showGrid">
+            <bool>false</bool>
+           </property>
+           <property name="gridStyle">
+            <enum>Qt::NoPen</enum>
+           </property>
+           <property name="sortingEnabled">
+            <bool>true</bool>
+           </property>
+           <property name="wordWrap">
+            <bool>false</bool>
+           </property>
+           <property name="cornerButtonEnabled">
+            <bool>false</bool>
+           </property>
+           <row>
+            <property name="text">
+             <string>New Row</string>
+            </property>
+           </row>
+           <column>
+            <property name="text">
+             <string>Rule Set</string>
+            </property>
+           </column>
+           <column>
+            <property name="text">
+             <string>Last Edited</string>
+            </property>
+           </column>
+          </widget>
+         </item>
+        </layout>
+       </widget>
+       <widget class="QWidget" name="tab_2">
+        <attribute name="title">
+         <string>Templates</string>
+        </attribute>
+        <layout class="QVBoxLayout">
+         <item>
+          <widget class="QTableWidget" name="template_table">
+           <property name="verticalScrollBarPolicy">
+            <enum>Qt::ScrollBarAsNeeded</enum>
+           </property>
+           <property name="horizontalScrollBarPolicy">
+            <enum>Qt::ScrollBarAsNeeded</enum>
+           </property>
+           <property name="autoScroll">
+            <bool>false</bool>
+           </property>
+           <property name="editTriggers">
+            <set>QAbstractItemView::NoEditTriggers</set>
+           </property>
+           <property name="alternatingRowColors">
+            <bool>true</bool>
+           </property>
+           <property name="selectionMode">
+            <enum>QAbstractItemView::SingleSelection</enum>
+           </property>
+           <property name="selectionBehavior">
+            <enum>QAbstractItemView::SelectRows</enum>
+           </property>
+           <property name="textElideMode">
+            <enum>Qt::ElideRight</enum>
+           </property>
+           <property name="horizontalScrollMode">
+            <enum>QAbstractItemView::ScrollPerItem</enum>
+           </property>
+           <property name="showGrid">
+            <bool>false</bool>
+           </property>
+           <property name="gridStyle">
+            <enum>Qt::NoPen</enum>
+           </property>
+           <property name="sortingEnabled">
+            <bool>true</bool>
+           </property>
+           <property name="wordWrap">
+            <bool>false</bool>
+           </property>
+           <property name="cornerButtonEnabled">
+            <bool>false</bool>
+           </property>
+           <row>
+            <property name="text">
+             <string>New Row</string>
+            </property>
+           </row>
+           <column>
+            <property name="text">
+             <string>Template</string>
+            </property>
+           </column>
+           <column>
+            <property name="text">
+             <string>Last Edited</string>
+            </property>
+           </column>
+          </widget>
+         </item>
+        </layout>
+       </widget>
+      </widget>
+     </item>
+     <item>
+      <layout class="QVBoxLayout">
+       <item>
+        <widget class="QPushButton" name="create_button">
+         <property name="text">
+          <string>New</string>
+         </property>
+         <property name="icon">
+          <iconset resource="../../ufwi-rpcc-qt/resources/ufwi-rpcc-qt.qrc">
+           <normaloff>:/icons/nouveau_jeu_de_regle.png</normaloff>:/icons/nouveau_jeu_de_regle.png</iconset>
+         </property>
+         <property name="autoDefault">
+          <bool>false</bool>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="download_button">
+         <property name="text">
+          <string>Export</string>
+         </property>
+         <property name="icon">
+          <iconset resource="../../ufwi-rpcc-qt/resources/ufwi-rpcc-qt.qrc">
+           <normaloff>:/icons/save.png</normaloff>:/icons/save.png</iconset>
+         </property>
+         <property name="autoDefault">
+          <bool>false</bool>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="upload_button">
+         <property name="text">
+          <string>Import</string>
+         </property>
+         <property name="icon">
+          <iconset resource="../../ufwi-rpcc-qt/resources/ufwi-rpcc-qt.qrc">
+           <normaloff>:/icons/upload.png</normaloff>:/icons/upload.png</iconset>
+         </property>
+         <property name="autoDefault">
+          <bool>false</bool>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="delete_button">
+         <property name="text">
+          <string>Delete</string>
+         </property>
+         <property name="icon">
+          <iconset resource="../../ufwi-rpcc-qt/resources/ufwi-rpcc-qt.qrc">
+           <normaloff>:/icons/delete.png</normaloff>:/icons/delete.png</iconset>
+         </property>
+         <property name="autoDefault">
+          <bool>false</bool>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <layout class="QHBoxLayout">
+     <item>
+      <widget class="QPushButton" name="open_button">
+       <property name="text">
+        <string>Open</string>
+       </property>
+       <property name="icon">
+        <iconset resource="../../ufwi-rpcc-qt/resources/ufwi-rpcc-qt.qrc">
+         <normaloff>:/icons/apply.png</normaloff>:/icons/apply.png</iconset>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="cancel_button">
+       <property name="text">
+        <string>Cancel</string>
+       </property>
+       <property name="icon">
+        <iconset resource="../../ufwi-rpcc-qt/resources/ufwi-rpcc-qt.qrc">
+         <normaloff>:/icons/wrong.png</normaloff>:/icons/wrong.png</iconset>
+       </property>
+       <property name="autoDefault">
+        <bool>false</bool>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+  </layout>
+ </widget>
+ <resources>
+  <include location="ufwi-ruleset.qrc"/>
+  <include location="../../ufwi-rpcc-qt/resources/ufwi-rpcc-qt.qrc"/>
+ </resources>
+ <connections>
+  <connection>
+   <sender>cancel_button</sender>
+   <signal>released()</signal>
+   <receiver>Dialog</receiver>
+   <slot>reject()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>367</x>
+     <y>326</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>244</x>
+     <y>318</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>open_button</sender>
+   <signal>released()</signal>
+   <receiver>Dialog</receiver>
+   <slot>accept()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>49</x>
+     <y>335</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>3</x>
+     <y>315</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+</ui>

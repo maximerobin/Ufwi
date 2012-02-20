@@ -1,0 +1,2421 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>1104</width>
+    <height>797</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Firewall</string>
+  </property>
+  <property name="dockNestingEnabled">
+   <bool>true</bool>
+  </property>
+  <property name="dockOptions">
+   <set>QMainWindow::AllowNestedDocks|QMainWindow::AllowTabbedDocks|QMainWindow::AnimatedDocks</set>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <layout class="QVBoxLayout" name="verticalLayout_9">
+    <item>
+     <widget class="QStackedWidget" name="acl_stack">
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
+      <property name="currentIndex">
+       <number>0</number>
+      </property>
+      <widget class="QWidget" name="page">
+       <layout class="QVBoxLayout">
+        <item>
+         <widget class="QTabWidget" name="main_tab">
+          <property name="enabled">
+           <bool>true</bool>
+          </property>
+          <property name="currentIndex">
+           <number>0</number>
+          </property>
+          <widget class="QWidget" name="tab">
+           <attribute name="title">
+            <string>IPv4 rules</string>
+           </attribute>
+           <layout class="QVBoxLayout" name="verticalLayout_11">
+            <item>
+             <widget class="QFrame" name="frame">
+              <property name="frameShape">
+               <enum>QFrame::StyledPanel</enum>
+              </property>
+              <property name="frameShadow">
+               <enum>QFrame::Raised</enum>
+              </property>
+              <layout class="QHBoxLayout" name="horizontalLayout_12">
+               <item>
+                <widget class="QLabel" name="label_27">
+                 <property name="sizePolicy">
+                  <sizepolicy hsizetype="Maximum" vsizetype="Maximum">
+                   <horstretch>0</horstretch>
+                   <verstretch>0</verstretch>
+                  </sizepolicy>
+                 </property>
+                 <property name="text">
+                  <string>Filters:</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QFrame" name="acl4_filter_layout">
+                 <property name="frameShape">
+                  <enum>QFrame::NoFrame</enum>
+                 </property>
+                 <property name="frameShadow">
+                  <enum>QFrame::Raised</enum>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QCheckBox" name="acl4_filter_exact">
+                 <property name="sizePolicy">
+                  <sizepolicy hsizetype="Maximum" vsizetype="Maximum">
+                   <horstretch>0</horstretch>
+                   <verstretch>0</verstretch>
+                  </sizepolicy>
+                 </property>
+                 <property name="text">
+                  <string>Exact Match</string>
+                 </property>
+                </widget>
+               </item>
+              </layout>
+             </widget>
+            </item>
+            <item>
+             <widget class="QTableWidget" name="acl4_table"/>
+            </item>
+            <item>
+             <layout class="QGridLayout" name="gridLayout">
+              <item row="0" column="0">
+               <widget class="QPushButton" name="acl4_create_button">
+                <property name="toolTip">
+                 <string>Create a new rule</string>
+                </property>
+                <property name="text">
+                 <string>&amp;New</string>
+                </property>
+                <property name="icon">
+                 <iconset resource="../../ufwi-rpcc-qt/resources/ufwi-rpcc-qt.qrc">
+                  <normaloff>:/icons/add.png</normaloff>:/icons/add.png</iconset>
+                </property>
+               </widget>
+              </item>
+              <item row="0" column="1">
+               <widget class="QPushButton" name="acl4_up_button">
+                <property name="toolTip">
+                 <string>Move the selected rule up</string>
+                </property>
+                <property name="text">
+                 <string>&amp;Up</string>
+                </property>
+                <property name="icon">
+                 <iconset resource="../../ufwi-rpcc-qt/resources/ufwi-rpcc-qt.qrc">
+                  <normaloff>:/icons/up.png</normaloff>:/icons/up.png</iconset>
+                </property>
+               </widget>
+              </item>
+              <item row="0" column="2">
+               <widget class="QPushButton" name="acl4_down_button">
+                <property name="toolTip">
+                 <string>Move the selected rule down</string>
+                </property>
+                <property name="text">
+                 <string>&amp;Down</string>
+                </property>
+                <property name="icon">
+                 <iconset resource="../../ufwi-rpcc-qt/resources/ufwi-rpcc-qt.qrc">
+                  <normaloff>:/icons/down.png</normaloff>:/icons/down.png</iconset>
+                </property>
+               </widget>
+              </item>
+              <item row="1" column="0">
+               <widget class="QPushButton" name="acl4_edit_button">
+                <property name="toolTip">
+                 <string>Edit the selected rule</string>
+                </property>
+                <property name="text">
+                 <string>&amp;Edit</string>
+                </property>
+                <property name="icon">
+                 <iconset resource="../../ufwi-rpcc-qt/resources/ufwi-rpcc-qt.qrc">
+                  <normaloff>:/icons/edit.png</normaloff>:/icons/edit.png</iconset>
+                </property>
+               </widget>
+              </item>
+              <item row="1" column="1">
+               <widget class="QPushButton" name="acl4_clone_button">
+                <property name="toolTip">
+                 <string>Clone the selected rule</string>
+                </property>
+                <property name="text">
+                 <string>&amp;Clone</string>
+                </property>
+                <property name="icon">
+                 <iconset resource="../../ufwi-rpcc-qt/resources/ufwi-rpcc-qt.qrc">
+                  <normaloff>:/icons/copy.png</normaloff>:/icons/copy.png</iconset>
+                </property>
+               </widget>
+              </item>
+              <item row="1" column="2">
+               <widget class="QPushButton" name="acl4_delete_button">
+                <property name="toolTip">
+                 <string>Delete the selected rules</string>
+                </property>
+                <property name="text">
+                 <string>&amp;Delete</string>
+                </property>
+                <property name="icon">
+                 <iconset resource="../../ufwi-rpcc-qt/resources/ufwi-rpcc-qt.qrc">
+                  <normaloff>:/icons/delete.png</normaloff>:/icons/delete.png</iconset>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </item>
+           </layout>
+          </widget>
+          <widget class="QWidget" name="tab_4">
+           <attribute name="title">
+            <string>IPv6 rules</string>
+           </attribute>
+           <layout class="QVBoxLayout" name="verticalLayout_10">
+            <item>
+             <widget class="QFrame" name="frame_2">
+              <property name="frameShape">
+               <enum>QFrame::StyledPanel</enum>
+              </property>
+              <property name="frameShadow">
+               <enum>QFrame::Raised</enum>
+              </property>
+              <layout class="QHBoxLayout" name="horizontalLayout_8">
+               <item>
+                <widget class="QLabel" name="label_28">
+                 <property name="sizePolicy">
+                  <sizepolicy hsizetype="Maximum" vsizetype="Maximum">
+                   <horstretch>0</horstretch>
+                   <verstretch>0</verstretch>
+                  </sizepolicy>
+                 </property>
+                 <property name="text">
+                  <string>Filters:</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QFrame" name="acl6_filter_layout">
+                 <property name="frameShape">
+                  <enum>QFrame::NoFrame</enum>
+                 </property>
+                 <property name="frameShadow">
+                  <enum>QFrame::Raised</enum>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QCheckBox" name="acl6_filter_exact">
+                 <property name="sizePolicy">
+                  <sizepolicy hsizetype="Maximum" vsizetype="Maximum">
+                   <horstretch>0</horstretch>
+                   <verstretch>0</verstretch>
+                  </sizepolicy>
+                 </property>
+                 <property name="text">
+                  <string>Exact Match</string>
+                 </property>
+                </widget>
+               </item>
+              </layout>
+             </widget>
+            </item>
+            <item>
+             <widget class="QTableWidget" name="acl6_table"/>
+            </item>
+            <item>
+             <layout class="QGridLayout" name="gridLayout_2">
+              <item row="0" column="0">
+               <widget class="QPushButton" name="acl6_create_button">
+                <property name="toolTip">
+                 <string>Create a new rule</string>
+                </property>
+                <property name="text">
+                 <string>&amp;New</string>
+                </property>
+                <property name="icon">
+                 <iconset resource="../../ufwi-rpcc-qt/resources/ufwi-rpcc-qt.qrc">
+                  <normaloff>:/icons/add.png</normaloff>:/icons/add.png</iconset>
+                </property>
+               </widget>
+              </item>
+              <item row="0" column="1">
+               <widget class="QPushButton" name="acl6_up_button">
+                <property name="toolTip">
+                 <string>Move the selected rule up</string>
+                </property>
+                <property name="text">
+                 <string>&amp;Up</string>
+                </property>
+                <property name="icon">
+                 <iconset resource="../../ufwi-rpcc-qt/resources/ufwi-rpcc-qt.qrc">
+                  <normaloff>:/icons/up.png</normaloff>:/icons/up.png</iconset>
+                </property>
+               </widget>
+              </item>
+              <item row="0" column="2">
+               <widget class="QPushButton" name="acl6_down_button">
+                <property name="toolTip">
+                 <string>Move the selected rule down</string>
+                </property>
+                <property name="text">
+                 <string>&amp;Down</string>
+                </property>
+                <property name="icon">
+                 <iconset resource="../../ufwi-rpcc-qt/resources/ufwi-rpcc-qt.qrc">
+                  <normaloff>:/icons/down.png</normaloff>:/icons/down.png</iconset>
+                </property>
+               </widget>
+              </item>
+              <item row="1" column="0">
+               <widget class="QPushButton" name="acl6_edit_button">
+                <property name="toolTip">
+                 <string>Edit the selected rule</string>
+                </property>
+                <property name="text">
+                 <string>&amp;Edit</string>
+                </property>
+                <property name="icon">
+                 <iconset resource="../../ufwi-rpcc-qt/resources/ufwi-rpcc-qt.qrc">
+                  <normaloff>:/icons/edit.png</normaloff>:/icons/edit.png</iconset>
+                </property>
+               </widget>
+              </item>
+              <item row="1" column="1">
+               <widget class="QPushButton" name="acl6_clone_button">
+                <property name="toolTip">
+                 <string>Clone the selected rule</string>
+                </property>
+                <property name="text">
+                 <string>&amp;Clone</string>
+                </property>
+                <property name="icon">
+                 <iconset resource="../../ufwi-rpcc-qt/resources/ufwi-rpcc-qt.qrc">
+                  <normaloff>:/icons/copy.png</normaloff>:/icons/copy.png</iconset>
+                </property>
+               </widget>
+              </item>
+              <item row="1" column="2">
+               <widget class="QPushButton" name="acl6_delete_button">
+                <property name="toolTip">
+                 <string>Delete the selected rules</string>
+                </property>
+                <property name="text">
+                 <string>&amp;Delete</string>
+                </property>
+                <property name="icon">
+                 <iconset resource="../../ufwi-rpcc-qt/resources/ufwi-rpcc-qt.qrc">
+                  <normaloff>:/icons/delete.png</normaloff>:/icons/delete.png</iconset>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </item>
+           </layout>
+          </widget>
+          <widget class="QWidget" name="tab_2">
+           <attribute name="title">
+            <string>NAT rules</string>
+           </attribute>
+           <layout class="QVBoxLayout" name="verticalLayout_12">
+            <item>
+             <widget class="QFrame" name="frame_3">
+              <property name="frameShape">
+               <enum>QFrame::StyledPanel</enum>
+              </property>
+              <property name="frameShadow">
+               <enum>QFrame::Raised</enum>
+              </property>
+              <layout class="QHBoxLayout" name="horizontalLayout_10">
+               <item>
+                <widget class="QLabel" name="label_29">
+                 <property name="sizePolicy">
+                  <sizepolicy hsizetype="Maximum" vsizetype="Maximum">
+                   <horstretch>0</horstretch>
+                   <verstretch>0</verstretch>
+                  </sizepolicy>
+                 </property>
+                 <property name="text">
+                  <string>Filters:</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QFrame" name="nat_filter_layout">
+                 <property name="frameShape">
+                  <enum>QFrame::NoFrame</enum>
+                 </property>
+                 <property name="frameShadow">
+                  <enum>QFrame::Raised</enum>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QCheckBox" name="nat_filter_exact">
+                 <property name="sizePolicy">
+                  <sizepolicy hsizetype="Maximum" vsizetype="Maximum">
+                   <horstretch>0</horstretch>
+                   <verstretch>0</verstretch>
+                  </sizepolicy>
+                 </property>
+                 <property name="text">
+                  <string>Exact Match</string>
+                 </property>
+                </widget>
+               </item>
+              </layout>
+             </widget>
+            </item>
+            <item>
+             <widget class="QTableWidget" name="table_nats"/>
+            </item>
+            <item>
+             <layout class="QHBoxLayout">
+              <item>
+               <widget class="QPushButton" name="nat_wizard_button">
+                <property name="toolTip">
+                 <string>Wizard to create a new NAT rule</string>
+                </property>
+                <property name="text">
+                 <string>&amp;Wizard...</string>
+                </property>
+                <property name="icon">
+                 <iconset>
+                  <normaloff>:icons/appicon.png</normaloff>:icons/appicon.png</iconset>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QPushButton" name="nat_up_button">
+                <property name="toolTip">
+                 <string>Move the selected rule up</string>
+                </property>
+                <property name="text">
+                 <string>&amp;Up</string>
+                </property>
+                <property name="icon">
+                 <iconset resource="../../ufwi-rpcc-qt/resources/ufwi-rpcc-qt.qrc">
+                  <normaloff>:/icons/up.png</normaloff>:/icons/up.png</iconset>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QPushButton" name="nat_down_button">
+                <property name="toolTip">
+                 <string>Move the selected rule down</string>
+                </property>
+                <property name="text">
+                 <string>&amp;Down</string>
+                </property>
+                <property name="icon">
+                 <iconset resource="../../ufwi-rpcc-qt/resources/ufwi-rpcc-qt.qrc">
+                  <normaloff>:/icons/down.png</normaloff>:/icons/down.png</iconset>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </item>
+            <item>
+             <layout class="QHBoxLayout">
+              <item>
+               <widget class="QPushButton" name="nat_create_button">
+                <property name="toolTip">
+                 <string>Create a new rule</string>
+                </property>
+                <property name="text">
+                 <string>&amp;New</string>
+                </property>
+                <property name="icon">
+                 <iconset resource="../../ufwi-rpcc-qt/resources/ufwi-rpcc-qt.qrc">
+                  <normaloff>:/icons/add.png</normaloff>:/icons/add.png</iconset>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QPushButton" name="nat_edit_button">
+                <property name="toolTip">
+                 <string>Edit the selected rule</string>
+                </property>
+                <property name="text">
+                 <string>&amp;Edit</string>
+                </property>
+                <property name="icon">
+                 <iconset resource="../../ufwi-rpcc-qt/resources/ufwi-rpcc-qt.qrc">
+                  <normaloff>:/icons/edit.png</normaloff>:/icons/edit.png</iconset>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QPushButton" name="nat_clone_button">
+                <property name="text">
+                 <string>Clone</string>
+                </property>
+                <property name="icon">
+                 <iconset resource="../../ufwi-rpcc-qt/resources/ufwi-rpcc-qt.qrc">
+                  <normaloff>:/icons/copy.png</normaloff>:/icons/copy.png</iconset>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QPushButton" name="nat_delete_button">
+                <property name="toolTip">
+                 <string>Delete the selected rules</string>
+                </property>
+                <property name="text">
+                 <string>&amp;Delete</string>
+                </property>
+                <property name="icon">
+                 <iconset resource="../../ufwi-rpcc-qt/resources/ufwi-rpcc-qt.qrc">
+                  <normaloff>:/icons/delete.png</normaloff>:/icons/delete.png</iconset>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </item>
+           </layout>
+          </widget>
+         </widget>
+        </item>
+       </layout>
+      </widget>
+      <widget class="QWidget" name="page_2">
+       <layout class="QVBoxLayout" name="verticalLayout_14">
+        <item>
+         <widget class="QGroupBox" name="acl_groupbox">
+          <property name="title">
+           <string>Rule Editor</string>
+          </property>
+          <layout class="QVBoxLayout" name="verticalLayout_13">
+           <property name="rightMargin">
+            <number>0</number>
+           </property>
+           <item>
+            <layout class="QHBoxLayout" name="_7">
+             <item>
+              <widget class="QLabel" name="label">
+               <property name="text">
+                <string>Decision:</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QComboBox" name="acl_decision">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QCheckBox" name="acl_enabled">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <property name="text">
+                <string>Rule Enabled</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QCheckBox" name="acl_mandatory">
+               <property name="text">
+                <string>Mandatory Rule</string>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </item>
+           <item>
+            <widget class="QGroupBox" name="groupBox">
+             <property name="title">
+              <string>Network</string>
+             </property>
+             <layout class="QGridLayout">
+              <item row="0" column="0">
+               <widget class="QLabel" name="label_2">
+                <property name="text">
+                 <string>Sources</string>
+                </property>
+                <property name="alignment">
+                 <set>Qt::AlignCenter</set>
+                </property>
+               </widget>
+              </item>
+              <item row="0" column="1">
+               <widget class="QLabel" name="label_4">
+                <property name="text">
+                 <string>Protocols</string>
+                </property>
+                <property name="alignment">
+                 <set>Qt::AlignCenter</set>
+                </property>
+               </widget>
+              </item>
+              <item row="0" column="2">
+               <widget class="QLabel" name="label_3">
+                <property name="text">
+                 <string>Destinations</string>
+                </property>
+                <property name="alignment">
+                 <set>Qt::AlignCenter</set>
+                </property>
+               </widget>
+              </item>
+              <item row="1" column="0">
+               <widget class="QListWidget" name="acl_sources">
+                <property name="minimumSize">
+                 <size>
+                  <width>1</width>
+                  <height>1</height>
+                 </size>
+                </property>
+               </widget>
+              </item>
+              <item row="1" column="1">
+               <widget class="QListWidget" name="acl_protocols">
+                <property name="minimumSize">
+                 <size>
+                  <width>1</width>
+                  <height>1</height>
+                 </size>
+                </property>
+               </widget>
+              </item>
+              <item row="1" column="2">
+               <widget class="QListWidget" name="acl_destinations">
+                <property name="minimumSize">
+                 <size>
+                  <width>1</width>
+                  <height>1</height>
+                 </size>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </widget>
+           </item>
+           <item>
+            <widget class="QGroupBox" name="nufw_widget_group">
+             <property name="enabled">
+              <bool>true</bool>
+             </property>
+             <property name="title">
+              <string>Identity-based Firewall</string>
+             </property>
+             <property name="flat">
+              <bool>false</bool>
+             </property>
+             <property name="checkable">
+              <bool>false</bool>
+             </property>
+             <layout class="QVBoxLayout" name="verticalLayout_16">
+              <item>
+               <layout class="QGridLayout" name="gridLayout_3">
+                <item row="0" column="0">
+                 <widget class="QLabel" name="label_6">
+                  <property name="text">
+                   <string>User Groups</string>
+                  </property>
+                  <property name="alignment">
+                   <set>Qt::AlignCenter</set>
+                  </property>
+                 </widget>
+                </item>
+                <item row="0" column="1">
+                 <widget class="QLabel" name="acl_applications_label">
+                  <property name="text">
+                   <string>Applications and Operating Systems</string>
+                  </property>
+                  <property name="alignment">
+                   <set>Qt::AlignCenter</set>
+                  </property>
+                 </widget>
+                </item>
+                <item row="1" column="0">
+                 <widget class="QListWidget" name="acl_user_groups">
+                  <property name="minimumSize">
+                   <size>
+                    <width>1</width>
+                    <height>1</height>
+                   </size>
+                  </property>
+                 </widget>
+                </item>
+                <item row="1" column="1">
+                 <widget class="QListWidget" name="acl_applications">
+                  <property name="minimumSize">
+                   <size>
+                    <width>1</width>
+                    <height>1</height>
+                   </size>
+                  </property>
+                 </widget>
+                </item>
+               </layout>
+              </item>
+              <item>
+               <layout class="QHBoxLayout" name="horizontalLayout_11">
+                <item>
+                 <widget class="QLabel" name="acl_time_period_label">
+                  <property name="text">
+                   <string>Time Period:</string>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QLineEdit" name="acl_time_period">
+                  <property name="readOnly">
+                   <bool>true</bool>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QPushButton" name="acl_clear_time_period">
+                  <property name="text">
+                   <string>Clear</string>
+                  </property>
+                  <property name="icon">
+                   <iconset resource="../../ufwi-rpcc-qt/resources/ufwi-rpcc-qt.qrc">
+                    <normaloff>:/icons/delete.png</normaloff>:/icons/delete.png</iconset>
+                  </property>
+                 </widget>
+                </item>
+               </layout>
+              </item>
+              <item>
+               <layout class="QHBoxLayout" name="horizontalLayout_9">
+                <item>
+                 <widget class="QLabel" name="acl_auth_quality_label">
+                  <property name="text">
+                   <string>Authentication Quality:</string>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QComboBox" name="acl_auth_quality">
+                  <property name="sizePolicy">
+                   <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                   </sizepolicy>
+                  </property>
+                  <item>
+                   <property name="text">
+                    <string>Java Applet</string>
+                   </property>
+                  </item>
+                  <item>
+                   <property name="text">
+                    <string>NuFW authentication</string>
+                   </property>
+                  </item>
+                  <item>
+                   <property name="text">
+                    <string>Certificate authentication</string>
+                   </property>
+                  </item>
+                 </widget>
+                </item>
+               </layout>
+              </item>
+             </layout>
+            </widget>
+           </item>
+           <item>
+            <layout class="QHBoxLayout">
+             <item>
+              <widget class="QGroupBox" name="acl_use_log">
+               <property name="title">
+                <string>Logging</string>
+               </property>
+               <property name="checkable">
+                <bool>true</bool>
+               </property>
+               <layout class="QHBoxLayout">
+                <item>
+                 <widget class="QLabel" name="acl_log_prefix_label">
+                  <property name="text">
+                   <string>Prefix:</string>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QLineEdit" name="acl_log_prefix"/>
+                </item>
+               </layout>
+              </widget>
+             </item>
+             <item>
+              <widget class="QGroupBox" name="groupBox_2">
+               <property name="title">
+                <string>Comment</string>
+               </property>
+               <layout class="QVBoxLayout">
+                <item>
+                 <widget class="QTextEdit" name="acl_comment"/>
+                </item>
+               </layout>
+              </widget>
+             </item>
+            </layout>
+           </item>
+           <item>
+            <layout class="QHBoxLayout">
+             <item>
+              <widget class="QPushButton" name="acl_save_button">
+               <property name="text">
+                <string>&amp;OK</string>
+               </property>
+               <property name="icon">
+                <iconset resource="../../ufwi-rpcc-qt/resources/ufwi-rpcc-qt.qrc">
+                 <normaloff>:/icons/save.png</normaloff>:/icons/save.png</iconset>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QPushButton" name="acl_cancel_button">
+               <property name="text">
+                <string>&amp;Cancel</string>
+               </property>
+               <property name="icon">
+                <iconset resource="../../ufwi-rpcc-qt/resources/ufwi-rpcc-qt.qrc">
+                 <normaloff>:/icons/wrong.png</normaloff>:/icons/wrong.png</iconset>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </item>
+          </layout>
+         </widget>
+        </item>
+       </layout>
+      </widget>
+      <widget class="QWidget" name="page_8">
+       <layout class="QVBoxLayout">
+        <item>
+         <widget class="QGroupBox" name="groupBox_7">
+          <property name="title">
+           <string>Create New Group</string>
+          </property>
+          <layout class="QVBoxLayout">
+           <item>
+            <layout class="QGridLayout">
+             <item row="0" column="0">
+              <widget class="QLabel" name="label_8">
+               <property name="text">
+                <string>Identifier:</string>
+               </property>
+              </widget>
+             </item>
+             <item row="0" column="1" colspan="2">
+              <widget class="QLineEdit" name="objgroup_id_text"/>
+             </item>
+             <item row="1" column="0">
+              <widget class="QLabel" name="label_19">
+               <property name="text">
+                <string>Objects:</string>
+               </property>
+              </widget>
+             </item>
+             <item row="1" column="1">
+              <widget class="QListWidget" name="objgroup_list"/>
+             </item>
+             <item row="1" column="2">
+              <widget class="QPushButton" name="objgroup_delete_button">
+               <property name="text">
+                <string>Delete</string>
+               </property>
+               <property name="icon">
+                <iconset resource="../../ufwi-rpcc-qt/resources/ufwi-rpcc-qt.qrc">
+                 <normaloff>:/icons/delete.png</normaloff>:/icons/delete.png</iconset>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </item>
+           <item>
+            <layout class="QHBoxLayout">
+             <item>
+              <widget class="QPushButton" name="objgroup_apply_button">
+               <property name="text">
+                <string>&amp;OK</string>
+               </property>
+               <property name="icon">
+                <iconset resource="../../ufwi-rpcc-qt/resources/ufwi-rpcc-qt.qrc">
+                 <normaloff>:/icons/save.png</normaloff>:/icons/save.png</iconset>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QPushButton" name="objgroup_cancel_button">
+               <property name="text">
+                <string>&amp;Cancel</string>
+               </property>
+               <property name="icon">
+                <iconset resource="../../ufwi-rpcc-qt/resources/ufwi-rpcc-qt.qrc">
+                 <normaloff>:/icons/wrong.png</normaloff>:/icons/wrong.png</iconset>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </item>
+          </layout>
+         </widget>
+        </item>
+        <item>
+         <spacer>
+          <property name="orientation">
+           <enum>Qt::Vertical</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>20</width>
+            <height>40</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+       </layout>
+      </widget>
+      <widget class="QWidget" name="page_9">
+       <layout class="QGridLayout">
+        <item row="0" column="0">
+         <widget class="QGroupBox" name="nat_groupbox">
+          <property name="title">
+           <string>NAT Editor</string>
+          </property>
+          <layout class="QVBoxLayout" name="verticalLayout_15">
+           <item>
+            <layout class="QHBoxLayout" name="_6">
+             <item>
+              <widget class="QLabel" name="nat_type_label">
+               <property name="text">
+                <string>Rule type:</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QComboBox" name="nat_type">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QCheckBox" name="nat_enabled">
+               <property name="text">
+                <string>Rule Enabled</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QCheckBox" name="nat_mandatory">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <property name="text">
+                <string>Mandatory Rule</string>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </item>
+           <item>
+            <widget class="QGroupBox" name="groupBox_4">
+             <property name="title">
+              <string>Condition to Translate</string>
+             </property>
+             <layout class="QGridLayout" name="_3">
+              <item row="0" column="0">
+               <widget class="QLabel" name="label_11">
+                <property name="text">
+                 <string>Sources</string>
+                </property>
+                <property name="alignment">
+                 <set>Qt::AlignCenter</set>
+                </property>
+               </widget>
+              </item>
+              <item row="0" column="1">
+               <widget class="QLabel" name="label_12">
+                <property name="text">
+                 <string>Protocols</string>
+                </property>
+                <property name="alignment">
+                 <set>Qt::AlignCenter</set>
+                </property>
+               </widget>
+              </item>
+              <item row="0" column="2">
+               <widget class="QLabel" name="label_13">
+                <property name="text">
+                 <string>Destinations</string>
+                </property>
+                <property name="alignment">
+                 <set>Qt::AlignCenter</set>
+                </property>
+               </widget>
+              </item>
+              <item row="1" column="0">
+               <widget class="QListWidget" name="nat_sources">
+                <property name="minimumSize">
+                 <size>
+                  <width>1</width>
+                  <height>1</height>
+                 </size>
+                </property>
+               </widget>
+              </item>
+              <item row="1" column="1">
+               <widget class="QListWidget" name="nat_filters">
+                <property name="minimumSize">
+                 <size>
+                  <width>1</width>
+                  <height>1</height>
+                 </size>
+                </property>
+               </widget>
+              </item>
+              <item row="1" column="2">
+               <widget class="QListWidget" name="nat_destinations">
+                <property name="minimumSize">
+                 <size>
+                  <width>1</width>
+                  <height>1</height>
+                 </size>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </widget>
+           </item>
+           <item>
+            <widget class="QGroupBox" name="nat_translate_group">
+             <property name="title">
+              <string>Translates to</string>
+             </property>
+             <layout class="QGridLayout" name="_5">
+              <item row="0" column="0">
+               <widget class="QLabel" name="label_15">
+                <property name="text">
+                 <string>Sources</string>
+                </property>
+                <property name="alignment">
+                 <set>Qt::AlignCenter</set>
+                </property>
+               </widget>
+              </item>
+              <item row="0" column="1">
+               <widget class="QLabel" name="label_16">
+                <property name="text">
+                 <string>Protocols</string>
+                </property>
+                <property name="alignment">
+                 <set>Qt::AlignCenter</set>
+                </property>
+               </widget>
+              </item>
+              <item row="0" column="2">
+               <widget class="QLabel" name="label_17">
+                <property name="text">
+                 <string>Destinations</string>
+                </property>
+                <property name="alignment">
+                 <set>Qt::AlignCenter</set>
+                </property>
+               </widget>
+              </item>
+              <item row="1" column="0">
+               <widget class="QListWidget" name="nat_nated_sources">
+                <property name="minimumSize">
+                 <size>
+                  <width>1</width>
+                  <height>1</height>
+                 </size>
+                </property>
+               </widget>
+              </item>
+              <item row="1" column="1">
+               <widget class="QListWidget" name="nat_nated_filters">
+                <property name="minimumSize">
+                 <size>
+                  <width>1</width>
+                  <height>1</height>
+                 </size>
+                </property>
+               </widget>
+              </item>
+              <item row="1" column="2">
+               <widget class="QListWidget" name="nat_nated_destinations">
+                <property name="minimumSize">
+                 <size>
+                  <width>1</width>
+                  <height>1</height>
+                 </size>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </widget>
+           </item>
+           <item>
+            <widget class="QGroupBox" name="groupBox_5">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="title">
+              <string>Comment</string>
+             </property>
+             <layout class="QVBoxLayout" name="_2">
+              <item>
+               <widget class="QTextEdit" name="nat_comment"/>
+              </item>
+             </layout>
+            </widget>
+           </item>
+           <item>
+            <layout class="QHBoxLayout" name="_4">
+             <item>
+              <widget class="QPushButton" name="nat_save_button">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <property name="text">
+                <string>&amp;OK</string>
+               </property>
+               <property name="icon">
+                <iconset resource="../../ufwi-rpcc-qt/resources/ufwi-rpcc-qt.qrc">
+                 <normaloff>:/icons/save.png</normaloff>:/icons/save.png</iconset>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QPushButton" name="nat_cancel_button">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <property name="text">
+                <string>&amp;Cancel</string>
+               </property>
+               <property name="icon">
+                <iconset resource="../../ufwi-rpcc-qt/resources/ufwi-rpcc-qt.qrc">
+                 <normaloff>:/icons/wrong.png</normaloff>:/icons/wrong.png</iconset>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </item>
+          </layout>
+         </widget>
+        </item>
+       </layout>
+      </widget>
+      <widget class="QWidget" name="platform">
+       <layout class="QVBoxLayout" name="verticalLayout_17">
+        <item>
+         <layout class="QHBoxLayout" name="layout" stretch="0,0">
+          <item>
+           <widget class="QLabel" name="platform_edit_label_identifier">
+            <property name="text">
+             <string>Identifier:</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLineEdit" name="platform_edit_identifier_text"/>
+          </item>
+         </layout>
+        </item>
+        <item>
+         <widget class="ListEdit" name="platform_edit_list">
+          <property name="acceptDrops">
+           <bool>true</bool>
+          </property>
+          <property name="dragDropMode">
+           <enum>QAbstractItemView::DropOnly</enum>
+          </property>
+          <property name="headers">
+           <stringlist>
+            <string>Network</string>
+            <string>Protocol</string>
+           </stringlist>
+          </property>
+          <property name="editInPopup">
+           <bool>false</bool>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <layout class="QHBoxLayout" name="horizontalLayout_13">
+          <item>
+           <widget class="QPushButton" name="platform_edit_save_button">
+            <property name="text">
+             <string>OK</string>
+            </property>
+            <property name="icon">
+             <iconset resource="../../ufwi-rpcc-qt/resources/ufwi-rpcc-qt.qrc">
+              <normaloff>:/icons/save.png</normaloff>:/icons/save.png</iconset>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="platform_edit_cancel_button">
+            <property name="text">
+             <string>Cancel</string>
+            </property>
+            <property name="icon">
+             <iconset resource="../../ufwi-rpcc-qt/resources/ufwi-rpcc-qt.qrc">
+              <normaloff>:/icons/wrong.png</normaloff>:/icons/wrong.png</iconset>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
+       </layout>
+      </widget>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QMenuBar" name="menubar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>1104</width>
+     <height>25</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QStatusBar" name="statusbar"/>
+  <widget class="QToolBar" name="toolbar">
+   <property name="windowTitle">
+    <string>Toolbar</string>
+   </property>
+   <property name="toolButtonStyle">
+    <enum>Qt::ToolButtonTextBesideIcon</enum>
+   </property>
+   <attribute name="toolBarArea">
+    <enum>TopToolBarArea</enum>
+   </attribute>
+   <attribute name="toolBarBreak">
+    <bool>false</bool>
+   </attribute>
+   <addaction name="action_open_ruleset"/>
+   <addaction name="action_save"/>
+   <addaction name="action_save_as"/>
+   <addaction name="action_close_ruleset"/>
+   <addaction name="separator"/>
+   <addaction name="action_undo"/>
+   <addaction name="action_redo"/>
+   <addaction name="separator"/>
+   <addaction name="action_test_ruleset"/>
+   <addaction name="action_apply"/>
+  </widget>
+  <widget class="QDockWidget" name="dock_library">
+   <property name="floating">
+    <bool>false</bool>
+   </property>
+   <property name="features">
+    <set>QDockWidget::DockWidgetMovable</set>
+   </property>
+   <property name="windowTitle">
+    <string>Object Library</string>
+   </property>
+   <attribute name="dockWidgetArea">
+    <number>1</number>
+   </attribute>
+   <widget class="QWidget" name="dockWidgetContents">
+    <layout class="QVBoxLayout" name="verticalLayout">
+     <item>
+      <widget class="QToolBox" name="object_library">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <widget class="QWidget" name="page_5">
+        <property name="geometry">
+         <rect>
+          <x>0</x>
+          <y>0</y>
+          <width>274</width>
+          <height>435</height>
+         </rect>
+        </property>
+        <attribute name="label">
+         <string>Networks</string>
+        </attribute>
+        <layout class="QVBoxLayout" name="verticalLayout_2">
+         <item>
+          <layout class="QHBoxLayout" name="horizontalLayout">
+           <item>
+            <widget class="QLabel" name="label_20">
+             <property name="text">
+              <string>Filter:</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLineEdit" name="resource_filter_text"/>
+           </item>
+           <item>
+            <widget class="QPushButton" name="resource_filter_clear">
+             <property name="text">
+              <string>Clear</string>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </item>
+         <item>
+          <widget class="QTreeWidget" name="resource_tree">
+           <column>
+            <property name="text">
+             <string>1</string>
+            </property>
+           </column>
+          </widget>
+         </item>
+         <item>
+          <layout class="QGridLayout">
+           <item row="1" column="0">
+            <widget class="QPushButton" name="resource_modify_button">
+             <property name="toolTip">
+              <string>Edit the selected resource</string>
+             </property>
+             <property name="text">
+              <string>Edit</string>
+             </property>
+             <property name="icon">
+              <iconset resource="../../ufwi-rpcc-qt/resources/ufwi-rpcc-qt.qrc">
+               <normaloff>:/icons/edit.png</normaloff>:/icons/edit.png</iconset>
+             </property>
+            </widget>
+           </item>
+           <item row="1" column="1">
+            <widget class="QPushButton" name="resource_delete_button">
+             <property name="toolTip">
+              <string>Delete the selected resource</string>
+             </property>
+             <property name="text">
+              <string>Delete</string>
+             </property>
+             <property name="icon">
+              <iconset resource="../../ufwi-rpcc-qt/resources/ufwi-rpcc-qt.qrc">
+               <normaloff>:/icons/delete.png</normaloff>:/icons/delete.png</iconset>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="0">
+            <widget class="QPushButton" name="resource_create_button">
+             <property name="text">
+              <string>New</string>
+             </property>
+             <property name="icon">
+              <iconset resource="../../ufwi-rpcc-qt/resources/ufwi-rpcc-qt.qrc">
+               <normaloff>:/icons-32/add.png</normaloff>:/icons-32/add.png</iconset>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="1">
+            <widget class="QPushButton" name="resource_creategrp_button">
+             <property name="text">
+              <string>New Group</string>
+             </property>
+             <property name="icon">
+              <iconset resource="../../ufwi-rpcc-qt/resources/ufwi-rpcc-qt.qrc">
+               <normaloff>:/icons-32/groupe_objets.png</normaloff>:/icons-32/groupe_objets.png</iconset>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </item>
+        </layout>
+       </widget>
+       <widget class="QWidget" name="page_6">
+        <property name="geometry">
+         <rect>
+          <x>0</x>
+          <y>0</y>
+          <width>236</width>
+          <height>210</height>
+         </rect>
+        </property>
+        <attribute name="label">
+         <string>Protocols</string>
+        </attribute>
+        <layout class="QVBoxLayout" name="verticalLayout_3">
+         <item>
+          <layout class="QHBoxLayout" name="horizontalLayout_2">
+           <item>
+            <widget class="QLabel" name="label_21">
+             <property name="text">
+              <string>Filter:</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLineEdit" name="protocol_filter_text"/>
+           </item>
+           <item>
+            <widget class="QPushButton" name="protocol_filter_clear">
+             <property name="text">
+              <string>Clear</string>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </item>
+         <item>
+          <widget class="QTreeWidget" name="protocol_list">
+           <column>
+            <property name="text">
+             <string>1</string>
+            </property>
+           </column>
+          </widget>
+         </item>
+         <item>
+          <layout class="QGridLayout">
+           <item row="1" column="0">
+            <widget class="QPushButton" name="protocol_modify_button">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="toolTip">
+              <string>Edit the selected protocol</string>
+             </property>
+             <property name="text">
+              <string>Edit</string>
+             </property>
+             <property name="icon">
+              <iconset resource="../../ufwi-rpcc-qt/resources/ufwi-rpcc-qt.qrc">
+               <normaloff>:/icons/edit.png</normaloff>:/icons/edit.png</iconset>
+             </property>
+            </widget>
+           </item>
+           <item row="1" column="1">
+            <widget class="QPushButton" name="protocol_delete_button">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="toolTip">
+              <string>Delete the selected protocol</string>
+             </property>
+             <property name="text">
+              <string>Delete</string>
+             </property>
+             <property name="icon">
+              <iconset resource="../../ufwi-rpcc-qt/resources/ufwi-rpcc-qt.qrc">
+               <normaloff>:/icons/delete.png</normaloff>:/icons/delete.png</iconset>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="0">
+            <widget class="QPushButton" name="protocol_create_button">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="toolTip">
+              <string>Create a new protocol</string>
+             </property>
+             <property name="text">
+              <string>New</string>
+             </property>
+             <property name="icon">
+              <iconset resource="../../ufwi-rpcc-qt/resources/ufwi-rpcc-qt.qrc">
+               <normaloff>:/icons/add.png</normaloff>:/icons/add.png</iconset>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="1">
+            <widget class="QPushButton" name="protocol_creategrp_button">
+             <property name="toolTip">
+              <string>Create a group of protocols</string>
+             </property>
+             <property name="text">
+              <string>New Group</string>
+             </property>
+             <property name="icon">
+              <iconset resource="../../ufwi-rpcc-qt/resources/ufwi-rpcc-qt.qrc">
+               <normaloff>:/icons/groupe_objets.png</normaloff>:/icons/groupe_objets.png</iconset>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </item>
+        </layout>
+       </widget>
+       <widget class="QWidget" name="page_platform">
+        <property name="geometry">
+         <rect>
+          <x>0</x>
+          <y>0</y>
+          <width>236</width>
+          <height>210</height>
+         </rect>
+        </property>
+        <attribute name="label">
+         <string>Platforms</string>
+        </attribute>
+        <layout class="QVBoxLayout" name="verticalLayout_19">
+         <item>
+          <layout class="QHBoxLayout" name="platform_filter">
+           <item>
+            <widget class="QLabel" name="platform_label_filter">
+             <property name="text">
+              <string>Filter:</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLineEdit" name="platform_filter_text"/>
+           </item>
+           <item>
+            <widget class="QPushButton" name="platform_filter_clear">
+             <property name="text">
+              <string>Clear</string>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </item>
+         <item>
+          <widget class="QTreeWidget" name="platform_list">
+           <column>
+            <property name="text">
+             <string>1</string>
+            </property>
+           </column>
+          </widget>
+         </item>
+         <item>
+          <layout class="QGridLayout" name="platform_buttons">
+           <item row="1" column="0">
+            <widget class="QPushButton" name="platform_modify_button">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="toolTip">
+              <string>Edit the selected platform</string>
+             </property>
+             <property name="text">
+              <string>Edit</string>
+             </property>
+             <property name="icon">
+              <iconset resource="../../ufwi-rpcc-qt/resources/ufwi-rpcc-qt.qrc">
+               <normaloff>:/icons/edit.png</normaloff>:/icons/edit.png</iconset>
+             </property>
+            </widget>
+           </item>
+           <item row="1" column="1">
+            <widget class="QPushButton" name="platform_delete_button">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="toolTip">
+              <string>Delete the selected platform</string>
+             </property>
+             <property name="text">
+              <string>Delete</string>
+             </property>
+             <property name="icon">
+              <iconset resource="../../ufwi-rpcc-qt/resources/ufwi-rpcc-qt.qrc">
+               <normaloff>:/icons/delete.png</normaloff>:/icons/delete.png</iconset>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="0" colspan="2">
+            <widget class="QPushButton" name="platform_create_button">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="toolTip">
+              <string>Create a new platform</string>
+             </property>
+             <property name="text">
+              <string>New</string>
+             </property>
+             <property name="icon">
+              <iconset resource="../../ufwi-rpcc-qt/resources/ufwi-rpcc-qt.qrc">
+               <normaloff>:/icons/add.png</normaloff>:/icons/add.png</iconset>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </item>
+        </layout>
+       </widget>
+       <widget class="QWidget" name="page_7">
+        <property name="geometry">
+         <rect>
+          <x>0</x>
+          <y>0</y>
+          <width>236</width>
+          <height>210</height>
+         </rect>
+        </property>
+        <attribute name="label">
+         <string>User Groups</string>
+        </attribute>
+        <layout class="QVBoxLayout" name="verticalLayout_4">
+         <item>
+          <layout class="QHBoxLayout" name="horizontalLayout_3">
+           <item>
+            <widget class="QLabel" name="label_22">
+             <property name="text">
+              <string>Filter:</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLineEdit" name="group_filter_text"/>
+           </item>
+           <item>
+            <widget class="QPushButton" name="group_filter_clear">
+             <property name="text">
+              <string>Clear</string>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </item>
+         <item>
+          <widget class="QTreeWidget" name="group_list">
+           <column>
+            <property name="text">
+             <string>1</string>
+            </property>
+           </column>
+          </widget>
+         </item>
+         <item>
+          <layout class="QGridLayout">
+           <item row="0" column="1">
+            <widget class="QPushButton" name="group_creategrp_button">
+             <property name="toolTip">
+              <string>Create a group of user groups</string>
+             </property>
+             <property name="text">
+              <string>New Group</string>
+             </property>
+             <property name="icon">
+              <iconset resource="../../ufwi-rpcc-qt/resources/ufwi-rpcc-qt.qrc">
+               <normaloff>:/icons/groupe_objets.png</normaloff>:/icons/groupe_objets.png</iconset>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="0">
+            <widget class="QPushButton" name="group_create_button">
+             <property name="text">
+              <string>New</string>
+             </property>
+             <property name="icon">
+              <iconset resource="../../ufwi-rpcc-qt/resources/ufwi-rpcc-qt.qrc">
+               <normaloff>:/icons/add.png</normaloff>:/icons/add.png</iconset>
+             </property>
+            </widget>
+           </item>
+           <item row="1" column="0">
+            <widget class="QPushButton" name="group_modify_button">
+             <property name="text">
+              <string>Edit</string>
+             </property>
+             <property name="icon">
+              <iconset resource="../../ufwi-rpcc-qt/resources/ufwi-rpcc-qt.qrc">
+               <normaloff>:/icons/edit.png</normaloff>:/icons/edit.png</iconset>
+             </property>
+            </widget>
+           </item>
+           <item row="1" column="1">
+            <widget class="QPushButton" name="group_delete_button">
+             <property name="text">
+              <string>Delete</string>
+             </property>
+             <property name="icon">
+              <iconset resource="../../ufwi-rpcc-qt/resources/ufwi-rpcc-qt.qrc">
+               <normaloff>:/icons/delete.png</normaloff>:/icons/delete.png</iconset>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </item>
+        </layout>
+       </widget>
+       <widget class="QWidget" name="page_3">
+        <property name="geometry">
+         <rect>
+          <x>0</x>
+          <y>0</y>
+          <width>236</width>
+          <height>210</height>
+         </rect>
+        </property>
+        <attribute name="label">
+         <string>Applications</string>
+        </attribute>
+        <layout class="QVBoxLayout" name="verticalLayout_5">
+         <item>
+          <layout class="QHBoxLayout" name="horizontalLayout_4">
+           <item>
+            <widget class="QLabel" name="label_23">
+             <property name="text">
+              <string>Filter:</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLineEdit" name="app_filter_text"/>
+           </item>
+           <item>
+            <widget class="QPushButton" name="app_filter_clear">
+             <property name="text">
+              <string>Clear</string>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </item>
+         <item>
+          <widget class="QTreeWidget" name="app_list">
+           <column>
+            <property name="text">
+             <string>Applications</string>
+            </property>
+           </column>
+          </widget>
+         </item>
+         <item>
+          <layout class="QGridLayout">
+           <item row="0" column="0">
+            <widget class="QPushButton" name="app_create_button">
+             <property name="text">
+              <string>New</string>
+             </property>
+             <property name="icon">
+              <iconset resource="../../ufwi-rpcc-qt/resources/ufwi-rpcc-qt.qrc">
+               <normaloff>:/icons/add.png</normaloff>:/icons/add.png</iconset>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="1">
+            <widget class="QPushButton" name="app_creategrp_button">
+             <property name="toolTip">
+              <string>Create a group of applications</string>
+             </property>
+             <property name="text">
+              <string>New Group</string>
+             </property>
+             <property name="icon">
+              <iconset resource="../../ufwi-rpcc-qt/resources/ufwi-rpcc-qt.qrc">
+               <normaloff>:/icons/groupe_objets.png</normaloff>:/icons/groupe_objets.png</iconset>
+             </property>
+            </widget>
+           </item>
+           <item row="1" column="0">
+            <widget class="QPushButton" name="app_modify_button">
+             <property name="text">
+              <string>Edit</string>
+             </property>
+             <property name="icon">
+              <iconset resource="../../ufwi-rpcc-qt/resources/ufwi-rpcc-qt.qrc">
+               <normaloff>:/icons/edit.png</normaloff>:/icons/edit.png</iconset>
+             </property>
+            </widget>
+           </item>
+           <item row="1" column="1">
+            <widget class="QPushButton" name="app_delete_button">
+             <property name="text">
+              <string>Delete</string>
+             </property>
+             <property name="icon">
+              <iconset resource="../../ufwi-rpcc-qt/resources/ufwi-rpcc-qt.qrc">
+               <normaloff>:/icons/delete.png</normaloff>:/icons/delete.png</iconset>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </item>
+        </layout>
+       </widget>
+       <widget class="QWidget" name="page_4">
+        <property name="geometry">
+         <rect>
+          <x>0</x>
+          <y>0</y>
+          <width>236</width>
+          <height>210</height>
+         </rect>
+        </property>
+        <attribute name="label">
+         <string>Operating Systems</string>
+        </attribute>
+        <layout class="QVBoxLayout" name="verticalLayout_6">
+         <item>
+          <layout class="QHBoxLayout" name="horizontalLayout_5">
+           <item>
+            <widget class="QLabel" name="label_24">
+             <property name="text">
+              <string>Filter:</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLineEdit" name="os_filter_text"/>
+           </item>
+           <item>
+            <widget class="QPushButton" name="os_filter_clear">
+             <property name="text">
+              <string>Clear</string>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </item>
+         <item>
+          <widget class="QTreeWidget" name="os_list">
+           <column>
+            <property name="text">
+             <string>1</string>
+            </property>
+           </column>
+          </widget>
+         </item>
+         <item>
+          <layout class="QGridLayout">
+           <item row="0" column="0">
+            <widget class="QPushButton" name="os_create_button">
+             <property name="text">
+              <string>New</string>
+             </property>
+             <property name="icon">
+              <iconset resource="../../ufwi-rpcc-qt/resources/ufwi-rpcc-qt.qrc">
+               <normaloff>:/icons/add.png</normaloff>:/icons/add.png</iconset>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="1">
+            <widget class="QPushButton" name="os_creategrp_button">
+             <property name="toolTip">
+              <string>Create a group of operating systems</string>
+             </property>
+             <property name="text">
+              <string>New Group</string>
+             </property>
+             <property name="icon">
+              <iconset resource="../../ufwi-rpcc-qt/resources/ufwi-rpcc-qt.qrc">
+               <normaloff>:/icons/groupe_objets.png</normaloff>:/icons/groupe_objets.png</iconset>
+             </property>
+            </widget>
+           </item>
+           <item row="1" column="0">
+            <widget class="QPushButton" name="os_modify_button">
+             <property name="text">
+              <string>Edit</string>
+             </property>
+             <property name="icon">
+              <iconset resource="../../ufwi-rpcc-qt/resources/ufwi-rpcc-qt.qrc">
+               <normaloff>:/icons/edit.png</normaloff>:/icons/edit.png</iconset>
+             </property>
+            </widget>
+           </item>
+           <item row="1" column="1">
+            <widget class="QPushButton" name="os_delete_button">
+             <property name="text">
+              <string>Delete</string>
+             </property>
+             <property name="icon">
+              <iconset resource="../../ufwi-rpcc-qt/resources/ufwi-rpcc-qt.qrc">
+               <normaloff>:/icons/delete.png</normaloff>:/icons/delete.png</iconset>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </item>
+        </layout>
+       </widget>
+       <widget class="QWidget" name="page_5">
+        <property name="geometry">
+         <rect>
+          <x>0</x>
+          <y>0</y>
+          <width>191</width>
+          <height>210</height>
+         </rect>
+        </property>
+        <attribute name="label">
+         <string>Time Criteria</string>
+        </attribute>
+        <layout class="QVBoxLayout" name="verticalLayout_7">
+         <item>
+          <layout class="QHBoxLayout" name="horizontalLayout_6">
+           <item>
+            <widget class="QLabel" name="label_25">
+             <property name="text">
+              <string>Filter:</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLineEdit" name="period_filter_text"/>
+           </item>
+           <item>
+            <widget class="QPushButton" name="period_filter_clear">
+             <property name="text">
+              <string>Clear</string>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </item>
+         <item>
+          <widget class="QTreeWidget" name="period_list">
+           <column>
+            <property name="text">
+             <string>1</string>
+            </property>
+           </column>
+          </widget>
+         </item>
+         <item>
+          <layout class="QGridLayout">
+           <item row="0" column="0" colspan="2">
+            <widget class="QPushButton" name="period_create_button">
+             <property name="text">
+              <string>New</string>
+             </property>
+             <property name="icon">
+              <iconset resource="../../ufwi-rpcc-qt/resources/ufwi-rpcc-qt.qrc">
+               <normaloff>:/icons/add.png</normaloff>:/icons/add.png</iconset>
+             </property>
+            </widget>
+           </item>
+           <item row="1" column="0">
+            <widget class="QPushButton" name="period_modify_button">
+             <property name="text">
+              <string>Edit</string>
+             </property>
+             <property name="icon">
+              <iconset resource="../../ufwi-rpcc-qt/resources/ufwi-rpcc-qt.qrc">
+               <normaloff>:/icons/edit.png</normaloff>:/icons/edit.png</iconset>
+             </property>
+            </widget>
+           </item>
+           <item row="1" column="1">
+            <widget class="QPushButton" name="period_delete_button">
+             <property name="text">
+              <string>Delete</string>
+             </property>
+             <property name="icon">
+              <iconset resource="../../ufwi-rpcc-qt/resources/ufwi-rpcc-qt.qrc">
+               <normaloff>:/icons/delete.png</normaloff>:/icons/delete.png</iconset>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </item>
+        </layout>
+       </widget>
+       <widget class="QWidget" name="page_6">
+        <property name="geometry">
+         <rect>
+          <x>0</x>
+          <y>0</y>
+          <width>191</width>
+          <height>210</height>
+         </rect>
+        </property>
+        <attribute name="label">
+         <string>Durations</string>
+        </attribute>
+        <layout class="QVBoxLayout" name="verticalLayout_8">
+         <item>
+          <layout class="QHBoxLayout" name="horizontalLayout_7">
+           <item>
+            <widget class="QLabel" name="label_26">
+             <property name="text">
+              <string>Filter:</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLineEdit" name="duration_filter_text"/>
+           </item>
+           <item>
+            <widget class="QPushButton" name="duration_filter_clear">
+             <property name="text">
+              <string>Clear</string>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </item>
+         <item>
+          <widget class="QTreeWidget" name="duration_list">
+           <column>
+            <property name="text">
+             <string>1</string>
+            </property>
+           </column>
+          </widget>
+         </item>
+         <item>
+          <layout class="QGridLayout">
+           <item row="1" column="1">
+            <widget class="QPushButton" name="duration_delete_button">
+             <property name="text">
+              <string>Delete</string>
+             </property>
+             <property name="icon">
+              <iconset resource="../../ufwi-rpcc-qt/resources/ufwi-rpcc-qt.qrc">
+               <normaloff>:/icons/delete.png</normaloff>:/icons/delete.png</iconset>
+             </property>
+            </widget>
+           </item>
+           <item row="1" column="0">
+            <widget class="QPushButton" name="duration_modify_button">
+             <property name="text">
+              <string>Edit</string>
+             </property>
+             <property name="icon">
+              <iconset resource="../../ufwi-rpcc-qt/resources/ufwi-rpcc-qt.qrc">
+               <normaloff>:/icons/edit.png</normaloff>:/icons/edit.png</iconset>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="0" colspan="2">
+            <widget class="QPushButton" name="duration_create_button">
+             <property name="text">
+              <string>New</string>
+             </property>
+             <property name="icon">
+              <iconset resource="../../ufwi-rpcc-qt/resources/ufwi-rpcc-qt.qrc">
+               <normaloff>:/icons/add.png</normaloff>:/icons/add.png</iconset>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </item>
+        </layout>
+       </widget>
+      </widget>
+     </item>
+    </layout>
+   </widget>
+  </widget>
+  <widget class="QDockWidget" name="dock_informations">
+   <property name="floating">
+    <bool>false</bool>
+   </property>
+   <property name="features">
+    <set>QDockWidget::DockWidgetMovable</set>
+   </property>
+   <property name="windowTitle">
+    <string>Information</string>
+   </property>
+   <attribute name="dockWidgetArea">
+    <number>2</number>
+   </attribute>
+   <widget class="QWidget" name="dockWidgetContents_5">
+    <layout class="QVBoxLayout">
+     <item>
+      <widget class="QTextBrowser" name="textInfo">
+       <property name="openLinks">
+        <bool>false</bool>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </widget>
+  </widget>
+  <action name="action_save">
+   <property name="icon">
+    <iconset resource="../../ufwi-rpcc-qt/resources/ufwi-rpcc-qt.qrc">
+     <normaloff>:/icons/save.png</normaloff>:/icons/save.png</iconset>
+   </property>
+   <property name="text">
+    <string>Save</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+S</string>
+   </property>
+  </action>
+  <action name="action_save_as">
+   <property name="icon">
+    <iconset resource="../../ufwi-rpcc-qt/resources/ufwi-rpcc-qt.qrc">
+     <normaloff>:/icons/save_as.png</normaloff>:/icons/save_as.png</iconset>
+   </property>
+   <property name="text">
+    <string>Save As</string>
+   </property>
+  </action>
+  <action name="action_undo">
+   <property name="icon">
+    <iconset resource="../../ufwi-rpcc-qt/resources/ufwi-rpcc-qt.qrc">
+     <normaloff>:/icons/undo.png</normaloff>:/icons/undo.png</iconset>
+   </property>
+   <property name="text">
+    <string>Undo</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Z</string>
+   </property>
+  </action>
+  <action name="action_redo">
+   <property name="icon">
+    <iconset resource="../../ufwi-rpcc-qt/resources/ufwi-rpcc-qt.qrc">
+     <normaloff>:/icons/redo.png</normaloff>:/icons/redo.png</iconset>
+   </property>
+   <property name="text">
+    <string>Redo</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Shift+Z</string>
+   </property>
+  </action>
+  <action name="action_apply">
+   <property name="icon">
+    <iconset resource="../../ufwi-rpcc-qt/resources/ufwi-rpcc-qt.qrc">
+     <normaloff>:/icons/apply_rules.png</normaloff>:/icons/apply_rules.png</iconset>
+   </property>
+   <property name="text">
+    <string>Apply the Rule Set</string>
+   </property>
+  </action>
+  <action name="action_open_ruleset">
+   <property name="icon">
+    <iconset resource="../../ufwi-rpcc-qt/resources/ufwi-rpcc-qt.qrc">
+     <normaloff>:/icons/nouveau_jeu_de_regle.png</normaloff>:/icons/nouveau_jeu_de_regle.png</iconset>
+   </property>
+   <property name="text">
+    <string>Rule Sets</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+O</string>
+   </property>
+  </action>
+  <action name="action_close_ruleset">
+   <property name="icon">
+    <iconset resource="../../ufwi-rpcc-qt/resources/ufwi-rpcc-qt.qrc">
+     <normaloff>:/icons/wrong.png</normaloff>:/icons/wrong.png</iconset>
+   </property>
+   <property name="text">
+    <string>Close</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+W</string>
+   </property>
+  </action>
+  <action name="action_parameters">
+   <property name="icon">
+    <iconset resource="../../ufwi-rpcc-qt/resources/ufwi-rpcc-qt.qrc">
+     <normaloff>:/icons/settings.png</normaloff>:/icons/settings.png</iconset>
+   </property>
+   <property name="text">
+    <string>Parameters...</string>
+   </property>
+  </action>
+  <action name="action_custom_rules">
+   <property name="icon">
+    <iconset resource="../../ufwi-rpcc-qt/resources/ufwi-rpcc-qt.qrc">
+     <normaloff>:/icons/edit.png</normaloff>:/icons/edit.png</iconset>
+   </property>
+   <property name="text">
+    <string>Custom Rules</string>
+   </property>
+  </action>
+  <action name="action_generic_links">
+   <property name="text">
+    <string>Edit Generic Links</string>
+   </property>
+  </action>
+  <action name="action_quit">
+   <property name="icon">
+    <iconset resource="../../ufwi-rpcc-qt/resources/ufwi-rpcc-qt.qrc">
+     <normaloff>:/icons/exit.png</normaloff>:/icons/exit.png</iconset>
+   </property>
+   <property name="text">
+    <string>&amp;Quit</string>
+   </property>
+  </action>
+  <action name="action_fullscreen">
+   <property name="icon">
+    <iconset resource="../../ufwi-rpcc-qt/resources/ufwi-rpcc-qt.qrc">
+     <normaloff>:/icons/fullscreen.png</normaloff>:/icons/fullscreen.png</iconset>
+   </property>
+   <property name="text">
+    <string>Fullscreen</string>
+   </property>
+  </action>
+  <action name="action_properties">
+   <property name="text">
+    <string>Properties</string>
+   </property>
+  </action>
+  <action name="action_manage_templates">
+   <property name="text">
+    <string>Manage Templates</string>
+   </property>
+  </action>
+  <action name="action_fusion">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Fusion</string>
+   </property>
+  </action>
+  <action name="action_production_ruleset">
+   <property name="text">
+    <string>Production Rule Set</string>
+   </property>
+   <property name="toolTip">
+    <string>Display information about the rule set in production</string>
+   </property>
+  </action>
+  <action name="action_new_ruleset">
+   <property name="icon">
+    <iconset resource="../../ufwi-rpcc-qt/resources/ufwi-rpcc-qt.qrc">
+     <normaloff>:/icons/nouveau_jeu_de_regle.png</normaloff>:/icons/nouveau_jeu_de_regle.png</iconset>
+   </property>
+   <property name="text">
+    <string>New Rule Set</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+N</string>
+   </property>
+  </action>
+  <action name="action_test_ruleset">
+   <property name="icon">
+    <iconset resource="../../ufwi-rpcc-qt/resources/ufwi-rpcc-qt.qrc">
+     <normaloff>:/icons/test_rules_set.png</normaloff>:/icons/test_rules_set.png</iconset>
+   </property>
+   <property name="text">
+    <string>Test the Rule Set</string>
+   </property>
+   <property name="toolTip">
+    <string>Build and test the rule set</string>
+   </property>
+  </action>
+  <action name="action_ufwi_conf_sync">
+   <property name="icon">
+    <iconset resource="../../ufwi-rpcc-qt/resources/ufwi-rpcc-qt.qrc">
+     <normaloff>:/icons-20/refresh.png</normaloff>:/icons-20/refresh.png</iconset>
+   </property>
+   <property name="text">
+    <string>Discover interfaces and networks</string>
+   </property>
+  </action>
+  <action name="action_apply_non_authenticated">
+   <property name="icon">
+    <iconset resource="../../ufwi-rpcc-qt/resources/ufwi-rpcc-qt.qrc">
+     <normaloff>:/icons-20/apply_rules.png</normaloff>:/icons-20/apply_rules.png</iconset>
+   </property>
+   <property name="text">
+    <string>Apply Non-Authenticating Rule Set</string>
+   </property>
+  </action>
+ </widget>
+ <customwidgets>
+  <customwidget>
+   <class>ListEdit</class>
+   <extends>QWidget</extends>
+   <header>ufwi_rpcc_qt.list_edit</header>
+  </customwidget>
+ </customwidgets>
+ <resources>
+  <include location="ufwi-ruleset.qrc"/>
+  <include location="../../ufwi-rpcc-qt/resources/ufwi-rpcc-qt.qrc"/>
+ </resources>
+ <connections>
+  <connection>
+   <sender>resource_filter_clear</sender>
+   <signal>clicked()</signal>
+   <receiver>resource_filter_text</receiver>
+   <slot>clear()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>232</x>
+     <y>127</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>186</x>
+     <y>131</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>protocol_filter_clear</sender>
+   <signal>clicked()</signal>
+   <receiver>protocol_filter_text</receiver>
+   <slot>clear()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>235</x>
+     <y>155</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>180</x>
+     <y>155</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>period_filter_clear</sender>
+   <signal>clicked()</signal>
+   <receiver>period_filter_text</receiver>
+   <slot>clear()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>242</x>
+     <y>262</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>162</x>
+     <y>261</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>duration_filter_clear</sender>
+   <signal>clicked()</signal>
+   <receiver>duration_filter_text</receiver>
+   <slot>clear()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>242</x>
+     <y>287</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>188</x>
+     <y>290</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>group_filter_clear</sender>
+   <signal>clicked()</signal>
+   <receiver>group_filter_text</receiver>
+   <slot>clear()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>246</x>
+     <y>183</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>186</x>
+     <y>183</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>app_filter_clear</sender>
+   <signal>clicked()</signal>
+   <receiver>app_filter_text</receiver>
+   <slot>clear()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>246</x>
+     <y>210</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>144</x>
+     <y>209</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>os_filter_clear</sender>
+   <signal>clicked()</signal>
+   <receiver>os_filter_text</receiver>
+   <slot>clear()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>240</x>
+     <y>237</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>141</x>
+     <y>236</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>platform_filter_clear</sender>
+   <signal>clicked()</signal>
+   <receiver>platform_filter_text</receiver>
+   <slot>clear()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>240</x>
+     <y>237</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>141</x>
+     <y>236</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+</ui>

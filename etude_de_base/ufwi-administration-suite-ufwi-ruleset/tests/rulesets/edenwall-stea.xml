@@ -1,0 +1,684 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<ruleset name="STEA" timestamp="2009-12-10 19:13:15" version="3.0.0">
+   <include library="nuface" />
+   <resources>
+      <interface id="GAASPAR (vlan 11)" name="bond0.11">
+         <network address="10.30.160.0/24" id="GAASPAR" />
+         <network address="75.10.150.0/24" id="GASPAAR (historique)">
+            <host address="75.10.150.51" id="oracle_gaaspar" />
+         </network>
+      </interface>
+      <interface id="Serveurs" name="bond0.510">
+         <network address="2000::/3" id="Internet IPv6" />
+         <network address="fe80::/64" id="Local link IPv6" />
+         <network address="ff02::/16" id="Local multicast IPv6" />
+         <network address="75.0.30.0/24" id="Serveurs (vlan 201)">
+            <host address="75.0.30.184" id="cook" />
+            <host address="75.0.30.63" id="mrs" />
+         </network>
+         <network address="10.30.15.0/24" id="Serveurs (vlan 510)">
+            <host address="10.30.15.50" id="activite" />
+            <host address="10.30.15.52" id="activiterecette" />
+            <host address="10.30.15.147" id="alger" />
+            <host address="10.30.15.117" id="apollinaire" />
+            <host address="10.30.15.149" id="asmara" />
+            <host address="10.30.15.59" id="babel" />
+            <host address="10.30.15.51" id="babylone" />
+            <host address="10.30.15.146" id="bamako" />
+            <host address="10.30.15.148" id="bangalore" />
+            <host address="10.30.15.53" id="cesaire" />
+            <host address="10.30.15.151" id="dodoma" />
+            <host address="10.30.15.115" id="dumas" />
+            <hostname address_type="IPv4" hostname="glpi.dpe-stea.mdp" id="glpi">
+               <address>10.30.15.191</address>
+               <address>10.30.15.192</address>
+            </hostname>
+            <hostname address_type="IPv4" hostname="gosa.dpe-stea.mdp" id="gosa">
+               <address>10.30.15.193</address>
+               <address>10.30.15.194</address>
+            </hostname>
+            <hostname address_type="IPv4" hostname="jffnms.dpe-stea.mdp" id="jffnms">
+               <address>10.30.15.183</address>
+               <address>10.30.15.184</address>
+            </hostname>
+            <host address="10.30.15.128" id="kadena" />
+            <host address="10.30.15.56" id="kolabtest" />
+            <host address="10.30.15.141" id="mexico" />
+            <host address="10.30.15.136" id="montevideo" />
+            <host address="10.30.15.120" id="moscou" />
+            <host address="10.30.15.137" id="munich" />
+            <host address="10.30.15.116" id="musset" />
+            <hostname address_type="IPv4" hostname="ocsinventory-ng.dpe-stea.mdp" id="ocsinventory-ng">
+               <address>10.30.15.185</address>
+               <address>10.30.15.186</address>
+            </hostname>
+            <host address="10.30.15.127" id="okinawa" />
+            <host address="10.30.15.57" id="orwell" />
+            <hostname address_type="IPv4" hostname="phpmyadmin.dpe-stea.mdp" id="phpmyadmin">
+               <address>10.30.15.199</address>
+               <address>10.30.15.200</address>
+            </hostname>
+            <host address="10.30.15.121" id="prevert" />
+            <host address="10.30.15.58" id="qse-stpp" />
+            <host address="10.30.15.125" id="rimbaud" />
+            <host address="10.30.15.131" id="ronsard" />
+            <host address="10.30.15.150" id="santiago" />
+            <host address="10.30.15.54" id="senghor" />
+            <hostname address_type="IPv4" hostname="svn.dpe-stea.mdp" id="svn">
+               <address>10.30.15.195</address>
+               <address>10.30.15.196</address>
+            </hostname>
+            <host address="10.30.15.155" id="valparaiso" />
+            <host address="10.30.15.156" id="vivaldi" />
+            <hostname address_type="IPv4" hostname="wikidic.dpe-stea.mdp" id="wikidic">
+               <address>10.30.15.181</address>
+               <address>10.30.15.182</address>
+            </hostname>
+            <host address="10.30.15.145" id="xian" />
+            <host address="10.30.15.123" id="zola" />
+         </network>
+      </interface>
+      <interface id="bond0" name="bond0" />
+      <interface id="bond0.1" name="bond0.1">
+         <network address="10.30.1.0/24" id="Boucle" />
+         <network address="10.30.0.0/16" id="STEA" />
+         <network address="10.128.0.0/16" id="STEA toip" />
+      </interface>
+      <interface id="serveurs ToIP (vlan 301)" name="bond0.301">
+         <network address="85.0.30.0/24" id="serveurs ToIP">
+            <host address="85.0.30.240" id="ccm1" />
+            <host address="85.0.30.241" id="ccm2" />
+         </network>
+      </interface>
+      <interface id="toip externe (vlan 311)" name="bond0.311">
+         <network address="10.128.11.0/24" id="toip externe" />
+      </interface>
+      <interface id="vers DSTI" name="bond0.12">
+         <network address="10.0.0.0/8" id="DSTI">
+            <hostname address_type="IPv4" hostname="ctv.apps.mdp" id="ctv.apps.mdp">
+               <address>10.167.16.2</address>
+            </hostname>
+            <hostname address_type="IPv4" hostname="m13-epm-intra.form.apps.mdp" id="m13-epm-intra.form.apps.mdp">
+               <address>10.164.3.23</address>
+            </hostname>
+            <hostname address_type="IPv4" hostname="m13-epm.apps.mdp" id="m13-epm.apps.mdp">
+               <address>10.167.16.2</address>
+            </hostname>
+            <hostname address_type="IPv4" hostname="pass-internet.mdp" id="pass-internet.mdp">
+               <address>10.160.26.10</address>
+            </hostname>
+            <hostname address_type="IPv4" hostname="sirh-hrprod.mdp" id="sirh-hrprod.mdp">
+               <address>10.165.6.1</address>
+            </hostname>
+         </network>
+         <network address="10.30.2.16/29" id="interco DSTI (vlan 12)" />
+      </interface>
+      <interface id="vers IIBRBS" name="bond0.14">
+         <network address="10.30.2.32/29" id="interco IIBRBS (vlan 14)" />
+      </interface>
+      <interface id="vers SIAAP" name="bond0.13">
+         <network address="10.30.2.24/29" id="interco SIAAP (vlan 13)" />
+      </interface>
+   </resources>
+   <protocols>
+      <group id="CiscoIPMA">
+         <tcp>CiscoIPMA8111</tcp>
+         <tcp>CiscoIPMA8666</tcp>
+      </group>
+      <tcp dport="8111" sport="1024:65535">CiscoIPMA8111</tcp>
+      <tcp dport="8666" sport="1024:65535">CiscoIPMA8666</tcp>
+      <tcp dport="8943" sport="1024:65535">CyViewer</tcp>
+      <tcp dport="67" sport="1024:65535">DHCP</tcp>
+      <tcp dport="5001" sport="1024:65535">GAASPAR</tcp>
+      <tcp dport="636" sport="1024:65535">LDAPS</tcp>
+      <group id="Netbios">
+         <tcp>microsoft-ds445</tcp>
+         <tcp>netbios-dgm138</tcp>
+         <tcp>netbios-ns137</tcp>
+         <tcp>netbios-ssn139</tcp>
+      </group>
+      <group id="Oracle">
+         <tcp>oracle listener</tcp>
+      </group>
+      <tcp dport="3389" sport="1024:65535">RDP</tcp>
+      <tcp dport="5060" sport="1024:65535">SIP</tcp>
+      <tcp dport="8080" sport="1024:65535">http_BO</tcp>
+      <tcp dport="102" sport="1024:65535">iso-tsap</tcp>
+      <tcp dport="135" sport="1024:65535">loc-srv</tcp>
+      <tcp dport="445" sport="1024:65535">microsoft-ds445</tcp>
+      <tcp dport="138" sport="1024:65535">netbios-dgm138</tcp>
+      <tcp dport="137" sport="1024:65535">netbios-ns137</tcp>
+      <tcp dport="139" sport="1024:65535">netbios-ssn139</tcp>
+      <tcp dport="1521" sport="1024:65535">oracle listener</tcp>
+      <tcp dport="995" sport="1024:65535">pop3s</tcp>
+      <tcp dport="5432" sport="1024:65535">postgres</tcp>
+      <tcp dport="1812" sport="1024:65535">radius</tcp>
+      <tcp dport="1813" sport="1024:65535">radius-acct</tcp>
+      <tcp dport="2000" sport="1024:65535">sccp</tcp>
+      <tcp dport="2000" sport="1024:65535">sieve</tcp>
+      <tcp dport="5080" sport="1024:65535">sip-ext</tcp>
+      <tcp dport="465" sport="1024:65535">smtps</tcp>
+      <tcp dport="162" sport="1024:65535">snmptrap</tcp>
+      <udp dport="69" sport="1024:65535">tftp</udp>
+   </protocols>
+   <user_groups>
+      <user_group group="2170">admins-ldap</user_group>
+      <user_group group="2200">app-arcs</user_group>
+      <user_group group="2202">app-awstats</user_group>
+      <user_group group="2119">app-carine</user_group>
+      <user_group group="2197">app-coswin</user_group>
+      <user_group group="2199">app-desqeau-dyn</user_group>
+      <user_group group="2195">app-devis</user_group>
+      <user_group group="2198">app-gaaspar</user_group>
+      <user_group group="2203">app-limesurvey</user_group>
+      <user_group group="2196">app-mysql-admin</user_group>
+      <user_group group="2193">app-oracle-admins</user_group>
+      <user_group group="2201">app-postgresql-admins</user_group>
+      <user_group group="2164">app-scop-prod</user_group>
+      <user_group group="2163">app-scop-test</user_group>
+      <user_group group="2182">app-suivi-d-activite</user_group>
+      <user_group group="2194">app-suivi-d-activiterecette</user_group>
+      <user_group group="2187">app-tigre-maj</user_group>
+      <user_group group="2007">div-stea-tous</user_group>
+   </user_groups>
+   <acls_ipv4 next_id="84">
+      <default_decisions>
+         <chain decision="ACCEPT" input="GAASPAR (vlan 11)" log="1" output="Serveurs" />
+      </default_decisions>
+      <acl decision="ACCEPT" id="17" log="0">
+         <comment>Bind9 pour GAASPAR</comment>
+         <source>GAASPAR (vlan 11)</source>
+         <protocol>DNS</protocol>
+         <destination>alger</destination>
+         <destination>asmara</destination>
+         <destination>bamako</destination>
+         <destination>valparaiso</destination>
+         <destination>xian</destination>
+      </acl>
+      <acl decision="ACCEPT" id="43" log="0">
+         <comment>JFFNMS poller</comment>
+         <source>mexico</source>
+         <protocol>Any IPv4</protocol>
+         <destination>bond0.1</destination>
+      </acl>
+      <acl decision="ACCEPT" id="79" log="0">
+         <comment>Zabbix poller</comment>
+         <source>vivaldi</source>
+         <protocol>Any ICMP</protocol>
+         <destination>bond0.1</destination>
+      </acl>
+      <acl decision="ACCEPT" id="28" log="0">
+         <comment>Cycos MRS</comment>
+         <source>mrs</source>
+         <protocol>Any IPv4</protocol>
+         <destination>ccm1</destination>
+         <destination>ccm2</destination>
+      </acl>
+      <acl decision="ACCEPT" id="35" log="0">
+         <comment>FreeSWITCH</comment>
+         <source>munich</source>
+         <protocol>SIP</protocol>
+         <destination>ccm1</destination>
+         <destination>ccm2</destination>
+      </acl>
+      <acl decision="ACCEPT" id="44" log="0">
+         <comment>JFFNMS poller Serveurs toip</comment>
+         <source>mexico</source>
+         <protocol>Any IPv4</protocol>
+         <destination>serveurs ToIP (vlan 301)</destination>
+      </acl>
+      <acl decision="ACCEPT" id="19" log="0">
+         <comment>Bind9 vers DSTI</comment>
+         <source>Serveurs (vlan 510)</source>
+         <protocol>DNS</protocol>
+         <destination>vers DSTI</destination>
+      </acl>
+      <acl decision="ACCEPT" id="54" log="0">
+         <comment>Microsoft Exchange Server 5.5</comment>
+         <source>cook</source>
+         <protocol>SMTP</protocol>
+         <protocol>iso-tsap</protocol>
+         <destination>DSTI</destination>
+      </acl>
+      <acl decision="ACCEPT" id="60" log="0">
+         <comment>NTP server depuis serveurs</comment>
+         <source>Serveurs</source>
+         <protocol>NNTP</protocol>
+         <protocol>NTP</protocol>
+         <destination>DSTI</destination>
+      </acl>
+      <acl decision="ACCEPT" id="81" log="0">
+         <comment>Proxy DSTI (depuis Serveurs)</comment>
+         <source>Serveurs (vlan 510)</source>
+         <protocol>HTTP</protocol>
+         <destination>pass-internet.mdp</destination>
+      </acl>
+      <acl decision="ACCEPT" id="23" log="0">
+         <comment>COSWIN</comment>
+         <source>STEA</source>
+         <protocol>Netbios</protocol>
+         <protocol>Oracle</protocol>
+         <destination>oracle_gaaspar</destination>
+         <user_group>app-coswin</user_group>
+      </acl>
+      <acl decision="ACCEPT" id="36" log="0">
+         <comment>GAASPAR</comment>
+         <source>STEA</source>
+         <protocol>Any ICMP</protocol>
+         <destination>GAASPAR</destination>
+      </acl>
+      <acl decision="ACCEPT" id="83" log="0">
+         <comment>GAASPAR</comment>
+         <source>STEA</source>
+         <protocol>GAASPAR</protocol>
+         <destination>GAASPAR</destination>
+         <user_group>app-gaaspar</user_group>
+      </acl>
+      <acl decision="ACCEPT" id="16" log="0">
+         <comment>Bind9 pour STEA</comment>
+         <source>STEA</source>
+         <protocol>DNS</protocol>
+         <destination>alger</destination>
+         <destination>asmara</destination>
+         <destination>bamako</destination>
+         <destination>valparaiso</destination>
+         <destination>xian</destination>
+      </acl>
+      <acl decision="ACCEPT" id="41" log="0">
+         <comment>ISC DHCP</comment>
+         <source>STEA</source>
+         <protocol>DHCP</protocol>
+         <destination>alger</destination>
+         <destination>asmara</destination>
+         <destination>bamako</destination>
+      </acl>
+      <acl decision="ACCEPT" id="15" log="0">
+         <comment>BackupPC</comment>
+         <source>STEA</source>
+         <protocol>HTTPS</protocol>
+         <destination>kadena</destination>
+         <destination>montevideo</destination>
+         <destination>okinawa</destination>
+      </acl>
+      <acl decision="ACCEPT" id="20" log="0">
+         <comment>Business Objects</comment>
+         <source>STEA</source>
+         <protocol>http_BO</protocol>
+         <destination>apollinaire</destination>
+         <destination>prevert</destination>
+      </acl>
+      <acl decision="ACCEPT" id="22" log="0">
+         <comment>CERC</comment>
+         <source>STEA</source>
+         <protocol>HTTP</protocol>
+         <protocol>HTTPS</protocol>
+         <destination>cesaire</destination>
+         <destination>senghor</destination>
+      </acl>
+      <acl decision="ACCEPT" id="30" log="0">
+         <comment>DesqEau</comment>
+         <source>STEA</source>
+         <protocol>HTTPS</protocol>
+         <destination>babel</destination>
+         <destination>babylone</destination>
+         <destination>qse-stpp</destination>
+      </acl>
+      <acl decision="ACCEPT" id="37" log="0">
+         <comment>GLPI</comment>
+         <source>STEA</source>
+         <protocol>HTTPS</protocol>
+         <destination>glpi</destination>
+      </acl>
+      <acl decision="ACCEPT" id="38" log="0">
+         <comment>GOsa</comment>
+         <source>STEA</source>
+         <protocol>HTTPS</protocol>
+         <destination>gosa</destination>
+      </acl>
+      <acl decision="ACCEPT" id="42" log="0">
+         <comment>Intranet QSE</comment>
+         <source>STEA</source>
+         <protocol>Websurf</protocol>
+         <destination>valparaiso</destination>
+         <destination>xian</destination>
+      </acl>
+      <acl decision="ACCEPT" id="51" log="0">
+         <comment>Mediawiki</comment>
+         <source>STEA</source>
+         <protocol>HTTPS</protocol>
+         <destination>wikidic</destination>
+      </acl>
+      <acl decision="ACCEPT" id="62" log="0">
+         <comment>OCS Inventory NG</comment>
+         <source>STEA</source>
+         <protocol>Websurf</protocol>
+         <destination>ocsinventory-ng</destination>
+         <destination>vivaldi</destination>
+      </acl>
+      <acl decision="ACCEPT" id="74" log="0">
+         <comment>Subversion</comment>
+         <source>STEA</source>
+         <protocol>HTTPS</protocol>
+         <destination>svn</destination>
+      </acl>
+      <acl decision="ACCEPT" id="77" log="0">
+         <comment>TIGRE 5</comment>
+         <source>STEA</source>
+         <protocol>Websurf</protocol>
+         <destination>dumas</destination>
+         <destination>musset</destination>
+         <destination>zola</destination>
+      </acl>
+      <acl decision="ACCEPT" id="78" log="0">
+         <comment>Zabbix (web)</comment>
+         <source>STEA</source>
+         <protocol>Websurf</protocol>
+         <destination>jffnms</destination>
+      </acl>
+      <acl decision="ACCEPT" id="11" log="0">
+         <comment>AWStats</comment>
+         <source>STEA</source>
+         <protocol>HTTPS</protocol>
+         <destination>Serveurs (vlan 510)</destination>
+         <user_group>app-awstats</user_group>
+      </acl>
+      <acl decision="ACCEPT" id="39" log="0">
+         <comment>Horde</comment>
+         <source>STEA</source>
+         <protocol>HTTPS</protocol>
+         <destination>kolabtest</destination>
+         <user_group>div-stea-tous</user_group>
+      </acl>
+      <acl decision="ACCEPT" id="66" log="1" log_prefix="PhpMyAdmin">
+         <comment>PhpMyAdmin</comment>
+         <source>STEA</source>
+         <protocol>HTTPS</protocol>
+         <destination>phpmyadmin</destination>
+         <user_group>app-mysql-admin</user_group>
+      </acl>
+      <acl decision="ACCEPT" id="75" log="0">
+         <comment>Suivi d activite</comment>
+         <source>STEA</source>
+         <protocol>Websurf</protocol>
+         <destination>activite</destination>
+         <user_group>app-suivi-d-activite</user_group>
+      </acl>
+      <acl decision="ACCEPT" id="76" log="0">
+         <comment>Suivi d activite recette</comment>
+         <source>STEA</source>
+         <protocol>Websurf</protocol>
+         <destination>activiterecette</destination>
+         <user_group>app-suivi-d-activiterecette</user_group>
+      </acl>
+      <acl decision="ACCEPT" id="10" log="0">
+         <comment>ARCS</comment>
+         <source>STEA</source>
+         <protocol>postgres</protocol>
+         <destination>orwell</destination>
+         <user_group>app-arcs</user_group>
+      </acl>
+      <acl decision="ACCEPT" id="21" log="0">
+         <comment>CARINE</comment>
+         <source>STEA</source>
+         <protocol>Oracle</protocol>
+         <destination>rimbaud</destination>
+         <user_group>app-carine</user_group>
+      </acl>
+      <acl decision="ACCEPT" id="31" log="0">
+         <comment>DesqEau Dyn</comment>
+         <source>STEA</source>
+         <protocol>Oracle</protocol>
+         <destination>rimbaud</destination>
+         <user_group>app-desqeau-dyn</user_group>
+      </acl>
+      <acl decision="ACCEPT" id="32" log="0">
+         <comment>Devis</comment>
+         <source>STEA</source>
+         <protocol>MySQL</protocol>
+         <destination>alger</destination>
+         <destination>asmara</destination>
+         <destination>bamako</destination>
+         <user_group>app-devis</user_group>
+      </acl>
+      <acl decision="ACCEPT" id="58" log="0">
+         <comment>MySQL</comment>
+         <source>STEA</source>
+         <protocol>MySQL</protocol>
+         <destination>activite</destination>
+         <destination>alger</destination>
+         <destination>asmara</destination>
+         <destination>bamako</destination>
+         <destination>cesaire</destination>
+         <destination>mexico</destination>
+         <destination>senghor</destination>
+         <destination>vivaldi</destination>
+         <user_group>app-mysql-admin</user_group>
+      </acl>
+      <acl decision="ACCEPT" id="65" log="1" log_prefix="Oracle Database">
+         <comment>Oracle Database</comment>
+         <source>STEA</source>
+         <protocol>Oracle</protocol>
+         <destination>moscou</destination>
+         <destination>rimbaud</destination>
+         <user_group>app-oracle-admins</user_group>
+      </acl>
+      <acl decision="ACCEPT" id="68" log="1" log_prefix="PostgreSQL">
+         <comment>PostgreSQL</comment>
+         <source>STEA</source>
+         <protocol>postgres</protocol>
+         <destination>orwell</destination>
+         <user_group>app-postgresql-admins</user_group>
+      </acl>
+      <acl decision="ACCEPT" id="72" log="0">
+         <comment>Sequoia (SCOP prod)</comment>
+         <source>STEA</source>
+         <protocol>Oracle</protocol>
+         <destination>rimbaud</destination>
+         <user_group>app-scop-prod</user_group>
+      </acl>
+      <acl decision="ACCEPT" id="73" log="0">
+         <comment>Sequoia (SCOP test)</comment>
+         <source>STEA</source>
+         <protocol>Oracle</protocol>
+         <destination>moscou</destination>
+         <user_group>app-scop-test</user_group>
+      </acl>
+      <acl decision="ACCEPT" id="49" log="0">
+         <comment>TIGRE Maj (Oracle)</comment>
+         <source>STEA</source>
+         <protocol>Oracle</protocol>
+         <destination>rimbaud</destination>
+         <user_group>app-tigre-maj</user_group>
+      </acl>
+      <acl decision="ACCEPT" id="14" log="0">
+         <comment>Atftpd</comment>
+         <source>STEA</source>
+         <source>STEA toip</source>
+         <protocol>tftp</protocol>
+         <destination>mexico</destination>
+      </acl>
+      <acl decision="ACCEPT" id="29" log="0">
+         <comment>Cyrus IMAP</comment>
+         <source>STEA</source>
+         <protocol>IMAP</protocol>
+         <protocol>IMAPS</protocol>
+         <protocol>POP3</protocol>
+         <protocol>pop3s</protocol>
+         <protocol>sieve</protocol>
+         <destination>kolabtest</destination>
+         <user_group>div-stea-tous</user_group>
+      </acl>
+      <acl decision="ACCEPT" id="27" log="0">
+         <comment>CyViewer</comment>
+         <source>STEA</source>
+         <protocol>CyViewer</protocol>
+         <destination>mrs</destination>
+         <user_group>div-stea-tous</user_group>
+      </acl>
+      <acl decision="ACCEPT" id="34" log="0">
+         <comment>FreeRADIUS</comment>
+         <source>STEA</source>
+         <protocol>radius</protocol>
+         <protocol>radius-acct</protocol>
+         <destination>alger</destination>
+         <destination>asmara</destination>
+         <destination>bamako</destination>
+      </acl>
+      <acl decision="ACCEPT" id="46" log="0">
+         <comment>JFFNMS snmptrap</comment>
+         <source>bond0.1</source>
+         <protocol>snmptrap</protocol>
+         <destination>mexico</destination>
+      </acl>
+      <acl decision="ACCEPT" id="56" log="1" log_prefix="Exchange">
+         <comment>Microsoft Outlook</comment>
+         <source>STEA</source>
+         <protocol>loc-srv</protocol>
+         <destination>cook</destination>
+         <user_group>div-stea-tous</user_group>
+      </acl>
+      <acl decision="ACCEPT" id="57" log="0">
+         <comment>Microsoft Terminal Services</comment>
+         <source>STEA</source>
+         <protocol>RDP</protocol>
+         <destination>Serveurs (vlan 201)</destination>
+         <destination>Serveurs (vlan 510)</destination>
+      </acl>
+      <acl decision="ACCEPT" id="63" log="1" log_prefix="OpenLDAP">
+         <comment>OpenLDAP</comment>
+         <source>STEA</source>
+         <protocol>LDAPS</protocol>
+         <destination>alger</destination>
+         <destination>asmara</destination>
+         <destination>bamako</destination>
+         <user_group>admins-ldap</user_group>
+      </acl>
+      <acl decision="ACCEPT" id="64" log="1" log_prefix="OpenSSH">
+         <comment>OpenSSH</comment>
+         <source>STEA</source>
+         <protocol>SSH</protocol>
+         <destination>Serveurs (vlan 510)</destination>
+      </acl>
+      <acl decision="ACCEPT" id="67" log="0">
+         <comment>Postfix</comment>
+         <source>STEA</source>
+         <protocol>SMTP</protocol>
+         <protocol>smtps</protocol>
+         <destination>kolabtest</destination>
+         <user_group>div-stea-tous</user_group>
+      </acl>
+      <acl decision="ACCEPT" id="71" log="0">
+         <comment>Samba</comment>
+         <source>STEA</source>
+         <protocol>Netbios</protocol>
+         <destination>alger</destination>
+         <destination>asmara</destination>
+         <destination>bamako</destination>
+      </acl>
+      <acl decision="ACCEPT" id="50" log="0">
+         <comment>TIGRE Maj (lecteur réseau)</comment>
+         <source>STEA</source>
+         <protocol>Netbios</protocol>
+         <destination>zola</destination>
+         <user_group>app-tigre-maj</user_group>
+      </acl>
+      <acl decision="ACCEPT" id="26" log="1" log_prefix="PC CCM">
+         <comment>Cisco Call Manager (depuis PC)</comment>
+         <source>STEA</source>
+         <protocol>sccp</protocol>
+         <destination>ccm1</destination>
+         <destination>ccm2</destination>
+      </acl>
+      <acl decision="ACCEPT" id="40" log="0">
+         <comment>IPMA</comment>
+         <source>STEA</source>
+         <protocol>CiscoIPMA</protocol>
+         <protocol>LDAP</protocol>
+         <destination>ccm1</destination>
+         <destination>ccm2</destination>
+      </acl>
+      <acl decision="ACCEPT" id="52" log="0">
+         <comment>Microsoft DHCP server (toip)</comment>
+         <source>STEA toip</source>
+         <protocol>DHCP</protocol>
+         <destination>ccm1</destination>
+         <destination>ccm2</destination>
+      </acl>
+      <acl decision="ACCEPT" id="53" log="0">
+         <comment>Microsoft DNS server(toip)</comment>
+         <source>STEA toip</source>
+         <protocol>DNS</protocol>
+         <destination>ccm1</destination>
+         <destination>ccm2</destination>
+      </acl>
+      <acl decision="ACCEPT" id="80" log="0">
+         <comment>Cisco Call Manager (STEA toip -&gt; Serveurs tel</comment>
+         <source>STEA toip</source>
+         <protocol>sccp</protocol>
+         <destination>ccm1</destination>
+         <destination>ccm2</destination>
+      </acl>
+      <acl decision="ACCEPT" id="24" log="0">
+         <comment>CTV</comment>
+         <source>STEA</source>
+         <protocol>HTTPS</protocol>
+         <destination>ctv.apps.mdp</destination>
+      </acl>
+      <acl decision="ACCEPT" id="70" log="0">
+         <comment>RH21</comment>
+         <source>STEA</source>
+         <protocol>Websurf</protocol>
+         <destination>sirh-hrprod.mdp</destination>
+      </acl>
+      <acl decision="ACCEPT" id="69" log="0">
+         <comment>Proxy DSTI (depuis STEA)</comment>
+         <source>STEA</source>
+         <protocol>HTTP</protocol>
+         <destination>pass-internet.mdp</destination>
+         <user_group>div-stea-tous</user_group>
+      </acl>
+      <acl decision="ACCEPT" id="59" log="0">
+         <comment>NTP server depuis STEA</comment>
+         <source>STEA</source>
+         <protocol>NNTP</protocol>
+         <protocol>NTP</protocol>
+         <destination>DSTI</destination>
+      </acl>
+      <acl decision="ACCEPT" id="25" log="0">
+         <comment>Cisco Call Manager vers munich</comment>
+         <source>ccm1</source>
+         <source>ccm2</source>
+         <protocol>sip-ext</protocol>
+         <destination>munich</destination>
+      </acl>
+      <acl decision="ACCEPT" id="61" log="0">
+         <comment>NTP server depuis serveurs toip</comment>
+         <source>serveurs ToIP</source>
+         <protocol>NNTP</protocol>
+         <protocol>NTP</protocol>
+         <destination>DSTI</destination>
+      </acl>
+      <acl decision="ACCEPT" id="18" log="0">
+         <comment>Bind9 pour DSTI</comment>
+         <source>vers DSTI</source>
+         <protocol>DNS</protocol>
+         <destination>alger</destination>
+         <destination>asmara</destination>
+         <destination>bamako</destination>
+         <destination>valparaiso</destination>
+         <destination>xian</destination>
+      </acl>
+      <acl decision="ACCEPT" id="55" log="0">
+         <comment>Microsoft Exchange Server 5.5</comment>
+         <source>DSTI</source>
+         <protocol>SMTP</protocol>
+         <protocol>iso-tsap</protocol>
+         <destination>cook</destination>
+      </acl>
+      <acl decision="ACCEPT" enabled="0" id="82" log="0">
+         <source>STEA</source>
+         <protocol>SSH</protocol>
+         <destination>Firewall</destination>
+      </acl>
+   </acls_ipv4>
+</ruleset>

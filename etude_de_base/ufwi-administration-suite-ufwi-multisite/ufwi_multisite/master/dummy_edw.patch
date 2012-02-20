@@ -1,0 +1,62 @@
+Index: master.py
+===================================================================
+--- master.py	(révision 7481)
++++ master.py	(copie de travail)
+@@ -28,6 +28,7 @@
+ OPENVPN_PORT = 8844
+ DEFAULT_OPENVPN_NETWORK = '5.1.0.0/16'
+ NUCENTRAL_PORT = 54321
++DEBUG_EDENWALL_NO=1
+ 
+ class MultiSite(MultiSiteComponent):
+ 
+@@ -174,7 +175,8 @@
+         """
+         l = []
+         for name, firewall in self.firewalls.iteritems():
+-            l.append((name, firewall.getState(), firewall.error))
++            for i in xrange(DEBUG_EDENWALL_NO):
++                l.append((name + "_" + str(i), firewall.getState(), firewall.error))
+ 
+         return l
+ 
+@@ -183,6 +185,7 @@
+         Get a firewall state
+         @return the status as a string
+         """
++        fw_name =  fw_name[:fw_name.rfind('_')]
+         return self.firewalls[fw_name].state
+ 
+     def service_callRemote(self, ctx, firewall, component, service, *args):
+@@ -195,6 +198,7 @@
+         @return  service result
+         """
+         try:
++            firewall =  firewall[:firewall.rfind('_')]
+             fw = self.firewalls[firewall]
+         except KeyError:
+             raise NuCentralError("Firewall '%s' does not exist." % firewall)
+@@ -211,6 +215,7 @@
+ 
+         self.writeError(err.value)
+         try:
++            firewall_name =  firewall_name[:firewall_name.rfind('_')]
+             fw = self.firewalls[firewall_name]
+             fw.state = Firewall.ERROR
+             fw.error = str(err.value)
+@@ -388,6 +393,7 @@
+ 
+     def service_setFirewallCategories(self, ctx, firewall, categories):
+         try:
++            firewall =  firewall[:firewall.rfind('_')]
+             fw = self.firewalls[firewall]
+         except KeyError:
+             raise NuCentralError("Firewall '%s' does not exist." % firewall)
+@@ -397,6 +403,7 @@
+ 
+     def service_getFirewallCategories(self, ctx, firewall):
+         try:
++            firewall =  firewall[:firewall.rfind('_')]
+             fw = self.firewalls[firewall]
+         except KeyError:
+             raise NuCentralError("Firewall '%s' does not exist." % firewall)

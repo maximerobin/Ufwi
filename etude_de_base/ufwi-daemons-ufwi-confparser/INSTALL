@@ -1,0 +1,33 @@
+=========================
+Installation instructions
+=========================
+
+Prerequisites
+=============
+
+Prerequisites of autogen.sh script:
+
+ * automake1.7 to execute cleanly autogen.sh:
+   http://www.gnu.org/software/automake/
+
+Prerequisites of ufwi-confparser compilation:
+
+ * GNU libtool:
+   http://www.gnu.org/software/libtool/
+ * GNU make:
+   http://www.gnu.org/software/make/
+ * Flex:
+   http://flex.sourceforge.net/
+ * Bison (or an other Yacc compatible generator):
+   http://www.gnu.org/software/bison.html
+
+
+Compilation
+===========
+
+To compile, use the standard ::
+
+  ./autogen.sh
+  ./configure
+  make
+  make install

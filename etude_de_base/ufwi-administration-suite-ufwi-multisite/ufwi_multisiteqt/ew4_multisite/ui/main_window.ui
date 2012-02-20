@@ -1,0 +1,295 @@
+<ui version="4.0" >
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow" >
+  <property name="geometry" >
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>640</width>
+    <height>1024</height>
+   </rect>
+  </property>
+  <property name="windowTitle" >
+   <string>Central Management</string>
+  </property>
+  <property name="toolButtonStyle" >
+   <enum>Qt::ToolButtonTextBesideIcon</enum>
+  </property>
+  <widget class="QWidget" name="centralwidget" >
+   <layout class="QVBoxLayout" name="verticalLayout" >
+    <item>
+     <widget class="QFrame" name="filter_frame" >
+      <property name="frameShape" >
+       <enum>QFrame::StyledPanel</enum>
+      </property>
+      <property name="frameShadow" >
+       <enum>QFrame::Raised</enum>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QSplitter" name="splitter" >
+      <property name="orientation" >
+       <enum>Qt::Vertical</enum>
+      </property>
+      <widget class="QTabWidget" name="tabs" >
+       <property name="currentIndex" >
+        <number>0</number>
+       </property>
+       <widget class="QWidget" name="main_tab" >
+        <attribute name="title" >
+         <string>Information</string>
+        </attribute>
+        <attribute name="icon" >
+         <iconset resource="../../../../../nucentral-edenwall/trunk/resources/edenwall.qrc" >
+          <normaloff>:/icons/info.png</normaloff>:/icons/info.png</iconset>
+        </attribute>
+        <layout class="QVBoxLayout" name="verticalLayout_2" >
+         <item>
+          <widget class="QScrollArea" name="main_scroll_area" >
+           <property name="widgetResizable" >
+            <bool>true</bool>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </widget>
+       <widget class="QWidget" name="monitoring_tab" >
+        <attribute name="title" >
+         <string>Monitoring</string>
+        </attribute>
+        <attribute name="icon" >
+         <iconset resource="../../../../../nucentral-edenwall/trunk/resources/edenwall.qrc" >
+          <normaloff>:/icons/monitoring.png</normaloff>:/icons/monitoring.png</iconset>
+        </attribute>
+        <layout class="QVBoxLayout" name="verticalLayout_monitoring" >
+         <item>
+          <widget class="QScrollArea" name="monitoring_scroll_area" >
+           <property name="widgetResizable" >
+            <bool>true</bool>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </widget>
+       <widget class="QWidget" name="services_tab" >
+        <attribute name="title" >
+         <string>Services</string>
+        </attribute>
+        <attribute name="icon" >
+         <iconset resource="../../../../../nucentral-edenwall/trunk/resources/edenwall.qrc" >
+          <normaloff>:/icons/service.png</normaloff>:/icons/service.png</iconset>
+        </attribute>
+        <layout class="QVBoxLayout" name="verticalLayout_3" >
+         <item>
+          <widget class="QScrollArea" name="services_scroll_area" >
+           <property name="widgetResizable" >
+            <bool>true</bool>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </widget>
+       <widget class="QWidget" name="firewall_tab" >
+        <attribute name="title" >
+         <string>Firewalls</string>
+        </attribute>
+        <attribute name="icon" >
+         <iconset resource="../../../../../nucentral-edenwall/trunk/resources/edenwall.qrc" >
+          <normaloff>:/icons/appicon.png</normaloff>:/icons/appicon.png</iconset>
+        </attribute>
+        <layout class="QVBoxLayout" name="verticalLayout_4" >
+         <item>
+          <widget class="QScrollArea" name="firewall_scroll_area" >
+           <property name="widgetResizable" >
+            <bool>true</bool>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </widget>
+       <widget class="QWidget" name="tab" >
+        <attribute name="title" >
+         <string>Updates</string>
+        </attribute>
+        <attribute name="icon" >
+         <iconset resource="../../../../../nucentral-edenwall/trunk/resources/edenwall.qrc" >
+          <normaloff>:/icons/up.png</normaloff>:/icons/up.png</iconset>
+        </attribute>
+        <layout class="QVBoxLayout" name="verticalLayout_5" >
+         <item>
+          <widget class="QScrollArea" name="nuconf_update_scroll_area" >
+           <property name="widgetResizable" >
+            <bool>true</bool>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </widget>
+       <widget class="QWidget" name="tab_2" >
+        <attribute name="title" >
+         <string>Schedule</string>
+        </attribute>
+        <attribute name="icon" >
+         <iconset resource="../../../../../nucentral-edenwall/trunk/resources/edenwall.qrc" >
+          <normaloff>:/icons/chrono.png</normaloff>:/icons/chrono.png</iconset>
+        </attribute>
+        <layout class="QVBoxLayout" name="verticalLayout_6" >
+         <item>
+          <widget class="QScrollArea" name="scheduler_scroll_area" >
+           <property name="widgetResizable" >
+            <bool>true</bool>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </widget>
+       <widget class="QWidget" name="permission_tab" >
+        <attribute name="title" >
+         <string>Permissions</string>
+        </attribute>
+        <attribute name="icon" >
+         <iconset resource="../../../../../nucentral-edenwall/trunk/resources/edenwall.qrc" >
+          <normaloff>:/icons/permissions.png</normaloff>:/icons/permissions.png</iconset>
+        </attribute>
+        <layout class="QHBoxLayout" name="perms_layout" />
+       </widget>
+      </widget>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QStatusBar" name="statusbar" />
+  <widget class="QToolBar" name="toolBar" >
+   <property name="windowTitle" >
+    <string>toolBar</string>
+   </property>
+   <property name="toolTip" >
+    <string>Register a new host</string>
+   </property>
+   <attribute name="toolBarArea" >
+    <enum>TopToolBarArea</enum>
+   </attribute>
+   <attribute name="toolBarBreak" >
+    <bool>false</bool>
+   </attribute>
+   <addaction name="actionRefresh" />
+   <addaction name="actionRegister_a_new_host" />
+   <addaction name="actionEdit_categories" />
+   <addaction name="actionUpdate_templates" />
+   <addaction name="actionEdit_templates" />
+   <addaction name="actionUpload_updates" />
+   <addaction name="actionEdit_generic_links" />
+   <addaction name="actionReschedule" />
+   <addaction name="actionDelete_task" />
+  </widget>
+  <action name="actionStart_Nulog" >
+   <property name="text" >
+    <string>Start Nulog</string>
+   </property>
+  </action>
+  <action name="actionRefresh" >
+   <property name="icon" >
+    <iconset resource="../../../../../nucentral-edenwall/trunk/resources/edenwall.qrc" >
+     <normaloff>:/icons/refresh.png</normaloff>:/icons/refresh.png</iconset>
+   </property>
+   <property name="text" >
+    <string>Refresh</string>
+   </property>
+   <property name="toolTip" >
+    <string>Refresh Firewall State</string>
+   </property>
+  </action>
+  <action name="actionRegister_a_new_host" >
+   <property name="icon" >
+    <iconset resource="../../../../../nucentral-edenwall/trunk/resources/edenwall.qrc" >
+     <normaloff>:/icons/add.png</normaloff>:/icons/add.png</iconset>
+   </property>
+   <property name="text" >
+    <string>Register a New Host</string>
+   </property>
+  </action>
+  <action name="actionEdit_categories" >
+   <property name="icon" >
+    <iconset resource="../../../../../nucentral-edenwall/trunk/resources/edenwall.qrc" >
+     <normaloff>:/icons/edit.png</normaloff>:/icons/edit.png</iconset>
+   </property>
+   <property name="text" >
+    <string>Edit Categories</string>
+   </property>
+   <property name="toolTip" >
+    <string>Edit custom categories</string>
+   </property>
+  </action>
+  <action name="actionUpdate_templates" >
+   <property name="icon" >
+    <iconset resource="../../../../../nucentral-edenwall/trunk/resources/edenwall.qrc" >
+     <normaloff>:/icons/up.png</normaloff>:/icons/up.png</iconset>
+   </property>
+   <property name="text" >
+    <string>Upload Templates</string>
+   </property>
+   <property name="toolTip" >
+    <string>Upload templates to  selected firewalls</string>
+   </property>
+  </action>
+  <action name="actionUpload_updates" >
+   <property name="icon" >
+    <iconset resource="../../../../../nucentral-edenwall/trunk/resources/edenwall.qrc" >
+     <normaloff>:/icons/up.png</normaloff>:/icons/up.png</iconset>
+   </property>
+   <property name="text" >
+    <string>Upload Updates</string>
+   </property>
+   <property name="toolTip" >
+    <string>Upload updates to selected firewalls</string>
+   </property>
+  </action>
+  <action name="actionEdit_generic_links" >
+   <property name="icon" >
+    <iconset resource="../../../../../nucentral-edenwall/trunk/resources/edenwall.qrc" >
+     <normaloff>:/icons/edit.png</normaloff>:/icons/edit.png</iconset>
+   </property>
+   <property name="text" >
+    <string>Edit Generic Links</string>
+   </property>
+  </action>
+  <action name="actionReschedule" >
+   <property name="icon" >
+    <iconset resource="../../../../../nucentral-edenwall/trunk/resources/edenwall.qrc" >
+     <normaloff>:/icons/chrono.png</normaloff>:/icons/chrono.png</iconset>
+   </property>
+   <property name="text" >
+    <string>Reschedule</string>
+   </property>
+   <property name="toolTip" >
+    <string>Reschedule selected tasks</string>
+   </property>
+  </action>
+  <action name="actionDelete_task" >
+   <property name="icon" >
+    <iconset resource="../../../../../nucentral-edenwall/trunk/resources/edenwall.qrc" >
+     <normaloff>:/icons/delete.png</normaloff>:/icons/delete.png</iconset>
+   </property>
+   <property name="text" >
+    <string>Delete Tasks</string>
+   </property>
+   <property name="toolTip" >
+    <string>Delete selected tasks</string>
+   </property>
+  </action>
+  <action name="actionEdit_templates" >
+   <property name="icon" >
+    <iconset resource="../../../../../nucentral-edenwall/trunk/resources/edenwall.qrc" >
+     <normaloff>:/icons-32/appicon.png</normaloff>:/icons-32/appicon.png</iconset>
+   </property>
+   <property name="text" >
+    <string>Edit templates</string>
+   </property>
+  </action>
+ </widget>
+ <resources>
+  <include location="../../../../../nucentral-edenwall/trunk/resources/edenwall.qrc" />
+ </resources>
+ <connections/>
+</ui>

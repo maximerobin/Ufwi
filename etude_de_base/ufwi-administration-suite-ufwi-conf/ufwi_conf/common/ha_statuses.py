@@ -1,0 +1,12 @@
+HA_STATUS = \
+    PRIMARY, \
+    PENDING_PRIMARY, \
+    SECONDARY, \
+    PENDING_SECONDARY, \
+    ENOHA = \
+    'PRIMARY', \
+    'PENDING_PRIMARY', \
+    'SECONDARY', \
+    'PENDING_SECONDARY', \
+    'ENOHA'
+

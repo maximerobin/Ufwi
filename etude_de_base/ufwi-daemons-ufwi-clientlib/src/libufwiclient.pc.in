@@ -1,0 +1,13 @@
+prefix=@prefix@
+
+exec_prefix=${prefix}
+libdir=${exec_prefix}/lib
+includedir=${prefix}/include
+
+Name: libufwiclient
+Description: UFWI lient library
+Version: @PACKAGE_VERSION@
+Requires:
+Libs: -L${libdir} -lufwiclient
+Libs.private: -lufwissl
+Cflags: -I${includedir}/ufwiclient

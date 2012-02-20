@@ -1,0 +1,30 @@
+#!/bin/sh
+#
+#
+# heartbeat     Initialize high-availability state
+#
+# Author:       Pierre-Louis Bonicoli <bonicoli@edenwall.com>
+#
+### BEGIN INIT INFO
+# Description: heartbeat EDW pre-initialization script
+# Short-Description: Initialize high-availability state to INACTIVE
+# Provides: init_HA_EDW
+# Required-Start: 
+# Should-Start: $local_fs
+# Required-Stop:
+# Should-stop:
+# Default-Start: 2 3 4 5
+# Default-Stop: 0 1 6
+### END INIT INFO
+
+case $1 in
+    start)
+        if [ -e /var/lib/nucentral/ha_status ]
+        then
+                # update /etc/ha.d/resource.d/edw if INACTIVE modified
+                echo "INACTIVE" > /var/lib/nucentral/ha_status
+        fi
+        ;;
+esac
+
+exit 0

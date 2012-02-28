@@ -1,0 +1,20 @@
+Planning du projet Ufwi
+------------------------------------------------------------------------------------------
+
+------------------------------------------------------------------------------------------
+Maxime Robin :
+
+- Semaine 4 à 8 (Du 23 janvier au 27 février) :
+	Mise en place du dépot github.
+	Étude et installation du deamon ufwi-rpcd.
+	Commencement du rapport.
+
+- Semaine 9 :
+	Étude de la durée de vie des autorisations données.
+
+- Semaine 10 et 11 :
+	Comment s'assurer que l'utilisateur est encore présent ?
+	Quel solution mettre en oeuvre pour vérifier cela ?
+
+------------------------------------------------------------------------------------------
+

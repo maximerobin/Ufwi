@@ -17,4 +17,17 @@ Maxime Robin :
 	Quel solution mettre en oeuvre pour vérifier cela ?
 
 ------------------------------------------------------------------------------------------
+Simon Barotte:
 
+- Début janvier :
+	Etude du daemon ufwi-auth
+	Installation du daemon (sans succès)
+	
+- Mois janvier début février :
+	Rédaction de la partie ufwi-auth du rapport
+	Etude des erreurs lors de la tentative d'installation du daemon
+	
+- Mis février début mars :
+	Etude des commandes du daemon ufwi-auth après le succès de l'installation
+	
+------------------------------------------------------------------------------------------

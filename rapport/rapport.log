@@ -1,11 +1,11 @@
-This is pdfTeX, Version 3.1415926-1.40.10 (TeX Live 2009/Debian) (format=pdflatex 2011.11.2)  22 FEB 2012 14:51
+This is pdfTeX, Version 3.1415926-1.40.10 (TeX Live 2009/Debian) (format=pdflatex 2011.11.22)  2 MAR 2012 12:28
 entering extended mode
  %&-line parsing enabled.
 **rapport.tex
 (./rapport.tex
 LaTeX2e <2009/09/24>
 Babel <v3.8l> and hyphenation patterns for english, usenglishmax, dumylang, noh
-yphenation, french, basque, loaded.
+yphenation, loaded.
 (/usr/share/texmf-texlive/tex/latex/base/report.cls
 Document Class: report 2007/10/19 v1.4h Standard LaTeX document class
 (/usr/share/texmf-texlive/tex/latex/base/size12.clo
@@ -252,6 +252,12 @@ File: babel.def 2008/07/06 v3.8l Babel common definitions
 \babel@savecnt=\count88
 \U@D=\dimen103
 )
+
+Package babel Warning: No hyphenation patterns were loaded for
+(babel)                the language `French'
+(babel)                I will use the patterns loaded for \language=0 instead.
+
+\l@french = a dialect from \language0
 Package babel Info: Making : an active character on input line 120.
 Package babel Info: Making ; an active character on input line 121.
 Package babel Info: Making ! an active character on input line 122.
@@ -260,7 +266,6 @@ Package babel Info: Making ? an active character on input line 123.
 \std@mcc=\count89
 \dec@mcc=\count90
 \parindentFFN=\dimen105
-
 *************************************
 * Local config file frenchb.cfg used
 *
@@ -423,11 +428,11 @@ driver: pdftex
 
 {/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}] (./rapport.toc
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <12> on input line 6.
+(Font)              <12> on input line 3.
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <8> on input line 6.
+(Font)              <8> on input line 3.
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <6> on input line 6.
+(Font)              <6> on input line 3.
 )
 \tf@toc=\write3
 \openout3 = `rapport.toc'.
@@ -458,12 +463,9 @@ See the inputenc package documentation for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.101 Configuration IP 
+l.109 Configuration IP 
                         :
-Your command was ignored.
-Type  I <command> <return>  to replace it with another command,
-or  <return>  to continue without it.
-
+? 
 
 ! Package inputenc Error: Unicode char \u8:  not set up for use with LaTeX.
 
@@ -471,12 +473,9 @@ See the inputenc package documentation for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.103 ifconfig eth0 
+l.111 ifconfig eth0 
                      192.168.1.137/24
-Your command was ignored.
-Type  I <command> <return>  to replace it with another command,
-or  <return>  to continue without it.
-
+? 
 
 ! Package inputenc Error: Unicode char \u8:  not set up for use with LaTeX.
 
@@ -484,28 +483,21 @@ See the inputenc package documentation for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.104 ifconfig eth1 
+l.112 ifconfig eth1 
                      172.20.8.1/24
-Your command was ignored.
-Type  I <command> <return>  to replace it with another command,
-or  <return>  to continue without it.
-
+? 
 ! Missing $ inserted.
 <inserted text> 
                 $
-l.113 export LD_
+l.121 export LD_
                 PRELOAD=/usr/lib/libmysqlclient.so.16
-I've inserted a begin-math/end-math symbol since I think
-you left one out. Proceed, with fingers crossed.
-
+? 
 ! Missing $ inserted.
 <inserted text> 
                 $
-l.114 
+l.122 
       
-I've inserted a begin-math/end-math symbol since I think
-you left one out. Proceed, with fingers crossed.
-
+? 
 
 ! Package inputenc Error: Unicode char \u8:  not set up for use with LaTeX.
 
@@ -513,12 +505,9 @@ See the inputenc package documentation for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.121 ...ons de connexion à la base de données 
+l.129 ...ons de connexion à la base de données 
                                                   :
-Your command was ignored.
-Type  I <command> <return>  to replace it with another command,
-or  <return>  to continue without it.
-
+? 
 
 ! Package inputenc Error: Unicode char \u8:  not set up for use with LaTeX.
 
@@ -526,12 +515,9 @@ See the inputenc package documentation for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.123 paragraphe « 
+l.131 paragraphe « 
                      [MYSQL] » ligne 59 :
-Your command was ignored.
-Type  I <command> <return>  to replace it with another command,
-or  <return>  to continue without it.
-
+? 
 
 ! Package inputenc Error: Unicode char \u8:  not set up for use with LaTeX.
 
@@ -539,12 +525,9 @@ See the inputenc package documentation for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.123 paragraphe « [MYSQL] 
+l.131 paragraphe « [MYSQL] 
                               » ligne 59 :
-Your command was ignored.
-Type  I <command> <return>  to replace it with another command,
-or  <return>  to continue without it.
-
+? 
 
 ! Package inputenc Error: Unicode char \u8:  not set up for use with LaTeX.
 
@@ -552,16 +535,13 @@ See the inputenc package documentation for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.123 paragraphe « [MYSQL] » ligne 59 
+l.131 paragraphe « [MYSQL] » ligne 59 
                                            :
-Your command was ignored.
-Type  I <command> <return>  to replace it with another command,
-or  <return>  to continue without it.
+? 
 
-
-Overfull \hbox (50.54788pt too wide) in paragraph at lines 123--129
-[]\T1/cmr/m/n/12 paragraphe ^^S[MYSQL]^^T ligne 59 : table=''ulog'' pass=''pass
-ulog'' user=''ulog'' db=''ulog'' host=''172.20.8.2'' 
+Overfull \hbox (50.54788pt too wide) in paragraph at lines 131--137
+[]\T1/cmr/m/n/12 paragraphe ^^S[MYSQL]^^T ligne 59 : ta-ble=''ulog'' pass=''pas
+sulog'' user=''ulog'' db=''ulog'' host=''172.20.8.2'' 
  []
 
 
@@ -571,12 +551,9 @@ See the inputenc package documentation for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.132 Configuration IP 
+l.140 Configuration IP 
                         :
-Your command was ignored.
-Type  I <command> <return>  to replace it with another command,
-or  <return>  to continue without it.
-
+? 
 
 ! Package inputenc Error: Unicode char \u8:  not set up for use with LaTeX.
 
@@ -584,12 +561,9 @@ See the inputenc package documentation for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.134 ifconfig eth0 
+l.142 ifconfig eth0 
                      172.20.8.2/24
-Your command was ignored.
-Type  I <command> <return>  to replace it with another command,
-or  <return>  to continue without it.
-
+? 
 
 ! Package inputenc Error: Unicode char \u8:  not set up for use with LaTeX.
 
@@ -597,13 +571,10 @@ See the inputenc package documentation for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.144 ...onnées et création de l’utilisateur 
+l.152 ...onnées et création de l’utilisateur 
                                                   (les deux programmes vont ...
 
-Your command was ignored.
-Type  I <command> <return>  to replace it with another command,
-or  <return>  to continue without it.
-
+? 
 
 ! Package inputenc Error: Unicode char \u8:  not set up for use with LaTeX.
 
@@ -611,12 +582,9 @@ See the inputenc package documentation for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.148 ...er 'ulog'@'\%' identified by 'passulog' 
+l.156 ...er 'ulog'@'\%' identified by 'passulog' 
                                                   ;
-Your command was ignored.
-Type  I <command> <return>  to replace it with another command,
-or  <return>  to continue without it.
-
+? 
 
 ! Package inputenc Error: Unicode char \u8:  not set up for use with LaTeX.
 
@@ -624,16 +592,13 @@ See the inputenc package documentation for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.152 Commandes de création de la base 
+l.160 Commandes de création de la base 
                                          :
-Your command was ignored.
-Type  I <command> <return>  to replace it with another command,
-or  <return>  to continue without it.
-
+? 
 [5
 
 ]
-Overfull \hbox (22.91994pt too wide) in paragraph at lines 169--173
+Overfull \hbox (22.91994pt too wide) in paragraph at lines 177--181
 []\T1/cmr/m/n/12 cd /etc/nulog cp de-fault. core.conf core.conf cp de-fault.nul
 og.conf nu-log.conf cp de-fault.wrapper.conf
  []
@@ -645,12 +610,9 @@ See the inputenc package documentation for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.174 ...ons de connexion à la base de données 
+l.182 ...ons de connexion à la base de données 
                                                   :
-Your command was ignored.
-Type  I <command> <return>  to replace it with another command,
-or  <return>  to continue without it.
-
+? 
 
 ! Package inputenc Error: Unicode char \u8:  not set up for use with LaTeX.
 
@@ -658,12 +620,9 @@ See the inputenc package documentation for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.184 Sur la passerelle 
+l.192 Sur la passerelle 
                          :
-Your command was ignored.
-Type  I <command> <return>  to replace it with another command,
-or  <return>  to continue without it.
-
+? 
 
 ! Package inputenc Error: Unicode char \u8:  not set up for use with LaTeX.
 
@@ -671,12 +630,9 @@ See the inputenc package documentation for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.188 Sur le serveur 
+l.196 Sur le serveur 
                       :
-Your command was ignored.
-Type  I <command> <return>  to replace it with another command,
-or  <return>  to continue without it.
-
+? 
 
 ! Package inputenc Error: Unicode char \u8:  not set up for use with LaTeX.
 
@@ -684,15 +640,12 @@ See the inputenc package documentation for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.193 On choisit ce que l’on veut loguer 
+l.201 On choisit ce que l’on veut loguer 
                                             avec iptables
-Your command was ignored.
-Type  I <command> <return>  to replace it with another command,
-or  <return>  to continue without it.
-
+? 
 [6]
  4.
-<images/auth.png, id=26, 355.3275pt x 411.03563pt>
+<images/auth.png, id=27, 355.3275pt x 411.03563pt>
 File: images/auth.png Graphic file (type png)
  <use images/auth.png>
 
@@ -702,12 +655,9 @@ See the inputenc package documentation for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.220 Pré-requis 
+l.228 Pré-requis 
                    :
-Your command was ignored.
-Type  I <command> <return>  to replace it with another command,
-or  <return>  to continue without it.
-
+? 
 [7
 
  <./images/auth.png (PNG copy)>]
@@ -718,12 +668,9 @@ See the inputenc package documentation for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.222 Script autogen.sh 
+l.230 Script autogen.sh 
                          :
-Your command was ignored.
-Type  I <command> <return>  to replace it with another command,
-or  <return>  to continue without it.
-
+? 
 
 ! Package inputenc Error: Unicode char \u8:  not set up for use with LaTeX.
 
@@ -731,43 +678,43 @@ See the inputenc package documentation for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.226 Compilation Nufw 
+l.234 Compilation Nufw 
                         :
-Your command was ignored.
-Type  I <command> <return>  to replace it with another command,
-or  <return>  to continue without it.
-
+? 
 [8] [9]
  5.
 
+Overfull \hbox (15.9164pt too wide) in paragraph at lines 309--311
+[]\T1/cmr/m/n/12 Le dae-mon ufwi-filterd (an-ciene-ment ap-pel� nufw) n'est d'a
+utre qu'un pare-feu bas� sur NFQUEUE
+ []
+
+
 ! Package inputenc Error: Unicode char \u8:  not set up for use with LaTeX.
 
 See the inputenc package documentation for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.312 Pré-requis 
+l.320 Pré-requis 
                    :
-Your command was ignored.
-Type  I <command> <return>  to replace it with another command,
-or  <return>  to continue without it.
-
+? 
 [10
 
 ] [11]
  6.
-
-Underfull \hbox (badness 10000) in paragraph at lines 368--370
-
- []
-
 
 Underfull \hbox (badness 10000) in paragraph at lines 376--378
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 385--387
+Underfull \hbox (badness 10000) in paragraph at lines 384--386
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 393--395
 
  []
 
@@ -779,24 +726,23 @@ Underfull \hbox (badness 10000) in paragraph at lines 385--387
 
 ] (./rapport.aux) ) 
 Here is how much of TeX's memory you used:
- 2631 strings out of 495028
- 32184 string characters out of 1181229
+ 2634 strings out of 495061
+ 32218 string characters out of 1182620
  95274 words of memory out of 3000000
- 5800 multiletter control sequences out of 15000+50000
+ 5794 multiletter control sequences out of 15000+50000
  12550 words of font info for 31 fonts, out of 3000000 for 9000
  28 hyphenation exceptions out of 8191
- 25i,11n,43p,615b,343s stack positions out of 5000i,500n,10000p,200000b,50000s
- </home/maxime/.texmf-var/fonts/pk/ljfour/jknappen/ec/ecbx14
-40.600pk> </home/maxime/.texmf-var/fonts/pk/ljfour/jknappen/ec/ecbx1728.600pk> 
-</home/maxime/.texmf-var/fonts/pk/ljfour/jknappen/ec/ecbx1200.600pk> </home/max
-ime/.texmf-var/fonts/pk/ljfour/jknappen/ec/ecbx2488.600pk> </home/maxime/.texmf
--var/fonts/pk/ljfour/jknappen/ec/ecrm1200.600pk></usr/share/texmf-texlive/fonts
-/type1/public/amsfonts/cm/cmmi12.pfb></usr/share/texmf-texlive/fonts/type1/publ
-ic/amsfonts/cm/cmmi8.pfb></usr/share/texmf-texlive/fonts/type1/public/amsfonts/
-cm/cmr12.pfb>
-Output written on rapport.pdf (14 pages, 255108 bytes).
+ 25i,11n,43p,906b,343s stack positions out of 5000i,500n,10000p,200000b,50000s
+ </root/.texmf-var/fonts/pk/ljfour/jknappen/ec/ecbx1440.600p
+k> </root/.texmf-var/fonts/pk/ljfour/jknappen/ec/ecbx1728.600pk> </root/.texmf-
+var/fonts/pk/ljfour/jknappen/ec/ecbx1200.600pk> </root/.texmf-var/fonts/pk/ljfo
+ur/jknappen/ec/ecbx2488.600pk> </root/.texmf-var/fonts/pk/ljfour/jknappen/ec/ec
+rm1200.600pk></usr/share/texmf-texlive/fonts/type1/public/amsfonts/cm/cmmi12.pf
+b></usr/share/texmf-texlive/fonts/type1/public/amsfonts/cm/cmmi8.pfb></usr/shar
+e/texmf-texlive/fonts/type1/public/amsfonts/cm/cmr12.pfb>
+Output written on rapport.pdf (14 pages, 258347 bytes).
 PDF statistics:
- 303 PDF objects out of 1000 (max. 8388607)
+ 307 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
  6 words of extra memory for PDF output out of 10000 (max. 10000000)
 

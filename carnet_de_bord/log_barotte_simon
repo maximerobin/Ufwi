@@ -20,6 +20,9 @@
 					make[1]: quittant le répertoire « /root/ufwi-daemons-ufwi-base/src »
 					make: *** [install-recursive] Erreur 1
 
-
-
-
+[2012-03-05] - Tentative de lancement du daemon ufwi-authd sans succès
+		Erreur au lancement il ne trouve pas le fichier libufwissl.so pourtant un locate de ce fichier sur la machine
+		montre que cette librairie est bien présente dans /usr/local/lib/
+	     - Tentative de réinstallation du daemon ufwi-authd
+		L'installation semble se dérouler correctement (aucune erreur dans le configure et le make)
+		   Dès lors je tente de relancer le daemon mais toujours la même erreur de librairie

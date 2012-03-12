@@ -87,6 +87,13 @@ Ufwi est une solution de pare-feu par authentification, cela signifie qu'il effe
 Ufwi dispose aussi d'un mode sans client, pour se faire ufwi utilise un module "ufwi-authd" (utilisé dans le cadre de notre projet).\\
 Comme vu précedemment Ufwi, chaque connexion est associée à un utilisateur. Ce qui veut dire que plusieurs utilisateurs peuvent travailler sur un même poste génèrent simultanément des flux à partir d'une même adresse IP source.
 
+\newpage
+Donc Ufwi permet le filtrage par utilisateur mais peut aussi apporter d'autre fonctionalité interessantes.\newline
+\begin{itemize}
+    \item Ufwi permet de contribuer de manière tres pointue à la surveillance de l'activité réseau des serveurs. En regle generale dans les installations moderne on attribue des utilisateurs distinct à chaque service que fait tourner le serveur, de ce faite avec Ufwi on peut attribuer une politique réseau différente pour chaque utilisateur système.\newline
+    \item Ufwi peut marquer chaque paquets d'une connexion avec les information de son utilisateur (identifiant...) ce qui permet d'appliquer une politique de qualité corespondant a chaque utilisateurs. Cela permetd onc de distribuer la bande passante en tre chaque utilisateur, ainsi attribuer une bande passante plus élevé au utilisateur qui utilise desn applications plus gourmande en terme de connexion.\newline
+    \item Ufwi comprend un module de surveillance qui journalisent les événement principaux se produisant sur le réseaux en indiquant les utilisateurs à l'orgine de ses flux ( ouverture, fermeture de connexion, paquet bloqué, etc...). Ces log peuvent etre gérés au choix par Syslog, PostgreSQL ou MySQL. Ufwi conserve chaque connexion ouverte ( ou tenté) meme si l'utilisateur en question a changé d'adresse IP ou de machine.\newline
+    \item Ufwi permet d'identifier les utilisateurs des aplications réseau grace a une authentification unique (Single sign on). Grace au systeme de journalisation Sql une table de connexion est maintenu en temps reel.  
 %-------------------------------------------------------------------------------------------------------------------------------
 \chapter{Liste des solutions de pare-feu par identification}
 Les pare-feu par identification les plus connus : 
@@ -422,5 +429,7 @@ Ce qui reste a faire :
 \end{itemize}
   
 
+%---------------------------------------------------------------------------------------------------------------------------------
+\chapter{Difficulté rencontré et avis personnel}
 %---------------------------------------------------------------------------------------------------------------------------------
 \end{document}

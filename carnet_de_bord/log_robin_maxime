@@ -12,4 +12,8 @@
 	- Je commence a modifier le code source python de rpcd pour trouver la bug de lancement.
 	- Le probleme ne viendrai pas du code source mais d'un paquet manquant (http://code.google.com/p/trash-cli/issues/detail?id=35)
 	- Je ne vois toujours pas d'ou vien le probleme, d'un paquet manquant, d'un probleme de permission, d'une erreur dans le code source ...
+[2012-03-05]
+	- Tentative de lancement du deamon rpcd : 
+		- Error on Core.start: [ImportError] No module named ufwi_conf.common.ha_cfg
+	- Réinstallation du module conf, déplacement des fichiers ufwi_conf/backend/components/ufwi_conf_component/* dans ufwi_conf/backend/components/. Cela a permis une meilleur installe du module.
 

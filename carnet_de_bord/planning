@@ -50,3 +50,20 @@ Valentin Frolich :
 	Tester different configuration de la suite Ufwi.
 	Simuler un environement test (entreprise...).
 	Definir les limite, avantage, inconvénient de la suite.
+
+-------------------------------------------------------------------------------------------
+Cyril PIERRÉ
+- Semaine 4 à 8 :
+	Mise en place d'un réseau virtualisé à l'aide de VirtualBox comprenant une passerelle 
+		entre le réseau ASRALL (192.168.1.0/24) et le réseau interne virtuel (172.20.8.0)
+		et d'une seconde machine avec un annuaire LDAP, un serveur MySQL et un serveur de résolution DNS (bind9)
+	Étude des PyQT Managements Tools
+	Installation de l'ensemble des modules d'UFWI sur la passerelle
+	Recherche des différents pare-feu par authentification
+	Mise en place d'un tutoriel pour l'externalisation des logs de pare-feu avec Nulog
+
+- Semaine 9 :
+	Correction d'un problème de RAM sur la passerelle
+	Étude de l'intégration d'UFWI avec d'autre logiciels d'authentification :
+			- Kerberos
+			

@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-1.40.10 (TeX Live 2009/Debian) (format=pdflatex 2011.11.22)  2 MAR 2012 12:28
+This is pdfTeX, Version 3.1415926-1.40.10 (TeX Live 2009/Debian) (format=pdflatex 2011.11.22)  12 MAR 2012 16:05
 entering extended mode
  %&-line parsing enabled.
 **rapport.tex
@@ -451,8 +451,28 @@ Package Fancyhdr Warning: \headheight is too small (12.0pt):
 [3
 
 ]
+Underfull \hbox (badness 10000) in paragraph at lines 91--92
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 93--94
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 94--95
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 95--96
+
+ []
+
+[4]
  2.
-[4
+[5
 
 ]
  3.
@@ -463,7 +483,7 @@ See the inputenc package documentation for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.109 Configuration IP 
+l.116 Configuration IP 
                         :
 ? 
 
@@ -473,7 +493,7 @@ See the inputenc package documentation for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.111 ifconfig eth0 
+l.118 ifconfig eth0 
                      192.168.1.137/24
 ? 
 
@@ -483,19 +503,31 @@ See the inputenc package documentation for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.112 ifconfig eth1 
+l.119 ifconfig eth1 
                      172.20.8.1/24
 ? 
 ! Missing $ inserted.
 <inserted text> 
                 $
-l.121 export LD_
+l.128 export LD_
                 PRELOAD=/usr/lib/libmysqlclient.so.16
 ? 
 ! Missing $ inserted.
 <inserted text> 
                 $
-l.122 
+l.129 
+      
+? 
+! Missing } inserted.
+<inserted text> 
+                }
+l.129 
+      
+? 
+! Extra }, or forgotten \endgroup.
+\@par ... \@noitemerr {\@@par }\fi \else {\@@par }
+                                                  \fi 
+l.129 
       
 ? 
 
@@ -505,7 +537,7 @@ See the inputenc package documentation for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.129 ...ons de connexion à la base de données 
+l.136 ...ons de connexion à la base de données 
                                                   :
 ? 
 
@@ -515,7 +547,7 @@ See the inputenc package documentation for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.131 paragraphe « 
+l.138 paragraphe « 
                      [MYSQL] » ligne 59 :
 ? 
 
@@ -525,7 +557,7 @@ See the inputenc package documentation for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.131 paragraphe « [MYSQL] 
+l.138 paragraphe « [MYSQL] 
                               » ligne 59 :
 ? 
 
@@ -535,11 +567,11 @@ See the inputenc package documentation for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.131 paragraphe « [MYSQL] » ligne 59 
+l.138 paragraphe « [MYSQL] » ligne 59 
                                            :
 ? 
 
-Overfull \hbox (50.54788pt too wide) in paragraph at lines 131--137
+Overfull \hbox (32.92307pt too wide) in paragraph at lines 138--144
 []\T1/cmr/m/n/12 paragraphe ^^S[MYSQL]^^T ligne 59 : ta-ble=''ulog'' pass=''pas
 sulog'' user=''ulog'' db=''ulog'' host=''172.20.8.2'' 
  []
@@ -551,7 +583,7 @@ See the inputenc package documentation for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.140 Configuration IP 
+l.147 Configuration IP 
                         :
 ? 
 
@@ -561,7 +593,7 @@ See the inputenc package documentation for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.142 ifconfig eth0 
+l.149 ifconfig eth0 
                      172.20.8.2/24
 ? 
 
@@ -571,7 +603,7 @@ See the inputenc package documentation for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.152 ...onnées et création de l’utilisateur 
+l.159 ...onnées et création de l’utilisateur 
                                                   (les deux programmes vont ...
 
 ? 
@@ -582,7 +614,7 @@ See the inputenc package documentation for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.156 ...er 'ulog'@'\%' identified by 'passulog' 
+l.163 ...er 'ulog'@'\%' identified by 'passulog' 
                                                   ;
 ? 
 
@@ -592,13 +624,13 @@ See the inputenc package documentation for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.160 Commandes de création de la base 
+l.167 Commandes de création de la base 
                                          :
 ? 
-[5
+[6
 
 ]
-Overfull \hbox (22.91994pt too wide) in paragraph at lines 177--181
+Overfull \hbox (5.29512pt too wide) in paragraph at lines 184--188
 []\T1/cmr/m/n/12 cd /etc/nulog cp de-fault. core.conf core.conf cp de-fault.nul
 og.conf nu-log.conf cp de-fault.wrapper.conf
  []
@@ -610,7 +642,7 @@ See the inputenc package documentation for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.182 ...ons de connexion à la base de données 
+l.189 ...ons de connexion à la base de données 
                                                   :
 ? 
 
@@ -620,7 +652,7 @@ See the inputenc package documentation for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.192 Sur la passerelle 
+l.199 Sur la passerelle 
                          :
 ? 
 
@@ -630,7 +662,7 @@ See the inputenc package documentation for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.196 Sur le serveur 
+l.203 Sur le serveur 
                       :
 ? 
 
@@ -640,12 +672,12 @@ See the inputenc package documentation for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.201 On choisit ce que l’on veut loguer 
+l.208 On choisit ce que l’on veut loguer 
                                             avec iptables
 ? 
-[6]
+[7]
  4.
-<images/auth.png, id=27, 355.3275pt x 411.03563pt>
+<images/auth.png, id=31, 355.3275pt x 411.03563pt>
 File: images/auth.png Graphic file (type png)
  <use images/auth.png>
 
@@ -655,10 +687,10 @@ See the inputenc package documentation for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.228 Pré-requis 
+l.235 Pré-requis 
                    :
 ? 
-[7
+[8
 
  <./images/auth.png (PNG copy)>]
 
@@ -668,7 +700,7 @@ See the inputenc package documentation for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.230 Script autogen.sh 
+l.237 Script autogen.sh 
                          :
 ? 
 
@@ -678,17 +710,11 @@ See the inputenc package documentation for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.234 Compilation Nufw 
+l.241 Compilation Nufw 
                         :
 ? 
-[8] [9]
+[9] [10]
  5.
-
-Overfull \hbox (15.9164pt too wide) in paragraph at lines 309--311
-[]\T1/cmr/m/n/12 Le dae-mon ufwi-filterd (an-ciene-ment ap-pel� nufw) n'est d'a
-utre qu'un pare-feu bas� sur NFQUEUE
- []
-
 
 ! Package inputenc Error: Unicode char \u8:  not set up for use with LaTeX.
 
@@ -696,35 +722,53 @@ See the inputenc package documentation for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.320 Pré-requis 
+l.327 Pré-requis 
                    :
 ? 
-[10
+[11
 
-] [11]
+] [12]
  6.
 
-Underfull \hbox (badness 10000) in paragraph at lines 376--378
+Underfull \hbox (badness 10000) in paragraph at lines 383--385
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 384--386
+Underfull \hbox (badness 10000) in paragraph at lines 391--393
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 393--395
+Underfull \hbox (badness 10000) in paragraph at lines 400--402
 
  []
 
-[12
+[13
 
-] [13]
+] [14]
  7.
-[14
+[15
 
-] (./rapport.aux) ) 
+]
+ 8.
+
+! LaTeX Error: \begin{itemize} on input line 92 ended by \end{document}.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.435 \end{document}
+                    
+? 
+[16
+
+] (./rapport.aux) )
+(\end occurred inside a group at level 1)
+
+### semi simple group (level 1) entered at line 92 (\begingroup)
+### bottom level 
 Here is how much of TeX's memory you used:
  2634 strings out of 495061
  32218 string characters out of 1182620
@@ -732,17 +776,17 @@ Here is how much of TeX's memory you used:
  5794 multiletter control sequences out of 15000+50000
  12550 words of font info for 31 fonts, out of 3000000 for 9000
  28 hyphenation exceptions out of 8191
- 25i,11n,43p,906b,343s stack positions out of 5000i,500n,10000p,200000b,50000s
- </root/.texmf-var/fonts/pk/ljfour/jknappen/ec/ecbx1440.600p
-k> </root/.texmf-var/fonts/pk/ljfour/jknappen/ec/ecbx1728.600pk> </root/.texmf-
-var/fonts/pk/ljfour/jknappen/ec/ecbx1200.600pk> </root/.texmf-var/fonts/pk/ljfo
-ur/jknappen/ec/ecbx2488.600pk> </root/.texmf-var/fonts/pk/ljfour/jknappen/ec/ec
-rm1200.600pk></usr/share/texmf-texlive/fonts/type1/public/amsfonts/cm/cmmi12.pf
-b></usr/share/texmf-texlive/fonts/type1/public/amsfonts/cm/cmmi8.pfb></usr/shar
-e/texmf-texlive/fonts/type1/public/amsfonts/cm/cmr12.pfb>
-Output written on rapport.pdf (14 pages, 258347 bytes).
+ 25i,11n,43p,906b,420s stack positions out of 5000i,500n,10000p,200000b,50000s
+ </root/.texmf-var/fonts/pk/ljfour/jknappen/ec/ecbx1440.600pk> 
+</root/.texmf-var/fonts/pk/ljfour/jknappen/ec/ecbx1728.600pk> </root/.texmf-var
+/fonts/pk/ljfour/jknappen/ec/ecbx1200.600pk> </root/.texmf-var/fonts/pk/ljfour/
+jknappen/ec/ecbx2488.600pk> </root/.texmf-var/fonts/pk/ljfour/jknappen/ec/ecrm1
+200.600pk></usr/share/texmf-texlive/fonts/type1/public/amsfonts/cm/cmmi12.pfb><
+/usr/share/texmf-texlive/fonts/type1/public/amsfonts/cm/cmmi8.pfb></usr/share/t
+exmf-texlive/fonts/type1/public/amsfonts/cm/cmr12.pfb>
+Output written on rapport.pdf (16 pages, 263350 bytes).
 PDF statistics:
- 307 PDF objects out of 1000 (max. 8388607)
+ 318 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
  6 words of extra memory for PDF output out of 10000 (max. 10000000)
 

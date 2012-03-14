@@ -26,3 +26,7 @@
 	     - Tentative de réinstallation du daemon ufwi-authd
 		L'installation semble se dérouler correctement (aucune erreur dans le configure et le make)
 		   Dès lors je tente de relancer le daemon mais toujours la même erreur de librairie
+
+[2012-03-05] - Téléchargement et installation du fichier iso disponible sur le site ufwi.org avec la suite nufw pré-installer
+		Installation qui se déroule avec succès
+	     - Prise en main de mon daemon nuauth

@@ -34,6 +34,9 @@ Simon Barotte:
 	Prise en main de mon daemon (ufwi-auth)
 	Mettre en place différent test et valider leur fonctionnement
 	Utiliser différentes configuration en tirer les avantages et inconvénients
+	Générer des certificats personnel pour nuauth	
+	Test du système d'authentification
+	Réaliser premier test et débogage
 	
 ------------------------------------------------------------------------------------------
 Valentin Frolich : 

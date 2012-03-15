@@ -27,6 +27,10 @@
 		L'installation semble se dérouler correctement (aucune erreur dans le configure et le make)
 		   Dès lors je tente de relancer le daemon mais toujours la même erreur de librairie
 
-[2012-03-05] - Téléchargement et installation du fichier iso disponible sur le site ufwi.org avec la suite nufw pré-installer
+[2012-03-13] - Téléchargement et installation du fichier iso disponible sur le site ufwi.org avec la suite nufw pré-installer
 		Installation qui se déroule avec succès
 	     - Prise en main de mon daemon nuauth
+
+[2012-03-15] - Génération des certificats d'authentification pour nuauth et nufw qui seront utilisés par la suite
+				nufw-key.pem nufw-cert.pem nuauth-key.pem nuauth-cert.pem
+			 - Etude de la config de base du fichier nuauth.conf pour une mise en oeuvre et 1er test dans les prochains jour

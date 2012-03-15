@@ -5,6 +5,8 @@
 \usepackage[T1]{fontenc}
 \usepackage{longtable}
 \usepackage{graphicx}
+\usepackage{verbatim} 
+\usepackage{hyperref}
 
 %-------------------------------------------------------------------------------------------------------------------------------
 % Marges
@@ -208,6 +210,39 @@ Sur le serveur :
 On choisit ce que l’on veut loguer avec iptables
 
 %-------------------------------------------------------------------------------------------------------------------------------
+\chapter{Fonctionnement d'ufwi}
+\section{Algorithme}
+
+\begin{enumerate}
+  \item Au démarrage de sa session de travail, l’utilisateur lance un client sur son poste de travail. Le client ouvre un tunnel crypté par TLS vers le serveur nuauth qui réalise l’authentification de l’utilisateur pour ce tunnel au regard d’un annuaire référent. Ce tunnel est ensuite conservé pendant toute la durée des opérations et l’ensemble des échanges entre nuauth et le client se fait ensuite par son intermédiaire.
+  \\
+  \item Supposons maintenant que l’utilisateur ouvre une connexion vers un serveur, par exemple une connexion web à destination du serveur d’application. Il utilise alors son navigateur favori qui envoie un paquet à destination du serveur. Le paquet envoyé est un paquet TCP standard avec notamment comme caractéristiques port destination 80 (web) et bit SYN positionné (ouverture de connexion).
+  \\
+  \item Le pare-feu (Netfilter) envoie ce paquet au démon nufw (au moyen de la décision QUEUE ou NFQUEUE) : contrairement à un pare-feu " classique ", Netfilter ne prend pas de décision à propos de cette connexion.
+  \\
+  \item Le démon nufw se contente de relayer le paquet reçu vers le serveur d’authentification, qui a autorité sur les décisions.
+  \\
+  \item Le démon nuauth analyse le paquet reçu (et en particulier l’adresse IP source) et envoie une demande de mise à jour à tous les clients connectés (par l’étape 1) depuis cette adresse pour qu’ils authentifient les connexions en attente. Cette demande est envoyée au travers du (ou des) canal (canaux) crypté(s) ouvert(s) à l’étape 1.
+  \\
+  \item Le client qui a ouvert notre connexion " témoin " stipule à nuauth qu’il l’a fait, en précisant tous les paramètres IP (IP et port destination, port source, etc.). À ce stade, le serveur nuauth connaît, de manière sûre, l’identité de l’utilisateur à la source de notre connexion.
+  \\
+  \item nuauth réalise une requête sur la base des ACL, pour vérifier si l’utilisateur dispose des droits pour établir cette connexion. nuauth obtient ainsi une décision.
+  \\
+  \item (En option) nuauth journalise toutes les informations relatives à cette connexion dans une base SQL, avec bien sûr l’identité de l’utilisateur.
+  \\
+  \item nuauth envoie la décision obtenue en 7 à nufw, qui la relaie à son tour à Netfilter. La décision associée à notre utilisateur est alors appliquée par Netfilter.
+  \\
+  \item S’il est autorisé, le paquet poursuit sa route.
+  \\
+  \item (En option) Si le serveur (Apache, par exemple) désire connaître l’identité de l’utilisateur, au lieu de la lui demander directement, il peut réaliser une simple requête SQL SELECT pour récupérer l’identifiant de l’utilisateur en partant de marqueurs uniques de la connexion (la socket source, pour les connaisseurs). L’utilisateur est ainsi authentifié de manière transparente, et sans pouvoir tricher, sur le serveur : il s’agit d’une solution de Single Sign On (authentification unique) très simple, très sûre, et indépendante du protocole.
+  \\
+  \item Le reste du flux est géré par le suivi de connexion (Stateful inspection) de Netfilter : les paquets ne repassent pas par les démons nufw/nuauth.
+\end{enumerate}
+\begin{center}
+  \includegraphics[width=12cm,height=10cm]{images/algo.jpg}
+\end{center}
+
+%-------------------------------------------------------------------------------------------------------------------------------
 \chapter{Daemon ufwi-authd}
 \section{Introduction}
 
@@ -380,7 +415,8 @@ Avant de lancer l'installation du module, certains pré-requis sont nécéssaire
   \item pysvn
   \item pytz
 \end{itemize}
-Debian: apt-get install python-twisted-web python-svn python-m2crypto sudo python-jinja subversion python-tz
+Debian: \begin{verbatim}apt-get install python-twisted-web python-svn 
+    python-m2crypto sudo python-jinja subversion python-tz\end{verbatim}
 \newline
 
 Pour l'installation de ufwi-rpcd:
@@ -388,7 +424,7 @@ Pour l'installation de ufwi-rpcd:
   \item (GNU) make
   \item sqlite3
 \end{itemize}
-Sous Debian: apt-get install make sqlite3
+Sous Debian: \begin{verbatim}apt-get install make sqlite3\end{verbatim}
 \newline
 
 Paquets optionnels :
@@ -397,7 +433,7 @@ Pour compiler les fichiers de .ts à .qm et mettre à jours les transmissions :
   \item lrelease4: Qt development tools
   \item pylupdate4, lrelease-qt4: Python Qt development tools
 \end{itemize}
-Sous Debian: apt-get install libqt4-dev pyqt4-dev-tools
+Sous Debian: \begin{verbatim}apt-get install libqt4-dev pyqt4-dev-tools\end{verbatim}
 \newline
 
 Autres :
@@ -408,6 +444,70 @@ Autres :
   \item libconfig-inifiles-perl : pour tools/ufwi\_rpcd\_enmod.
   \item IPy (python-ipy) : pour les tests.
 \end{itemize}
+
+\section{Utilisation}
+Une fois démarrer, on peut accèder au fonction plus particuliaire de ufwi-rpcd (nucentral).
+\subsection{Démarrage}
+\subsubsection{Lancement en mode deamon}
+Pour lancer ufwi-rpcd en mode deamon il suffit d'exécuter une commande en root:
+\begin{verbatim}
+twistd -y /usr/sbin/ufwi-rpcd.tac --pidfile=/var/run/ufwi-rpcd.pid 
+    -l /var/log/ufwi-rpcd-twisted.log
+\end{verbatim}
+   
+Pour arrèter ufwi-rpcd en mode deamon (en root):
+\begin{verbatim}kill \$(cat /var/run/ufwi-rpcd.pid)\end{verbatim}
+   
+\subsubsection{Lancement en mode "premier plan"}
+Pour facilité le développement, on peut également lancer ufwi-rpcd en premier plan:
+\begin{verbatim}twistd -n -y /usr/sbin/ufwi-rpcd.tac -l /var/log/ufwi-rpcd-twisted.log\end{verbatim}
+Pour arréter le processus : CTRL+c.
+
+\subsection{ufwi\_rpcd\_client (nucentral\_client)}
+\subsubsection{Le client}
+Pour lancer le client d'ufwi\_rpcd en HTTP (tcp/8080):
+\begin{verbatim}ufwi_rpcd_client --host 127.0.0.1 --cleartext -u admin -p admin\end{verbatim}
+Par défaut, ufwi\_rpcd\_client utilise HTTPS (tcp/8443):
+\begin{verbatim}ufwi_rpcd_client --host 127.0.0.1 -u admin -p admin\end{verbatim}
+Une fois connecté sur le client, le prompt devient: 
+\begin{verbatim}nucentral>\end{verbatim}
+
+\subsubsection{Le menu}
+Une fois lancer, on peut accèder aux différentes fonctions d'ufwi-rpcd:
+\begin{itemize}
+  \item \begin{verbatim}call('component', 'service', ...)\end{verbatim}
+  Apelle un service d'NuCentral
+  \item \begin{verbatim}authenticate('login', 'password')\end{verbatim}
+  Authentification ou mise à jour d'un groupe ou d'un utilisateur.
+  \item \begin{verbatim}components()\end{verbatim}
+  Affiche la liste des différents composants.
+  \item \begin{verbatim}services('component')\end{verbatim}
+  Affiche la liste des services d'un composant.
+  \item \begin{verbatim}proxy('component')\end{verbatim}
+  Créé un composant pour le proxy qui pourra être utilisé avec component.service().
+  \item \begin{verbatim}nucentralStatus()\end{verbatim}
+  Afficher l'état du serveur et la session d'informations.
+  \item \begin{verbatim}help('component')\end{verbatim}
+  Utilisation d'un composant.
+  \item \begin{verbatim}help('component', 'service')\end{verbatim}
+  Utilisation d'un service d'un composant.
+  \item \begin{verbatim}help(proxy)\end{verbatim}
+  Utilisation du proxy.
+  \item \begin{verbatim}exit()\end{verbatim}
+  Quitter.
+  \item \begin{verbatim}pyhelp(object)\end{verbatim}
+  Aide Python pour l'objet spécifié.
+  
+\end{itemize}
+\\
+\\
+Différents composants sont disonibles :
+\begin{verbatim}
+CORE, access, acl, audit, auth_cert, bind, config, contact, hostname, hosts, 
+httpout, localfw, lock, logger, network, ntp, nuauth, nuauth_command, nuconf, 
+nuface, nulog, nupki, nurestore, reporting, resolv, session, status, streaming, 
+system, system_info, tools, update, users_config, versionning
+\end{verbatim}
 
 
 %---------------------------------------------------------------------------------------------------------------------------------

@@ -376,7 +376,7 @@ Signe les demandes de certificats grâce à l’AC:
 \textit{openssl x509 -req -days 365 -in nufw.csr -CA private/CAcert.pem -CAkey private/CAkey.pem -CAcreateserial -out nufw-cert.pem}
 
 \textit{openssl x509 -req -days 365 -in nuauth.csr -CA private/CAcert.pem -CAkey private/CAkey.pem -CAcreateserial -out nuauth-cert.pem}
-\\
+~\\
 Enfin on déplace les certificats dans le bon répertoire:
 
 \textit{cp private/nufw-key.pem /etc/nufw/}

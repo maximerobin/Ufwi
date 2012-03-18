@@ -24,4 +24,14 @@
 	- Changement du mot de passe root de la nouvelle machine par root-root.
 	- Suppression des regle iptables pour ajouter nos regles plustard.
 	- On peut sortir de la machine mais pas y entrer.
+[2012-03-13]
+	- Mise en place sur le réseau de la machine
+	- Modification du fichier de log nucentral.conf pour y ajouter ldap
+[2012-03-14]
+	- Installation de phpldamadmin
+	- Ajout d'un mot de passe "admin" à l'admin pour le domaine "cn=admin,dc=edenwall,dc=com"
+	- Commencement de lister tous les menus de nucentral (ufwi-rpcd)
+[2012-03-15]
+	- Ajout des menus de nucentral dans le rapport.
+	- Recherche sur l'authentification ssl et ldap.
 

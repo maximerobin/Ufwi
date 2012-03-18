@@ -7,6 +7,7 @@
 \usepackage{graphicx}
 \usepackage{verbatim} 
 \usepackage{hyperref}
+\usepackage{lastpage}
 
 %-------------------------------------------------------------------------------------------------------------------------------
 % Marges
@@ -21,7 +22,7 @@
 	\fancyhead{}                  
 	\fancyfoot{}   
 	\fancyfoot[L]{Ufwi}
-	\fancyfoot[C]{\thepage}
+	\fancyfoot[C]{\thepage \/ \pageref{LastPage}}
 	\fancyfoot[R]{\today}
 	\chead{Projet tuteuré – Ufwi}
 	\renewcommand{\headrulewidth}{1pt}   
@@ -55,13 +56,30 @@
 Licence Professionnel ASRALL
 
 
+\vspace{1cm}
 Projet tuteuré.
 
 \vspace{2,5cm}
+
+\begin{center}
+  \includegraphics[width=10cm,height=10cm]{images/ufwi.png}
+\end{center}
+
+\vspace{1cm}
 \textbf{\Huge Ufwi}
 
 
 \end{center}
+
+\vspace{4cm}
+
+Groupe :
+\begin{itemize}
+  \item Cyril PIERRÉ
+  \item Maxime ROBIN
+  \item Valentin FROLICH
+  \item Simon BARROT
+\end{itemize}
 
 
 %-------------------------------------------------------------------------------------------------------------------------------

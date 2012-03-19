@@ -5,6 +5,9 @@
 \usepackage[T1]{fontenc}
 \usepackage{longtable}
 \usepackage{graphicx}
+\usepackage{verbatim} 
+\usepackage{hyperref}
+\usepackage{lastpage}
 
 %-------------------------------------------------------------------------------------------------------------------------------
 % Marges
@@ -19,7 +22,7 @@
 	\fancyhead{}                  
 	\fancyfoot{}   
 	\fancyfoot[L]{Ufwi}
-	\fancyfoot[C]{\thepage}
+	\fancyfoot[C]{\thepage \/ \pageref{LastPage}}
 	\fancyfoot[R]{\today}
 	\chead{Projet tuteuré – Ufwi}
 	\renewcommand{\headrulewidth}{1pt}   
@@ -53,13 +56,30 @@
 Licence Professionnel ASRALL
 
 
+\vspace{1cm}
 Projet tuteuré.
 
 \vspace{2,5cm}
+
+\begin{center}
+  \includegraphics[width=10cm,height=10cm]{images/ufwi.png}
+\end{center}
+
+\vspace{1cm}
 \textbf{\Huge Ufwi}
 
 
 \end{center}
+
+\vspace{4cm}
+
+Groupe :
+\begin{itemize}
+  \item Cyril PIERRÉ
+  \item Maxime ROBIN
+  \item Valentin FROLICH
+  \item Simon BARROT
+\end{itemize}
 
 
 %-------------------------------------------------------------------------------------------------------------------------------
@@ -77,8 +97,23 @@ Projet tuteuré.
 %-------------------------------------------------------------------------------------------------------------------------------
 % Content
 \chapter{Introduction}
-Début du doc de Ufwi
+\section{Historique}
+Il faut savoir que le projet Ufwi descend du projet NuFW.
+La première version publique de NuFW est sortie le 01 septembre 2003.L’idée avait germée en 2001 mais ne s’était concrétisée que le 01 septembre de l’année 2003. La société croît rapidement, créant une vingtaine d'emplois en région parisienne, et acquérant une réputation dans le milieu de la sécurité informatique. En 2009, l'entreprise décide d'abandonner le pôle service pour se concentrer sur l'édition d'un pare-feu clef en main, EdenWall, couplant NuFW avec une interface d'administration performante, cette action entraina des difficulté financiere lourde a la société.
+Le 18 août 2011, soit sept ans après sa création, le tribunal du commerce de Paris a prononcé la liquidation de la société, de se fait la fin du projet NuFW.\\
+Cependant le projet fut reprit sous le nom de Ufwi, offrant une reprise optimale du projet en opérant un rassemblement du code, notamment éparpillé chez les clients de la société, qui évite les mois de travail nécessaires à la récupération des modifications ayant eu lieu depuis cette date.
+\section{Présentation}
+Ufwi est une solution de pare-feu par authentification, cela signifie qu'il effectue une authentification de chaque connexion qui le traverse. L'authentification se fait de façon transparente, en requérant les informations d’identification via l'annuaire des utilisateurs d'un réseau (LDAP ou autre). Donc avec Ufwi chaque utilisateur doit décliner son identité à chaque initialisation de conexion. Une fois que l'utilisateur est identifié, le paquet se voit filtré, selon les droits associés à l'utilisateur. Une fois que le premier paquet est accepter, les paquets suivant appartenant à la même connexion sont gérés par le système de suivi d'état (seul le paquet d'initialisation d'une connexion est authentifié). Ce principe de fonctionnement requiert la présence d'un client sur le poste utilisateur, il existe des clients compatible pour windows et GNU/Linux.
+Ufwi dispose aussi d'un mode sans client, pour se faire ufwi utilise un module "ufwi-authd" (utilisé dans le cadre de notre projet).\\
+Comme vu précedemment Ufwi, chaque connexion est associée à un utilisateur. Ce qui veut dire que plusieurs utilisateurs peuvent travailler sur un même poste génèrent simultanément des flux à partir d'une même adresse IP source.
 
+\newpage
+Donc Ufwi permet le filtrage par utilisateur mais peut aussi apporter d'autre fonctionalité interessantes.\newline
+\begin{itemize}
+    \item Ufwi permet de contribuer de manière tres pointue à la surveillance de l'activité réseau des serveurs. En regle generale dans les installations moderne on attribue des utilisateurs distinct à chaque service que fait tourner le serveur, de ce faite avec Ufwi on peut attribuer une politique réseau différente pour chaque utilisateur système.\newline
+    \item Ufwi peut marquer chaque paquets d'une connexion avec les information de son utilisateur (identifiant...) ce qui permet d'appliquer une politique de qualité corespondant a chaque utilisateurs. Cela permetd onc de distribuer la bande passante en tre chaque utilisateur, ainsi attribuer une bande passante plus élevé au utilisateur qui utilise desn applications plus gourmande en terme de connexion.\newline
+    \item Ufwi comprend un module de surveillance qui journalisent les événement principaux se produisant sur le réseaux en indiquant les utilisateurs à l'orgine de ses flux ( ouverture, fermeture de connexion, paquet bloqué, etc...). Ces log peuvent etre gérés au choix par Syslog, PostgreSQL ou MySQL. Ufwi conserve chaque connexion ouverte ( ou tenté) meme si l'utilisateur en question a changé d'adresse IP ou de machine.\newline
+    \item Ufwi permet d'identifier les utilisateurs des aplications réseau grace a une authentification unique (Single sign on). Grace au systeme de journalisation Sql une table de connexion est maintenu en temps reel.  
 %-------------------------------------------------------------------------------------------------------------------------------
 \chapter{Liste des solutions de pare-feu par identification}
 Les pare-feu par identification les plus connus : 
@@ -96,7 +131,7 @@ Installation des paquets :
 
 apt-get install apache2 php5 mysql-server nulog
 
-\underline{Configuration de la passerelle : }
+\underline{Configuration de la passerelle :}
 
 Configuration IP :
 
@@ -193,6 +228,39 @@ Sur le serveur :
 On choisit ce que l’on veut loguer avec iptables
 
 %-------------------------------------------------------------------------------------------------------------------------------
+\chapter{Fonctionnement d'ufwi}
+\section{Algorithme}
+
+\begin{enumerate}
+  \item Au démarrage de sa session de travail, l’utilisateur lance un client sur son poste de travail. Le client ouvre un tunnel crypté par TLS vers le serveur nuauth qui réalise l’authentification de l’utilisateur pour ce tunnel au regard d’un annuaire référent. Ce tunnel est ensuite conservé pendant toute la durée des opérations et l’ensemble des échanges entre nuauth et le client se fait ensuite par son intermédiaire.
+  \\
+  \item Supposons maintenant que l’utilisateur ouvre une connexion vers un serveur, par exemple une connexion web à destination du serveur d’application. Il utilise alors son navigateur favori qui envoie un paquet à destination du serveur. Le paquet envoyé est un paquet TCP standard avec notamment comme caractéristiques port destination 80 (web) et bit SYN positionné (ouverture de connexion).
+  \\
+  \item Le pare-feu (Netfilter) envoie ce paquet au démon nufw (au moyen de la décision QUEUE ou NFQUEUE) : contrairement à un pare-feu " classique ", Netfilter ne prend pas de décision à propos de cette connexion.
+  \\
+  \item Le démon nufw se contente de relayer le paquet reçu vers le serveur d’authentification, qui a autorité sur les décisions.
+  \\
+  \item Le démon nuauth analyse le paquet reçu (et en particulier l’adresse IP source) et envoie une demande de mise à jour à tous les clients connectés (par l’étape 1) depuis cette adresse pour qu’ils authentifient les connexions en attente. Cette demande est envoyée au travers du (ou des) canal (canaux) crypté(s) ouvert(s) à l’étape 1.
+  \\
+  \item Le client qui a ouvert notre connexion " témoin " stipule à nuauth qu’il l’a fait, en précisant tous les paramètres IP (IP et port destination, port source, etc.). À ce stade, le serveur nuauth connaît, de manière sûre, l’identité de l’utilisateur à la source de notre connexion.
+  \\
+  \item nuauth réalise une requête sur la base des ACL, pour vérifier si l’utilisateur dispose des droits pour établir cette connexion. nuauth obtient ainsi une décision.
+  \\
+  \item (En option) nuauth journalise toutes les informations relatives à cette connexion dans une base SQL, avec bien sûr l’identité de l’utilisateur.
+  \\
+  \item nuauth envoie la décision obtenue en 7 à nufw, qui la relaie à son tour à Netfilter. La décision associée à notre utilisateur est alors appliquée par Netfilter.
+  \\
+  \item S’il est autorisé, le paquet poursuit sa route.
+  \\
+  \item (En option) Si le serveur (Apache, par exemple) désire connaître l’identité de l’utilisateur, au lieu de la lui demander directement, il peut réaliser une simple requête SQL SELECT pour récupérer l’identifiant de l’utilisateur en partant de marqueurs uniques de la connexion (la socket source, pour les connaisseurs). L’utilisateur est ainsi authentifié de manière transparente, et sans pouvoir tricher, sur le serveur : il s’agit d’une solution de Single Sign On (authentification unique) très simple, très sûre, et indépendante du protocole.
+  \\
+  \item Le reste du flux est géré par le suivi de connexion (Stateful inspection) de Netfilter : les paquets ne repassent pas par les démons nufw/nuauth.
+\end{enumerate}
+\begin{center}
+  \includegraphics[width=12cm,height=10cm]{images/algo.jpg}
+\end{center}
+
+%-------------------------------------------------------------------------------------------------------------------------------
 \chapter{Daemon ufwi-authd}
 \section{Introduction}
 
@@ -281,16 +349,92 @@ Gestion des utilisateurs:
 Le fichier authd.conf est le fichier principal de configuration pour le
 daemon ufwi-authd. C'est dans ce fichier que seront indiqué l'adresse du daemon ufwi-filterd 
 par exemple ou encore le niveau de debug, le nombre de connexion qu'un utilsateur peut lancer.
+Dans ce fichier seront aussi renseigné les différents paramètres qui guide le comportement du 
+daemon, mais aussi les paramètres système, et pour finir les chemins absolus des autres fichiers
+de configuration.
 
 Il existe aussi d'autres fichiers de configurations liés à ufwi-authd:
 \begin{itemize}
-  \item modules/nuauth_tls.conf qui contiendra les paramètres TLS
-  \item modules/nuauth_krb5.conf configuration authentification Kerberos 5
-  \item modules/nuauth_ldap.conf authentification ldap
-  \item modules/nuauth_mysql.conf configuration de la base de donnée pour les logs utilisateurs (mysql)
-  \item modules/nuauth_pgsql.conf configuration de la base de donnée pour les logs utilisateurs (postgres) 
+  \item modules/nuauth-tls.conf qui contiendra les paramètres TLS
+  \item modules/nuauth-krb5.conf configuration authentification Kerberos 5
+  \item modules/nuauth-ldap.conf authentification ldap
+  \item modules/nuauth-mysql.conf configuration de la base de donnée pour les logs utilisateurs (mysql)
+  \item modules/nuauth-pgsql.conf configuration de la base de donnée pour les logs utilisateurs (postgres) 
 \end{itemize}
  
+\section{Installation des certificats}
+
+Le daemon d'authentification et le client utilise des certificats afin de comuniquer ensemble. Lors de l'installation de la
+suite ufwi des certificats sont installés par défaut dans le répertoire /certs. On peut utiliser ces certificats par défaut 
+pour procéder à des tests mais il n'est pas conseillé de les utiliser pour un utilisation pro de la suite ufwi. Dans cette 
+section nous allons voir comment générer ces certificats.
+
+Génére notre propre Authorité de Certification:
+
+\textit{mkdir private}
+
+\textit{chmod 700 private}
+
+\textit{openssl req -new -x509 -keyout private/CAkey.pem -out private/CAcert.pem}
+
+Génére les clefs privées pour le client et le daemon d'authentification:
+
+\textit{openssl genrsa -out private/nufw-key.pem}
+
+\textit{openssl genrsa -out private/nuauth-key.pem}
+
+Génére les demandes de certificats pour le client et le daemon:
+
+\textit{openssl req -new -key private/nufw-key.pem -out nufw.csr}
+
+\textit{openssl req -new -key private/nuauth-key.pem -out nuauth.csr}
+
+Signe les demandes de certificats grâce à l’AC:
+
+\textit{openssl x509 -req -days 365 -in nufw.csr -CA private/CAcert.pem -CAkey private/CAkey.pem -CAcreateserial -out nufw-cert.pem}
+
+\textit{openssl x509 -req -days 365 -in nuauth.csr -CA private/CAcert.pem -CAkey private/CAkey.pem -CAcreateserial -out nuauth-cert.pem}
+\\
+Enfin on déplace les certificats dans le bon répertoire:
+
+\textit{cp private/nufw-key.pem /etc/nufw/}
+
+\textit{cp nufw-cert.pem /etc/nufw/}
+
+\textit{cp private/nuauth-key.pem /etc/nufw/}
+
+\textit{cp nuauth-cert.pem /etc/nufw/}
+
+\section{Configuration basique du daemon}
+
+Lors de l'installation de la suite ufwi un fichier de configuration de base est fournie nuauth.conf, qui est disponible 
+dans le répertoire conf.
+Ce fichier est remplie de plusieurs directives, les deux plus importantes directives de configuration sont : 
+nuauth_client_listen_addr : qui définit l’adresse à laquelle le daemon va attendre les requètes des clients 
+nuauth_nufw_listen_addr : qui définit l’adresse à laquelle le daemon va attendre les requètes de nufw. 
+La liste des machines autorisées à se connecter au serveur d'authentifcation constitue la variable nufw_gw_addr.
+
+Ensuite, on doit choisir le module d’authentification et de vérification des ACL. Les modules suivants sont disponibles :
+\begin{itemize}
+ \item libldap : les informations utilisateur sont stockées dans un annuaire LDAP
+ \item dbm : les informations utilisateur sont stockées dans une base gdbm
+ \item plaintext : les informations utilisateur sont stockées dans un fichier texte
+ \item system : l’authentification s’adosse à PAM et utilise les groupes existants dans le système. Ceci procure un 
+moyen pratique d’utiliser nss et/ou pam-modules
+\end{itemize}
+
+Le module d’authentification est paramétrable via l’option nuauth_user_check_module dont la valeur par défaut est
+libsystem (si non défini dans le fichier de configuration). D’autre paramètres concernant la vérification
+des ACL doivent être précisés si vous choisissez l’authentification parmi :
+\begin{itemize}
+ \item libldap
+ \item plaintext
+\end{itemize}
+
+en définissant la variable nuauth_acl_check_module.
+
+
+
 %-------------------------------------------------------------------------------------------------------------------------------
 \chapter{Daemon ufwi-filterd}
 \section{Introduction}
@@ -344,5 +488,139 @@ Dans se fichier on trouvera l'adresse ou le nom du serveur d'authentification nu
   \item /etc/ufwi-filterd/crl.pem (liste de révocation de certificat serveur)
 \end{itemize}
 
+%-------------------------------------------------------------------------------------------------------------------------------
+\chapter{Daemon ufwi-rcpd}
+\section{Introduction}
+Le module ufwi-rcpd (anciènnement appelé NuCentral) est le module qui gère les autres deamons.
+
+\section{Installation}
+\subsection{Pré-requis}
+Avant de lancer l'installation du module, certains pré-requis sont nécéssaires :
+\begin{itemize}
+  \item Python 2.5
+  \item Twisted web
+  \item M2Crypto
+  \item Jinja
+  \item Subversion (svnadmin program)
+  \item sudo
+  \item pysvn
+  \item pytz
+\end{itemize}
+Debian: \begin{verbatim}apt-get install python-twisted-web python-svn 
+    python-m2crypto sudo python-jinja subversion python-tz\end{verbatim}
+\newline
+
+Pour l'installation de ufwi-rpcd:
+\begin{itemize}
+  \item (GNU) make
+  \item sqlite3
+\end{itemize}
+Sous Debian: \begin{verbatim}apt-get install make sqlite3\end{verbatim}
+\newline
+
+Paquets optionnels :
+Pour compiler les fichiers de .ts à .qm et mettre à jours les transmissions :
+\begin{itemize}
+  \item lrelease4: Qt development tools
+  \item pylupdate4, lrelease-qt4: Python Qt development tools
+\end{itemize}
+Sous Debian: \begin{verbatim}apt-get install libqt4-dev pyqt4-dev-tools\end{verbatim}
+\newline
+
+Autres :
+\begin{itemize}
+  \item python-twisted-snmp : pour le module SNMP.
+  \item gnutls-bin : le programme certtool l'utilise pour générer les certificats ssl.
+  \item py.test (Sous Debian, python-codespeak-lib) : utilisé pour les tests.
+  \item libconfig-inifiles-perl : pour tools/ufwi\_rpcd\_enmod.
+  \item IPy (python-ipy) : pour les tests.
+\end{itemize}
+
+\section{Utilisation}
+Une fois démarrer, on peut accèder au fonction plus particuliaire de ufwi-rpcd (nucentral).
+\subsection{Démarrage}
+\subsubsection{Lancement en mode deamon}
+Pour lancer ufwi-rpcd en mode deamon il suffit d'exécuter une commande en root:
+\begin{verbatim}
+twistd -y /usr/sbin/ufwi-rpcd.tac --pidfile=/var/run/ufwi-rpcd.pid 
+    -l /var/log/ufwi-rpcd-twisted.log
+\end{verbatim}
+   
+Pour arrèter ufwi-rpcd en mode deamon (en root):
+\begin{verbatim}kill \$(cat /var/run/ufwi-rpcd.pid)\end{verbatim}
+   
+\subsubsection{Lancement en mode "premier plan"}
+Pour facilité le développement, on peut également lancer ufwi-rpcd en premier plan:
+\begin{verbatim}twistd -n -y /usr/sbin/ufwi-rpcd.tac -l /var/log/ufwi-rpcd-twisted.log\end{verbatim}
+Pour arréter le processus : CTRL+c.
+
+\subsection{ufwi\_rpcd\_client (nucentral\_client)}
+\subsubsection{Le client}
+Pour lancer le client d'ufwi\_rpcd en HTTP (tcp/8080):
+\begin{verbatim}ufwi_rpcd_client --host 127.0.0.1 --cleartext -u admin -p admin\end{verbatim}
+Par défaut, ufwi\_rpcd\_client utilise HTTPS (tcp/8443):
+\begin{verbatim}ufwi_rpcd_client --host 127.0.0.1 -u admin -p admin\end{verbatim}
+Une fois connecté sur le client, le prompt devient: 
+\begin{verbatim}nucentral>\end{verbatim}
+
+\subsubsection{Le menu}
+Une fois lancer, on peut accèder aux différentes fonctions d'ufwi-rpcd:
+\begin{itemize}
+  \item \begin{verbatim}call('component', 'service', ...)\end{verbatim}
+  Apelle un service d'NuCentral
+  \item \begin{verbatim}authenticate('login', 'password')\end{verbatim}
+  Authentification ou mise à jour d'un groupe ou d'un utilisateur.
+  \item \begin{verbatim}components()\end{verbatim}
+  Affiche la liste des différents composants.
+  \item \begin{verbatim}services('component')\end{verbatim}
+  Affiche la liste des services d'un composant.
+  \item \begin{verbatim}proxy('component')\end{verbatim}
+  Créé un composant pour le proxy qui pourra être utilisé avec component.service().
+  \item \begin{verbatim}nucentralStatus()\end{verbatim}
+  Afficher l'état du serveur et la session d'informations.
+  \item \begin{verbatim}help('component')\end{verbatim}
+  Utilisation d'un composant.
+  \item \begin{verbatim}help('component', 'service')\end{verbatim}
+  Utilisation d'un service d'un composant.
+  \item \begin{verbatim}help(proxy)\end{verbatim}
+  Utilisation du proxy.
+  \item \begin{verbatim}exit()\end{verbatim}
+  Quitter.
+  \item \begin{verbatim}pyhelp(object)\end{verbatim}
+  Aide Python pour l'objet spécifié.
+  
+\end{itemize}
+\\
+\\
+Différents composants sont disonibles :
+\begin{verbatim}
+CORE, access, acl, audit, auth_cert, bind, config, contact, hostname, hosts, 
+httpout, localfw, lock, logger, network, ntp, nuauth, nuauth_command, nuconf, 
+nuface, nulog, nupki, nurestore, reporting, resolv, session, status, streaming, 
+system, system_info, tools, update, users_config, versionning
+\end{verbatim}
+
+
+%---------------------------------------------------------------------------------------------------------------------------------
+\chapter{Avencement du projet à mis parcours}
+Ce qui a été fait :
+\begin{itemize}
+  \item Ufwi est installé et fonctionnel.
+  \item La première partie du projet est terminer. Il reste les tests de fonctionnement à faire
+\end{itemize}
+
+
+Ce qui reste a faire :
+\begin{itemize}
+  \item Recherche des limites et des failles du logiciel
+  \item Comment gérer l'élévation de privilèges (root se connect en ssh sur un non-root, que se passe t-il ?)
+  \item Mettre en lumière les durées de vie des autorisations données.
+  \item Comment s'assurer que l'utilisateur est encore présent ?
+  \item Ufwi aide t-il pour l'authentification des utilisateurs nomades connu (commercial) ou non (intervenant exterieur) ?
+\end{itemize}
+  
+
+%---------------------------------------------------------------------------------------------------------------------------------
+\chapter{Difficulté rencontré et avis personnel}
 %---------------------------------------------------------------------------------------------------------------------------------
 \end{document}

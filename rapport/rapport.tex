@@ -362,6 +362,76 @@ Il existe aussi d'autres fichiers de configurations liés à ufwi-authd:
   \item modules/nuauth-pgsql.conf configuration de la base de donnée pour les logs utilisateurs (postgres) 
 \end{itemize}
  
+\section{Installation des certificats}
+
+Le daemon d'authentification et le client utilise des certificats afin de comuniquer ensemble. Lors de l'installation de la
+suite ufwi des certificats sont installés par défaut dans le répertoire /certs. On peut utiliser ces certificats par défaut 
+pour procéder à des tests mais il n'est pas conseillé de les utiliser pour un utilisation pro de la suite ufwi. Dans cette 
+section nous allons voir comment générer ces certificats.
+
+Génére notre propre Authorité de Certification:
+
+\textit{mkdir private}
+
+\textit{chmod 700 private}
+
+\textit{openssl req -new -x509 -keyout private/CAkey.pem -out private/CAcert.pem}
+
+Génére les clefs privées pour le client et le daemon d'authentification:
+
+\textit{openssl genrsa -out private/nufw-key.pem}
+
+\textit{openssl genrsa -out private/nuauth-key.pem}
+
+Génére les demandes de certificats pour le client et le daemon:
+
+\textit{openssl req -new -key private/nufw-key.pem -out nufw.csr}
+
+\textit{openssl req -new -key private/nuauth-key.pem -out nuauth.csr}
+
+Signe les demandes de certificats grâce à l’AC:
+
+\textit{openssl x509 -req -days 365 -in nufw.csr -CA private/CAcert.pem -CAkey private/CAkey.pem -CAcreateserial -out nufw-cert.pem}
+
+\textit{openssl x509 -req -days 365 -in nuauth.csr -CA private/CAcert.pem -CAkey private/CAkey.pem -CAcreateserial -out nuauth-cert.pem}
+\\
+Enfin on déplace les certificats dans le bon répertoire:
+
+\textit{cp private/nufw-key.pem /etc/nufw/}
+
+\textit{cp nufw-cert.pem /etc/nufw/}
+
+\textit{cp private/nuauth-key.pem /etc/nufw/}
+
+\textit{cp nuauth-cert.pem /etc/nufw/}
+
+\section{Configuration basique du daemon}
+
+Lors de l'installation de la suite ufwi un fichier de configuration de base est fournie nuauth.conf, qui est disponible 
+dans le répertoire conf.
+Ce fichier est remplie de plusieurs directives, les deux plus importantes directives de configuration sont : 
+nuauth client listen addr : qui définit l’adresse à laquelle le daemon va attendre les requètes des clients 
+nuauth nufw listen addr : qui définit l’adresse à laquelle le daemon va attendre les requètes de nufw. 
+La liste des machines autorisées à se connecter au serveur d'authentifcation constitue la variable nufw gw addr.
+
+Ensuite, on doit choisir le module d’authentification et de vérification des ACL. Les modules suivants sont disponibles :
+\begin{itemize}
+ \item libldap : les informations utilisateur sont stockées dans un annuaire LDAP
+ \item dbm : les informations utilisateur sont stockées dans une base gdbm
+ \item plaintext : les informations utilisateur sont stockées dans un fichier texte
+ \item system : l’authentification s’adosse à PAM et utilise les groupes existants dans le système. Ceci procure un 
+moyen pratique d’utiliser nss et/ou pam-modules
+\end{itemize}
+
+Le module d’authentification est paramétrable via l’option nuauth user check module dont la valeur par défaut est
+libsystem (si non défini dans le fichier de configuration). D’autre paramètres concernant la vérification
+des ACL doivent être précisés si on choisit une des deux authentification suivante :
+\begin{itemize}
+ \item libldap
+ \item plaintext
+\end{itemize}
+Tout ceci en définissant la variable nuauth acl check module.
+
 %-------------------------------------------------------------------------------------------------------------------------------
 \chapter{Daemon ufwi-filterd}
 \section{Introduction}

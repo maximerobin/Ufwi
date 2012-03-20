@@ -1,11 +1,11 @@
-This is pdfTeX, Version 3.1415926-1.40.10 (TeX Live 2009/Debian) (format=pdflatex 2011.11.2)  16 MAR 2012 14:45
+This is pdfTeX, Version 3.1415926-1.40.10 (TeX Live 2009/Debian) (format=pdflatex 2012.2.18)  19 MAR 2012 18:39
 entering extended mode
  %&-line parsing enabled.
 **rapport.tex
 (./rapport.tex
 LaTeX2e <2009/09/24>
 Babel <v3.8l> and hyphenation patterns for english, usenglishmax, dumylang, noh
-yphenation, french, basque, loaded.
+yphenation, loaded.
 (/usr/share/texmf-texlive/tex/latex/base/report.cls
 Document Class: report 2007/10/19 v1.4h Standard LaTeX document class
 (/usr/share/texmf-texlive/tex/latex/base/size12.clo
@@ -252,6 +252,12 @@ File: babel.def 2008/07/06 v3.8l Babel common definitions
 \babel@savecnt=\count88
 \U@D=\dimen103
 )
+
+Package babel Warning: No hyphenation patterns were loaded for
+(babel)                the language `French'
+(babel)                I will use the patterns loaded for \language=0 instead.
+
+\l@french = a dialect from \language0
 Package babel Info: Making : an active character on input line 120.
 Package babel Info: Making ; an active character on input line 121.
 Package babel Info: Making ! an active character on input line 122.
@@ -260,7 +266,6 @@ Package babel Info: Making ? an active character on input line 123.
 \std@mcc=\count89
 \dec@mcc=\count90
 \parindentFFN=\dimen105
-
 *************************************
 * Local config file frenchb.cfg used
 *
@@ -553,7 +558,7 @@ driver: pdftex
 
 (1in=72.27pt, 1cm=28.45pt)
 -----------------------
-<images/ufwi.png, id=111, 285.065pt x 291.0875pt>
+<images/ufwi.png, id=119, 285.065pt x 291.0875pt>
 File: images/ufwi.png Graphic file (type png)
  <use images/ufwi.png>
 [1
@@ -740,8 +745,8 @@ or  <return>  to continue without it.
 
 
 Overfull \hbox (32.92307pt too wide) in paragraph at lines 158--164
-[]\T1/cmr/m/n/12 paragraphe ^^S[MYSQL]^^T ligne 59 : table=''ulog'' pass=''pass
-ulog'' user=''ulog'' db=''ulog'' host=''172.20.8.2'' 
+[]\T1/cmr/m/n/12 paragraphe ^^S[MYSQL]^^T ligne 59 : ta-ble=''ulog'' pass=''pas
+sulog'' user=''ulog'' db=''ulog'' host=''172.20.8.2'' 
  []
 
 
@@ -878,12 +883,6 @@ Underfull \hbox (badness 10000) in paragraph at lines 235--237
  []
 
 
-Overfull \hbox (1.78264pt too wide) in paragraph at lines 237--239
-[]\T1/cmr/m/n/12 Supposons main-te-nant que l'uti-li-sa-teur ouvre une connexio
-n vers un ser-veur, par exemple
- []
-
-
 Underfull \hbox (badness 10000) in paragraph at lines 237--239
 
  []
@@ -935,12 +934,12 @@ Underfull \hbox (badness 10000) in paragraph at lines 255--257
 
  []
 
-<images/algo.jpg, id=198, 487.8225pt x 354.32375pt>
+<images/algo.jpg, id=208, 487.8225pt x 354.32375pt>
 File: images/algo.jpg Graphic file (type jpg)
  <use images/algo.jpg>
 [9 <./images/algo.jpg>]
  5.
-<images/auth.png, id=209, 355.3275pt x 411.03563pt>
+<images/auth.png, id=219, 355.3275pt x 411.03563pt>
 File: images/auth.png Graphic file (type png)
  <use images/auth.png>
 
@@ -985,7 +984,7 @@ Your command was ignored.
 Type  I <command> <return>  to replace it with another command,
 or  <return>  to continue without it.
 
-[11] [12]
+[11] [12] [13]
  6.
 
 ! Package inputenc Error: Unicode char \u8:  not set up for use with LaTeX.
@@ -994,17 +993,17 @@ See the inputenc package documentation for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.380 Pré-requis 
+l.450 Pré-requis 
                    :
 Your command was ignored.
 Type  I <command> <return>  to replace it with another command,
 or  <return>  to continue without it.
 
-[13
+[14
 
-] [14]
+] [15]
  7.
-LaTeX Font Info:    Try loading font information for T1+cmtt on input line 436.
+LaTeX Font Info:    Try loading font information for T1+cmtt on input line 506.
 
 (/usr/share/texmf-texlive/tex/latex/base/t1cmtt.fd
 File: t1cmtt.fd 1999/05/25 v2.5h Standard LaTeX font definitions
@@ -1016,7 +1015,7 @@ See the LaTeX manual or LaTeX Companion for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.438 \newline
+l.508 \newline
               
 Your command was ignored.
 Type  I <command> <return>  to replace it with another command,
@@ -1029,7 +1028,7 @@ See the LaTeX manual or LaTeX Companion for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.446 \newline
+l.516 \newline
               
 Your command was ignored.
 Type  I <command> <return>  to replace it with another command,
@@ -1042,15 +1041,15 @@ See the LaTeX manual or LaTeX Companion for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.455 \newline
+l.525 \newline
               
 Your command was ignored.
 Type  I <command> <return>  to replace it with another command,
 or  <return>  to continue without it.
 
-[15
+[16
 
-] [16]
+] [17]
 
 ! LaTeX Error: There's no line here to end.
 
@@ -1058,7 +1057,7 @@ See the LaTeX manual or LaTeX Companion for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.521 \\
+l.591 \\
         
 Your command was ignored.
 Type  I <command> <return>  to replace it with another command,
@@ -1071,31 +1070,31 @@ See the LaTeX manual or LaTeX Companion for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.522 D
+l.592 D
        ifférents composants sont disonibles :
 Your command was ignored.
 Type  I <command> <return>  to replace it with another command,
 or  <return>  to continue without it.
 
 
-Overfull \hbox (4.24825pt too wide) in paragraph at lines 525--525
+Overfull \hbox (4.24825pt too wide) in paragraph at lines 595--595
  []\T1/cmtt/m/n/12 httpout, localfw, lock, logger, network, ntp, nuauth, nuauth
 _command, nuconf,[] 
  []
 
 
-Overfull \hbox (16.59523pt too wide) in paragraph at lines 526--526
+Overfull \hbox (16.59523pt too wide) in paragraph at lines 596--596
  []\T1/cmtt/m/n/12 nuface, nulog, nupki, nurestore, reporting, resolv, session,
  status, streaming,[] 
  []
 
-[17]
+[18]
  8.
-[18
+[19
 
 ]
  9.
-[19
+[20
 
 ] AED: lastpage setting LastPage
 
@@ -1105,7 +1104,7 @@ See the LaTeX manual or LaTeX Companion for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.553 \end{document}
+l.623 \end{document}
                     
 Your command was ignored.
 Type  I <command> <return>  to replace it with another command,
@@ -1117,25 +1116,25 @@ or  <return>  to continue without it.
 ### semi simple group (level 1) entered at line 112 (\begingroup)
 ### bottom level 
 Here is how much of TeX's memory you used:
- 5900 strings out of 495028
- 82065 string characters out of 1181229
- 165813 words of memory out of 3000000
- 8924 multiletter control sequences out of 15000+50000
- 12863 words of font info for 32 fonts, out of 3000000 for 9000
+ 5910 strings out of 495061
+ 82176 string characters out of 1182621
+ 165797 words of memory out of 3000000
+ 8921 multiletter control sequences out of 15000+50000
+ 13547 words of font info for 33 fonts, out of 3000000 for 9000
  28 hyphenation exceptions out of 8191
- 38i,11n,43p,916b,625s stack positions out of 5000i,500n,10000p,200000b,50000s
- </home/maxime/.texmf-var/fonts/pk/ljfour/jknappen/ec/ectt1200.
-600pk> </home/maxime/.texmf-var/fonts/pk/ljfour/jknappen/ec/ecbx1440.600pk> </h
-ome/maxime/.texmf-var/fonts/pk/ljfour/jknappen/ec/ecbx1728.600pk> </home/maxime
-/.texmf-var/fonts/pk/ljfour/jknappen/ec/ecbx1200.600pk> </home/maxime/.texmf-va
-r/fonts/pk/ljfour/jknappen/ec/ecbx2488.600pk> </home/maxime/.texmf-var/fonts/pk
-/ljfour/jknappen/ec/ecrm1200.600pk></usr/share/texmf-texlive/fonts/type1/public
-/amsfonts/cm/cmmi12.pfb></usr/share/texmf-texlive/fonts/type1/public/amsfonts/c
-m/cmmi8.pfb></usr/share/texmf-texlive/fonts/type1/public/amsfonts/cm/cmr12.pfb>
-
-Output written on rapport.pdf (19 pages, 374061 bytes).
+ 38i,11n,43p,916b,627s stack positions out of 5000i,500n,10000p,200000b,50000s
+{/usr/share/texmf/fonts/enc/dvips/cm-super/cm-super-t1.enc}</us
+r/share/texmf-texlive/fonts/type1/public/amsfonts/cm/cmmi12.pfb></usr/share/tex
+mf-texlive/fonts/type1/public/amsfonts/cm/cmmi8.pfb></usr/share/texmf-texlive/f
+onts/type1/public/amsfonts/cm/cmr12.pfb></usr/share/texmf/fonts/type1/public/cm
+-super/sfbx1200.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfbx1440.pfb>
+</usr/share/texmf/fonts/type1/public/cm-super/sfbx1728.pfb></usr/share/texmf/fo
+nts/type1/public/cm-super/sfbx2488.pfb></usr/share/texmf/fonts/type1/public/cm-
+super/sfrm1200.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfti1200.pfb><
+/usr/share/texmf/fonts/type1/public/cm-super/sftt1200.pfb>
+Output written on rapport.pdf (20 pages, 431202 bytes).
 PDF statistics:
- 622 PDF objects out of 1000 (max. 8388607)
- 64 named destinations out of 1000 (max. 500000)
- 232 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 333 PDF objects out of 1000 (max. 8388607)
+ 67 named destinations out of 1000 (max. 500000)
+ 248 words of extra memory for PDF output out of 10000 (max. 10000000)
 

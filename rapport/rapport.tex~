@@ -410,9 +410,9 @@ Enfin on déplace les certificats dans le bon répertoire:
 Lors de l'installation de la suite ufwi un fichier de configuration de base est fournie nuauth.conf, qui est disponible 
 dans le répertoire conf.
 Ce fichier est remplie de plusieurs directives, les deux plus importantes directives de configuration sont : 
-nuauth_client_listen_addr : qui définit l’adresse à laquelle le daemon va attendre les requètes des clients 
-nuauth_nufw_listen_addr : qui définit l’adresse à laquelle le daemon va attendre les requètes de nufw. 
-La liste des machines autorisées à se connecter au serveur d'authentifcation constitue la variable nufw_gw_addr.
+nuauth client listen addr : qui définit l’adresse à laquelle le daemon va attendre les requètes des clients 
+nuauth nufw listen addr : qui définit l’adresse à laquelle le daemon va attendre les requètes de nufw. 
+La liste des machines autorisées à se connecter au serveur d'authentifcation constitue la variable nufw gw addr.
 
 Ensuite, on doit choisir le module d’authentification et de vérification des ACL. Les modules suivants sont disponibles :
 \begin{itemize}
@@ -425,15 +425,12 @@ moyen pratique d’utiliser nss et/ou pam-modules
 
 Le module d’authentification est paramétrable via l’option nuauth_user_check_module dont la valeur par défaut est
 libsystem (si non défini dans le fichier de configuration). D’autre paramètres concernant la vérification
-des ACL doivent être précisés si vous choisissez l’authentification parmi :
+des ACL doivent être précisés si on choisit une des deux authentification suivante :
 \begin{itemize}
  \item libldap
  \item plaintext
 \end{itemize}
-
-en définissant la variable nuauth_acl_check_module.
-
-
+Tout ceci en définissant la variable nuauth_acl_check_module.
 
 %-------------------------------------------------------------------------------------------------------------------------------
 \chapter{Daemon ufwi-filterd}

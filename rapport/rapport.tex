@@ -123,6 +123,65 @@ Les pare-feu par identification les plus connus :
     \item Cyberoam : pare-feu entièrement basé sur l'identification, en utilisant une corrélation entre adresse MAC et utilisateur : http://www.cyberoam.com/fr/firewall.html
     \item CheckPoint (NAC Blade) : utilisation des règles de filtrage en fonction d'une authentifcation basée sur Kerberos, l'identité de son poste et du niveau de sécurité du poste ( mise à jour de sécurité / antivirus ) : http://www.cyberoam.com/fr/firewall.html
   \end{itemize}
+\newligne
+Ci-dessous un tableau comparatif des different avantage et inconvénient des differentes solution de pare-feu par authentification: \\
+\begin{tabular}{|p{3cm}|p{5cm}|p{5cm}|}
+  \hline
+  Solution parefeu & Avantage & Inconvégnient\\
+  \hline
+	Ufwi &
+ 	\begin{itemize}
+		\item Projet devenu libre.
+		\item Appliquer des règles horaires strictes.
+		\item  composé de deux démons qui peuvent être mis en place sur des systèmes différents et le démon principal est massivement multithreadé.
+		\item Contrôle d’accès sont réalisées grâce à des greffons (des modules system, ldap, dbm, plaintext).
+		\item Journalisation de l’activité des utilisateurs peut être faite par syslog, mysql, postgresql.
+		\item Multi plate-forme.
+		\item Géneration des acl grace a un module (nuaclgen)
+	\end{itemize}&
+	\begin{itemize}
+		\item Tres peu de documenation voir aucune (obligé de cf. à nufw).
+		\item Nécessite une partie cliente spécifique sur les postes clients.
+		\item Payante sous windows (NuWinC).
+		\item Projet peu soutenu (temps de reponse 20-30 jours).
+	\end{itemize} \\
+  \hline
+	AuthPF&
+	\begin{itemize}
+		\item règles par système et/ou par utilisateur.
+		\item Connection via SSH.
+		\item chaque utilisateur peut disposer de ses propres règles, présentes dans HOME/.authpf/authpf .rules.
+		\item Simple a metre en place.
+		\item  C'est un Firewall de type filtre de paquet (Couches réseau et transport).
+		\item Documentation et suport en français et assez simple.
+	\end{itemize}&
+	\begin{itemize}
+		\item l'utilisateur se déconnecte, le pare-feu lui retire les règles ajoutées.
+		\item quelqu'un d'autre peut toujours spoofer cette IP et passer.
+		\item Necessite la creation d'un home pour chaque utilisateur.
+		\item Necessite Openbsd et des conaissance PF.
+	\end{itemize} \\
+  \hline 
+	Cyberoam&
+	\begin{itemize}
+		\item N
+		\item A 
+	\end{itemize}&
+	\begin{itemize}
+		\item N
+		\item A
+	\end{itemize} \\
+  \hline 
+	CheckPoint&
+	\begin{itemize}
+		\item N
+		\item A
+	\end{itemize}&
+	\begin{itemize}
+		\item N
+		\item A
+	\end{itemize} \\
+\end{tabular} 
 %-------------------------------------------------------------------------------------------------------------------------------
 \chapter{Externalisation des logs dans une BD MySQL}
 \underline{Configuration du serveur BD}

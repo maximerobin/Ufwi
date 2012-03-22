@@ -423,14 +423,14 @@ Ensuite, on doit choisir le module d’authentification et de vérification des 
 moyen pratique d’utiliser nss et/ou pam-modules
 \end{itemize}
 
-Le module d’authentification est paramétrable via l’option nuauth_user_check_module dont la valeur par défaut est
+Le module d’authentification est paramétrable via l’option nuauth user check module dont la valeur par défaut est
 libsystem (si non défini dans le fichier de configuration). D’autre paramètres concernant la vérification
 des ACL doivent être précisés si on choisit une des deux authentification suivante :
 \begin{itemize}
  \item libldap
  \item plaintext
 \end{itemize}
-Tout ceci en définissant la variable nuauth_acl_check_module.
+Tout ceci en définissant la variable nuauth acl check module.
 
 %-------------------------------------------------------------------------------------------------------------------------------
 \chapter{Daemon ufwi-filterd}

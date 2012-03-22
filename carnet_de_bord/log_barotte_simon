@@ -34,3 +34,11 @@
 [2012-03-15] - Génération des certificats d'authentification pour nuauth et nufw qui seront utilisés par la suite
 				nufw-key.pem nufw-cert.pem nuauth-key.pem nuauth-cert.pem
 			 - Etude de la config de base du fichier nuauth.conf pour une mise en oeuvre et 1er test dans les prochains jour
+
+[2012-03-18] - Test de base sur une machine virtuel de nufw avec 2 succès malgrès des erreurs par la suite non compris.
+
+[2012-03-22] - Test a l'IUT de nufw sans succès erreur avec les certificats, pourtant j'ai suivi la même procédure que sur la machine virtuel
+				 - Préparation de la machine pour des tests avec nufw et une authentification "plate" c'est à dir avec un fichier contenant les utilisateurs
+				 	concernés pour le filtrage
+				 - Préparation du fichier acls.nufw afin d'autoriser les membres contenu dans le fichier d'utilisateurs et les groupes
+				   Test de cette config demain (23/03)

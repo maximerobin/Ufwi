@@ -42,3 +42,10 @@
 				 	concernés pour le filtrage
 				 - Préparation du fichier acls.nufw afin d'autoriser les membres contenu dans le fichier d'utilisateurs et les groupes
 				   Test de cette config demain (23/03)
+				   
+[2012-03-23] - Tentative de réutilisation de nuauth :
+						erreur de segmentation, par réussi à savoir pourquoi
+				 - Tentative d'utilisation d'authentification avec fichier locale
+				 		la aussi erreur de segmentation et erreur avec les certificats entre client et nuauth
+				 		
+[212-03-24]	- Redaction de ma partie dans le rapport

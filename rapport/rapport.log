@@ -1,11 +1,11 @@
-This is pdfTeX, Version 3.1415926-1.40.10 (TeX Live 2009/Debian) (format=pdflatex 2011.11.2)  23 MAR 2012 08:01
+This is pdfTeX, Version 3.1415926-1.40.10 (TeX Live 2009/Debian) (format=pdflatex 2012.2.18)  24 MAR 2012 20:26
 entering extended mode
  %&-line parsing enabled.
 **rapport.tex
 (./rapport.tex
 LaTeX2e <2009/09/24>
 Babel <v3.8l> and hyphenation patterns for english, usenglishmax, dumylang, noh
-yphenation, french, basque, loaded.
+yphenation, loaded.
 (/usr/share/texmf-texlive/tex/latex/base/report.cls
 Document Class: report 2007/10/19 v1.4h Standard LaTeX document class
 (/usr/share/texmf-texlive/tex/latex/base/size12.clo
@@ -252,6 +252,12 @@ File: babel.def 2008/07/06 v3.8l Babel common definitions
 \babel@savecnt=\count88
 \U@D=\dimen103
 )
+
+Package babel Warning: No hyphenation patterns were loaded for
+(babel)                the language `French'
+(babel)                I will use the patterns loaded for \language=0 instead.
+
+\l@french = a dialect from \language0
 Package babel Info: Making : an active character on input line 120.
 Package babel Info: Making ; an active character on input line 121.
 Package babel Info: Making ! an active character on input line 122.
@@ -260,7 +266,6 @@ Package babel Info: Making ? an active character on input line 123.
 \std@mcc=\count89
 \dec@mcc=\count90
 \parindentFFN=\dimen105
-
 *************************************
 * Local config file frenchb.cfg used
 *
@@ -439,16 +444,41 @@ File: hpdftex.def 2009/10/09 v6.79a Hyperref driver for pdfTeX
 Package: lastpage 1994/06/25 v0.1b LaTeX2e package for refs to last page number
  (JPG)
 )
+(/usr/share/texmf-texlive/tex/latex/listings/listings.sty
+\lst@mode=\count104
+\lst@gtempboxa=\box30
+\lst@token=\toks21
+\lst@length=\count105
+\lst@currlwidth=\dimen112
+\lst@column=\count106
+\lst@pos=\count107
+\lst@lostspace=\dimen113
+\lst@width=\dimen114
+\lst@newlines=\count108
+\lst@lineno=\count109
+\lst@maxwidth=\dimen115
+
+(/usr/share/texmf-texlive/tex/latex/listings/lstmisc.sty
+File: lstmisc.sty 2007/02/22 1.4 (Carsten Heinz)
+\c@lstnumber=\count110
+\lst@skipnumbers=\count111
+\lst@framebox=\box31
+)
+(/usr/share/texmf-texlive/tex/latex/listings/listings.cfg
+File: listings.cfg 2007/02/22 1.4 listings configuration
+))
+Package: listings 2007/02/22 1.4 (Carsten Heinz)
+
 (/usr/share/texmf-texlive/tex/latex/geometry/geometry.sty
 Package: geometry 2008/12/21 v4.2 Page Geometry
-\Gm@cnth=\count104
-\Gm@cntv=\count105
-\c@Gm@tempcnt=\count106
-\Gm@bindingoffset=\dimen112
-\Gm@wd@mp=\dimen113
-\Gm@odd@mp=\dimen114
-\Gm@even@mp=\dimen115
-\Gm@dimlist=\toks21
+\Gm@cnth=\count112
+\Gm@cntv=\count113
+\c@Gm@tempcnt=\count114
+\Gm@bindingoffset=\dimen116
+\Gm@wd@mp=\dimen117
+\Gm@odd@mp=\dimen118
+\Gm@even@mp=\dimen119
+\Gm@dimlist=\toks22
 )
 (/usr/share/texmf-texlive/tex/latex/fancyhdr/fancyhdr.sty
 \fancy@headwidth=\skip47
@@ -463,54 +493,55 @@ Package: geometry 2008/12/21 v4.2 Page Geometry
 ) (./rapport.aux)
 \openout1 = `rapport.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 48.
-LaTeX Font Info:    ... okay on input line 48.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 48.
-LaTeX Font Info:    ... okay on input line 48.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 48.
-LaTeX Font Info:    ... okay on input line 48.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 48.
-LaTeX Font Info:    ... okay on input line 48.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 48.
-LaTeX Font Info:    ... okay on input line 48.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 48.
-LaTeX Font Info:    ... okay on input line 48.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 48.
-LaTeX Font Info:    ... okay on input line 48.
-LaTeX Info: Redefining \degres on input line 48.
-LaTeX Info: Redefining \dots on input line 48.
-LaTeX Info: Redefining \up on input line 48.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 49.
+LaTeX Font Info:    ... okay on input line 49.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 49.
+LaTeX Font Info:    ... okay on input line 49.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 49.
+LaTeX Font Info:    ... okay on input line 49.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 49.
+LaTeX Font Info:    ... okay on input line 49.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 49.
+LaTeX Font Info:    ... okay on input line 49.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 49.
+LaTeX Font Info:    ... okay on input line 49.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 49.
+LaTeX Font Info:    ... okay on input line 49.
+LaTeX Info: Redefining \degres on input line 49.
+LaTeX Info: Redefining \dots on input line 49.
+LaTeX Info: Redefining \up on input line 49.
 
 (/usr/share/texmf-texlive/tex/context/base/supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
-\scratchcounter=\count107
-\scratchdimen=\dimen116
-\scratchbox=\box30
-\nofMPsegments=\count108
-\nofMParguments=\count109
-\everyMPshowfont=\toks22
-\MPscratchCnt=\count110
-\MPscratchDim=\dimen117
-\MPnumerator=\count111
-\everyMPtoPDFconversion=\toks23
+\scratchcounter=\count115
+\scratchdimen=\dimen120
+\scratchbox=\box32
+\nofMPsegments=\count116
+\nofMParguments=\count117
+\everyMPshowfont=\toks23
+\MPscratchCnt=\count118
+\MPscratchDim=\dimen121
+\MPnumerator=\count119
+\everyMPtoPDFconversion=\toks24
 )
-Package hyperref Info: Link coloring OFF on input line 48.
+Package hyperref Info: Link coloring OFF on input line 49.
  (/usr/share/texmf-texlive/tex/latex/hyperref/nameref.sty
 Package: nameref 2007/05/29 v2.31 Cross-referencing by name of section
 
 (/usr/share/texmf-texlive/tex/latex/oberdiek/refcount.sty
 Package: refcount 2008/08/11 v3.1 Data extraction from references (HO)
 )
-\c@section@level=\count112
+\c@section@level=\count120
 )
-LaTeX Info: Redefining \ref on input line 48.
-LaTeX Info: Redefining \pageref on input line 48.
+LaTeX Info: Redefining \ref on input line 49.
+LaTeX Info: Redefining \pageref on input line 49.
  (./rapport.out)
 (./rapport.out)
 \@outlinefile=\write3
 \openout3 = `rapport.out'.
 
-\AtBeginShipoutBox=\box31
+\AtBeginShipoutBox=\box33
+\c@lstlisting=\count121
 
 *geometry auto-detecting driver*
 *geometry detected driver: pdftex*
@@ -553,7 +584,7 @@ driver: pdftex
 
 (1in=72.27pt, 1cm=28.45pt)
 -----------------------
-<images/ufwi.png, id=119, 285.065pt x 291.0875pt>
+<images/ufwi.png, id=171, 285.065pt x 291.0875pt>
 File: images/ufwi.png Graphic file (type png)
  <use images/ufwi.png>
 [1
@@ -566,10 +597,6 @@ LaTeX Font Info:    External font `cmex10' loaded for size
 (Font)              <8> on input line 3.
 LaTeX Font Info:    External font `cmex10' loaded for size
 (Font)              <6> on input line 3.
-)
-\tf@toc=\write4
-\openout4 = `rapport.toc'.
-
 
 
 Package Fancyhdr Warning: \headheight is too small (12.0pt): 
@@ -579,17 +606,16 @@ Package Fancyhdr Warning: \headheight is too small (12.0pt):
 
 [2
 
-]
+])
+\tf@toc=\write4
+\openout4 = `rapport.toc'.
+
+ [3]
  1.
-[3
+[4
 
 ]
-Underfull \hbox (badness 10000) in paragraph at lines 111--112
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 113--114
+Underfull \hbox (badness 10000) in paragraph at lines 112--113
 
  []
 
@@ -603,57 +629,67 @@ Underfull \hbox (badness 10000) in paragraph at lines 115--116
 
  []
 
-[4]
+
+Underfull \hbox (badness 10000) in paragraph at lines 116--117
+
+ []
+
+[5]
  2.
 
-Underfull \hbox (badness 3471) in paragraph at lines 143--144
+Underfull \hbox (badness 3471) in paragraph at lines 144--145
 []\T1/cmr/m/n/12 N�cessite une par-tie cliente
  []
 
 
-Underfull \hbox (badness 2556) in paragraph at lines 144--145
-[]\T1/cmr/m/n/12 Payante sous win-dows (Nu-
+Underfull \hbox (badness 10000) in paragraph at lines 145--146
+[]\T1/cmr/m/n/12 Payante sous win-dows
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 152--153
-[]\T1/cmr/m/n/12 chaque uti-li-sa-teur peut
+Underfull \hbox (badness 10000) in paragraph at lines 153--154
+[]\T1/cmr/m/n/12 chaque util-isa-teur peut
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 152--153
-\T1/cmr/m/n/12 dis-po-ser de ses propres
+Underfull \hbox (badness 10000) in paragraph at lines 153--154
+\T1/cmr/m/n/12 dis-poser de ses pro-pres
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 152--153
-\T1/cmr/m/n/12 r�gles, pr�-sentes dans
+Underfull \hbox (badness 10000) in paragraph at lines 153--154
+\T1/cmr/m/n/12 r�-gles, pr�sentes dans
  []
 
 
-Underfull \hbox (badness 1308) in paragraph at lines 155--156
+Underfull \hbox (badness 1308) in paragraph at lines 156--157
 []\T1/cmr/m/n/12 Documentation et su-port en
  []
 
 
-Underfull \hbox (badness 1540) in paragraph at lines 158--159
-\T1/cmr/m/n/12 pare-feu lui re-tire les r�gles
+Underfull \hbox (badness 1540) in paragraph at lines 159--160
+\T1/cmr/m/n/12 pare-feu lui re-tire les r�-gles
  []
 
 
-Underfull \hbox (badness 2158) in paragraph at lines 159--160
+Underfull \hbox (badness 2158) in paragraph at lines 160--161
 []\T1/cmr/m/n/12 quelqu'un d'autre peut tou-
  []
 
 
-Underfull \vbox (badness 10000) detected at line 186
+Underfull \hbox (badness 10000) in paragraph at lines 162--163
+[]\T1/cmr/m/n/12 Necessite Openbsd et des
  []
 
-[5
+
+Underfull \vbox (badness 10000) detected at line 187
+ []
+
+[6
 
 ]
 ! Undefined control sequence.
-l.187 \newligne
+l.188 \newligne
                
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
@@ -661,7 +697,7 @@ misspelled it (e.g., `\hobx'), type `I' and the correct
 spelling (e.g., `I\hbox'). Otherwise just continue,
 and I'll forget about whatever was undefined.
 
-[6]
+[7]
  3.
 
 ! Package inputenc Error: Unicode char \u8:  not set up for use with LaTeX.
@@ -670,7 +706,7 @@ See the inputenc package documentation for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.198 Configuration IP 
+l.199 Configuration IP 
                         :
 Your command was ignored.
 Type  I <command> <return>  to replace it with another command,
@@ -683,7 +719,7 @@ See the inputenc package documentation for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.200 ifconfig eth0 
+l.201 ifconfig eth0 
                      192.168.1.137/24
 Your command was ignored.
 Type  I <command> <return>  to replace it with another command,
@@ -696,7 +732,7 @@ See the inputenc package documentation for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.201 ifconfig eth1 
+l.202 ifconfig eth1 
                      172.20.8.1/24
 Your command was ignored.
 Type  I <command> <return>  to replace it with another command,
@@ -705,7 +741,7 @@ or  <return>  to continue without it.
 ! Missing $ inserted.
 <inserted text> 
                 $
-l.210 export LD_
+l.211 export LD_
                 PRELOAD=/usr/lib/libmysqlclient.so.16
 I've inserted a begin-math/end-math symbol since I think
 you left one out. Proceed, with fingers crossed.
@@ -713,7 +749,7 @@ you left one out. Proceed, with fingers crossed.
 ! Missing $ inserted.
 <inserted text> 
                 $
-l.211 
+l.212 
       
 I've inserted a begin-math/end-math symbol since I think
 you left one out. Proceed, with fingers crossed.
@@ -721,7 +757,7 @@ you left one out. Proceed, with fingers crossed.
 ! Missing } inserted.
 <inserted text> 
                 }
-l.211 
+l.212 
       
 I've inserted something that you may have forgotten.
 (See the <inserted text> above.)
@@ -732,7 +768,7 @@ my insertion and my current dilemma will both disappear.
 ! Extra }, or forgotten \endgroup.
 \@par ... \@noitemerr {\@@par }\fi \else {\@@par }
                                                   \fi 
-l.211 
+l.212 
       
 I've deleted a group-closing symbol because it seems to be
 spurious, as in `$x}$'. But perhaps the } is legitimate and
@@ -747,7 +783,7 @@ See the inputenc package documentation for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.218 ...ons de connexion à la base de données 
+l.219 ...ons de connexion à la base de données 
                                                   :
 Your command was ignored.
 Type  I <command> <return>  to replace it with another command,
@@ -760,7 +796,7 @@ See the inputenc package documentation for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.220 paragraphe « 
+l.221 paragraphe « 
                      [MYSQL] » ligne 59 :
 Your command was ignored.
 Type  I <command> <return>  to replace it with another command,
@@ -773,7 +809,7 @@ See the inputenc package documentation for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.220 paragraphe « [MYSQL] 
+l.221 paragraphe « [MYSQL] 
                               » ligne 59 :
 Your command was ignored.
 Type  I <command> <return>  to replace it with another command,
@@ -786,16 +822,16 @@ See the inputenc package documentation for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.220 paragraphe « [MYSQL] » ligne 59 
+l.221 paragraphe « [MYSQL] » ligne 59 
                                            :
 Your command was ignored.
 Type  I <command> <return>  to replace it with another command,
 or  <return>  to continue without it.
 
 
-Overfull \hbox (32.92307pt too wide) in paragraph at lines 220--226
-[]\T1/cmr/m/n/12 paragraphe ^^S[MYSQL]^^T ligne 59 : table=''ulog'' pass=''pass
-ulog'' user=''ulog'' db=''ulog'' host=''172.20.8.2'' 
+Overfull \hbox (32.92307pt too wide) in paragraph at lines 221--227
+[]\T1/cmr/m/n/12 paragraphe ^^S[MYSQL]^^T ligne 59 : ta-ble=''ulog'' pass=''pas
+sulog'' user=''ulog'' db=''ulog'' host=''172.20.8.2'' 
  []
 
 
@@ -805,7 +841,7 @@ See the inputenc package documentation for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.229 Configuration IP 
+l.230 Configuration IP 
                         :
 Your command was ignored.
 Type  I <command> <return>  to replace it with another command,
@@ -818,7 +854,7 @@ See the inputenc package documentation for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.231 ifconfig eth0 
+l.232 ifconfig eth0 
                      172.20.8.2/24
 Your command was ignored.
 Type  I <command> <return>  to replace it with another command,
@@ -831,7 +867,7 @@ See the inputenc package documentation for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.241 ...onnées et création de l’utilisateur 
+l.242 ...onnées et création de l’utilisateur 
                                                   (les deux programmes vont ...
 
 Your command was ignored.
@@ -845,7 +881,7 @@ See the inputenc package documentation for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.245 ...er 'ulog'@'\%' identified by 'passulog' 
+l.246 ...er 'ulog'@'\%' identified by 'passulog' 
                                                   ;
 Your command was ignored.
 Type  I <command> <return>  to replace it with another command,
@@ -858,18 +894,18 @@ See the inputenc package documentation for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.249 Commandes de création de la base 
+l.250 Commandes de création de la base 
                                          :
 Your command was ignored.
 Type  I <command> <return>  to replace it with another command,
 or  <return>  to continue without it.
 
-[7
+[8
 
 ]
-Overfull \hbox (5.29512pt too wide) in paragraph at lines 266--270
-[]\T1/cmr/m/n/12 cd /etc/nulog cp de-fault. core.conf core.conf cp de-fault.nul
-og.conf nu-log.conf cp de-fault.wrapper.conf
+Overfull \hbox (5.29512pt too wide) in paragraph at lines 267--271
+[]\T1/cmr/m/n/12 cd /etc/nu-log cp de-fault. core.conf core.conf cp de-fault.nu
+log.conf nu-log.conf cp de-fault.wrapper.conf
  []
 
 
@@ -879,7 +915,7 @@ See the inputenc package documentation for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.271 ...ons de connexion à la base de données 
+l.272 ...ons de connexion à la base de données 
                                                   :
 Your command was ignored.
 Type  I <command> <return>  to replace it with another command,
@@ -892,7 +928,7 @@ See the inputenc package documentation for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.281 Sur la passerelle 
+l.282 Sur la passerelle 
                          :
 Your command was ignored.
 Type  I <command> <return>  to replace it with another command,
@@ -905,7 +941,7 @@ See the inputenc package documentation for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.285 Sur le serveur 
+l.286 Sur le serveur 
                       :
 Your command was ignored.
 Type  I <command> <return>  to replace it with another command,
@@ -918,83 +954,77 @@ See the inputenc package documentation for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.290 On choisit ce que l’on veut loguer 
+l.291 On choisit ce que l’on veut loguer 
                                             avec iptables
 Your command was ignored.
 Type  I <command> <return>  to replace it with another command,
 or  <return>  to continue without it.
 
-[8]
+[9]
  4.
 
-Underfull \hbox (badness 10000) in paragraph at lines 297--299
+Underfull \hbox (badness 10000) in paragraph at lines 298--300
 
  []
 
 
-Overfull \hbox (1.78264pt too wide) in paragraph at lines 299--301
-[]\T1/cmr/m/n/12 Supposons main-te-nant que l'uti-li-sa-teur ouvre une connexio
-n vers un ser-veur, par exemple
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 299--301
+Underfull \hbox (badness 10000) in paragraph at lines 300--302
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 301--303
+Underfull \hbox (badness 10000) in paragraph at lines 302--304
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 303--305
+Underfull \hbox (badness 10000) in paragraph at lines 304--306
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 305--307
+Underfull \hbox (badness 10000) in paragraph at lines 306--308
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 307--309
+Underfull \hbox (badness 10000) in paragraph at lines 308--310
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 309--311
+Underfull \hbox (badness 10000) in paragraph at lines 310--312
 
  []
 
-[9
+[10
 
 ]
-Underfull \hbox (badness 10000) in paragraph at lines 311--313
+Underfull \hbox (badness 10000) in paragraph at lines 312--314
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 313--315
+Underfull \hbox (badness 10000) in paragraph at lines 314--316
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 315--317
+Underfull \hbox (badness 10000) in paragraph at lines 316--318
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 317--319
+Underfull \hbox (badness 10000) in paragraph at lines 318--320
 
  []
 
-<images/algo.jpg, id=214, 487.8225pt x 354.32375pt>
+<images/algo.jpg, id=284, 487.8225pt x 354.32375pt>
 File: images/algo.jpg Graphic file (type jpg)
  <use images/algo.jpg>
-[10 <./images/algo.jpg>]
+[11 <./images/algo.jpg>]
  5.
-<images/auth.png, id=225, 355.3275pt x 411.03563pt>
+<images/auth.png, id=295, 355.3275pt x 411.03563pt>
 File: images/auth.png Graphic file (type png)
  <use images/auth.png>
 
@@ -1004,13 +1034,13 @@ See the inputenc package documentation for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.350 Pré-requis 
+l.351 Pré-requis 
                    :
 Your command was ignored.
 Type  I <command> <return>  to replace it with another command,
 or  <return>  to continue without it.
 
-[11
+[12
 
  <./images/auth.png (PNG copy)>]
 
@@ -1020,7 +1050,7 @@ See the inputenc package documentation for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.352 Script autogen.sh 
+l.353 Script autogen.sh 
                          :
 Your command was ignored.
 Type  I <command> <return>  to replace it with another command,
@@ -1033,13 +1063,128 @@ See the inputenc package documentation for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.356 Compilation Nufw 
+l.357 Compilation Nufw 
                         :
 Your command was ignored.
 Type  I <command> <return>  to replace it with another command,
 or  <return>  to continue without it.
 
-[12] [13] [14]
+[13] [14] [15]
+! Illegal parameter number in definition of \reserved@a.
+<to be read again> 
+                   1
+l.555 ...3.0.10, #1 Tue Mar 19 23:00:32 CEST 2012}
+                                                  
+You meant to type ## instead of #, right?
+Or maybe a } was forgotten somewhere earlier, and things
+are all screwed up? I'm going to assume that you meant ##.
+
+! You can't use `macro parameter character #' in horizontal mode.
+<argument> ...simon@nufw uses OS Linux, 3.0.10, ##
+                                                  1 Tue Mar 19 23:00:32 CEST...
+l.555 ...3.0.10, #1 Tue Mar 19 23:00:32 CEST 2012}
+                                                  
+Sorry, but I'm not programmed to handle this case;
+I'll just pretend that you didn't ask for it.
+If you're in the wrong mode, you might be able to
+return to the right one by typing `I}' or `I$' or `I\par'.
+
+[16]
+! You can't use `macro parameter character #' in horizontal mode.
+l.578 		\subitem ** Message: OS : Linux 2.6.9 #
+                                               1 Fri Mar 16 21:51:32 CEST 2012
+Sorry, but I'm not programmed to handle this case;
+I'll just pretend that you didn't ask for it.
+If you're in the wrong mode, you might be able to
+return to the right one by typing `I}' or `I$' or `I\par'.
+
+[17]
+! Illegal parameter number in definition of \reserved@a.
+<to be read again> 
+                   1
+l.684 \textit{#1 = acceptation, 0 = rejet}
+                                          
+You meant to type ## instead of #, right?
+Or maybe a } was forgotten somewhere earlier, and things
+are all screwed up? I'm going to assume that you meant ##.
+
+! Illegal parameter number in definition of \reserved@b.
+<to be read again> 
+                   }
+l.684 \textit{#1 = acceptation, 0 = rejet}
+                                          
+You meant to type ## instead of #, right?
+Or maybe a } was forgotten somewhere earlier, and things
+are all screwed up? I'm going to assume that you meant ##.
+
+! You can't use `macro parameter character #' in horizontal mode.
+<recently read> ##
+                  
+l.684 \textit{#1 = acceptation, 0 = rejet}
+                                          
+Sorry, but I'm not programmed to handle this case;
+I'll just pretend that you didn't ask for it.
+If you're in the wrong mode, you might be able to
+return to the right one by typing `I}' or `I$' or `I\par'.
+
+[18]
+! Illegal parameter number in definition of \reserved@a.
+<to be read again> 
+                    
+l.688 ...# groupes concernés par cette décision}
+                                                  
+You meant to type ## instead of #, right?
+Or maybe a } was forgotten somewhere earlier, and things
+are all screwed up? I'm going to assume that you meant ##.
+
+! Illegal parameter number in definition of \reserved@b.
+<to be read again> 
+                   }
+l.688 ...# groupes concernés par cette décision}
+                                                  
+You meant to type ## instead of #, right?
+Or maybe a } was forgotten somewhere earlier, and things
+are all screwed up? I'm going to assume that you meant ##.
+
+! You can't use `macro parameter character #' in horizontal mode.
+<recently read> ##
+                  
+l.688 ...# groupes concernés par cette décision}
+                                                  
+Sorry, but I'm not programmed to handle this case;
+I'll just pretend that you didn't ask for it.
+If you're in the wrong mode, you might be able to
+return to the right one by typing `I}' or `I$' or `I\par'.
+
+! Illegal parameter number in definition of \reserved@a.
+<to be read again> 
+                    
+l.692 ...c/protocols. Ici il s’agit de TCP == 6}
+                                                  
+You meant to type ## instead of #, right?
+Or maybe a } was forgotten somewhere earlier, and things
+are all screwed up? I'm going to assume that you meant ##.
+
+! Illegal parameter number in definition of \reserved@b.
+<to be read again> 
+                   }
+l.692 ...c/protocols. Ici il s’agit de TCP == 6}
+                                                  
+You meant to type ## instead of #, right?
+Or maybe a } was forgotten somewhere earlier, and things
+are all screwed up? I'm going to assume that you meant ##.
+
+! You can't use `macro parameter character #' in horizontal mode.
+<recently read> ##
+                  
+l.692 ...c/protocols. Ici il s’agit de TCP == 6}
+                                                  
+Sorry, but I'm not programmed to handle this case;
+I'll just pretend that you didn't ask for it.
+If you're in the wrong mode, you might be able to
+return to the right one by typing `I}' or `I$' or `I\par'.
+
+[19]
  6.
 
 ! Package inputenc Error: Unicode char \u8:  not set up for use with LaTeX.
@@ -1048,17 +1193,17 @@ See the inputenc package documentation for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.512 Pré-requis 
+l.734 Pré-requis 
                    :
 Your command was ignored.
 Type  I <command> <return>  to replace it with another command,
 or  <return>  to continue without it.
 
-[15
+[20
 
-] [16]
+] [21]
  7.
-LaTeX Font Info:    Try loading font information for T1+cmtt on input line 568.
+LaTeX Font Info:    Try loading font information for T1+cmtt on input line 790.
 
 (/usr/share/texmf-texlive/tex/latex/base/t1cmtt.fd
 File: t1cmtt.fd 1999/05/25 v2.5h Standard LaTeX font definitions
@@ -1070,7 +1215,7 @@ See the LaTeX manual or LaTeX Companion for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.570 \newline
+l.792 \newline
               
 Your command was ignored.
 Type  I <command> <return>  to replace it with another command,
@@ -1083,7 +1228,7 @@ See the LaTeX manual or LaTeX Companion for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.578 \newline
+l.800 \newline
               
 Your command was ignored.
 Type  I <command> <return>  to replace it with another command,
@@ -1096,15 +1241,15 @@ See the LaTeX manual or LaTeX Companion for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.587 \newline
+l.809 \newline
               
 Your command was ignored.
 Type  I <command> <return>  to replace it with another command,
 or  <return>  to continue without it.
 
-[17
+[22
 
-] [18]
+] [23]
 
 ! LaTeX Error: There's no line here to end.
 
@@ -1112,7 +1257,7 @@ See the LaTeX manual or LaTeX Companion for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.653 \\
+l.875 \\
         
 Your command was ignored.
 Type  I <command> <return>  to replace it with another command,
@@ -1125,41 +1270,41 @@ See the LaTeX manual or LaTeX Companion for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.654 D
+l.876 D
        ifférents composants sont disonibles :
 Your command was ignored.
 Type  I <command> <return>  to replace it with another command,
 or  <return>  to continue without it.
 
 
-Overfull \hbox (4.24825pt too wide) in paragraph at lines 657--657
+Overfull \hbox (4.24825pt too wide) in paragraph at lines 879--879
  []\T1/cmtt/m/n/12 httpout, localfw, lock, logger, network, ntp, nuauth, nuauth
 _command, nuconf,[] 
  []
 
 
-Overfull \hbox (16.59523pt too wide) in paragraph at lines 658--658
+Overfull \hbox (16.59523pt too wide) in paragraph at lines 880--880
  []\T1/cmtt/m/n/12 nuface, nulog, nupki, nurestore, reporting, resolv, session,
  status, streaming,[] 
  []
 
-[19]
+[24]
  8.
-[20
+[25
 
 ]
  9.
-[21
+[26
 
 ] AED: lastpage setting LastPage
 
-! LaTeX Error: \begin{itemize} on input line 112 ended by \end{document}.
+! LaTeX Error: \begin{itemize} on input line 113 ended by \end{document}.
 
 See the LaTeX manual or LaTeX Companion for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.685 \end{document}
+l.929 \end{document}
                     
 Your command was ignored.
 Type  I <command> <return>  to replace it with another command,
@@ -1168,28 +1313,30 @@ or  <return>  to continue without it.
 (./rapport.aux) )
 (\end occurred inside a group at level 1)
 
-### semi simple group (level 1) entered at line 112 (\begingroup)
+### semi simple group (level 1) entered at line 113 (\begingroup)
 ### bottom level 
 Here is how much of TeX's memory you used:
- 5910 strings out of 495028
- 82162 string characters out of 1181229
- 173813 words of memory out of 3000000
- 8928 multiletter control sequences out of 15000+50000
- 13547 words of font info for 33 fonts, out of 3000000 for 9000
+ 7278 strings out of 495061
+ 101496 string characters out of 1182621
+ 192877 words of memory out of 3000000
+ 10254 multiletter control sequences out of 15000+50000
+ 15074 words of font info for 35 fonts, out of 3000000 for 9000
  28 hyphenation exceptions out of 8191
- 38i,11n,43p,916b,627s stack positions out of 5000i,500n,10000p,200000b,50000s
- </home/maxime/.texmf-var/fonts/pk/ljfour/jknappen/ec/ectt1200.
-600pk> </home/maxime/.texmf-var/fonts/pk/ljfour/jknappen/ec/ecbx1440.600pk> </h
-ome/maxime/.texmf-var/fonts/pk/ljfour/jknappen/ec/ecti1200.600pk> </home/maxime
-/.texmf-var/fonts/pk/ljfour/jknappen/ec/ecbx1728.600pk> </home/maxime/.texmf-va
-r/fonts/pk/ljfour/jknappen/ec/ecbx1200.600pk> </home/maxime/.texmf-var/fonts/pk
-/ljfour/jknappen/ec/ecbx2488.600pk> </home/maxime/.texmf-var/fonts/pk/ljfour/jk
-nappen/ec/ecrm1200.600pk></usr/share/texmf-texlive/fonts/type1/public/amsfonts/
-cm/cmmi12.pfb></usr/share/texmf-texlive/fonts/type1/public/amsfonts/cm/cmmi8.pf
-b></usr/share/texmf-texlive/fonts/type1/public/amsfonts/cm/cmr12.pfb>
-Output written on rapport.pdf (21 pages, 394647 bytes).
+ 38i,11n,51p,916b,633s stack positions out of 5000i,500n,10000p,200000b,50000s
+{/usr/share/texmf/fonts/enc/dvips/cm-super/cm-super-t1.enc}</us
+r/share/texmf-texlive/fonts/type1/public/amsfonts/cm/cmmi12.pfb></usr/share/tex
+mf-texlive/fonts/type1/public/amsfonts/cm/cmmi8.pfb></usr/share/texmf-texlive/f
+onts/type1/public/amsfonts/cm/cmr12.pfb></usr/share/texmf/fonts/type1/public/cm
+-super/sfbx1200.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfbx1440.pfb>
+</usr/share/texmf/fonts/type1/public/cm-super/sfbx1728.pfb></usr/share/texmf/fo
+nts/type1/public/cm-super/sfbx2488.pfb></usr/share/texmf/fonts/type1/public/cm-
+super/sfrm0800.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfrm1000.pfb><
+/usr/share/texmf/fonts/type1/public/cm-super/sfrm1200.pfb></usr/share/texmf/fon
+ts/type1/public/cm-super/sfti1200.pfb></usr/share/texmf/fonts/type1/public/cm-s
+uper/sftt1200.pfb>
+Output written on rapport.pdf (26 pages, 491682 bytes).
 PDF statistics:
- 683 PDF objects out of 1000 (max. 8388607)
- 69 named destinations out of 1000 (max. 500000)
- 248 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 444 PDF objects out of 1000 (max. 8388607)
+ 88 named destinations out of 1000 (max. 500000)
+ 352 words of extra memory for PDF output out of 10000 (max. 10000000)
 

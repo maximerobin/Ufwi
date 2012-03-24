@@ -8,6 +8,7 @@
 \usepackage{verbatim} 
 \usepackage{hyperref}
 \usepackage{lastpage}
+\usepackage{listings}
 
 %-------------------------------------------------------------------------------------------------------------------------------
 % Marges
@@ -78,7 +79,7 @@ Groupe :
   \item Cyril PIERRÉ
   \item Maxime ROBIN
   \item Valentin FROLICH
-  \item Simon BARROT
+  \item Simon BAROTTE
 \end{itemize}
 
 
@@ -383,7 +384,31 @@ La compilation du daemon est relativement simple, elle se déroule en quatre ét
   \end{itemize}
 Lors de la première installation, il faut penser à copier le ficheir de configuration avec la commande suivante:
 
-cp ./conf/nuauth.conf /usr/local/etc/nuauth.conf
+\textit{cp ./conf/nuauth.conf /usr/local/etc/nuauth.conf}
+
+\section{Sécuriser l’installation}
+\subsection{Vérification des certificats}
+Il est particulièrement recommandé de placer nuauth dans un endroit protégé afin de garantir la sécurité
+des communications entre nufw et nuauth\footnote{Même si tous les paquets sont chiffrés par TLS}. 
+Dans la mesure où la décision du pare-feu dépend de la réponse de nuauth, il est important de pouvoir 
+valider l’identité du serveur nuauth. Pour cela, on peut demander à nufw de vérifier le certificat présenté 
+par nuauth lors de l’établissement du tunnel TLS. Ceci peut être mis en place grâce à l’option -a suivie du nom 
+du fichier contenant le certificat d’autorité racine. Cette option est ajoutée à la ligne de commande démarrant nufw. 
+Ce faisant, nufw vérifiera la validité du certificat présenté par nauth.
+
+\subsection{Côté client}
+Du côté du client, le système doit être intègre pour que les informations conernant les applications et le
+système d’exploitation soient pertinentes. On doit toujours garder à l’esprit que seul l’agent installé
+côté client est capable d’obtenir ces renseignements. En cas d’attaque, il est évident que ces informations
+PEUVENT et SERONT faussées par l’installation d’un agent NuFW modifié.
+
+On doit tenir compte de cet avertissement et ne surtout pas oublier que cette
+fonctionnalité permet de sécuriser des flux qui auraient dû être ouvert sans vérification sur un système
+basique.
+
+La pertinence du filtrage d’application et/ou de système d’exploitation dépend de la confiance que l'on
+place dans le système qui réalisera l’authentification. Elle est "relativement bonne" sur un système
+sécurisé sur lequel les utilisateurs ne peuvent installer de logiciels
 
 \section{Quelques commandes liées au daemon}
 
@@ -493,6 +518,203 @@ des ACL doivent être précisés si on choisit une des deux authentification sui
  \item plaintext
 \end{itemize}
 Tout ceci en définissant la variable nuauth acl check module.
+
+ \section{Procédure de test}
+Lors du projet j'ai monté une machine virtuel avec une image iso d'une machine Debian avec
+nufw pré-installé dessus. J'ai réussi à faire fonctionner nufw deux fois sur cette machine
+virtuelle avant d'obtenir des erreurs, je vais donc dans cette section détaillé la procédure 
+que j'ai suivi.
+
+\subsection{Paramétrage Iptables}
+Tout d'abord j'ai définie les règles Iptables comme suit de façon à déclencher une 
+demande d’authentification pour toute connection vers ssh:
+
+\textit{iptables -A OUTPUT -s 192.168.1.0/24 -p tcp --dport 22 -m state --state NEW --syn -j NFQUEUE}
+
+\textit{iptables -A OUTPUT -m state --state ESTABLISHED,RELATED -j ACCEPT}
+
+\subsection{Test du système d’authentification}
+Concernant la configuration de nuauth j'ai gardé la configuration de base fourni avec l'image ISO.
+En premier lieu, j'ai démarré le service nuauth dans un terminal:
+
+\textit{nuauth -vvvvvvvvv} (les v en argument corresponde au niveau de debug du daemon, ici niveau 9, niveau
+max)
+
+Ensuite, on démarre nufw dans un autre terminal, avec ici aussi le niveau de debug max afin d'avoir
+le plus d'informations possible sur le daemon.
+
+\textit{nufw -vvvvvvvvv}
+
+Enfin, on peut essayer de connecter un utilisateur. On utilise nutpc pour réaliser ceci avec
+ la commande :
+
+\textit{nutcpc -d -H [NUAUTH IP]} ou NUAUTH IP correspond à l'adresse IP de la machine qui exécute nuauth.
+
+Dans le terminal qui exécute nuauth, nous voyons apparaître une ligne de ce stile:
+
+\textit{user simon@nufw uses OS Linux, 3.0.10, #1 Tue Mar 19 23:00:32 CEST 2012}
+
+Cette ligne nous donne le nom de l'utilisateur qui se connecte ici simon l'OS utiliser par 
+cette utilisateur ainsi que la date et l'heure.
+
+\subsection{Déroulement de l'authentification}
+La connection SSH va déclencher la procédure d’authentification :
+\begin{itemize}
+	\item nufw reçoit un paquet de Netfilter :
+		\subitem [PID] Sending request for 3352783904
+	\item nufw ouvre une connexion TLS vers nuauth :
+		\subitem [PID] Trying TLS connection
+	\item nuauth reçoit la requète de nufw :
+		\subitem ** Message: Packet :
+		\subitem ** Message: Connection : src=192.168.1.12 dst=192.168.1.12 proto=6
+		\subitem ** Message: sport=32848 dport=22
+	\item nuauth envoie une demande d’authentification au client en fonction de l’IP source :
+		\subitem ** Message: need to warn client
+		\subitem ** Message: sending request
+	\item nuauth reçoit la réponse du client :
+		\subitem ** Message: User :
+		\subitem ** Message: Connection : src=192.168.1.12 dst=192.168.1.12 proto=6
+		\subitem ** Message: sport=32848 dport=22
+		\subitem ** Message: OS : Linux 2.6.9 #1 Fri Mar 16 21:51:32 CEST 2012
+		\subitem ** Message: Application : /usr/bin/ssh
+	\item nuauth renvoie sa réponse à nufw :
+		\subitem Sending auth answer 1 for 3352783904 on 0x42428482 ...
+	\item nufw renvoie le paquet dans le noyau :
+		\subitem [PID] Accepting 3352783904
+\end{itemize}
+
+Remarque:
+
+Ne JAMAIS nutcpc avec l’adresse [NUAUTH IP] égale à localhost ou 127.0.0.1, même si nuauth 
+est installé sur la même machine. Dans ce cas, les paquets envoyés à nuauth 
+par le pare-feu proviendront de la machine (avec une adresse égale à, par exemple,
+192.168.0.1) alors que nuauth attend pour l’authentification une adresse égale à 127.0.0.1. 
+Dès lors, l’authentification échouera systématiquement.
+
+\subsection{Utilisation du module LDAP}
+Après avoir réalisé un text de base de nuauth, j'ai voulu tenter l'utilisation de LDAP pour vérifier les ACL. Malgrès l'échec 
+de cette configuration je vais tout de même mettre ma démarche dans cette section. Tout d'abord j'ai mis le fichier 
+acls.schema dans le répertoire \textit{/etc/ldap/schema} et j'ai ajouté la ligne suivante dans le fichier \textit{/etc/ldap/slapd.conf} : 
+\textit{include  /etc/ldap/schema/acls.schema}.
+
+J'ai ensuite configuré nuauth (nuauth.conf) pour l'utilisation de LDAP comme suit:
+
+Tout d'abord j'ai modifier la directive nuauth\_acl\_check\_module pour lui indiquer l'utilisation de libldap.
+
+Ensuite, j'ai préciser les paramètres de connection à l’annuaire :
+
+\textit{ldap\_bind\_dn="uid=nuauth,ou=Users,dc=inl,dc=fr"}
+
+\textit{ldap\_bind\_password="secretpassword"}
+
+\textit{ldap\_basedn="dc=inl,dc=fr"}
+
+\textit{ldap\_acls\_base\_dn="ou=Acls,dc=inl,dc=fr"}
+
+\section{Suivi des connexions avec SQL}
+J'ai aussi configuré nuauth pour permettre le suivi des connexions grâce à une base de données SQL. Pour commencer pour 
+activer le suivi de connexion avec NuFW, j'ai paramétré les options suivantes dans le fichier nuauth.conf :
+
+\textit{nuauth\_log\_users\_sync=1}
+
+\textit{nuauth\_log\_users=8}
+
+Pour journaliser en MySQL, il faut avoir une base contenant la bonne structure. Pour ce faire on peut utiliser 
+le fichier nulog.mysql.dump du répertoire conf et les commandes suivantes (dans un terminal) :
+
+\textit{mysqladmin create nulog}
+
+\textit{cat conf/nulog.mysql.dump|mysql nulog}
+
+Il suffit ensuite de créer un utilisateur MySql qui aura les droits SELECT, DELETE, UPDATE et INSERT sur la table. Enfin, ajoute 
+les informations de connexions au serveur SQL dans le fichier nuauth.conf, en modifiant les directives suiventes:
+
+\textit{mysql\_server\_addr="localhost"}
+
+\textit{mysql\_server\_port="3306"}
+
+\textit{mysql\_user="nuauth"} (ici c'est le nom que j'ai donné à l'utilisateur SQL)
+
+\textit{mysql\_passwd="root"}
+
+\textit{mysql\_table\_name="nulog"} (ici on renseigne le nom de la table crée ci-dessus)
+
+Après différente recherche sur la journalisation des connexions avec SQl je suis tombé sur une discussion d'utilisateur, 
+cette discussion avait pour sujet l'utilisation d'un script clean\_conntrack.pl qui est disponnible dans le répertoire scripts 
+à partir de la version 1.0.12. 
+Ce script doit être exécuté très régulièrement, à intervalles de quelques minutes seulement, par l’intermédiaire de cron, 
+notamment en cas de trafic important.La seule opération réalisée par le script est de transférer les connexions "mortes" 
+(ie les connexions fermées ou refusées) vers une autre table, qui sera une table d’archivage.Il faut envisager d’archiver 
+régulièrement la table d'archivage, afin d’éviter qu’elle ne grossisse indéfiniment.
+
+\section{Authentification par fichier locale}
+Il existe un autre moyen de spécifier des utilisateurs à nuauth. Nuauth considère que la base des utilisateurs est locale, 
+dans un fichier plat, ce type de configuration est très simple à mettre en place, et est donc parfait pour réaliser des tests.
+Tout d'abord il va falloir vérifier quelques options importantes de notre configuration nuauth, dans 
+\textit{/etc/nufw/nuauth.conf}.
+
+\textit{nuauth\_user\_check\_module="plaintext"}
+
+C'est grâce à cette directive que nuauth va savoir que nous utilisons un fichier plat. 
+Bien sûr, sur un réseau d’entreprise, on interface plutôt nuauth à l’annuaire (LDAP, Active Directory, Radius, etc.)
+
+\textit{nuauth\_acl\_check\_module="libplaintext"}
+
+Cette directive indique à nuauth de chercher les droits de chaque utilisateur dans un fichier texte également.
+
+À présent, on crée notre fichier texte de définition des utilisateurs \textit{/etc/nufw/users.nufw} avec le contenu suivant.
+
+\textit{simon:simon:1:102}
+
+\textit{admin:iadmin:2:100,102}
+
+\textit{suadmin:suroot:3:103}
+
+Le fichier définit donc trois utilisateurs : simon, admin et suadmin. Le deuxième champ (après le " : ") est 
+le mot de passe. Le troisième champ est un identifiant propre à chaque utilisateur. Enfin, le dernier champ définit la 
+liste des groupes (numériques) auxquels l’utilisateur appartient. Ici, donc, l’utilisateur simon a comme mot de passe simon, 
+comme identifiant 1 et appartient au groupe 102.
+
+Bien évidemment, ces utilisateurs sont totalement indépendants des utilisateurs systèmes existants sur le pare-feu. 
+Notre base d’utilisateur est ici parfaitement spécifique à NuFW. Voyons à présent les ACL. Nous allons créer le 
+fichier \textit{/etc/nufw/acls.nufw} avec le contenu suivant :
+
+\textit{[http]}
+
+\textit{#1 = acceptation, 0 = rejet}
+
+\textit{decision=1}
+
+\textit{# groupes concernés par cette décision}
+
+\textit{gid=102}
+
+\textit{# L’identifiant du protocole, tel que décrit par /etc/protocols. Ici il s’agit de TCP == 6}
+
+\textit{proto=6}
+
+\textit{SrcIP=0.0.0.0/0}
+
+\textit{SrcPort=1024-65535}
+
+\textit{DstIP=192.168.1.12}
+
+\textit{DstPort=80}
+
+Ici on autorise donc les membres du groupe 102 à surfer sur le site web de la machine 192.168.1.12. Dans notre exemple, 
+il s’agit des utilisateurs simon et admin.
+
+Recharge la configuration du serveur nuauth:
+
+\textit{killall -HUP nuauth}
+
+à présent, lançe le client :
+
+\textit{nutcpc -H IP\_nuauth -U user}
+
+Si tout se passe bien, le mot de passe concernat l'user choisit est demandé. Pour tester il suffirait de faire un simple
+telnet sur la machine 192.168.1.12 sur le port 80 et vérifier que la connexion s'ouvre bien.
+
 
 %-------------------------------------------------------------------------------------------------------------------------------
 \chapter{Daemon ufwi-filterd}
@@ -681,5 +903,27 @@ Ce qui reste a faire :
 
 %---------------------------------------------------------------------------------------------------------------------------------
 \chapter{Difficulté rencontré et avis personnel}
+\section{Daemon d'authentifcation}
+\subsection{Problèmes rencontrés}
+Malheureusement ils sont assez nombreux. Tout d'abord lors de l'installation du module initial (ufwi-authd), impossible de 
+l'installer, lors du make install des erreurs été générés, aucunes solutions trouvées afin de résoudre cse soucis. Dès lors notre
+choix a été d'utiliser l'ancienne version, c'est à dire nufw (nuauth). Après une étude du fichier de configuration et le suivit
+de la procédure de test décrite dans la partie 5.8, j'ai réussi à faire fonctionner deux fois le module nuauth sur une machine 
+vituelle, dès le troisième lancement de nuauth j'ai rencontré un nouveau problème, une erreur lièe au socket. Après de 
+nombreuses recherche je n'ai pas réussi à résoudre ce soucis. J'ai retenté par la suite de relancer nuauth afin de refaire des 
+tests, et l'erreur concernant les sockets avait disparu sans que je sache pourquoi, mais cette bonne nouvelle à fait 
+apparaitre un nouveau problème, une erreur de segmentation à la fin de l'initialisation de nuauth. J'ai effectué des 
+recherches sur différents forum et il semblerait que cette erreur soit du à un bug de nufw, sans en trouvé la correction.
+J'ai aussi rencontré des problèmes sur les certificats entre le client et nuauth, il marchait une fois sur deux sans savoir 
+la non plus pourquoi.
+\subsection{Avis personnel}
+Pour ma part ce projet tuteuré a tout de même été une bonne expériences, malgrès "l'echec" de l'utilisation de ce logiciel. 
+Nufw peut être très puissant et réellement utile pour une entreprise. Une foi que ce logiciel fonctionne il est assez 
+simple de l'utiliser, le seul problème je dirais est le manque de documentation concerant ce logiciel. Si l'on rencontre un 
+ou plusieurs problèmes il est difficile d'en trouver les solutions.
+Concernant la reprise de nufw par FSF France (ufwi), je trouve que c'est une bonne chose, car la disparition de nufw aurait 
+été vraiment dommage, car ce logiciel mérite sa place dans les réseaux d 'entreprise même si il est peu connu. La encore le soucis est le 
+manque de documentation et d'aide au sujet de ce nouveau projet ufwi, (les premiers documents d'aide concerant ufwi ont été 
+mis en ligne sur le dépôt git du projet ufwi à la fin de la période de notre projet).
 %---------------------------------------------------------------------------------------------------------------------------------
 \end{document}

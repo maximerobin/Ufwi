@@ -103,7 +103,7 @@ Il faut savoir que le projet Ufwi descend du projet NuFW.
 La première version publique de NuFW est sortie le 01 septembre 2003.L’idée avait germée en 2001 mais ne s’était concrétisée que le 01 septembre de l’année 2003.
 La société croît rapidement, créant une vingtaine d'emplois en région parisienne, et acquérant une réputation dans le milieu de la sécurité informatique. 
 En 2009, l'entreprise décide d'abandonner le pôle service pour se concentrer sur l'édition d'un pare-feu clef en main, EdenWall, couplant NuFW avec une interface d'administration performante.
-Cette action entraina des difficulté financiere lourde a la société.
+Cette action entraîna des difficulté financiere lourde a la société.
 Le 18 août 2011, soit sept ans après sa création, le tribunal du commerce de Paris a prononcé la liquidation de la société, et de se fait, la fin du projet NuFW.\\
 Cependant le projet fut reprit sous le nom de Ufwi, offrant une reprise optimale du projet en opérant un rassemblement du code,
  notamment éparpillé chez les clients de la société, qui évite les mois de travail nécessaires à la récupération des modifications ayant eu lieu depuis cette date.
@@ -117,16 +117,16 @@ Ufwi est une solution de pare-feu par authentification, cela signifie qu'il effe
 Ufwi dispose aussi d'un mode sans client, pour se faire ufwi utilise un module "ufwi-authd" (utilisé dans le cadre de notre projet).\\
 Comme vu précedemment Ufwi, chaque connexion est associée à un utilisateur. Ce qui veut dire que plusieurs utilisateurs peuvent travailler sur un même poste génèrent simultanément des flux à partir d'une même adresse IP source.
 
-\newpage111
+\newpage
 Donc Ufwi permet le filtrage par utilisateur mais peut aussi apporter d'autre fonctionalité interessantes.\newline
 \begin{itemize}
-    \item Ufwi permet de contribuer de manière tres pointue à la surveillance de l'activité réseau des serveurs. En regle generale dans les installations moderne on attribue des utilisateurs distinct à chaque service que fait tourner le serveur, de ce faite avec Ufwi on peut attribuer une politique réseau différente pour chaque utilisateur système.\newline
+    \item Ufwi permet de contribuer de manière très pointue à la surveillance de l'activité réseau des serveurs. En regle générale dans les installations moderne on attribue des utilisateurs distinct à chaque service que fait tourner le serveur, de ce faite avec Ufwi on peut attribuer une politique réseau différente pour chaque utilisateur système.\newline
     \item Ufwi peut marquer chaque paquets d'une connexion avec les information de son utilisateur (identifiant...) ce qui permet d'appliquer une politique de qualité corespondant a chaque utilisateurs. Cela permetd onc de distribuer la bande passante en tre chaque utilisateur, ainsi attribuer une bande passante plus élevé au utilisateur qui utilise desn applications plus gourmande en terme de connexion.\newline
     \item Ufwi comprend un module de surveillance qui journalisent les événement principaux se produisant sur le réseaux en indiquant les utilisateurs à l'orgine de ses flux ( ouverture, fermeture de connexion, paquet bloqué, etc...). Ces log peuvent etre gérés au choix par Syslog, PostgreSQL ou MySQL. Ufwi conserve chaque connexion ouverte ( ou tenté) meme si l'utilisateur en question a changé d'adresse IP ou de machine.\newline
     \item Ufwi permet d'identifier les utilisateurs des aplications réseau grace a une authentification unique (Single sign on). Grace au systeme de journalisation Sql une table de connexion est maintenu en temps reel.  
 %-------------------------------------------------------------------------------------------------------------------------------
 \chapter{Liste des solutions de pare-feu par identification}
-Les pare-feu par identification les plus connus : 
+Les pare-feu par identifications les plus connus : 
   \begin{itemize}
     \item AuthPF : Fonctionne sous OpenBSD et qui se repose sur SSH pour l'identification des utilisateurs : http://www.openbsd.org/faq/pf/authpf.html
     \item NuFW : projet ayant donné naissance à UFWI suite à la liquiditation de l'éditeur "EdenWall Technologies"
@@ -196,108 +196,6 @@ Les pare-feu par identification les plus connus :
 \end{longtable}
 \newligne
 %-------------------------------------------------------------------------------------------------------------------------------
-\chapter{Externalisation des logs dans une BD MySQL}
-\underline{Configuration du serveur BD}
-
-Installation des paquets :
-
-apt-get install apache2 php5 mysql-server nulog
-
-\underline{Configuration de la passerelle :}
-
-Configuration IP :
-
-ifconfig eth0 192.168.1.137/24
-ifconfig eth1 172.20.8.1/24
-
-Installation des paquets :
-
-apt-get install ulogd ulogd-mysql
-
-Correction d'un bug : ajout d’une ligne dans le script de démarrage qui va charger un module
-
-nano /etc/init.d/ulogd
-export LD_PRELOAD=/usr/lib/libmysqlclient.so.16
-
-Configuration de ulogd : modification de son fichier de configuration
-
-nano /etc/ulogd.conf
-
-Décommenter la ligne 46 (pour charger un module supplémentaire)
-
-Renseigner les informations de connexion à la base de données :
-
-paragraphe « [MYSQL] » ligne 59 :
-table=’’ulog’’
-pass=’’passulog’’
-user=’’ulog’’
-db=’’ulog’’
-host=’’172.20.8.2’’
-
-Configuration du serveur de BD:
-
-Configuration IP :
-
-ifconfig eth0 172.20.8.2/24
-
-Lister tous les fichiers installés à l’installation de nulog :
-
-dpkg –L nulog | more
-
-Ouvrir le fichier suvant (démarche à suivre pour creer les tables de la base de données)
-
-nano /usr/share/doc/nulog/README.Debian
-
-Connexion à la base de données et création de l’utilisateur (les deux programmes vont se connecter avec ce compte):
-
-mysql –u root –p
-create database ulog;
-create user 'ulog'@'\%' identified by 'passulog' ;
-grant all privileges on ulog.* to ulog;
-exit
-
-Commandes de création de la base :
-
-cd /usr/share/doc/nulog/scripts
-gunzip ipv4.sql.gz
-cat ipv4.sql | mysql –uulog –p ulog
-
-Modification du fichier de configuration de mysql
-
-nano /etc/mysql//my.cnf
-ligne 47
-
-Il faut qu’il écoute sur l’interface 172.20.8.2
-
-bind address= ‘’172.20.8.2’’
-
-Renommer les fichiers de configuration :
-
-cd /etc/nulog
-cp default. core.conf core.conf
-cp default.nulog.conf nulog.conf
-cp default.wrapper.conf wrapper.conf
-
-Renseigner les informations de connexion à la base de données :
-
-nano core.conf
-host=localhost
-db=ulog
-user=ulog
-password=passulog
-table=ulog
-
-Prise en compte des changements : redémarrage de services
-Sur la passerelle :
-
-/etc/init.d/ulogd restart
-
-Sur le serveur :
-
-/etc/init.d/ulogd restart
-
-
-On choisit ce que l’on veut loguer avec iptables
 
 %-------------------------------------------------------------------------------------------------------------------------------
 \chapter{Fonctionnement d'ufwi}
@@ -942,6 +840,145 @@ ESU permet de régler certains paramètres spécifiques à NuWinC.Il est, par ex
   \includegraphics[width=7cm,height=6cm]{images/nuwinc1.png}
 \end{center}
 %---------------------------------------------------------------------------------------------------------------------------------
+\chapter{Externalisation des logs dans une BD MySQL}
+\underline{Configuration du serveur BD}
+\newline
+Installation des paquets :
+\newline
+
+apt-get install apache2 php5 mysql-server nulog
+\newline
+
+\underline{Configuration de la passerelle :}
+\newline
+
+Configuration IP :
+\newline
+
+ifconfig eth0 192.168.1.137/24
+\newline
+ifconfig eth1 172.20.8.1/24
+\newline
+
+Installation des paquets :
+\newline
+
+apt-get install ulogd ulogd-mysql
+\newline
+
+Correction d'un bug : ajout d’une ligne dans le script de démarrage qui va charger un module
+\newline
+
+nano /etc/init.d/ulogd
+\newline
+export LD_PRELOAD=/usr/lib/libmysqlclient.so.16
+\newline
+
+Configuration de ulogd : modification de son fichier de configuration
+\newline
+
+nano /etc/ulogd.conf
+\newline
+
+Décommenter la ligne 46 (pour charger un module supplémentaire)
+\newline
+
+Renseigner les informations de connexion à la base de données :
+\newline
+
+paragraphe « [MYSQL] » ligne 59 :
+table=’’ulog’’
+pass=’’passulog’’
+user=’’ulog’’
+db=’’ulog’’
+host=’’172.20.8.2’’
+
+\newline
+Configuration du serveur de BD:
+\newline
+
+Configuration IP :
+\newline
+
+ifconfig eth0 172.20.8.2/24
+\newline
+
+Lister tous les fichiers installés à l’installation de nulog :
+\newline
+
+dpkg –L nulog | more
+\newline
+
+Ouvrir le fichier suvant (démarche à suivre pour creer les tables de la base de données)
+\newline
+
+nano /usr/share/doc/nulog/README.Debian
+\newline
+
+Connexion à la base de données et création de l’utilisateur (les deux programmes vont se connecter avec ce compte):
+\newline
+
+mysql –u root –p
+create database ulog;
+create user 'ulog'@'\%' identified by 'passulog' ;
+grant all privileges on ulog.* to ulog;
+exit
+\newline
+
+Commandes de création de la base :
+\newline
+
+cd /usr/share/doc/nulog/scripts
+gunzip ipv4.sql.gz
+cat ipv4.sql | mysql –uulog –p ulog
+
+\newline
+Modification du fichier de configuration de mysql
+\newline
+
+nano /etc/mysql//my.cnf
+ligne 47
+\newline
+
+Il faut qu’il écoute sur l’interface 172.20.8.2
+
+bind address= ‘’172.20.8.2’’
+\newline
+
+Renommer les fichiers de configuration :
+\newline
+
+cd /etc/nulog
+cp default. core.conf core.conf
+cp default.nulog.conf nulog.conf
+cp default.wrapper.conf wrapper.conf
+\newline
+
+Renseigner les informations de connexion à la base de données :
+\newline
+
+nano core.conf
+host=localhost
+db=ulog
+user=ulog
+password=passulog
+table=ulog
+
+\newline
+Prise en compte des changements : redémarrage de services
+Sur la passerelle :
+\newline
+
+/etc/init.d/ulogd restart
+
+\newline
+Sur le serveur :
+
+\newline
+/etc/init.d/ulogd restart
+
+
+On choisit ce que l’on veut loguer avec iptables
 
 %---------------------------------------------------------------------------------------------------------------------------------
 \chapter{Difficulté rencontré et avis personnel}

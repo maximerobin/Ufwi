@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-1.40.10 (TeX Live 2009/Debian) (format=pdflatex 2011.11.2)  25 MAR 2012 13:54
+This is pdfTeX, Version 3.1415926-1.40.10 (TeX Live 2009/Debian) (format=pdflatex 2011.11.2)  25 MAR 2012 14:45
 entering extended mode
  %&-line parsing enabled.
 **rapport.tex
@@ -610,7 +610,7 @@ Package Fancyhdr Warning: \headheight is too small (12.0pt):
 [4
 
 ]
-Underfull \hbox (badness 10000) in paragraph at lines 120--122
+Underfull \hbox (badness 10000) in paragraph at lines 121--122
 
  []
 
@@ -690,337 +690,74 @@ and I'll forget about whatever was undefined.
 [7]
  3.
 
-! Package inputenc Error: Unicode char \u8:  not set up for use with LaTeX.
-
-See the inputenc package documentation for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.208 Configuration IP 
-                        :
-Your command was ignored.
-Type  I <command> <return>  to replace it with another command,
-or  <return>  to continue without it.
-
-
-! Package inputenc Error: Unicode char \u8:  not set up for use with LaTeX.
-
-See the inputenc package documentation for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.210 ifconfig eth0 
-                     192.168.1.137/24
-Your command was ignored.
-Type  I <command> <return>  to replace it with another command,
-or  <return>  to continue without it.
-
-
-! Package inputenc Error: Unicode char \u8:  not set up for use with LaTeX.
-
-See the inputenc package documentation for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.211 ifconfig eth1 
-                     172.20.8.1/24
-Your command was ignored.
-Type  I <command> <return>  to replace it with another command,
-or  <return>  to continue without it.
-
-! Missing $ inserted.
-<inserted text> 
-                $
-l.220 export LD_
-                PRELOAD=/usr/lib/libmysqlclient.so.16
-I've inserted a begin-math/end-math symbol since I think
-you left one out. Proceed, with fingers crossed.
-
-! Missing $ inserted.
-<inserted text> 
-                $
-l.221 
-      
-I've inserted a begin-math/end-math symbol since I think
-you left one out. Proceed, with fingers crossed.
-
-! Missing } inserted.
-<inserted text> 
-                }
-l.221 
-      
-I've inserted something that you may have forgotten.
-(See the <inserted text> above.)
-With luck, this will get me unwedged. But if you
-really didn't forget anything, try typing `2' now; then
-my insertion and my current dilemma will both disappear.
-
-! Extra }, or forgotten \endgroup.
-\@par ... \@noitemerr {\@@par }\fi \else {\@@par }
-                                                  \fi 
-l.221 
-      
-I've deleted a group-closing symbol because it seems to be
-spurious, as in `$x}$'. But perhaps the } is legitimate and
-you forgot something else, as in `\hbox{$x}'. In such cases
-the way to recover is to insert both the forgotten and the
-deleted material, e.g., by typing `I$}'.
-
-
-! Package inputenc Error: Unicode char \u8:  not set up for use with LaTeX.
-
-See the inputenc package documentation for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.228 ...ons de connexion à la base de données 
-                                                  :
-Your command was ignored.
-Type  I <command> <return>  to replace it with another command,
-or  <return>  to continue without it.
-
-
-! Package inputenc Error: Unicode char \u8:  not set up for use with LaTeX.
-
-See the inputenc package documentation for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.230 paragraphe « 
-                     [MYSQL] » ligne 59 :
-Your command was ignored.
-Type  I <command> <return>  to replace it with another command,
-or  <return>  to continue without it.
-
-
-! Package inputenc Error: Unicode char \u8:  not set up for use with LaTeX.
-
-See the inputenc package documentation for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.230 paragraphe « [MYSQL] 
-                              » ligne 59 :
-Your command was ignored.
-Type  I <command> <return>  to replace it with another command,
-or  <return>  to continue without it.
-
-
-! Package inputenc Error: Unicode char \u8:  not set up for use with LaTeX.
-
-See the inputenc package documentation for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.230 paragraphe « [MYSQL] » ligne 59 
-                                           :
-Your command was ignored.
-Type  I <command> <return>  to replace it with another command,
-or  <return>  to continue without it.
-
-
-Overfull \hbox (32.92307pt too wide) in paragraph at lines 230--236
-[]\T1/cmr/m/n/12 paragraphe ^^S[MYSQL]^^T ligne 59 : table=''ulog'' pass=''pass
-ulog'' user=''ulog'' db=''ulog'' host=''172.20.8.2'' 
- []
-
-
-! Package inputenc Error: Unicode char \u8:  not set up for use with LaTeX.
-
-See the inputenc package documentation for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.239 Configuration IP 
-                        :
-Your command was ignored.
-Type  I <command> <return>  to replace it with another command,
-or  <return>  to continue without it.
-
-
-! Package inputenc Error: Unicode char \u8:  not set up for use with LaTeX.
-
-See the inputenc package documentation for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.241 ifconfig eth0 
-                     172.20.8.2/24
-Your command was ignored.
-Type  I <command> <return>  to replace it with another command,
-or  <return>  to continue without it.
-
-
-! Package inputenc Error: Unicode char \u8:  not set up for use with LaTeX.
-
-See the inputenc package documentation for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.251 ...onnées et création de l’utilisateur 
-                                                  (les deux programmes vont ...
-
-Your command was ignored.
-Type  I <command> <return>  to replace it with another command,
-or  <return>  to continue without it.
-
-
-! Package inputenc Error: Unicode char \u8:  not set up for use with LaTeX.
-
-See the inputenc package documentation for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.255 ...er 'ulog'@'\%' identified by 'passulog' 
-                                                  ;
-Your command was ignored.
-Type  I <command> <return>  to replace it with another command,
-or  <return>  to continue without it.
-
-
-! Package inputenc Error: Unicode char \u8:  not set up for use with LaTeX.
-
-See the inputenc package documentation for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.259 Commandes de création de la base 
-                                         :
-Your command was ignored.
-Type  I <command> <return>  to replace it with another command,
-or  <return>  to continue without it.
-
-[8
-
-]
-Overfull \hbox (5.29512pt too wide) in paragraph at lines 276--280
-[]\T1/cmr/m/n/12 cd /etc/-nu-log cp de-fault. core.conf core.conf cp de-fault.n
-ulog.conf nu-log.conf cp de-fault.wrapper.conf
- []
-
-
-! Package inputenc Error: Unicode char \u8:  not set up for use with LaTeX.
-
-See the inputenc package documentation for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.281 ...ons de connexion à la base de données 
-                                                  :
-Your command was ignored.
-Type  I <command> <return>  to replace it with another command,
-or  <return>  to continue without it.
-
-
-! Package inputenc Error: Unicode char \u8:  not set up for use with LaTeX.
-
-See the inputenc package documentation for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.291 Sur la passerelle 
-                         :
-Your command was ignored.
-Type  I <command> <return>  to replace it with another command,
-or  <return>  to continue without it.
-
-
-! Package inputenc Error: Unicode char \u8:  not set up for use with LaTeX.
-
-See the inputenc package documentation for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.295 Sur le serveur 
-                      :
-Your command was ignored.
-Type  I <command> <return>  to replace it with another command,
-or  <return>  to continue without it.
-
-
-! Package inputenc Error: Unicode char \u8:  not set up for use with LaTeX.
-
-See the inputenc package documentation for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.300 On choisit ce que l’on veut loguer 
-                                            avec iptables
-Your command was ignored.
-Type  I <command> <return>  to replace it with another command,
-or  <return>  to continue without it.
-
-[9]
- 4.
-
-Underfull \hbox (badness 10000) in paragraph at lines 307--309
+Underfull \hbox (badness 10000) in paragraph at lines 205--207
 
  []
 
 
-Overfull \hbox (1.78264pt too wide) in paragraph at lines 309--311
+Overfull \hbox (1.78264pt too wide) in paragraph at lines 207--209
 []\T1/cmr/m/n/12 Supposons main-te-nant que l'uti-li-sa-teur ouvre une connexio
 n vers un ser-veur, par exemple
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 309--311
+Underfull \hbox (badness 10000) in paragraph at lines 207--209
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 311--313
+Underfull \hbox (badness 10000) in paragraph at lines 209--211
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 313--315
+Underfull \hbox (badness 10000) in paragraph at lines 211--213
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 315--317
+Underfull \hbox (badness 10000) in paragraph at lines 213--215
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 317--319
+Underfull \hbox (badness 10000) in paragraph at lines 215--217
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 319--321
+Underfull \hbox (badness 10000) in paragraph at lines 217--219
 
  []
 
-[10
+[8
 
 ]
-Underfull \hbox (badness 10000) in paragraph at lines 321--323
+Underfull \hbox (badness 10000) in paragraph at lines 219--221
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 323--325
+Underfull \hbox (badness 10000) in paragraph at lines 221--223
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 325--327
+Underfull \hbox (badness 10000) in paragraph at lines 223--225
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 327--329
+Underfull \hbox (badness 10000) in paragraph at lines 225--227
 
  []
 
-<images/algo.jpg, id=289, 487.8225pt x 354.32375pt>
+<images/algo.jpg, id=276, 487.8225pt x 354.32375pt>
 File: images/algo.jpg Graphic file (type jpg)
  <use images/algo.jpg>
-[11 <./images/algo.jpg>]
- 5.
-<images/auth.png, id=300, 355.3275pt x 411.03563pt>
+[9 <./images/algo.jpg>]
+ 4.
+<images/auth.png, id=287, 355.3275pt x 411.03563pt>
 File: images/auth.png Graphic file (type png)
  <use images/auth.png>
 
@@ -1030,13 +767,13 @@ See the inputenc package documentation for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.360 Pré-requis 
+l.258 Pré-requis 
                    :
 Your command was ignored.
 Type  I <command> <return>  to replace it with another command,
 or  <return>  to continue without it.
 
-[12
+[10
 
  <./images/auth.png (PNG copy)>]
 
@@ -1046,7 +783,7 @@ See the inputenc package documentation for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.362 Script autogen.sh 
+l.260 Script autogen.sh 
                          :
 Your command was ignored.
 Type  I <command> <return>  to replace it with another command,
@@ -1059,17 +796,23 @@ See the inputenc package documentation for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.366 Compilation Nufw 
+l.264 Compilation Nufw 
                         :
 Your command was ignored.
 Type  I <command> <return>  to replace it with another command,
 or  <return>  to continue without it.
 
-[13] [14] [15]
+[11] [12]
+Overfull \hbox (4.15663pt too wide) in paragraph at lines 404--410
+[]\T1/cmr/m/n/12 Lors de l'ins-tal-la-tion de la suite ufwi un fi-chier de conf
+i-gu-ra-tion de base est four-nie nuauth.conf,
+ []
+
+[13]
 ! Illegal parameter number in definition of \reserved@a.
 <to be read again> 
                    1
-l.560 ...3.0.10, #1 Tue Mar 19 23:00:32 CEST 2012}
+l.458 ...3.0.10, #1 Tue Mar 19 23:00:32 CEST 2012}
                                                   
 You meant to type ## instead of #, right?
 Or maybe a } was forgotten somewhere earlier, and things
@@ -1078,27 +821,32 @@ are all screwed up? I'm going to assume that you meant ##.
 ! You can't use `macro parameter character #' in horizontal mode.
 <argument> ...simon@nufw uses OS Linux, 3.0.10, ##
                                                   1 Tue Mar 19 23:00:32 CEST...
-l.560 ...3.0.10, #1 Tue Mar 19 23:00:32 CEST 2012}
+l.458 ...3.0.10, #1 Tue Mar 19 23:00:32 CEST 2012}
                                                   
 Sorry, but I'm not programmed to handle this case;
 I'll just pretend that you didn't ask for it.
 If you're in the wrong mode, you might be able to
 return to the right one by typing `I}' or `I$' or `I\par'.
 
-[16]
+[14]
 ! You can't use `macro parameter character #' in horizontal mode.
-l.583 		\subitem ** Message: OS : Linux 2.6.9 #
+l.481 		\subitem ** Message: OS : Linux 2.6.9 #
                                                1 Fri Mar 16 21:51:32 CEST 2012
 Sorry, but I'm not programmed to handle this case;
 I'll just pretend that you didn't ask for it.
 If you're in the wrong mode, you might be able to
 return to the right one by typing `I}' or `I$' or `I\par'.
 
-[17]
+[15]
+Overfull \hbox (49.35211pt too wide) in paragraph at lines 545--552
+\T1/cmr/m/n/12 une dis-cus-sion d'uti-li-sa-teur, cette dis-cus-sion avait pour
+ su-jet l'uti-li-sa-tion d'un script clean_conntrack.pl
+ []
+
 ! Illegal parameter number in definition of \reserved@a.
 <to be read again> 
                    1
-l.689 \textit{#1 = acceptation, 0 = rejet}
+l.587 \textit{#1 = acceptation, 0 = rejet}
                                           
 You meant to type ## instead of #, right?
 Or maybe a } was forgotten somewhere earlier, and things
@@ -1107,7 +855,7 @@ are all screwed up? I'm going to assume that you meant ##.
 ! Illegal parameter number in definition of \reserved@b.
 <to be read again> 
                    }
-l.689 \textit{#1 = acceptation, 0 = rejet}
+l.587 \textit{#1 = acceptation, 0 = rejet}
                                           
 You meant to type ## instead of #, right?
 Or maybe a } was forgotten somewhere earlier, and things
@@ -1116,8 +864,37 @@ are all screwed up? I'm going to assume that you meant ##.
 ! You can't use `macro parameter character #' in horizontal mode.
 <recently read> ##
                   
-l.689 \textit{#1 = acceptation, 0 = rejet}
+l.587 \textit{#1 = acceptation, 0 = rejet}
                                           
+Sorry, but I'm not programmed to handle this case;
+I'll just pretend that you didn't ask for it.
+If you're in the wrong mode, you might be able to
+return to the right one by typing `I}' or `I$' or `I\par'.
+
+[16]
+! Illegal parameter number in definition of \reserved@a.
+<to be read again> 
+                    
+l.591 ...# groupes concernés par cette décision}
+                                                  
+You meant to type ## instead of #, right?
+Or maybe a } was forgotten somewhere earlier, and things
+are all screwed up? I'm going to assume that you meant ##.
+
+! Illegal parameter number in definition of \reserved@b.
+<to be read again> 
+                   }
+l.591 ...# groupes concernés par cette décision}
+                                                  
+You meant to type ## instead of #, right?
+Or maybe a } was forgotten somewhere earlier, and things
+are all screwed up? I'm going to assume that you meant ##.
+
+! You can't use `macro parameter character #' in horizontal mode.
+<recently read> ##
+                  
+l.591 ...# groupes concernés par cette décision}
+                                                  
 Sorry, but I'm not programmed to handle this case;
 I'll just pretend that you didn't ask for it.
 If you're in the wrong mode, you might be able to
@@ -1126,7 +903,7 @@ return to the right one by typing `I}' or `I$' or `I\par'.
 ! Illegal parameter number in definition of \reserved@a.
 <to be read again> 
                     
-l.693 ...# groupes concernés par cette décision}
+l.595 ...c/protocols. Ici il s’agit de TCP == 6}
                                                   
 You meant to type ## instead of #, right?
 Or maybe a } was forgotten somewhere earlier, and things
@@ -1135,7 +912,7 @@ are all screwed up? I'm going to assume that you meant ##.
 ! Illegal parameter number in definition of \reserved@b.
 <to be read again> 
                    }
-l.693 ...# groupes concernés par cette décision}
+l.595 ...c/protocols. Ici il s’agit de TCP == 6}
                                                   
 You meant to type ## instead of #, right?
 Or maybe a } was forgotten somewhere earlier, and things
@@ -1144,44 +921,15 @@ are all screwed up? I'm going to assume that you meant ##.
 ! You can't use `macro parameter character #' in horizontal mode.
 <recently read> ##
                   
-l.693 ...# groupes concernés par cette décision}
+l.595 ...c/protocols. Ici il s’agit de TCP == 6}
                                                   
 Sorry, but I'm not programmed to handle this case;
 I'll just pretend that you didn't ask for it.
 If you're in the wrong mode, you might be able to
 return to the right one by typing `I}' or `I$' or `I\par'.
 
-[18]
-! Illegal parameter number in definition of \reserved@a.
-<to be read again> 
-                    
-l.697 ...c/protocols. Ici il s’agit de TCP == 6}
-                                                  
-You meant to type ## instead of #, right?
-Or maybe a } was forgotten somewhere earlier, and things
-are all screwed up? I'm going to assume that you meant ##.
-
-! Illegal parameter number in definition of \reserved@b.
-<to be read again> 
-                   }
-l.697 ...c/protocols. Ici il s’agit de TCP == 6}
-                                                  
-You meant to type ## instead of #, right?
-Or maybe a } was forgotten somewhere earlier, and things
-are all screwed up? I'm going to assume that you meant ##.
-
-! You can't use `macro parameter character #' in horizontal mode.
-<recently read> ##
-                  
-l.697 ...c/protocols. Ici il s’agit de TCP == 6}
-                                                  
-Sorry, but I'm not programmed to handle this case;
-I'll just pretend that you didn't ask for it.
-If you're in the wrong mode, you might be able to
-return to the right one by typing `I}' or `I$' or `I\par'.
-
-[19]
- 6.
+[17]
+ 5.
 
 ! Package inputenc Error: Unicode char \u8:  not set up for use with LaTeX.
 
@@ -1189,17 +937,17 @@ See the inputenc package documentation for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.739 Pré-requis 
+l.637 Pré-requis 
                    :
 Your command was ignored.
 Type  I <command> <return>  to replace it with another command,
 or  <return>  to continue without it.
 
-[20
+[18
 
-] [21]
- 7.
-LaTeX Font Info:    Try loading font information for T1+cmtt on input line 795.
+] [19]
+ 6.
+LaTeX Font Info:    Try loading font information for T1+cmtt on input line 693.
 
 (/usr/share/texmf-texlive/tex/latex/base/t1cmtt.fd
 File: t1cmtt.fd 1999/05/25 v2.5h Standard LaTeX font definitions
@@ -1211,7 +959,7 @@ See the LaTeX manual or LaTeX Companion for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.797 \newline
+l.695 \newline
               
 Your command was ignored.
 Type  I <command> <return>  to replace it with another command,
@@ -1224,7 +972,7 @@ See the LaTeX manual or LaTeX Companion for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.805 \newline
+l.703 \newline
               
 Your command was ignored.
 Type  I <command> <return>  to replace it with another command,
@@ -1237,15 +985,15 @@ See the LaTeX manual or LaTeX Companion for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.814 \newline
+l.712 \newline
               
 Your command was ignored.
 Type  I <command> <return>  to replace it with another command,
 or  <return>  to continue without it.
 
-[22
+[20
 
-] [23]
+] [21]
 
 ! LaTeX Error: There's no line here to end.
 
@@ -1253,7 +1001,7 @@ See the LaTeX manual or LaTeX Companion for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.880 \\
+l.778 \\
         
 Your command was ignored.
 Type  I <command> <return>  to replace it with another command,
@@ -1266,28 +1014,28 @@ See the LaTeX manual or LaTeX Companion for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.881 D
+l.779 D
        ifférents composants sont disonibles :
 Your command was ignored.
 Type  I <command> <return>  to replace it with another command,
 or  <return>  to continue without it.
 
 
-Overfull \hbox (4.24825pt too wide) in paragraph at lines 884--884
+Overfull \hbox (4.24825pt too wide) in paragraph at lines 782--782
  []\T1/cmtt/m/n/12 httpout, localfw, lock, logger, network, ntp, nuauth, nuauth
 _command, nuconf,[] 
  []
 
 
-Overfull \hbox (16.59523pt too wide) in paragraph at lines 885--885
+Overfull \hbox (16.59523pt too wide) in paragraph at lines 783--783
  []\T1/cmtt/m/n/12 nuface, nulog, nupki, nurestore, reporting, resolv, session,
  status, streaming,[] 
  []
 
-[24]
- 8.
+[22]
+ 7.
 ! Undefined control sequence.
-l.904 ...rvice Nuauth (4129 par défaut).\newligne
+l.802 ...rvice Nuauth (4129 par défaut).\newligne
                                                   
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
@@ -1295,11 +1043,11 @@ misspelled it (e.g., `\hobx'), type `I' and the correct
 spelling (e.g., `I\hbox'). Otherwise just continue,
 and I'll forget about whatever was undefined.
 
-<images/nuapp.png, id=379, 344.28625pt x 192.72pt>
+<images/nuapp.png, id=366, 344.28625pt x 192.72pt>
 File: images/nuapp.png Graphic file (type png)
  <use images/nuapp.png>
 ! Undefined control sequence.
-l.912 \newpagge
+l.810 \newpagge
                
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
@@ -1307,46 +1055,109 @@ misspelled it (e.g., `\hobx'), type `I' and the correct
 spelling (e.g., `I\hbox'). Otherwise just continue,
 and I'll forget about whatever was undefined.
 
-[25
+[23
 
  <./images/nuapp.png (PNG copy)>]
-<images/nuwinc.png, id=386, 421.575pt x 311.66437pt>
+<images/nuwinc.png, id=372, 421.575pt x 311.66437pt>
 File: images/nuwinc.png Graphic file (type png)
  <use images/nuwinc.png>
-[26 <./images/nuwinc.png (PNG copy)>]
-<images/nuwinc1.png, id=392, 421.575pt x 311.66437pt>
+[24 <./images/nuwinc.png (PNG copy)>]
+<images/nuwinc1.png, id=378, 421.575pt x 311.66437pt>
 File: images/nuwinc1.png Graphic file (type png)
  <use images/nuwinc1.png>
-[27 <./images/nuwinc1.png (PNG copy)>]
- 9.
+[25 <./images/nuwinc1.png (PNG copy)>]
+ 8.
+
+Underfull \hbox (badness 10000) in paragraph at lines 844--848
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 849--851
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 852--854
+
+ []
+
+
+! Package inputenc Error: Unicode char \u8:  not set up for use with LaTeX.
+
+See the inputenc package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.855 Configuration IP 
+                        :
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 855--857
+
+ []
+
+
+! Package inputenc Error: Unicode char \u8:  not set up for use with LaTeX.
+
+See the inputenc package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.858 ifconfig eth0 
+                     192.168.1.137/24
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
+
+
+! Package inputenc Error: Unicode char \u8:  not set up for use with LaTeX.
+
+See the inputenc package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.860 ifconfig eth1 
+                     172.20.8.1/24
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 858--862
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 863--865
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 866--868
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 869--871
+
+ []
+
 ! Missing $ inserted.
 <inserted text> 
                 $
-l.965 include_
-              HEADERS = linuxlist.h config-table.h ipv6.h log.h ufwibase.h p...
+l.874 export LD_
+                PRELOAD=/usr/lib/libmysqlclient.so.16
 I've inserted a begin-math/end-math symbol since I think
 you left one out. Proceed, with fingers crossed.
 
 ! Missing $ inserted.
 <inserted text> 
                 $
-l.966 ...y.h debug.h documentation.h jhash.h ufwi_
-                                                  source.h proto.$
-I've inserted a begin-math/end-math symbol since I think
-you left one out. Proceed, with fingers crossed.
-
-! Missing $ inserted.
-<inserted text> 
-                $
-l.967 proto_
-            v3.h proto_v4.h proto_v5.h security.h
-I've inserted a begin-math/end-math symbol since I think
-you left one out. Proceed, with fingers crossed.
-
-! Missing $ inserted.
-<inserted text> 
-                $
-l.968 
+l.876 
       
 I've inserted a begin-math/end-math symbol since I think
 you left one out. Proceed, with fingers crossed.
@@ -1354,7 +1165,7 @@ you left one out. Proceed, with fingers crossed.
 ! Missing } inserted.
 <inserted text> 
                 }
-l.968 
+l.876 
       
 I've inserted something that you may have forgotten.
 (See the <inserted text> above.)
@@ -1362,8 +1173,419 @@ With luck, this will get me unwedged. But if you
 really didn't forget anything, try typing `2' now; then
 my insertion and my current dilemma will both disappear.
 
+! Extra }, or forgotten \endgroup.
+\@par ... \@noitemerr {\@@par }\fi \else {\@@par }
+                                                  \fi 
+l.876 
+      
+I've deleted a group-closing symbol because it seems to be
+spurious, as in `$x}$'. But perhaps the } is legitimate and
+you forgot something else, as in `\hbox{$x}'. In such cases
+the way to recover is to insert both the forgotten and the
+deleted material, e.g., by typing `I$}'.
 
-Overfull \hbox (99.81377pt too wide) in paragraph at lines 963--968
+
+Underfull \hbox (badness 10000) in paragraph at lines 877--879
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 880--882
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 883--885
+
+ []
+
+
+! Package inputenc Error: Unicode char \u8:  not set up for use with LaTeX.
+
+See the inputenc package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.886 ...ons de connexion à la base de données 
+                                                  :
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 886--888
+
+ []
+
+
+! Package inputenc Error: Unicode char \u8:  not set up for use with LaTeX.
+
+See the inputenc package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.889 paragraphe « 
+                     [MYSQL] » ligne 59 :
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
+
+
+! Package inputenc Error: Unicode char \u8:  not set up for use with LaTeX.
+
+See the inputenc package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.889 paragraphe « [MYSQL] 
+                              » ligne 59 :
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
+
+
+! Package inputenc Error: Unicode char \u8:  not set up for use with LaTeX.
+
+See the inputenc package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.889 paragraphe « [MYSQL] » ligne 59 
+                                           :
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
+
+
+Overfull \hbox (32.92307pt too wide) in paragraph at lines 889--895
+[]\T1/cmr/m/n/12 paragraphe ^^S[MYSQL]^^T ligne 59 : table=''ulog'' pass=''pass
+ulog'' user=''ulog'' db=''ulog'' host=''172.20.8.2'' 
+ []
+
+
+! LaTeX Error: There's no line here to end.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.896 \newline
+              
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 897--899
+
+ []
+
+
+! Package inputenc Error: Unicode char \u8:  not set up for use with LaTeX.
+
+See the inputenc package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.900 Configuration IP 
+                        :
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 900--902
+
+ []
+
+[26
+
+]
+
+! Package inputenc Error: Unicode char \u8:  not set up for use with LaTeX.
+
+See the inputenc package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.903 ifconfig eth0 
+                     172.20.8.2/24
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 903--905
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 906--908
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 909--911
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 912--914
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 915--917
+
+ []
+
+
+! Package inputenc Error: Unicode char \u8:  not set up for use with LaTeX.
+
+See the inputenc package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.918 ...onnées et création de l’utilisateur 
+                                                  (les deux programmes vont ...
+
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 918--920
+
+ []
+
+
+! Package inputenc Error: Unicode char \u8:  not set up for use with LaTeX.
+
+See the inputenc package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.923 ...er 'ulog'@'\%' identified by 'passulog' 
+                                                  ;
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 921--927
+
+ []
+
+
+! Package inputenc Error: Unicode char \u8:  not set up for use with LaTeX.
+
+See the inputenc package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.928 Commandes de création de la base 
+                                         :
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 928--930
+
+ []
+
+
+! LaTeX Error: There's no line here to end.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.935 \newline
+              
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 936--938
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 939--942
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 945--947
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 948--950
+
+ []
+
+
+Overfull \hbox (5.29512pt too wide) in paragraph at lines 951--956
+[]\T1/cmr/m/n/12 cd /etc/-nu-log cp de-fault. core.conf core.conf cp de-fault.n
+ulog.conf nu-log.conf cp de-fault.wrapper.conf
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 951--956
+
+ []
+
+
+! Package inputenc Error: Unicode char \u8:  not set up for use with LaTeX.
+
+See the inputenc package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.957 ...ons de connexion à la base de données 
+                                                  :
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 957--959
+
+ []
+
+
+! LaTeX Error: There's no line here to end.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.967 \newline
+              
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
+
+
+! Package inputenc Error: Unicode char \u8:  not set up for use with LaTeX.
+
+See the inputenc package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.969 Sur la passerelle 
+                         :
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 968--971
+
+ []
+
+
+! LaTeX Error: There's no line here to end.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.974 \newline
+              
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
+
+
+! Package inputenc Error: Unicode char \u8:  not set up for use with LaTeX.
+
+See the inputenc package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.975 Sur le serveur 
+                      :
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
+
+
+! LaTeX Error: There's no line here to end.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.977 \newline
+              
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
+
+
+! Package inputenc Error: Unicode char \u8:  not set up for use with LaTeX.
+
+See the inputenc package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.981 On choisit ce que l’on veut loguer 
+                                            avec iptables
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
+
+[27]
+ 9.
+! Missing $ inserted.
+<inserted text> 
+                $
+l.1002 include_
+               HEADERS = linuxlist.h config-table.h ipv6.h log.h ufwibase.h ...
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
+! Missing $ inserted.
+<inserted text> 
+                $
+l.1003 ....h debug.h documentation.h jhash.h ufwi_
+                                                  source.h proto.$
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
+! Missing $ inserted.
+<inserted text> 
+                $
+l.1004 proto_
+             v3.h proto_v4.h proto_v5.h security.h
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
+! Missing $ inserted.
+<inserted text> 
+                $
+l.1005 
+       
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
+! Missing } inserted.
+<inserted text> 
+                }
+l.1005 
+       
+I've inserted something that you may have forgotten.
+(See the <inserted text> above.)
+With luck, this will get me unwedged. But if you
+really didn't forget anything, try typing `2' now; then
+my insertion and my current dilemma will both disappear.
+
+
+Overfull \hbox (99.81377pt too wide) in paragraph at lines 1000--1005
 []\T1/cmr/m/n/12 fichier ba-se/src/-Ma-ke-File ligne 223 : include$[]\OML/cmm/m
 /it/12 EADERS \OT1/cmr/m/n/12 = \OML/cmm/m/it/12 linuxlist:hconfig \OMS/cmsy/m/
 n/12 ^^@ \OML/cmm/m/it/12 table:hipv\OT1/cmr/m/n/12 6\OML/cmm/m/it/12 :hlog:huf
@@ -1371,7 +1593,7 @@ wibase:hpacket[]ar$
  []
 
 
-Overfull \hbox (16.70164pt too wide) in paragraph at lines 963--968
+Overfull \hbox (16.70164pt too wide) in paragraph at lines 1000--1005
 \T1/cmr/m/n/12 se-cu-rity.h de-bug.h do-cu-men-ta-tion.h jhash.h ufwi$[]\OML/cm
 m/m/it/12 ource:hproto:$ \T1/cmr/m/n/12 proto$[]\OT1/cmr/m/n/12 3\OML/cmm/m/it/
 12 :hproto[]\OT1/cmr/m/n/12 4\OML/cmm/m/it/12 :hproto[]\OT1/cmr/m/n/12 5\OML/cm
@@ -1381,8 +1603,8 @@ m/m/it/12 :hsecurity:h[]$
 ! Extra }, or forgotten \endgroup.
 \@par ... \@noitemerr {\@@par }\fi \else {\@@par }
                                                   \fi 
-l.968 
-      
+l.1005 
+       
 I've deleted a group-closing symbol because it seems to be
 spurious, as in `$x}$'. But perhaps the } is legitimate and
 you forgot something else, as in `\hbox{$x}'. In such cases
@@ -1390,7 +1612,7 @@ the way to recover is to insert both the forgotten and the
 deleted material, e.g., by typing `I$}'.
 
 ! You can't use `macro parameter character #' in horizontal mode.
-l.969 ...�cemment : http://www.ufwi.org/issues/65#
+l.1006 ...cemment : http://www.ufwi.org/issues/65#
                                                   change-8
 Sorry, but I'm not programmed to handle this case;
 I'll just pretend that you didn't ask for it.
@@ -1398,7 +1620,7 @@ If you're in the wrong mode, you might be able to
 return to the right one by typing `I}' or `I$' or `I\par'.
 
 
-Overfull \hbox (43.5556pt too wide) in paragraph at lines 969--970
+Overfull \hbox (43.5556pt too wide) in paragraph at lines 1006--1007
 []\T1/cmr/m/n/12 Ce bug a �t� rap-port� au sup-port UFWI et a �t� cor-rig� r�-c
 em-ment : http ://www.ufwi.org/issues/65change-
  []
@@ -1417,7 +1639,7 @@ See the LaTeX manual or LaTeX Companion for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.1076 \end{document}
+l.1113 \end{document}
                      
 Your command was ignored.
 Type  I <command> <return>  to replace it with another command,
@@ -1435,7 +1657,7 @@ Here is how much of TeX's memory you used:
  10271 multiletter control sequences out of 15000+50000
  15074 words of font info for 35 fonts, out of 3000000 for 9000
  28 hyphenation exceptions out of 8191
- 38i,11n,51p,625b,633s stack positions out of 5000i,500n,10000p,200000b,50000s
+ 38i,11n,51p,625b,557s stack positions out of 5000i,500n,10000p,200000b,50000s
  </home/maxime/.texmf-var/fonts/pk/ljfour/jknappen/ec/ectt1200.
 600pk> </home/maxime/.texmf-var/fonts/pk/ljfour/jknappen/ec/ecrm1000.600pk> </h
 ome/maxime/.texmf-var/fonts/pk/ljfour/jknappen/ec/ecrm0800.600pk> </home/maxime
@@ -1448,9 +1670,9 @@ ecbx2488.600pk> </home/maxime/.texmf-var/fonts/pk/ljfour/jknappen/ec/ecrm1200.6
 share/texmf-texlive/fonts/type1/public/amsfonts/cm/cmmi8.pfb></usr/share/texmf-
 texlive/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/share/texmf-texlive/font
 s/type1/public/amsfonts/cm/cmsy10.pfb>
-Output written on rapport.pdf (30 pages, 685302 bytes).
+Output written on rapport.pdf (30 pages, 685114 bytes).
 PDF statistics:
- 926 PDF objects out of 1000 (max. 8388607)
+ 925 PDF objects out of 1000 (max. 8388607)
  93 named destinations out of 1000 (max. 500000)
  375 words of extra memory for PDF output out of 10000 (max. 10000000)
 

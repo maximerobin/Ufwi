@@ -13,8 +13,12 @@ Maxime Robin :
 	Étude de la durée de vie des autorisations données.
 
 - Semaine 10 et 11 :
-	Comment s'assurer que l'utilisateur est encore présent ?
-	Quel solution mettre en oeuvre pour vérifier cela ?
+	Installation de l'ISO de NuFW dans une machine virtual disponnible sur le site de nufw.
+	Mise en place sur le réseau de la nouvelle machine.
+	étude des fonctions préinstallées sur la nouvelle machine préinstaller.
+- Semaine 12 :
+	étude des différentes fonctions du module nucetral (ufwi-rpcd).
+	
 
 ------------------------------------------------------------------------------------------
 Simon Barotte:

@@ -1,11 +1,15 @@
+<<<<<<< HEAD
 This is pdfTeX, Version 3.1415926-1.40.10 (TeX Live 2009/Debian) (format=pdflatex 2012.3.22)  25 MAR 2012 13:24
+=======
+This is pdfTeX, Version 3.1415926-1.40.10 (TeX Live 2009/Debian) (format=pdflatex 2011.11.2)  25 MAR 2012 13:38
+>>>>>>> 0af4772390f60686d1cef24fad0cdb9a696bb27a
 entering extended mode
  %&-line parsing enabled.
 **rapport.tex
 (./rapport.tex
 LaTeX2e <2009/09/24>
 Babel <v3.8l> and hyphenation patterns for english, usenglishmax, dumylang, noh
-yphenation, loaded.
+yphenation, french, basque, loaded.
 (/usr/share/texmf-texlive/tex/latex/base/report.cls
 Document Class: report 2007/10/19 v1.4h Standard LaTeX document class
 (/usr/share/texmf-texlive/tex/latex/base/size12.clo
@@ -252,12 +256,6 @@ File: babel.def 2008/07/06 v3.8l Babel common definitions
 \babel@savecnt=\count88
 \U@D=\dimen103
 )
-
-Package babel Warning: No hyphenation patterns were loaded for
-(babel)                the language `French'
-(babel)                I will use the patterns loaded for \language=0 instead.
-
-\l@french = a dialect from \language0
 Package babel Info: Making : an active character on input line 120.
 Package babel Info: Making ; an active character on input line 121.
 Package babel Info: Making ! an active character on input line 122.
@@ -266,6 +264,7 @@ Package babel Info: Making ? an active character on input line 123.
 \std@mcc=\count89
 \dec@mcc=\count90
 \parindentFFN=\dimen105
+
 *************************************
 * Local config file frenchb.cfg used
 *
@@ -643,23 +642,23 @@ Underfull \hbox (badness 3471) in paragraph at lines 144--145
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 145--146
-[]\T1/cmr/m/n/12 Payante sous win-dows
+Underfull \hbox (badness 2556) in paragraph at lines 145--146
+[]\T1/cmr/m/n/12 Payante sous win-dows (Nu-
  []
 
 
 Underfull \hbox (badness 10000) in paragraph at lines 153--154
-[]\T1/cmr/m/n/12 chaque util-isa-teur peut
+[]\T1/cmr/m/n/12 chaque uti-li-sa-teur peut
  []
 
 
 Underfull \hbox (badness 10000) in paragraph at lines 153--154
-\T1/cmr/m/n/12 dis-poser de ses pro-pres
+\T1/cmr/m/n/12 dis-po-ser de ses propres
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 153--154
-\T1/cmr/m/n/12 rè-gles, présentes dans
+Underfull \hbox (badness 5970) in paragraph at lines 153--154
+\T1/cmr/m/n/12 règles, pré-sentes dans HO-
  []
 
 
@@ -669,17 +668,12 @@ Underfull \hbox (badness 1308) in paragraph at lines 156--157
 
 
 Underfull \hbox (badness 1540) in paragraph at lines 159--160
-\T1/cmr/m/n/12 pare-feu lui re-tire les rè-gles
+\T1/cmr/m/n/12 pare-feu lui re-tire les règles
  []
 
 
 Underfull \hbox (badness 2158) in paragraph at lines 160--161
 []\T1/cmr/m/n/12 quelqu'un d'autre peut tou-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 162--163
-[]\T1/cmr/m/n/12 Necessite Openbsd et des
  []
 
 
@@ -701,10 +695,14 @@ misspelled it (e.g., `\hobx'), type `I' and the correct
 spelling (e.g., `I\hbox'). Otherwise just continue,
 and I'll forget about whatever was undefined.
 
+<<<<<<< HEAD
 
 LaTeX Warning: Reference `LastPage' on page 6 undefined on input line 190.
 
 [6]
+=======
+[7]
+>>>>>>> 0af4772390f60686d1cef24fad0cdb9a696bb27a
  3.
 LaTeX Font Info:    External font `cmex10' loaded for size
 (Font)              <12> on input line 191.
@@ -843,8 +841,8 @@ or  <return>  to continue without it.
 
 
 Overfull \hbox (32.92307pt too wide) in paragraph at lines 221--227
-[]\T1/cmr/m/n/12 paragraphe ^^S[MYSQL]^^T ligne 59 : ta-ble=''ulog'' pass=''pas
-sulog'' user=''ulog'' db=''ulog'' host=''172.20.8.2'' 
+[]\T1/cmr/m/n/12 paragraphe ^^S[MYSQL]^^T ligne 59 : table=''ulog'' pass=''pass
+ulog'' user=''ulog'' db=''ulog'' host=''172.20.8.2'' 
  []
 
 
@@ -913,15 +911,19 @@ Your command was ignored.
 Type  I <command> <return>  to replace it with another command,
 or  <return>  to continue without it.
 
+<<<<<<< HEAD
 
 LaTeX Warning: Reference `LastPage' on page 7 undefined on input line 267.
 
 [7
+=======
+[8
+>>>>>>> 0af4772390f60686d1cef24fad0cdb9a696bb27a
 
 ]
 Overfull \hbox (5.29512pt too wide) in paragraph at lines 267--271
-[]\T1/cmr/m/n/12 cd /etc/nu-log cp de-fault. core.conf core.conf cp de-fault.nu
-log.conf nu-log.conf cp de-fault.wrapper.conf
+[]\T1/cmr/m/n/12 cd /etc/-nu-log cp de-fault. core.conf core.conf cp de-fault.n
+ulog.conf nu-log.conf cp de-fault.wrapper.conf
  []
 
 
@@ -976,14 +978,24 @@ Your command was ignored.
 Type  I <command> <return>  to replace it with another command,
 or  <return>  to continue without it.
 
+<<<<<<< HEAD
 
 LaTeX Warning: Reference `LastPage' on page 8 undefined on input line 294.
 
 [8]
+=======
+[9]
+>>>>>>> 0af4772390f60686d1cef24fad0cdb9a696bb27a
  4.
 
 Underfull \hbox (badness 10000) in paragraph at lines 298--300
 
+ []
+
+
+Overfull \hbox (1.78264pt too wide) in paragraph at lines 300--302
+[]\T1/cmr/m/n/12 Supposons main-te-nant que l'uti-li-sa-teur ouvre une connexio
+n vers un ser-veur, par exemple
  []
 
 
@@ -1065,10 +1077,14 @@ Your command was ignored.
 Type  I <command> <return>  to replace it with another command,
 or  <return>  to continue without it.
 
+<<<<<<< HEAD
 
 LaTeX Warning: Reference `LastPage' on page 11 undefined on input line 353.
 
 [11
+=======
+[12
+>>>>>>> 0af4772390f60686d1cef24fad0cdb9a696bb27a
 
  <./images/auth.png (PNG copy)>]
 
@@ -1097,6 +1113,7 @@ Your command was ignored.
 Type  I <command> <return>  to replace it with another command,
 or  <return>  to continue without it.
 
+<<<<<<< HEAD
 
 LaTeX Warning: Reference `LastPage' on page 12 undefined on input line 404.
 
@@ -1109,6 +1126,9 @@ LaTeX Warning: Reference `LastPage' on page 13 undefined on input line 458.
 LaTeX Warning: Reference `LastPage' on page 14 undefined on input line 517.
 
 [14]
+=======
+[13] [14] [15]
+>>>>>>> 0af4772390f60686d1cef24fad0cdb9a696bb27a
 ! Illegal parameter number in definition of \reserved@a.
 <to be read again> 
                    1
@@ -1128,10 +1148,14 @@ I'll just pretend that you didn't ask for it.
 If you're in the wrong mode, you might be able to
 return to the right one by typing `I}' or `I$' or `I\par'.
 
+<<<<<<< HEAD
 
 LaTeX Warning: Reference `LastPage' on page 15 undefined on input line 572.
 
 [15]
+=======
+[16]
+>>>>>>> 0af4772390f60686d1cef24fad0cdb9a696bb27a
 ! You can't use `macro parameter character #' in horizontal mode.
 l.578 		\subitem ** Message: OS : Linux 2.6.9 #
                                                1 Fri Mar 16 21:51:32 CEST 2012
@@ -1140,10 +1164,14 @@ I'll just pretend that you didn't ask for it.
 If you're in the wrong mode, you might be able to
 return to the right one by typing `I}' or `I$' or `I\par'.
 
+<<<<<<< HEAD
 
 LaTeX Warning: Reference `LastPage' on page 16 undefined on input line 627.
 
 [16]
+=======
+[17]
+>>>>>>> 0af4772390f60686d1cef24fad0cdb9a696bb27a
 ! Illegal parameter number in definition of \reserved@a.
 <to be read again> 
                    1
@@ -1172,10 +1200,14 @@ I'll just pretend that you didn't ask for it.
 If you're in the wrong mode, you might be able to
 return to the right one by typing `I}' or `I$' or `I\par'.
 
+<<<<<<< HEAD
 
 LaTeX Warning: Reference `LastPage' on page 17 undefined on input line 686.
 
 [17]
+=======
+[18]
+>>>>>>> 0af4772390f60686d1cef24fad0cdb9a696bb27a
 ! Illegal parameter number in definition of \reserved@a.
 <to be read again> 
                     
@@ -1232,10 +1264,14 @@ I'll just pretend that you didn't ask for it.
 If you're in the wrong mode, you might be able to
 return to the right one by typing `I}' or `I$' or `I\par'.
 
+<<<<<<< HEAD
 
 LaTeX Warning: Reference `LastPage' on page 18 undefined on input line 720.
 
 [18]
+=======
+[19]
+>>>>>>> 0af4772390f60686d1cef24fad0cdb9a696bb27a
  6.
 
 ! Package inputenc Error: Unicode char \u8:Â  not set up for use with LaTeX.
@@ -1250,10 +1286,14 @@ Your command was ignored.
 Type  I <command> <return>  to replace it with another command,
 or  <return>  to continue without it.
 
+<<<<<<< HEAD
 
 LaTeX Warning: Reference `LastPage' on page 19 undefined on input line 748.
 
 [19
+=======
+[20
+>>>>>>> 0af4772390f60686d1cef24fad0cdb9a696bb27a
 
 ]
 
@@ -1305,12 +1345,16 @@ Your command was ignored.
 Type  I <command> <return>  to replace it with another command,
 or  <return>  to continue without it.
 
+<<<<<<< HEAD
 
 LaTeX Warning: Reference `LastPage' on page 21 undefined on input line 816.
 
 [21
 
 ]
+=======
+[22
+>>>>>>> 0af4772390f60686d1cef24fad0cdb9a696bb27a
 
 LaTeX Warning: Reference `LastPage' on page 22 undefined on input line 860.
 
@@ -1367,7 +1411,11 @@ misspelled it (e.g., `\hobx'), type `I' and the correct
 spelling (e.g., `I\hbox'). Otherwise just continue,
 and I'll forget about whatever was undefined.
 
+<<<<<<< HEAD
 <images/nuapp.png, id=185, 344.28625pt x 192.72pt>
+=======
+<images/nuapp.png, id=379, 344.28625pt x 192.72pt>
+>>>>>>> 0af4772390f60686d1cef24fad0cdb9a696bb27a
 File: images/nuapp.png Graphic file (type png)
  <use images/nuapp.png>
 ! Undefined control sequence.
@@ -1379,10 +1427,14 @@ misspelled it (e.g., `\hobx'), type `I' and the correct
 spelling (e.g., `I\hbox'). Otherwise just continue,
 and I'll forget about whatever was undefined.
 
+<<<<<<< HEAD
 
 LaTeX Warning: Reference `LastPage' on page 24 undefined on input line 910.
 
 [24
+=======
+[25
+>>>>>>> 0af4772390f60686d1cef24fad0cdb9a696bb27a
 
  <./images/nuapp.png (PNG copy)>]
 <images/nuwinc.png, id=191, 421.575pt x 311.66437pt>
@@ -1496,7 +1548,7 @@ LaTeX Warning: Reference `LastPage' on page 28 undefined on input line 997.
 
 [28
 
-] AED: lastpage setting LastPage
+] [30] AED: lastpage setting LastPage
 
 ! LaTeX Error: \begin{itemize} on input line 113 ended by \end{document}.
 
@@ -1504,12 +1556,18 @@ See the LaTeX manual or LaTeX Companion for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
+<<<<<<< HEAD
 l.997 \end{document}
                     
+=======
+l.1057 \end{document}
+                     
+>>>>>>> 0af4772390f60686d1cef24fad0cdb9a696bb27a
 Your command was ignored.
 Type  I <command> <return>  to replace it with another command,
 or  <return>  to continue without it.
 
+<<<<<<< HEAD
 (./rapport.aux)
 
 LaTeX Warning: There were undefined references.
@@ -1518,11 +1576,15 @@ LaTeX Warning: There were undefined references.
 LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
 
  )
+=======
+(./rapport.aux) )
+>>>>>>> 0af4772390f60686d1cef24fad0cdb9a696bb27a
 (\end occurred inside a group at level 1)
 
 ### semi simple group (level 1) entered at line 113 (\begingroup)
 ### bottom level 
 Here is how much of TeX's memory you used:
+<<<<<<< HEAD
  7258 strings out of 495061
  101278 string characters out of 1182621
  191877 words of memory out of 3000000
@@ -1546,4 +1608,29 @@ PDF statistics:
  699 PDF objects out of 1000 (max. 8388607)
  91 named destinations out of 1000 (max. 500000)
  63 words of extra memory for PDF output out of 10000 (max. 10000000)
+=======
+ 7294 strings out of 495028
+ 101780 string characters out of 1181229
+ 192893 words of memory out of 3000000
+ 10271 multiletter control sequences out of 15000+50000
+ 15074 words of font info for 35 fonts, out of 3000000 for 9000
+ 28 hyphenation exceptions out of 8191
+ 38i,11n,51p,916b,633s stack positions out of 5000i,500n,10000p,200000b,50000s
+ </home/maxime/.texmf-var/fonts/pk/ljfour/jknappen/ec/ectt1200.
+600pk> </home/maxime/.texmf-var/fonts/pk/ljfour/jknappen/ec/ecrm1000.600pk> </h
+ome/maxime/.texmf-var/fonts/pk/ljfour/jknappen/ec/ecrm0800.600pk> </home/maxime
+/.texmf-var/fonts/pk/ljfour/jknappen/ec/ecbx1440.600pk> </home/maxime/.texmf-va
+r/fonts/pk/ljfour/jknappen/ec/ecti1200.600pk> </home/maxime/.texmf-var/fonts/pk
+/ljfour/jknappen/ec/ecbx1728.600pk> </home/maxime/.texmf-var/fonts/pk/ljfour/jk
+nappen/ec/ecbx1200.600pk> </home/maxime/.texmf-var/fonts/pk/ljfour/jknappen/ec/
+ecbx2488.600pk> </home/maxime/.texmf-var/fonts/pk/ljfour/jknappen/ec/ecrm1200.6
+00pk></usr/share/texmf-texlive/fonts/type1/public/amsfonts/cm/cmmi12.pfb></usr/
+share/texmf-texlive/fonts/type1/public/amsfonts/cm/cmmi8.pfb></usr/share/texmf-
+texlive/fonts/type1/public/amsfonts/cm/cmr12.pfb>
+Output written on rapport.pdf (30 pages, 673665 bytes).
+PDF statistics:
+ 922 PDF objects out of 1000 (max. 8388607)
+ 93 named destinations out of 1000 (max. 500000)
+ 375 words of extra memory for PDF output out of 10000 (max. 10000000)
+>>>>>>> 0af4772390f60686d1cef24fad0cdb9a696bb27a
 

@@ -43,7 +43,7 @@
 %-------------------------------------------------------------------------------------------------------------------------------
 
 \title{Ufwi}
-\author{Maxime Robin, Cyril Pierré, Valentin Frolich, Simon Barotte}
+\author{Simon BAROTTE, Valentin FROLICH, Cyril PIERRÉ, Maxime ROBIN}
 \date{\today}
 
 \begin{document}
@@ -76,10 +76,10 @@ Projet tuteuré.
 
 Groupe :
 \begin{itemize}
+  \item Simon BAROTTE
+  \item Valentin FROLICH
   \item Cyril PIERRÉ
   \item Maxime ROBIN
-  \item Valentin FROLICH
-  \item Simon BAROTTE
 \end{itemize}
 
 
@@ -883,6 +883,60 @@ system, system_info, tools, update, users_config, versionning
 
 
 %---------------------------------------------------------------------------------------------------------------------------------
+\chapter{Client Ufwi/nufw}
+Comme vu précedemment dans l'intruductuin Ufwi a besoin d'une partit client sur chaque poste utilisent ce logiciel. Cependant il y'a un moyen de contourné se probleme sous 
+GNU/Linux.\\ Il est possible de s'authentifier directement au serveur UFWI au moment de l'authentification de l'utilisateur sur un poste linux.
+Pour cela, il est nécessaire d'installer le paquet pam\_nufw présent dans la plupart des distributions GNU/Linux. Il est possible de trouver les sources de ce logiciel dans les sources du projet NuFW.
+Pour configurer, il suffit de renseigner la ligne suivante dans /etc/pam.d/common-auth :
+\begin{verbatim}
+	auth optional pam_nufw.so server=adresse_amon port=4129 noauth=root,mdp
+\end{verbatim}
+et dans /etc/pam.d/common-session :
+\begin{verbatim}
+	session optional pam_nufw.so server=adresse_amon port=4129 noauth=root,mdp
+\end{verbatim}
+Un client graphique autonome est proposé librement par la société INL. Ce client, NuApplet2, est disponible dans la plupart des distributions GNU/Linux.
+L'adresse IP correspond à l'amon et le port correspond au service Nuauth (4129 par défaut).\newligne
+\vspace{1,5cm}
+\begin{center}
+  \includegraphics[width=5cm,height=4cm]{images/nuapp.png}
+\end{center}
+\vspace{1,5cm}
+UN autre client exicte sous GNU/Linux Nutcpc celui ci est celui que nous avons utilisé pour nos test, c'est un client non-graphique uniquement en ligne de commande. Ce client est le client de base proposé dans l'iso de Nufw. Le client a besoin de certificat d'authentification SSL, pour les configurer deux solution sont disponible. La premiere (recommandé) est de mettre directement les certificats d'authentification dans le dossier c'est a dire dans le /home/user/.nufw . La deuxieme solution consisitant a definir les certificats d'hautentification en parametre de la commande.\\
+Quelque commande pour le client nutcpc :
+\newpagge
+\begin{itemize}
+	\item -h : Affiche les differente commande.
+	\item -v : Affiche la version du client.
+	\item -d : affiche le mode debug.
+	\item -S : utilise le SSL pour se connecter auserveur Nuauth.
+	\item -k : Avant de demarre, le programe rue tout les processus existant de l'userID
+	\item -l : ne verifie pas les lokfile avant de demarrer et n'en créé pas.
+	\item -H + Ip serveur Nuauth : Envoie un packet d'authentification au serveur.
+	\item -p + port du serveur Nuauth : Envoie un packet d'authentification au serveur (port).
+	\item -U : Definie l'utiliastauer (UserID).
+	\item -P : Set le mot de passe utilisateur.
+	\item -C : Define le certfile qui autorise la connection TLS a Nuauth.
+	\item -A : Definie l'AuthorityFile et verifie la validité des certificats de Nuauth.
+	\item -k : Définei la KeyFile qui autorise la connection TLS.
+\end{itemize}
+\vspace{0,7cm}
+Un exemple typique pour tester si le client dialogue bien avec le serveur est de faire:
+\begin{verbatim}
+	nutcpc -d 9 -H 192.168.1.137 -A Nuauth_cert.pem
+\end{verbatim}
+Donc dans la commande ci dessus on active le mode debug avac le plus haut niveau pour plus d'info en cas de probleme ou d'erreure, ensuite on configure l'IP du serveur Nuauth et enfin on definie le certificats si il n'est pas deja placé dans .nufw de l'utilisateur et verifie la validité des certificats de Nuauth.
+\vspace{0,7cm}
+Il existe toutefois un client nufw pour windows non libre pour le moment. NuWinC est le client NuFW pour les OS de microsoft, Windows.Le client NuWinC est intégré au client Scribe mais il est désactivé par défaut.Avant tout, il faut activer le client NuWinC. Cela se fait dans ESU.Après l'avoir activé, il faut paramétrer l'IP de l'Amon et le port du serveur d'authentification Nuauth (4129).
+\begin{center}
+  \includegraphics[width=7cm,height=6cm]{images/nuwinc.png}
+\end{center}
+\newpage
+ESU permet de régler certains paramètres spécifiques à NuWinC.Il est, par exemple, possible de protéger ou de masquer le client NuFW.
+\begin{center}
+  \includegraphics[width=7cm,height=6cm]{images/nuwinc1.png}
+\end{center}
+%---------------------------------------------------------------------------------------------------------------------------------
 \chapter{Avencement du projet à mis parcours}
 Ce qui a été fait :
 \begin{itemize}
@@ -905,25 +959,39 @@ Ce qui reste a faire :
 \chapter{Difficulté rencontré et avis personnel}
 \section{Daemon d'authentifcation}
 \subsection{Problèmes rencontrés}
-Malheureusement ils sont assez nombreux. Tout d'abord lors de l'installation du module initial (ufwi-authd), impossible de 
-l'installer, lors du make install des erreurs été générés, aucunes solutions trouvées afin de résoudre cse soucis. Dès lors notre
-choix a été d'utiliser l'ancienne version, c'est à dire nufw (nuauth). Après une étude du fichier de configuration et le suivit
-de la procédure de test décrite dans la partie 5.8, j'ai réussi à faire fonctionner deux fois le module nuauth sur une machine 
-vituelle, dès le troisième lancement de nuauth j'ai rencontré un nouveau problème, une erreur lièe au socket. Après de 
-nombreuses recherche je n'ai pas réussi à résoudre ce soucis. J'ai retenté par la suite de relancer nuauth afin de refaire des 
-tests, et l'erreur concernant les sockets avait disparu sans que je sache pourquoi, mais cette bonne nouvelle à fait 
-apparaitre un nouveau problème, une erreur de segmentation à la fin de l'initialisation de nuauth. J'ai effectué des 
-recherches sur différents forum et il semblerait que cette erreur soit du à un bug de nufw, sans en trouvé la correction.
-J'ai aussi rencontré des problèmes sur les certificats entre le client et nuauth, il marchait une fois sur deux sans savoir 
-la non plus pourquoi.
+Au début du projet, nous avons voulu installer UFWI sur une distribution Debian afin de pouvoir tester les modules PyQT qui fonctionnent en GUI,
+alors que l'iso NUFW ne fonctionne qu'en CLI.
+À ce moment du projet, aucune documentation technique n'était disponible pour l'installation du logiciel.
+Nous avons donc télécharger l'ensemble des modules qui composent UFWI et avons testé l'installation "à l'aveugle" sans savoir quelles étaient les 
+dépendances entre ces différents modules.
+De plus un grand nombre de dépendance n'étaient pas satisfaites car UFWI exigeait des librairies trop anciennes pour fonctionner, 
+certaines de ces librairies n'étant plus disponible sur une debian stable.
+En fonction des modules il fallut même utiliser des versions différentes d'autogen.
+Nous avons ensuite découvert un bug dans "UFWI Base", 
+lors de l'installation du module ufwi-base, le make génére un src/MakeFile contenant une erreur : 
+l'installation avec make install appelle deux fois successivement le script security.h ce qui retourne un message d'erreur. 
+Il faut donc éditer le MakeFile généré et supprimé le deuxième security.h pour que l'installation fonctionne correctement :
+
+fichier base/src/MakeFile
+ligne 223 :
+include_HEADERS = linuxlist.h config-table.h ipv6.h log.h ufwibase.h packet_par$
+security.h debug.h documentation.h jhash.h ufwi_source.h proto.$
+proto_v3.h proto_v4.h proto_v5.h security.h
+
+Ce bug a été rapporté au support UFWI et a été corrigé récemment : http://www.ufwi.org/issues/65#change-8
+
+Mais lorsqu'enfin tout les modules sont installés il est impossible de les lancer, d'autres dépendances étant manquantes.
+Nous avons donc utiliser une nouvelle iso de projet nufw qui venait d'être mis en ligne pour pouvoir enfin tester le logiciel.
+
+
 \subsection{Avis personnel}
-Pour ma part ce projet tuteuré a tout de même été une bonne expériences, malgrès "l'echec" de l'utilisation de ce logiciel. 
-Nufw peut être très puissant et réellement utile pour une entreprise. Une foi que ce logiciel fonctionne il est assez 
-simple de l'utiliser, le seul problème je dirais est le manque de documentation concerant ce logiciel. Si l'on rencontre un 
-ou plusieurs problèmes il est difficile d'en trouver les solutions.
-Concernant la reprise de nufw par FSF France (ufwi), je trouve que c'est une bonne chose, car la disparition de nufw aurait 
-été vraiment dommage, car ce logiciel mérite sa place dans les réseaux d 'entreprise même si il est peu connu. La encore le soucis est le 
-manque de documentation et d'aide au sujet de ce nouveau projet ufwi, (les premiers documents d'aide concerant ufwi ont été 
-mis en ligne sur le dépôt git du projet ufwi à la fin de la période de notre projet).
+
+
+Ce projet tuteuré a tout de même été une bonne expériences, malgrès "l'echec" de l'utilisation de ce logiciel. 
+Nufw peut être très puissant et réellement utile pour une entreprise. Une fois que ce logiciel fonctionne il est assez 
+simple de l'utiliser, le seul problème réel problème étant la jeunesse du projet (très peu de documentation ont été mise en ligne par exemple).
+
+Un point particulièrement intéressant durant ce projet, fût de découvrir un bug d'installation qui nous a permit de légèrement contribuer au projet.
+
 %---------------------------------------------------------------------------------------------------------------------------------
 \end{document}

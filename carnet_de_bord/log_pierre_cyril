@@ -24,4 +24,7 @@
 	Réinstallation de tous les modules avec l'aide de M.SIMON.
 	Envoie d'un patch corrigeant une erreur survenu lors de la compilation du mode ufwi-administration-ufwi-base à l'équipe gérant le projet sur ufwi.org.
 
-
+[2012-03-16 -> 18 ]
+	Tentative de reconfiguration du module d'authentification => erreurs de certificats
+	Début de relecture du rapport LaTeX
+	Réinstallation du nouvelle machine virtuelle à base de l'iso Nufw pour ré-obtenir les certificats par défaut

@@ -43,7 +43,7 @@
 %-------------------------------------------------------------------------------------------------------------------------------
 
 \title{Ufwi}
-\author{Maxime Robin, Cyril Pierré, Valentin Frolich, Simon Barotte}
+\author{Simon BAROTTE, Valentin FROLICH, Cyril PIERRÉ, Maxime ROBIN}
 \date{\today}
 
 \begin{document}
@@ -76,10 +76,10 @@ Projet tuteuré.
 
 Groupe :
 \begin{itemize}
+  \item Simon BAROTTE
+  \item Valentin FROLICH
   \item Cyril PIERRÉ
   \item Maxime ROBIN
-  \item Valentin FROLICH
-  \item Simon BAROTTE
 \end{itemize}
 
 
@@ -100,15 +100,24 @@ Groupe :
 \chapter{Introduction}
 \section{Historique}
 Il faut savoir que le projet Ufwi descend du projet NuFW.
-La première version publique de NuFW est sortie le 01 septembre 2003.L’idée avait germée en 2001 mais ne s’était concrétisée que le 01 septembre de l’année 2003. La société croît rapidement, créant une vingtaine d'emplois en région parisienne, et acquérant une réputation dans le milieu de la sécurité informatique. En 2009, l'entreprise décide d'abandonner le pôle service pour se concentrer sur l'édition d'un pare-feu clef en main, EdenWall, couplant NuFW avec une interface d'administration performante, cette action entraina des difficulté financiere lourde a la société.
-Le 18 août 2011, soit sept ans après sa création, le tribunal du commerce de Paris a prononcé la liquidation de la société, de se fait la fin du projet NuFW.\\
-Cependant le projet fut reprit sous le nom de Ufwi, offrant une reprise optimale du projet en opérant un rassemblement du code, notamment éparpillé chez les clients de la société, qui évite les mois de travail nécessaires à la récupération des modifications ayant eu lieu depuis cette date.
+La première version publique de NuFW est sortie le 01 septembre 2003.L’idée avait germée en 2001 mais ne s’était concrétisée que le 01 septembre de l’année 2003.
+La société croît rapidement, créant une vingtaine d'emplois en région parisienne, et acquérant une réputation dans le milieu de la sécurité informatique. 
+En 2009, l'entreprise décide d'abandonner le pôle service pour se concentrer sur l'édition d'un pare-feu clef en main, EdenWall, couplant NuFW avec une interface d'administration performante.
+Cette action entraina des difficulté financiere lourde a la société.
+Le 18 août 2011, soit sept ans après sa création, le tribunal du commerce de Paris a prononcé la liquidation de la société, et de se fait, la fin du projet NuFW.\\
+Cependant le projet fut reprit sous le nom de Ufwi, offrant une reprise optimale du projet en opérant un rassemblement du code,
+ notamment éparpillé chez les clients de la société, qui évite les mois de travail nécessaires à la récupération des modifications ayant eu lieu depuis cette date.
 \section{Présentation}
-Ufwi est une solution de pare-feu par authentification, cela signifie qu'il effectue une authentification de chaque connexion qui le traverse. L'authentification se fait de façon transparente, en requérant les informations d’identification via l'annuaire des utilisateurs d'un réseau (LDAP ou autre). Donc avec Ufwi chaque utilisateur doit décliner son identité à chaque initialisation de conexion. Une fois que l'utilisateur est identifié, le paquet se voit filtré, selon les droits associés à l'utilisateur. Une fois que le premier paquet est accepter, les paquets suivant appartenant à la même connexion sont gérés par le système de suivi d'état (seul le paquet d'initialisation d'une connexion est authentifié). Ce principe de fonctionnement requiert la présence d'un client sur le poste utilisateur, il existe des clients compatible pour windows et GNU/Linux.
+Ufwi est une solution de pare-feu par authentification, cela signifie qu'il effectue une authentification de chaque connexion qui le traverse.
+ L'authentification se fait de façon transparente, en requérant les informations d’identification via l'annuaire des utilisateurs d'un réseau (LDAP par défaut).
+ Donc avec Ufwi chaque utilisateur doit décliner son identité à chaque initialisation de conexion. Une fois que l'utilisateur est identifié,
+ le paquet se voit filtré, selon les droits associés à l'utilisateur.
+ Une fois que le premier paquet est accepter, les paquets suivant appartenant à la même connexion sont gérés par le système de suivi d'état
+ (seul le paquet d'initialisation d'une connexion est authentifié). Ce principe de fonctionnement requiert la présence d'un client sur le poste utilisateur, il existe des clients compatible pour windows et GNU/Linux.
 Ufwi dispose aussi d'un mode sans client, pour se faire ufwi utilise un module "ufwi-authd" (utilisé dans le cadre de notre projet).\\
 Comme vu précedemment Ufwi, chaque connexion est associée à un utilisateur. Ce qui veut dire que plusieurs utilisateurs peuvent travailler sur un même poste génèrent simultanément des flux à partir d'une même adresse IP source.
 
-\newpage
+\newpage111
 Donc Ufwi permet le filtrage par utilisateur mais peut aussi apporter d'autre fonctionalité interessantes.\newline
 \begin{itemize}
     \item Ufwi permet de contribuer de manière tres pointue à la surveillance de l'activité réseau des serveurs. En regle generale dans les installations moderne on attribue des utilisateurs distinct à chaque service que fait tourner le serveur, de ce faite avec Ufwi on peut attribuer une politique réseau différente pour chaque utilisateur système.\newline
@@ -520,13 +529,10 @@ des ACL doivent être précisés si on choisit une des deux authentification sui
 Tout ceci en définissant la variable nuauth acl check module.
 
  \section{Procédure de test}
-Lors du projet j'ai monté une machine virtuel avec une image iso d'une machine Debian avec
-nufw pré-installé dessus. J'ai réussi à faire fonctionner nufw deux fois sur cette machine
-virtuelle avant d'obtenir des erreurs, je vais donc dans cette section détaillé la procédure 
-que j'ai suivi.
-
+Lors du projet nous avons installé une machine virtuelle avec l'iso nufw pré-installées.
+Détail des configurations effectuées :
 \subsection{Paramétrage Iptables}
-Tout d'abord j'ai définie les règles Iptables comme suit de façon à déclencher une 
+Tout d'abord mise en place de règles Iptables de façon à déclencher une 
 demande d’authentification pour toute connection vers ssh:
 
 \textit{iptables -A OUTPUT -s 192.168.1.0/24 -p tcp --dport 22 -m state --state NEW --syn -j NFQUEUE}
@@ -534,8 +540,7 @@ demande d’authentification pour toute connection vers ssh:
 \textit{iptables -A OUTPUT -m state --state ESTABLISHED,RELATED -j ACCEPT}
 
 \subsection{Test du système d’authentification}
-Concernant la configuration de nuauth j'ai gardé la configuration de base fourni avec l'image ISO.
-En premier lieu, j'ai démarré le service nuauth dans un terminal:
+Nous avons laissé la configuration par défaut de nuauth.
 
 \textit{nuauth -vvvvvvvvv} (les v en argument corresponde au niveau de debug du daemon, ici niveau 9, niveau
 max)
@@ -550,11 +555,11 @@ Enfin, on peut essayer de connecter un utilisateur. On utilise nutpc pour réali
 
 \textit{nutcpc -d -H [NUAUTH IP]} ou NUAUTH IP correspond à l'adresse IP de la machine qui exécute nuauth.
 
-Dans le terminal qui exécute nuauth, nous voyons apparaître une ligne de ce stile:
+Dans le terminal qui exécute nuauth :
 
 \textit{user simon@nufw uses OS Linux, 3.0.10, #1 Tue Mar 19 23:00:32 CEST 2012}
 
-Cette ligne nous donne le nom de l'utilisateur qui se connecte ici simon l'OS utiliser par 
+Cette ligne nous donne le nom de l'utilisateur qui se connecte, ici simon, l'OS utiliser par 
 cette utilisateur ainsi que la date et l'heure.
 
 \subsection{Déroulement de l'authentification}
@@ -592,16 +597,16 @@ par le pare-feu proviendront de la machine (avec une adresse égale à, par exem
 Dès lors, l’authentification échouera systématiquement.
 
 \subsection{Utilisation du module LDAP}
-Après avoir réalisé un text de base de nuauth, j'ai voulu tenter l'utilisation de LDAP pour vérifier les ACL. Malgrès l'échec 
-de cette configuration je vais tout de même mettre ma démarche dans cette section. Tout d'abord j'ai mis le fichier 
-acls.schema dans le répertoire \textit{/etc/ldap/schema} et j'ai ajouté la ligne suivante dans le fichier \textit{/etc/ldap/slapd.conf} : 
+Après avoir réalisé un test de base de nuauth, vous avons tenter l'utilisation de LDAP pour vérifier les comptes d'utilisateurs. Malgrès l'échec 
+de cette configuration nous explicitons notre démarche : 
+acls.schema dans le répertoire \textit{/etc/ldap/schema} et ajout de la ligne suivante dans le fichier \textit{/etc/ldap/slapd.conf} : 
 \textit{include  /etc/ldap/schema/acls.schema}.
 
-J'ai ensuite configuré nuauth (nuauth.conf) pour l'utilisation de LDAP comme suit:
+Configuration de nuauth (nuauth.conf) pour l'utilisation de LDAP comme suit:
 
-Tout d'abord j'ai modifier la directive nuauth\_acl\_check\_module pour lui indiquer l'utilisation de libldap.
+Modification de la directive nuauth\_acl\_check\_module pour lui indiquer l'utilisation de libldap.
 
-Ensuite, j'ai préciser les paramètres de connection à l’annuaire :
+Ensuite, préciser les paramètres de connexion à l’annuaire :
 
 \textit{ldap\_bind\_dn="uid=nuauth,ou=Users,dc=inl,dc=fr"}
 
@@ -612,8 +617,8 @@ Ensuite, j'ai préciser les paramètres de connection à l’annuaire :
 \textit{ldap\_acls\_base\_dn="ou=Acls,dc=inl,dc=fr"}
 
 \section{Suivi des connexions avec SQL}
-J'ai aussi configuré nuauth pour permettre le suivi des connexions grâce à une base de données SQL. Pour commencer pour 
-activer le suivi de connexion avec NuFW, j'ai paramétré les options suivantes dans le fichier nuauth.conf :
+Configuration de nuauth pour permettre le suivi des connexions grâce à une base de données SQL. Pour commencer pour 
+activer le suivi de connexion avec NuFW, nous avons paramétré les options suivantes dans le fichier nuauth.conf :
 
 \textit{nuauth\_log\_users\_sync=1}
 
@@ -633,13 +638,13 @@ les informations de connexions au serveur SQL dans le fichier nuauth.conf, en mo
 
 \textit{mysql\_server\_port="3306"}
 
-\textit{mysql\_user="nuauth"} (ici c'est le nom que j'ai donné à l'utilisateur SQL)
+\textit{mysql\_user="nuauth"} (ici c'est le nom que nous avons donné à l'utilisateur SQL)
 
 \textit{mysql\_passwd="root"}
 
 \textit{mysql\_table\_name="nulog"} (ici on renseigne le nom de la table crée ci-dessus)
 
-Après différente recherche sur la journalisation des connexions avec SQl je suis tombé sur une discussion d'utilisateur, 
+Après différente recherche sur la journalisation des connexions avec SQL nous avons trouvé une discussion d'utilisateur, 
 cette discussion avait pour sujet l'utilisation d'un script clean\_conntrack.pl qui est disponnible dans le répertoire scripts 
 à partir de la version 1.0.12. 
 Ce script doit être exécuté très régulièrement, à intervalles de quelques minutes seulement, par l’intermédiaire de cron, 
@@ -937,47 +942,45 @@ ESU permet de régler certains paramètres spécifiques à NuWinC.Il est, par ex
   \includegraphics[width=7cm,height=6cm]{images/nuwinc1.png}
 \end{center}
 %---------------------------------------------------------------------------------------------------------------------------------
-\chapter{Avencement du projet à mis parcours}
-Ce qui a été fait :
-\begin{itemize}
-  \item Ufwi est installé et fonctionnel.
-  \item La première partie du projet est terminer. Il reste les tests de fonctionnement à faire
-\end{itemize}
-
-
-Ce qui reste a faire :
-\begin{itemize}
-  \item Recherche des limites et des failles du logiciel
-  \item Comment gérer l'élévation de privilèges (root se connect en ssh sur un non-root, que se passe t-il ?)
-  \item Mettre en lumière les durées de vie des autorisations données.
-  \item Comment s'assurer que l'utilisateur est encore présent ?
-  \item Ufwi aide t-il pour l'authentification des utilisateurs nomades connu (commercial) ou non (intervenant exterieur) ?
-\end{itemize}
-  
 
 %---------------------------------------------------------------------------------------------------------------------------------
 \chapter{Difficulté rencontré et avis personnel}
 \section{Daemon d'authentifcation}
 \subsection{Problèmes rencontrés}
-Malheureusement ils sont assez nombreux. Tout d'abord lors de l'installation du module initial (ufwi-authd), impossible de 
-l'installer, lors du make install des erreurs été générés, aucunes solutions trouvées afin de résoudre cse soucis. Dès lors notre
-choix a été d'utiliser l'ancienne version, c'est à dire nufw (nuauth). Après une étude du fichier de configuration et le suivit
-de la procédure de test décrite dans la partie 5.8, j'ai réussi à faire fonctionner deux fois le module nuauth sur une machine 
-vituelle, dès le troisième lancement de nuauth j'ai rencontré un nouveau problème, une erreur lièe au socket. Après de 
-nombreuses recherche je n'ai pas réussi à résoudre ce soucis. J'ai retenté par la suite de relancer nuauth afin de refaire des 
-tests, et l'erreur concernant les sockets avait disparu sans que je sache pourquoi, mais cette bonne nouvelle à fait 
-apparaitre un nouveau problème, une erreur de segmentation à la fin de l'initialisation de nuauth. J'ai effectué des 
-recherches sur différents forum et il semblerait que cette erreur soit du à un bug de nufw, sans en trouvé la correction.
-J'ai aussi rencontré des problèmes sur les certificats entre le client et nuauth, il marchait une fois sur deux sans savoir 
-la non plus pourquoi.
+Au début du projet, nous avons voulu installer UFWI sur une distribution Debian afin de pouvoir tester les modules PyQT qui fonctionnent en GUI,
+alors que l'iso NUFW ne fonctionne qu'en CLI.
+À ce moment du projet, aucune documentation technique n'était disponible pour l'installation du logiciel.
+Nous avons donc télécharger l'ensemble des modules qui composent UFWI et avons testé l'installation "à l'aveugle" sans savoir quelles étaient les 
+dépendances entre ces différents modules.
+De plus un grand nombre de dépendance n'étaient pas satisfaites car UFWI exigeait des librairies trop anciennes pour fonctionner, 
+certaines de ces librairies n'étant plus disponible sur une debian stable.
+En fonction des modules il fallut même utiliser des versions différentes d'autogen.
+Nous avons ensuite découvert un bug dans "UFWI Base", 
+lors de l'installation du module ufwi-base, le make génère un src/MakeFile contenant une erreur : 
+l'installation avec make install appelle deux fois successivement le script security.h ce qui retourne un message d'erreur. 
+Il faut donc éditer le MakeFile généré et supprimé le deuxième security.h pour que l'installation fonctionne correctement :
+
+fichier base/src/MakeFile
+ligne 223 :
+include_HEADERS = linuxlist.h config-table.h ipv6.h log.h ufwibase.h packet_par$
+security.h debug.h documentation.h jhash.h ufwi_source.h proto.$
+proto_v3.h proto_v4.h proto_v5.h security.h
+
+Ce bug a été rapporté au support UFWI et a été corrigé récemment : http://www.ufwi.org/issues/65#change-8
+
+Mais lorsqu'enfin tout les modules sont installés il est impossible de les lancer, d'autres dépendances étant manquantes.
+Nous avons donc utiliser une nouvelle iso de projet nufw qui venait d'être mis en ligne pour pouvoir enfin tester le logiciel.
+
+
 \subsection{Avis personnel}
-Pour ma part ce projet tuteuré a tout de même été une bonne expériences, malgrès "l'echec" de l'utilisation de ce logiciel. 
-Nufw peut être très puissant et réellement utile pour une entreprise. Une foi que ce logiciel fonctionne il est assez 
-simple de l'utiliser, le seul problème je dirais est le manque de documentation concerant ce logiciel. Si l'on rencontre un 
-ou plusieurs problèmes il est difficile d'en trouver les solutions.
-Concernant la reprise de nufw par FSF France (ufwi), je trouve que c'est une bonne chose, car la disparition de nufw aurait 
-été vraiment dommage, car ce logiciel mérite sa place dans les réseaux d 'entreprise même si il est peu connu. La encore le soucis est le 
-manque de documentation et d'aide au sujet de ce nouveau projet ufwi, (les premiers documents d'aide concerant ufwi ont été 
-mis en ligne sur le dépôt git du projet ufwi à la fin de la période de notre projet).
+
+
+Ce projet tuteuré a tout de même été une bonne expériences, malgrès "l'echec" de l'utilisation de ce logiciel. 
+Nufw peut être très puissant et réellement utile pour une entreprise. Une fois que ce logiciel fonctionne il est assez 
+simple de l'utiliser, le seul problème réel problème étant la jeunesse du projet (très peu de documentation ont été mise en ligne par exemple).
+
+Un point particulièrement intéressant durant ce projet, fût de découvrir un bug d'installation qui nous a permit de légèrement contribuer au projet.
+
 %---------------------------------------------------------------------------------------------------------------------------------
 \end{document}
+

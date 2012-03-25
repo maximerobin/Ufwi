@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-1.40.10 (TeX Live 2009/Debian) (format=pdflatex 2011.11.22)  25 MAR 2012 11:31
+This is pdfTeX, Version 3.1415926-1.40.10 (TeX Live 2009/Debian) (format=pdflatex 2012.3.22)  25 MAR 2012 13:24
 entering extended mode
  %&-line parsing enabled.
 **rapport.tex
@@ -584,19 +584,15 @@ driver: pdftex
 
 (1in=72.27pt, 1cm=28.45pt)
 -----------------------
-<images/ufwi.png, id=175, 285.065pt x 291.0875pt>
+<images/ufwi.png, id=19, 285.065pt x 291.0875pt>
 File: images/ufwi.png Graphic file (type png)
- <use images/ufwi.png>
-[1
+ <use images/ufwi.png> [1
 
 {/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map} <./images/ufwi.png>]
-(./rapport.toc
-LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <12> on input line 3.
-LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <8> on input line 3.
-LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <6> on input line 3.
+(./rapport.toc)
+\tf@toc=\write4
+\openout4 = `rapport.toc'.
+
 
 
 Package Fancyhdr Warning: \headheight is too small (12.0pt): 
@@ -604,15 +600,17 @@ Package Fancyhdr Warning: \headheight is too small (12.0pt):
  We now make it that large for the rest of the document.
  This may cause the page layout to be inconsistent, however.
 
+
+LaTeX Warning: Reference `LastPage' on page 2 undefined on input line 96.
+
 [2
 
-])
-\tf@toc=\write4
-\openout4 = `rapport.toc'.
-
- [3]
+]
  1.
-[4
+
+LaTeX Warning: Reference `LastPage' on page 3 undefined on input line 111.
+
+[3
 
 ]
 Underfull \hbox (badness 10000) in paragraph at lines 112--113
@@ -634,7 +632,10 @@ Underfull \hbox (badness 10000) in paragraph at lines 116--117
 
  []
 
-[5]
+
+LaTeX Warning: Reference `LastPage' on page 4 undefined on input line 119.
+
+[4]
  2.
 
 Underfull \hbox (badness 3471) in paragraph at lines 144--145
@@ -685,15 +686,32 @@ Underfull \hbox (badness 10000) in paragraph at lines 162--163
 Underfull \vbox (badness 10000) detected at line 187
  []
 
-[6
+
+LaTeX Warning: Reference `LastPage' on page 5 undefined on input line 187.
+
+[5
 
 ]
 ! Undefined control sequence.
 l.188 \newligne
                
-? 
-[7]
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+
+LaTeX Warning: Reference `LastPage' on page 6 undefined on input line 190.
+
+[6]
  3.
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <12> on input line 191.
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <8> on input line 191.
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <6> on input line 191.
 
 ! Package inputenc Error: Unicode char \u8:  not set up for use with LaTeX.
 
@@ -703,7 +721,10 @@ Type  H <return>  for immediate help.
                                                   
 l.199 Configuration IP 
                         :
-? 
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
+
 
 ! Package inputenc Error: Unicode char \u8:  not set up for use with LaTeX.
 
@@ -713,7 +734,10 @@ Type  H <return>  for immediate help.
                                                   
 l.201 ifconfig eth0 
                      192.168.1.137/24
-? 
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
+
 
 ! Package inputenc Error: Unicode char \u8:  not set up for use with LaTeX.
 
@@ -723,31 +747,48 @@ Type  H <return>  for immediate help.
                                                   
 l.202 ifconfig eth1 
                      172.20.8.1/24
-? 
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
+
 ! Missing $ inserted.
 <inserted text> 
                 $
 l.211 export LD_
                 PRELOAD=/usr/lib/libmysqlclient.so.16
-? 
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
 ! Missing $ inserted.
 <inserted text> 
                 $
 l.212 
       
-? 
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
 ! Missing } inserted.
 <inserted text> 
                 }
 l.212 
       
-? 
+I've inserted something that you may have forgotten.
+(See the <inserted text> above.)
+With luck, this will get me unwedged. But if you
+really didn't forget anything, try typing `2' now; then
+my insertion and my current dilemma will both disappear.
+
 ! Extra }, or forgotten \endgroup.
 \@par ... \@noitemerr {\@@par }\fi \else {\@@par }
                                                   \fi 
 l.212 
       
-? 
+I've deleted a group-closing symbol because it seems to be
+spurious, as in `$x}$'. But perhaps the } is legitimate and
+you forgot something else, as in `\hbox{$x}'. In such cases
+the way to recover is to insert both the forgotten and the
+deleted material, e.g., by typing `I$}'.
+
 
 ! Package inputenc Error: Unicode char \u8:  not set up for use with LaTeX.
 
@@ -757,7 +798,10 @@ Type  H <return>  for immediate help.
                                                   
 l.219 ...ons de connexion à la base de données 
                                                   :
-? 
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
+
 
 ! Package inputenc Error: Unicode char \u8:  not set up for use with LaTeX.
 
@@ -767,7 +811,10 @@ Type  H <return>  for immediate help.
                                                   
 l.221 paragraphe « 
                      [MYSQL] » ligne 59 :
-? 
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
+
 
 ! Package inputenc Error: Unicode char \u8:  not set up for use with LaTeX.
 
@@ -777,7 +824,10 @@ Type  H <return>  for immediate help.
                                                   
 l.221 paragraphe « [MYSQL] 
                               » ligne 59 :
-? 
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
+
 
 ! Package inputenc Error: Unicode char \u8:  not set up for use with LaTeX.
 
@@ -787,7 +837,10 @@ Type  H <return>  for immediate help.
                                                   
 l.221 paragraphe « [MYSQL] » ligne 59 
                                            :
-? 
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
+
 
 Overfull \hbox (32.92307pt too wide) in paragraph at lines 221--227
 []\T1/cmr/m/n/12 paragraphe ^^S[MYSQL]^^T ligne 59 : ta-ble=''ulog'' pass=''pas
@@ -803,7 +856,10 @@ Type  H <return>  for immediate help.
                                                   
 l.230 Configuration IP 
                         :
-? 
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
+
 
 ! Package inputenc Error: Unicode char \u8:  not set up for use with LaTeX.
 
@@ -813,7 +869,10 @@ Type  H <return>  for immediate help.
                                                   
 l.232 ifconfig eth0 
                      172.20.8.2/24
-? 
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
+
 
 ! Package inputenc Error: Unicode char \u8:  not set up for use with LaTeX.
 
@@ -824,7 +883,10 @@ Type  H <return>  for immediate help.
 l.242 ...onnées et création de l’utilisateur 
                                                   (les deux programmes vont ...
 
-? 
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
+
 
 ! Package inputenc Error: Unicode char \u8:  not set up for use with LaTeX.
 
@@ -834,7 +896,10 @@ Type  H <return>  for immediate help.
                                                   
 l.246 ...er 'ulog'@'\%' identified by 'passulog' 
                                                   ;
-? 
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
+
 
 ! Package inputenc Error: Unicode char \u8:  not set up for use with LaTeX.
 
@@ -844,8 +909,14 @@ Type  H <return>  for immediate help.
                                                   
 l.250 Commandes de création de la base 
                                          :
-? 
-[8
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
+
+
+LaTeX Warning: Reference `LastPage' on page 7 undefined on input line 267.
+
+[7
 
 ]
 Overfull \hbox (5.29512pt too wide) in paragraph at lines 267--271
@@ -862,7 +933,10 @@ Type  H <return>  for immediate help.
                                                   
 l.272 ...ons de connexion à la base de données 
                                                   :
-? 
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
+
 
 ! Package inputenc Error: Unicode char \u8:  not set up for use with LaTeX.
 
@@ -872,7 +946,10 @@ Type  H <return>  for immediate help.
                                                   
 l.282 Sur la passerelle 
                          :
-? 
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
+
 
 ! Package inputenc Error: Unicode char \u8:  not set up for use with LaTeX.
 
@@ -882,7 +959,10 @@ Type  H <return>  for immediate help.
                                                   
 l.286 Sur le serveur 
                       :
-? 
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
+
 
 ! Package inputenc Error: Unicode char \u8:  not set up for use with LaTeX.
 
@@ -892,8 +972,14 @@ Type  H <return>  for immediate help.
                                                   
 l.291 On choisit ce que l’on veut loguer 
                                             avec iptables
-? 
-[9]
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
+
+
+LaTeX Warning: Reference `LastPage' on page 8 undefined on input line 294.
+
+[8]
  4.
 
 Underfull \hbox (badness 10000) in paragraph at lines 298--300
@@ -930,7 +1016,10 @@ Underfull \hbox (badness 10000) in paragraph at lines 310--312
 
  []
 
-[10
+
+LaTeX Warning: Reference `LastPage' on page 9 undefined on input line 312.
+
+[9
 
 ]
 Underfull \hbox (badness 10000) in paragraph at lines 312--314
@@ -952,12 +1041,15 @@ Underfull \hbox (badness 10000) in paragraph at lines 318--320
 
  []
 
-<images/algo.jpg, id=289, 487.8225pt x 354.32375pt>
+<images/algo.jpg, id=79, 487.8225pt x 354.32375pt>
 File: images/algo.jpg Graphic file (type jpg)
  <use images/algo.jpg>
-[11 <./images/algo.jpg>]
+
+LaTeX Warning: Reference `LastPage' on page 10 undefined on input line 327.
+
+[10 <./images/algo.jpg>]
  5.
-<images/auth.png, id=300, 355.3275pt x 411.03563pt>
+<images/auth.png, id=89, 355.3275pt x 411.03563pt>
 File: images/auth.png Graphic file (type png)
  <use images/auth.png>
 
@@ -969,8 +1061,14 @@ Type  H <return>  for immediate help.
                                                   
 l.351 Pré-requis 
                    :
-? 
-[12
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
+
+
+LaTeX Warning: Reference `LastPage' on page 11 undefined on input line 353.
+
+[11
 
  <./images/auth.png (PNG copy)>]
 
@@ -982,7 +1080,10 @@ Type  H <return>  for immediate help.
                                                   
 l.353 Script autogen.sh 
                          :
-? 
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
+
 
 ! Package inputenc Error: Unicode char \u8:  not set up for use with LaTeX.
 
@@ -992,82 +1093,149 @@ Type  H <return>  for immediate help.
                                                   
 l.357 Compilation Nufw 
                         :
-? 
-[13] [14] [15]
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
+
+
+LaTeX Warning: Reference `LastPage' on page 12 undefined on input line 404.
+
+[12]
+
+LaTeX Warning: Reference `LastPage' on page 13 undefined on input line 458.
+
+[13]
+
+LaTeX Warning: Reference `LastPage' on page 14 undefined on input line 517.
+
+[14]
 ! Illegal parameter number in definition of \reserved@a.
 <to be read again> 
                    1
 l.555 ...3.0.10, #1 Tue Mar 19 23:00:32 CEST 2012}
                                                   
-? 
+You meant to type ## instead of #, right?
+Or maybe a } was forgotten somewhere earlier, and things
+are all screwed up? I'm going to assume that you meant ##.
+
 ! You can't use `macro parameter character #' in horizontal mode.
 <argument> ...simon@nufw uses OS Linux, 3.0.10, ##
                                                   1 Tue Mar 19 23:00:32 CEST...
 l.555 ...3.0.10, #1 Tue Mar 19 23:00:32 CEST 2012}
                                                   
-? 
-[16]
+Sorry, but I'm not programmed to handle this case;
+I'll just pretend that you didn't ask for it.
+If you're in the wrong mode, you might be able to
+return to the right one by typing `I}' or `I$' or `I\par'.
+
+
+LaTeX Warning: Reference `LastPage' on page 15 undefined on input line 572.
+
+[15]
 ! You can't use `macro parameter character #' in horizontal mode.
 l.578 		\subitem ** Message: OS : Linux 2.6.9 #
                                                1 Fri Mar 16 21:51:32 CEST 2012
-? 
-[17]
+Sorry, but I'm not programmed to handle this case;
+I'll just pretend that you didn't ask for it.
+If you're in the wrong mode, you might be able to
+return to the right one by typing `I}' or `I$' or `I\par'.
+
+
+LaTeX Warning: Reference `LastPage' on page 16 undefined on input line 627.
+
+[16]
 ! Illegal parameter number in definition of \reserved@a.
 <to be read again> 
                    1
 l.684 \textit{#1 = acceptation, 0 = rejet}
                                           
-? 
+You meant to type ## instead of #, right?
+Or maybe a } was forgotten somewhere earlier, and things
+are all screwed up? I'm going to assume that you meant ##.
+
 ! Illegal parameter number in definition of \reserved@b.
 <to be read again> 
                    }
 l.684 \textit{#1 = acceptation, 0 = rejet}
                                           
-? 
+You meant to type ## instead of #, right?
+Or maybe a } was forgotten somewhere earlier, and things
+are all screwed up? I'm going to assume that you meant ##.
+
 ! You can't use `macro parameter character #' in horizontal mode.
 <recently read> ##
                   
 l.684 \textit{#1 = acceptation, 0 = rejet}
                                           
-? 
+Sorry, but I'm not programmed to handle this case;
+I'll just pretend that you didn't ask for it.
+If you're in the wrong mode, you might be able to
+return to the right one by typing `I}' or `I$' or `I\par'.
+
+
+LaTeX Warning: Reference `LastPage' on page 17 undefined on input line 686.
+
+[17]
+! Illegal parameter number in definition of \reserved@a.
+<to be read again> 
+                    
+l.688 ...# groupes concernés par cette décision}
+                                                  
+You meant to type ## instead of #, right?
+Or maybe a } was forgotten somewhere earlier, and things
+are all screwed up? I'm going to assume that you meant ##.
+
+! Illegal parameter number in definition of \reserved@b.
+<to be read again> 
+                   }
+l.688 ...# groupes concernés par cette décision}
+                                                  
+You meant to type ## instead of #, right?
+Or maybe a } was forgotten somewhere earlier, and things
+are all screwed up? I'm going to assume that you meant ##.
+
+! You can't use `macro parameter character #' in horizontal mode.
+<recently read> ##
+                  
+l.688 ...# groupes concernés par cette décision}
+                                                  
+Sorry, but I'm not programmed to handle this case;
+I'll just pretend that you didn't ask for it.
+If you're in the wrong mode, you might be able to
+return to the right one by typing `I}' or `I$' or `I\par'.
+
+! Illegal parameter number in definition of \reserved@a.
+<to be read again> 
+                    
+l.692 ...c/protocols. Ici il s’agit de TCP == 6}
+                                                  
+You meant to type ## instead of #, right?
+Or maybe a } was forgotten somewhere earlier, and things
+are all screwed up? I'm going to assume that you meant ##.
+
+! Illegal parameter number in definition of \reserved@b.
+<to be read again> 
+                   }
+l.692 ...c/protocols. Ici il s’agit de TCP == 6}
+                                                  
+You meant to type ## instead of #, right?
+Or maybe a } was forgotten somewhere earlier, and things
+are all screwed up? I'm going to assume that you meant ##.
+
+! You can't use `macro parameter character #' in horizontal mode.
+<recently read> ##
+                  
+l.692 ...c/protocols. Ici il s’agit de TCP == 6}
+                                                  
+Sorry, but I'm not programmed to handle this case;
+I'll just pretend that you didn't ask for it.
+If you're in the wrong mode, you might be able to
+return to the right one by typing `I}' or `I$' or `I\par'.
+
+
+LaTeX Warning: Reference `LastPage' on page 18 undefined on input line 720.
+
 [18]
-! Illegal parameter number in definition of \reserved@a.
-<to be read again> 
-                    
-l.688 ...# groupes concernés par cette décision}
-                                                  
-? 
-! Illegal parameter number in definition of \reserved@b.
-<to be read again> 
-                   }
-l.688 ...# groupes concernés par cette décision}
-                                                  
-? 
-! You can't use `macro parameter character #' in horizontal mode.
-<recently read> ##
-                  
-l.688 ...# groupes concernés par cette décision}
-                                                  
-? 
-! Illegal parameter number in definition of \reserved@a.
-<to be read again> 
-                    
-l.692 ...c/protocols. Ici il s’agit de TCP == 6}
-                                                  
-? 
-! Illegal parameter number in definition of \reserved@b.
-<to be read again> 
-                   }
-l.692 ...c/protocols. Ici il s’agit de TCP == 6}
-                                                  
-? 
-! You can't use `macro parameter character #' in horizontal mode.
-<recently read> ##
-                  
-l.692 ...c/protocols. Ici il s’agit de TCP == 6}
-                                                  
-? 
-[19]
  6.
 
 ! Package inputenc Error: Unicode char \u8:  not set up for use with LaTeX.
@@ -1078,10 +1246,20 @@ Type  H <return>  for immediate help.
                                                   
 l.734 Pré-requis 
                    :
-? 
-[20
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
 
-] [21]
+
+LaTeX Warning: Reference `LastPage' on page 19 undefined on input line 748.
+
+[19
+
+]
+
+LaTeX Warning: Reference `LastPage' on page 20 undefined on input line 773.
+
+[20]
  7.
 LaTeX Font Info:    Try loading font information for T1+cmtt on input line 790.
 
@@ -1097,7 +1275,10 @@ Type  H <return>  for immediate help.
                                                   
 l.792 \newline
               
-? 
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
+
 
 ! LaTeX Error: There's no line here to end.
 
@@ -1107,7 +1288,10 @@ Type  H <return>  for immediate help.
                                                   
 l.800 \newline
               
-? 
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
+
 
 ! LaTeX Error: There's no line here to end.
 
@@ -1117,10 +1301,20 @@ Type  H <return>  for immediate help.
                                                   
 l.809 \newline
               
-? 
-[22
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
 
-] [23]
+
+LaTeX Warning: Reference `LastPage' on page 21 undefined on input line 816.
+
+[21
+
+]
+
+LaTeX Warning: Reference `LastPage' on page 22 undefined on input line 860.
+
+[22]
 
 ! LaTeX Error: There's no line here to end.
 
@@ -1130,7 +1324,10 @@ Type  H <return>  for immediate help.
                                                   
 l.875 \\
         
-? 
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
+
 
 ! LaTeX Error: There's no line here to end.
 
@@ -1140,7 +1337,10 @@ Type  H <return>  for immediate help.
                                                   
 l.876 D
        ifférents composants sont disonibles :
-? 
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
+
 
 Overfull \hbox (4.24825pt too wide) in paragraph at lines 879--879
  []\T1/cmtt/m/n/12 httpout, localfw, lock, logger, network, ntp, nuauth, nuauth
@@ -1153,36 +1353,148 @@ Overfull \hbox (16.59523pt too wide) in paragraph at lines 880--880
  status, streaming,[] 
  []
 
-[24]
+
+LaTeX Warning: Reference `LastPage' on page 23 undefined on input line 886.
+
+[23]
  8.
 ! Undefined control sequence.
 l.899 ...rvice Nuauth (4129 par défaut).\newligne
                                                   
-? 
-<images/nuapp.png, id=379, 344.28625pt x 192.72pt>
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+<images/nuapp.png, id=185, 344.28625pt x 192.72pt>
 File: images/nuapp.png Graphic file (type png)
  <use images/nuapp.png>
 ! Undefined control sequence.
 l.907 \newpagge
                
-? 
-[25
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+
+LaTeX Warning: Reference `LastPage' on page 24 undefined on input line 910.
+
+[24
 
  <./images/nuapp.png (PNG copy)>]
-<images/nuwinc.png, id=386, 421.575pt x 311.66437pt>
+<images/nuwinc.png, id=191, 421.575pt x 311.66437pt>
 File: images/nuwinc.png Graphic file (type png)
  <use images/nuwinc.png>
-[26 <./images/nuwinc.png (PNG copy)>]
-<images/nuwinc1.png, id=392, 421.575pt x 311.66437pt>
+
+LaTeX Warning: Reference `LastPage' on page 25 undefined on input line 934.
+
+[25 <./images/nuwinc.png (PNG copy)>]
+<images/nuwinc1.png, id=197, 421.575pt x 311.66437pt>
 File: images/nuwinc1.png Graphic file (type png)
  <use images/nuwinc1.png>
-[27 <./images/nuwinc1.png (PNG copy)>]
+
+LaTeX Warning: Reference `LastPage' on page 26 undefined on input line 940.
+
+[26 <./images/nuwinc1.png (PNG copy)>]
  9.
-[28
+
+LaTeX Warning: Reference `LastPage' on page 27 undefined on input line 959.
+
+[27
 
 ]
  10.
-[29
+! Missing $ inserted.
+<inserted text> 
+                $
+l.977 include_
+              HEADERS = linuxlist.h config-table.h ipv6.h log.h ufwibase.h p...
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
+! Missing $ inserted.
+<inserted text> 
+                $
+l.978 ...y.h debug.h documentation.h jhash.h ufwi_
+                                                  source.h proto.$
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
+! Missing $ inserted.
+<inserted text> 
+                $
+l.979 proto_
+            v3.h proto_v4.h proto_v5.h security.h
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
+! Missing $ inserted.
+<inserted text> 
+                $
+l.980 
+      
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
+! Missing } inserted.
+<inserted text> 
+                }
+l.980 
+      
+I've inserted something that you may have forgotten.
+(See the <inserted text> above.)
+With luck, this will get me unwedged. But if you
+really didn't forget anything, try typing `2' now; then
+my insertion and my current dilemma will both disappear.
+
+
+Overfull \hbox (99.81377pt too wide) in paragraph at lines 975--980
+[]\T1/cmr/m/n/12 fichier base/s-r-c/-Make-File ligne 223 : include$[]\OML/cmm/m
+/it/12 EADERS \OT1/cmr/m/n/12 = \OML/cmm/m/it/12 linuxlist:hconfig \OMS/cmsy/m/
+n/12 ^^@ \OML/cmm/m/it/12 table:hipv\OT1/cmr/m/n/12 6\OML/cmm/m/it/12 :hlog:huf
+wibase:hpacket[]ar$
+ []
+
+
+Overfull \hbox (16.70164pt too wide) in paragraph at lines 975--980
+\T1/cmr/m/n/12 se-cu-rity.h de-bug.h doc-u-men-ta-tion.h jhash.h ufwi$[]\OML/cm
+m/m/it/12 ource:hproto:$ \T1/cmr/m/n/12 proto$[]\OT1/cmr/m/n/12 3\OML/cmm/m/it/
+12 :hproto[]\OT1/cmr/m/n/12 4\OML/cmm/m/it/12 :hproto[]\OT1/cmr/m/n/12 5\OML/cm
+m/m/it/12 :hsecurity:h[]$ 
+ []
+
+! Extra }, or forgotten \endgroup.
+\@par ... \@noitemerr {\@@par }\fi \else {\@@par }
+                                                  \fi 
+l.980 
+      
+I've deleted a group-closing symbol because it seems to be
+spurious, as in `$x}$'. But perhaps the } is legitimate and
+you forgot something else, as in `\hbox{$x}'. In such cases
+the way to recover is to insert both the forgotten and the
+deleted material, e.g., by typing `I$}'.
+
+! You can't use `macro parameter character #' in horizontal mode.
+l.981 ...�cemment : http://www.ufwi.org/issues/65#
+                                                  change-8
+Sorry, but I'm not programmed to handle this case;
+I'll just pretend that you didn't ask for it.
+If you're in the wrong mode, you might be able to
+return to the right one by typing `I}' or `I$' or `I\par'.
+
+
+Overfull \hbox (43.5556pt too wide) in paragraph at lines 981--982
+[]\T1/cmr/m/n/12 Ce bug a �t� rap-port� au sup-port UFWI et a �t� cor-rig� r�ce
+m-ment : http ://www.ufwi.org/issues/65change-
+ []
+
+
+LaTeX Warning: Reference `LastPage' on page 28 undefined on input line 997.
+
+[28
 
 ] AED: lastpage setting LastPage
 
@@ -1192,36 +1504,46 @@ See the LaTeX manual or LaTeX Companion for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.983 \end{document}
+l.997 \end{document}
                     
-? 
-(./rapport.aux) )
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
+
+(./rapport.aux)
+
+LaTeX Warning: There were undefined references.
+
+
+LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
+
+ )
 (\end occurred inside a group at level 1)
 
 ### semi simple group (level 1) entered at line 113 (\begingroup)
 ### bottom level 
 Here is how much of TeX's memory you used:
- 7298 strings out of 495061
- 101836 string characters out of 1182620
- 192877 words of memory out of 3000000
- 10267 multiletter control sequences out of 15000+50000
+ 7258 strings out of 495061
+ 101278 string characters out of 1182621
+ 191877 words of memory out of 3000000
+ 10228 multiletter control sequences out of 15000+50000
  15074 words of font info for 35 fonts, out of 3000000 for 9000
  28 hyphenation exceptions out of 8191
- 38i,11n,51p,916b,633s stack positions out of 5000i,500n,10000p,200000b,50000s
- </home/shinji/.texmf-var/fonts/pk/ljfour/jknappen/ec/ectt1200.
-600pk> </home/shinji/.texmf-var/fonts/pk/ljfour/jknappen/ec/ecrm1000.600pk> </h
-ome/shinji/.texmf-var/fonts/pk/ljfour/jknappen/ec/ecrm0800.600pk> </home/shinji
-/.texmf-var/fonts/pk/ljfour/jknappen/ec/ecbx1440.600pk> </home/shinji/.texmf-va
-r/fonts/pk/ljfour/jknappen/ec/ecti1200.600pk> </home/shinji/.texmf-var/fonts/pk
-/ljfour/jknappen/ec/ecbx1728.600pk> </home/shinji/.texmf-var/fonts/pk/ljfour/jk
-nappen/ec/ecbx1200.600pk> </home/shinji/.texmf-var/fonts/pk/ljfour/jknappen/ec/
-ecbx2488.600pk> </home/shinji/.texmf-var/fonts/pk/ljfour/jknappen/ec/ecrm1200.6
-00pk></usr/share/texmf-texlive/fonts/type1/public/amsfonts/cm/cmmi12.pfb></usr/
-share/texmf-texlive/fonts/type1/public/amsfonts/cm/cmmi8.pfb></usr/share/texmf-
-texlive/fonts/type1/public/amsfonts/cm/cmr12.pfb>
-Output written on rapport.pdf (29 pages, 671802 bytes).
+ 38i,11n,43p,916b,633s stack positions out of 5000i,500n,10000p,200000b,50000s
+ </root/.texmf-var/fonts/pk/ljfour/jknappen/ec/ectt1200.600pk> 
+</root/.texmf-var/fonts/pk/ljfour/jknappen/ec/ecrm1000.600pk> </root/.texmf-var
+/fonts/pk/ljfour/jknappen/ec/ecrm0800.600pk> </root/.texmf-var/fonts/pk/ljfour/
+jknappen/ec/ecbx1440.600pk> </root/.texmf-var/fonts/pk/ljfour/jknappen/ec/ecti1
+200.600pk> </root/.texmf-var/fonts/pk/ljfour/jknappen/ec/ecbx1728.600pk> </root
+/.texmf-var/fonts/pk/ljfour/jknappen/ec/ecbx1200.600pk> </root/.texmf-var/fonts
+/pk/ljfour/jknappen/ec/ecbx2488.600pk> </root/.texmf-var/fonts/pk/ljfour/jknapp
+en/ec/ecrm1200.600pk></usr/share/texmf-texlive/fonts/type1/public/amsfonts/cm/c
+mmi12.pfb></usr/share/texmf-texlive/fonts/type1/public/amsfonts/cm/cmmi8.pfb></
+usr/share/texmf-texlive/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/share/te
+xmf-texlive/fonts/type1/public/amsfonts/cm/cmsy10.pfb>
+Output written on rapport.pdf (28 pages, 649238 bytes).
 PDF statistics:
- 916 PDF objects out of 1000 (max. 8388607)
- 92 named destinations out of 1000 (max. 500000)
- 375 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 699 PDF objects out of 1000 (max. 8388607)
+ 91 named destinations out of 1000 (max. 500000)
+ 63 words of extra memory for PDF output out of 10000 (max. 10000000)
 

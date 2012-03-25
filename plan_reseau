@@ -16,3 +16,6 @@
 #
 #mdp : asrallmdp (admin ldap / utilisateurs machines)
 #mdp : rootasrallmdp (root)
+
+
+=> Nouvelle installation : pare-feu Nufw incluant un annuaire LDAP, une BD MySQL en 192.168.1.137

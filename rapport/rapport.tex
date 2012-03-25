@@ -883,6 +883,60 @@ system, system_info, tools, update, users_config, versionning
 
 
 %---------------------------------------------------------------------------------------------------------------------------------
+\chapter{Client Ufwi/nufw}
+Comme vu précedemment dans l'intruductuin Ufwi a besoin d'une partit client sur chaque poste utilisent ce logiciel. Cependant il y'a un moyen de contourné se probleme sous 
+GNU/Linux.\\ Il est possible de s'authentifier directement au serveur UFWI au moment de l'authentification de l'utilisateur sur un poste linux.
+Pour cela, il est nécessaire d'installer le paquet pam\_nufw présent dans la plupart des distributions GNU/Linux. Il est possible de trouver les sources de ce logiciel dans les sources du projet NuFW.
+Pour configurer, il suffit de renseigner la ligne suivante dans /etc/pam.d/common-auth :
+\begin{verbatim}
+	auth optional pam_nufw.so server=adresse_amon port=4129 noauth=root,mdp
+\end{verbatim}
+et dans /etc/pam.d/common-session :
+\begin{verbatim}
+	session optional pam_nufw.so server=adresse_amon port=4129 noauth=root,mdp
+\end{verbatim}
+Un client graphique autonome est proposé librement par la société INL. Ce client, NuApplet2, est disponible dans la plupart des distributions GNU/Linux.
+L'adresse IP correspond à l'amon et le port correspond au service Nuauth (4129 par défaut).\newligne
+\vspace{1,5cm}
+\begin{center}
+  \includegraphics[width=5cm,height=4cm]{images/nuapp.png}
+\end{center}
+\vspace{1,5cm}
+UN autre client exicte sous GNU/Linux Nutcpc celui ci est celui que nous avons utilisé pour nos test, c'est un client non-graphique uniquement en ligne de commande. Ce client est le client de base proposé dans l'iso de Nufw. Le client a besoin de certificat d'authentification SSL, pour les configurer deux solution sont disponible. La premiere (recommandé) est de mettre directement les certificats d'authentification dans le dossier c'est a dire dans le /home/user/.nufw . La deuxieme solution consisitant a definir les certificats d'hautentification en parametre de la commande.\\
+Quelque commande pour le client nutcpc :
+\newpagge
+\begin{itemize}
+	\item -h : Affiche les differente commande.
+	\item -v : Affiche la version du client.
+	\item -d : affiche le mode debug.
+	\item -S : utilise le SSL pour se connecter auserveur Nuauth.
+	\item -k : Avant de demarre, le programe rue tout les processus existant de l'userID
+	\item -l : ne verifie pas les lokfile avant de demarrer et n'en créé pas.
+	\item -H + Ip serveur Nuauth : Envoie un packet d'authentification au serveur.
+	\item -p + port du serveur Nuauth : Envoie un packet d'authentification au serveur (port).
+	\item -U : Definie l'utiliastauer (UserID).
+	\item -P : Set le mot de passe utilisateur.
+	\item -C : Define le certfile qui autorise la connection TLS a Nuauth.
+	\item -A : Definie l'AuthorityFile et verifie la validité des certificats de Nuauth.
+	\item -k : Définei la KeyFile qui autorise la connection TLS.
+\end{itemize}
+\vspace{0,7cm}
+Un exemple typique pour tester si le client dialogue bien avec le serveur est de faire:
+\begin{verbatim}
+	nutcpc -d 9 -H 192.168.1.137 -A Nuauth_cert.pem
+\end{verbatim}
+Donc dans la commande ci dessus on active le mode debug avac le plus haut niveau pour plus d'info en cas de probleme ou d'erreure, ensuite on configure l'IP du serveur Nuauth et enfin on definie le certificats si il n'est pas deja placé dans .nufw de l'utilisateur et verifie la validité des certificats de Nuauth.
+\vspace{0,7cm}
+Il existe toutefois un client nufw pour windows non libre pour le moment. NuWinC est le client NuFW pour les OS de microsoft, Windows.Le client NuWinC est intégré au client Scribe mais il est désactivé par défaut.Avant tout, il faut activer le client NuWinC. Cela se fait dans ESU.Après l'avoir activé, il faut paramétrer l'IP de l'Amon et le port du serveur d'authentification Nuauth (4129).
+\begin{center}
+  \includegraphics[width=7cm,height=6cm]{images/nuwinc.png}
+\end{center}
+\newpage
+ESU permet de régler certains paramètres spécifiques à NuWinC.Il est, par exemple, possible de protéger ou de masquer le client NuFW.
+\begin{center}
+  \includegraphics[width=7cm,height=6cm]{images/nuwinc1.png}
+\end{center}
+%---------------------------------------------------------------------------------------------------------------------------------
 \chapter{Avencement du projet à mis parcours}
 Ce qui a été fait :
 \begin{itemize}

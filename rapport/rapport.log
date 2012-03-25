@@ -1,11 +1,11 @@
-This is pdfTeX, Version 3.1415926-1.40.10 (TeX Live 2009/Debian) (format=pdflatex 2011.11.2)  25 MAR 2012 15:29
+This is pdfTeX, Version 3.1415926-1.40.10 (TeX Live 2009/Debian) (format=pdflatex 2011.11.22)  25 MAR 2012 16:45
 entering extended mode
  %&-line parsing enabled.
 **rapport.tex
 (./rapport.tex
 LaTeX2e <2009/09/24>
 Babel <v3.8l> and hyphenation patterns for english, usenglishmax, dumylang, noh
-yphenation, french, basque, loaded.
+yphenation, loaded.
 (/usr/share/texmf-texlive/tex/latex/base/report.cls
 Document Class: report 2007/10/19 v1.4h Standard LaTeX document class
 (/usr/share/texmf-texlive/tex/latex/base/size12.clo
@@ -252,6 +252,12 @@ File: babel.def 2008/07/06 v3.8l Babel common definitions
 \babel@savecnt=\count88
 \U@D=\dimen103
 )
+
+Package babel Warning: No hyphenation patterns were loaded for
+(babel)                the language `French'
+(babel)                I will use the patterns loaded for \language=0 instead.
+
+\l@french = a dialect from \language0
 Package babel Info: Making : an active character on input line 120.
 Package babel Info: Making ; an active character on input line 121.
 Package babel Info: Making ! an active character on input line 122.
@@ -260,7 +266,6 @@ Package babel Info: Making ? an active character on input line 123.
 \std@mcc=\count89
 \dec@mcc=\count90
 \parindentFFN=\dimen105
-
 *************************************
 * Local config file frenchb.cfg used
 *
@@ -579,7 +584,7 @@ driver: pdftex
 
 (1in=72.27pt, 1cm=28.45pt)
 -----------------------
-<images/ufwi.png, id=175, 285.065pt x 291.0875pt>
+<images/ufwi.png, id=179, 285.065pt x 291.0875pt>
 File: images/ufwi.png Graphic file (type png)
  <use images/ufwi.png>
 [1
@@ -637,23 +642,23 @@ Underfull \hbox (badness 3471) in paragraph at lines 153--154
  []
 
 
-Underfull \hbox (badness 2556) in paragraph at lines 154--155
-[]\T1/cmr/m/n/12 Payante sous win-dows (Nu-
+Underfull \hbox (badness 10000) in paragraph at lines 154--155
+[]\T1/cmr/m/n/12 Payante sous win-dows
  []
 
 
 Underfull \hbox (badness 10000) in paragraph at lines 162--163
-[]\T1/cmr/m/n/12 chaque uti-li-sa-teur peut
+[]\T1/cmr/m/n/12 chaque util-isa-teur peut
  []
 
 
 Underfull \hbox (badness 10000) in paragraph at lines 162--163
-\T1/cmr/m/n/12 dis-po-ser de ses propres
+\T1/cmr/m/n/12 dis-poser de ses pro-pres
  []
 
 
-Underfull \hbox (badness 5970) in paragraph at lines 162--163
-\T1/cmr/m/n/12 r�gles, pr�-sentes dans HO-
+Underfull \hbox (badness 10000) in paragraph at lines 162--163
+\T1/cmr/m/n/12 r�-gles, pr�sentes dans
  []
 
 
@@ -663,12 +668,17 @@ Underfull \hbox (badness 1308) in paragraph at lines 165--166
 
 
 Underfull \hbox (badness 1540) in paragraph at lines 168--169
-\T1/cmr/m/n/12 pare-feu lui re-tire les r�gles
+\T1/cmr/m/n/12 pare-feu lui re-tire les r�-gles
  []
 
 
 Underfull \hbox (badness 2158) in paragraph at lines 169--170
 []\T1/cmr/m/n/12 quelqu'un d'autre peut tou-
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 171--172
+[]\T1/cmr/m/n/12 Necessite Openbsd et des
  []
 
 
@@ -681,23 +691,12 @@ Underfull \vbox (badness 10000) detected at line 196
 ! Undefined control sequence.
 l.197 \newligne
                
-The control sequence at the end of the top line
-of your error message was never \def'ed. If you have
-misspelled it (e.g., `\hobx'), type `I' and the correct
-spelling (e.g., `I\hbox'). Otherwise just continue,
-and I'll forget about whatever was undefined.
-
+? 
 [7]
  3.
 
 Underfull \hbox (badness 10000) in paragraph at lines 205--207
 
- []
-
-
-Overfull \hbox (1.78264pt too wide) in paragraph at lines 207--209
-[]\T1/cmr/m/n/12 Supposons main-te-nant que l'uti-li-sa-teur ouvre une connexio
-n vers un ser-veur, par exemple
  []
 
 
@@ -752,12 +751,12 @@ Underfull \hbox (badness 10000) in paragraph at lines 225--227
 
  []
 
-<images/algo.jpg, id=276, 487.8225pt x 354.32375pt>
+<images/algo.jpg, id=281, 487.8225pt x 354.32375pt>
 File: images/algo.jpg Graphic file (type jpg)
  <use images/algo.jpg>
 [9 <./images/algo.jpg>]
  4.
-<images/auth.png, id=287, 355.3275pt x 411.03563pt>
+<images/auth.png, id=292, 355.3275pt x 411.03563pt>
 File: images/auth.png Graphic file (type png)
  <use images/auth.png>
 
@@ -769,10 +768,7 @@ Type  H <return>  for immediate help.
                                                   
 l.258 Pré-requis 
                    :
-Your command was ignored.
-Type  I <command> <return>  to replace it with another command,
-or  <return>  to continue without it.
-
+? 
 [10
 
  <./images/auth.png (PNG copy)>]
@@ -785,10 +781,7 @@ Type  H <return>  for immediate help.
                                                   
 l.260 Script autogen.sh 
                          :
-Your command was ignored.
-Type  I <command> <return>  to replace it with another command,
-or  <return>  to continue without it.
-
+? 
 
 ! Package inputenc Error: Unicode char \u8:  not set up for use with LaTeX.
 
@@ -798,14 +791,11 @@ Type  H <return>  for immediate help.
                                                   
 l.264 Compilation Nufw 
                         :
-Your command was ignored.
-Type  I <command> <return>  to replace it with another command,
-or  <return>  to continue without it.
-
+? 
 [11] [12]
-Overfull \hbox (4.15663pt too wide) in paragraph at lines 404--410
-[]\T1/cmr/m/n/12 Lors de l'ins-tal-la-tion de la suite ufwi un fi-chier de conf
-i-gu-ra-tion de base est four-nie nuauth.conf,
+Overfull \hbox (8.10994pt too wide) in paragraph at lines 390--393
+[]\T1/cmr/m/it/12 openssl x509 -req -days 365 -in nu-auth.csr -CA pri-vate/-CAc
+-ert.pem -CAkey pri-vate/-CAkey.pem
  []
 
 [13]
@@ -814,33 +804,22 @@ i-gu-ra-tion de base est four-nie nuauth.conf,
                    1
 l.458 ...3.0.10, #1 Tue Mar 19 23:00:32 CEST 2012}
                                                   
-You meant to type ## instead of #, right?
-Or maybe a } was forgotten somewhere earlier, and things
-are all screwed up? I'm going to assume that you meant ##.
-
+? 
 ! You can't use `macro parameter character #' in horizontal mode.
 <argument> ...simon@nufw uses OS Linux, 3.0.10, ##
                                                   1 Tue Mar 19 23:00:32 CEST...
 l.458 ...3.0.10, #1 Tue Mar 19 23:00:32 CEST 2012}
                                                   
-Sorry, but I'm not programmed to handle this case;
-I'll just pretend that you didn't ask for it.
-If you're in the wrong mode, you might be able to
-return to the right one by typing `I}' or `I$' or `I\par'.
-
+? 
 [14]
 ! You can't use `macro parameter character #' in horizontal mode.
 l.481 		\subitem ** Message: OS : Linux 2.6.9 #
                                                1 Fri Mar 16 21:51:32 CEST 2012
-Sorry, but I'm not programmed to handle this case;
-I'll just pretend that you didn't ask for it.
-If you're in the wrong mode, you might be able to
-return to the right one by typing `I}' or `I$' or `I\par'.
-
+? 
 [15]
 Overfull \hbox (49.35211pt too wide) in paragraph at lines 545--552
-\T1/cmr/m/n/12 une dis-cus-sion d'uti-li-sa-teur, cette dis-cus-sion avait pour
- su-jet l'uti-li-sa-tion d'un script clean_conntrack.pl
+\T1/cmr/m/n/12 une dis-cus-sion d'u-til-isa-teur, cette dis-cus-sion avait pour
+ su-jet l'u-til-i-sa-tion d'un script clean_conntrack.pl
  []
 
 ! Illegal parameter number in definition of \reserved@a.
@@ -848,86 +827,56 @@ Overfull \hbox (49.35211pt too wide) in paragraph at lines 545--552
                    1
 l.587 \textit{#1 = acceptation, 0 = rejet}
                                           
-You meant to type ## instead of #, right?
-Or maybe a } was forgotten somewhere earlier, and things
-are all screwed up? I'm going to assume that you meant ##.
-
+? 
 ! Illegal parameter number in definition of \reserved@b.
 <to be read again> 
                    }
 l.587 \textit{#1 = acceptation, 0 = rejet}
                                           
-You meant to type ## instead of #, right?
-Or maybe a } was forgotten somewhere earlier, and things
-are all screwed up? I'm going to assume that you meant ##.
-
+? 
 ! You can't use `macro parameter character #' in horizontal mode.
 <recently read> ##
                   
 l.587 \textit{#1 = acceptation, 0 = rejet}
                                           
-Sorry, but I'm not programmed to handle this case;
-I'll just pretend that you didn't ask for it.
-If you're in the wrong mode, you might be able to
-return to the right one by typing `I}' or `I$' or `I\par'.
-
+? 
 [16]
 ! Illegal parameter number in definition of \reserved@a.
 <to be read again> 
                     
 l.591 ...# groupes concernés par cette décision}
                                                   
-You meant to type ## instead of #, right?
-Or maybe a } was forgotten somewhere earlier, and things
-are all screwed up? I'm going to assume that you meant ##.
-
+? 
 ! Illegal parameter number in definition of \reserved@b.
 <to be read again> 
                    }
 l.591 ...# groupes concernés par cette décision}
                                                   
-You meant to type ## instead of #, right?
-Or maybe a } was forgotten somewhere earlier, and things
-are all screwed up? I'm going to assume that you meant ##.
-
+? 
 ! You can't use `macro parameter character #' in horizontal mode.
 <recently read> ##
                   
 l.591 ...# groupes concernés par cette décision}
                                                   
-Sorry, but I'm not programmed to handle this case;
-I'll just pretend that you didn't ask for it.
-If you're in the wrong mode, you might be able to
-return to the right one by typing `I}' or `I$' or `I\par'.
-
+? 
 ! Illegal parameter number in definition of \reserved@a.
 <to be read again> 
                     
 l.595 ...c/protocols. Ici il s’agit de TCP == 6}
                                                   
-You meant to type ## instead of #, right?
-Or maybe a } was forgotten somewhere earlier, and things
-are all screwed up? I'm going to assume that you meant ##.
-
+? 
 ! Illegal parameter number in definition of \reserved@b.
 <to be read again> 
                    }
 l.595 ...c/protocols. Ici il s’agit de TCP == 6}
                                                   
-You meant to type ## instead of #, right?
-Or maybe a } was forgotten somewhere earlier, and things
-are all screwed up? I'm going to assume that you meant ##.
-
+? 
 ! You can't use `macro parameter character #' in horizontal mode.
 <recently read> ##
                   
 l.595 ...c/protocols. Ici il s’agit de TCP == 6}
                                                   
-Sorry, but I'm not programmed to handle this case;
-I'll just pretend that you didn't ask for it.
-If you're in the wrong mode, you might be able to
-return to the right one by typing `I}' or `I$' or `I\par'.
-
+? 
 [17]
  5.
 
@@ -939,10 +888,7 @@ Type  H <return>  for immediate help.
                                                   
 l.637 Pré-requis 
                    :
-Your command was ignored.
-Type  I <command> <return>  to replace it with another command,
-or  <return>  to continue without it.
-
+? 
 [18
 
 ] [19]
@@ -961,10 +907,7 @@ Type  H <return>  for immediate help.
                                                   
 l.695 \newline
               
-Your command was ignored.
-Type  I <command> <return>  to replace it with another command,
-or  <return>  to continue without it.
-
+? 
 
 ! LaTeX Error: There's no line here to end.
 
@@ -974,10 +917,7 @@ Type  H <return>  for immediate help.
                                                   
 l.703 \newline
               
-Your command was ignored.
-Type  I <command> <return>  to replace it with another command,
-or  <return>  to continue without it.
-
+? 
 
 ! LaTeX Error: There's no line here to end.
 
@@ -987,10 +927,7 @@ Type  H <return>  for immediate help.
                                                   
 l.712 \newline
               
-Your command was ignored.
-Type  I <command> <return>  to replace it with another command,
-or  <return>  to continue without it.
-
+? 
 [20
 
 ] [21]
@@ -1003,10 +940,7 @@ Type  H <return>  for immediate help.
                                                   
 l.778 \\
         
-Your command was ignored.
-Type  I <command> <return>  to replace it with another command,
-or  <return>  to continue without it.
-
+? 
 
 ! LaTeX Error: There's no line here to end.
 
@@ -1016,10 +950,7 @@ Type  H <return>  for immediate help.
                                                   
 l.779 D
        ifférents composants sont disonibles :
-Your command was ignored.
-Type  I <command> <return>  to replace it with another command,
-or  <return>  to continue without it.
-
+? 
 
 Overfull \hbox (4.24825pt too wide) in paragraph at lines 782--782
  []\T1/cmtt/m/n/12 httpout, localfw, lock, logger, network, ntp, nuauth, nuauth
@@ -1034,35 +965,31 @@ Overfull \hbox (16.59523pt too wide) in paragraph at lines 783--783
 
 [22]
  7.
+
+Overfull \hbox (12.71283pt too wide) in paragraph at lines 790--794
+\T1/cmr/m/n/12 poste utilisent ce logi-ciel. Cepen-dant il y'a un moyen de con-
+tourn� se prob-leme sous GNU/Linux. 
+ []
+
 ! Undefined control sequence.
 l.802 ...rvice Nuauth (4129 par défaut).\newligne
                                                   
-The control sequence at the end of the top line
-of your error message was never \def'ed. If you have
-misspelled it (e.g., `\hobx'), type `I' and the correct
-spelling (e.g., `I\hbox'). Otherwise just continue,
-and I'll forget about whatever was undefined.
-
-<images/nuapp.png, id=366, 344.28625pt x 192.72pt>
+? 
+<images/nuapp.png, id=371, 344.28625pt x 192.72pt>
 File: images/nuapp.png Graphic file (type png)
  <use images/nuapp.png>
 ! Undefined control sequence.
 l.810 \newpagge
                
-The control sequence at the end of the top line
-of your error message was never \def'ed. If you have
-misspelled it (e.g., `\hobx'), type `I' and the correct
-spelling (e.g., `I\hbox'). Otherwise just continue,
-and I'll forget about whatever was undefined.
-
+? 
 [23
 
  <./images/nuapp.png (PNG copy)>]
-<images/nuwinc.png, id=372, 421.575pt x 311.66437pt>
+<images/nuwinc.png, id=377, 421.575pt x 311.66437pt>
 File: images/nuwinc.png Graphic file (type png)
  <use images/nuwinc.png>
 [24 <./images/nuwinc.png (PNG copy)>]
-<images/nuwinc1.png, id=378, 421.575pt x 311.66437pt>
+<images/nuwinc1.png, id=383, 421.575pt x 311.66437pt>
 File: images/nuwinc1.png Graphic file (type png)
  <use images/nuwinc1.png>
 [25 <./images/nuwinc1.png (PNG copy)>]
@@ -1091,10 +1018,7 @@ Type  H <return>  for immediate help.
                                                   
 l.855 Configuration IP 
                         :
-Your command was ignored.
-Type  I <command> <return>  to replace it with another command,
-or  <return>  to continue without it.
-
+? 
 
 Underfull \hbox (badness 10000) in paragraph at lines 855--857
 
@@ -1109,10 +1033,7 @@ Type  H <return>  for immediate help.
                                                   
 l.858 ifconfig eth0 
                      192.168.1.137/24
-Your command was ignored.
-Type  I <command> <return>  to replace it with another command,
-or  <return>  to continue without it.
-
+? 
 
 ! Package inputenc Error: Unicode char \u8:  not set up for use with LaTeX.
 
@@ -1122,10 +1043,7 @@ Type  H <return>  for immediate help.
                                                   
 l.860 ifconfig eth1 
                      172.20.8.1/24
-Your command was ignored.
-Type  I <command> <return>  to replace it with another command,
-or  <return>  to continue without it.
-
+? 
 
 Underfull \hbox (badness 10000) in paragraph at lines 858--862
 
@@ -1175,10 +1093,7 @@ Type  H <return>  for immediate help.
                                                   
 l.886 ...ons de connexion à la base de données 
                                                   :
-Your command was ignored.
-Type  I <command> <return>  to replace it with another command,
-or  <return>  to continue without it.
-
+? 
 
 Underfull \hbox (badness 10000) in paragraph at lines 886--888
 
@@ -1193,10 +1108,7 @@ Type  H <return>  for immediate help.
                                                   
 l.889 paragraphe « 
                      [MYSQL] » ligne 59 :
-Your command was ignored.
-Type  I <command> <return>  to replace it with another command,
-or  <return>  to continue without it.
-
+? 
 
 ! Package inputenc Error: Unicode char \u8:  not set up for use with LaTeX.
 
@@ -1206,10 +1118,7 @@ Type  H <return>  for immediate help.
                                                   
 l.889 paragraphe « [MYSQL] 
                               » ligne 59 :
-Your command was ignored.
-Type  I <command> <return>  to replace it with another command,
-or  <return>  to continue without it.
-
+? 
 
 ! Package inputenc Error: Unicode char \u8:  not set up for use with LaTeX.
 
@@ -1219,10 +1128,7 @@ Type  H <return>  for immediate help.
                                                   
 l.889 paragraphe « [MYSQL] » ligne 59 
                                            :
-Your command was ignored.
-Type  I <command> <return>  to replace it with another command,
-or  <return>  to continue without it.
-
+? 
 [26
 
 ]
@@ -1235,10 +1141,7 @@ Type  H <return>  for immediate help.
                                                   
 l.901 \newline
               
-Your command was ignored.
-Type  I <command> <return>  to replace it with another command,
-or  <return>  to continue without it.
-
+? 
 
 Underfull \hbox (badness 10000) in paragraph at lines 902--904
 
@@ -1253,10 +1156,7 @@ Type  H <return>  for immediate help.
                                                   
 l.905 Configuration IP 
                         :
-Your command was ignored.
-Type  I <command> <return>  to replace it with another command,
-or  <return>  to continue without it.
-
+? 
 
 ! Package inputenc Error: Unicode char \u8:  not set up for use with LaTeX.
 
@@ -1266,10 +1166,7 @@ Type  H <return>  for immediate help.
                                                   
 l.907 ifconfig eth0 
                      172.20.8.2/24
-Your command was ignored.
-Type  I <command> <return>  to replace it with another command,
-or  <return>  to continue without it.
-
+? 
 
 Underfull \hbox (badness 10000) in paragraph at lines 907--909
 
@@ -1305,10 +1202,7 @@ Type  H <return>  for immediate help.
 l.922 ...ées et création de l’utilisateur} : 
                                                   (les deux programmes vont ...
 
-Your command was ignored.
-Type  I <command> <return>  to replace it with another command,
-or  <return>  to continue without it.
-
+? 
 
 ! Package inputenc Error: Unicode char \u8:  not set up for use with LaTeX.
 
@@ -1318,10 +1212,7 @@ Type  H <return>  for immediate help.
                                                   
 l.928 ...er 'ulog'@'\%' identified by 'passulog' 
                                                   ;
-Your command was ignored.
-Type  I <command> <return>  to replace it with another command,
-or  <return>  to continue without it.
-
+? 
 
 Underfull \hbox (badness 10000) in paragraph at lines 932--934
 
@@ -1336,10 +1227,7 @@ Type  H <return>  for immediate help.
                                                   
 l.935 Commandes de création de la base 
                                          :
-Your command was ignored.
-Type  I <command> <return>  to replace it with another command,
-or  <return>  to continue without it.
-
+? 
 
 ! LaTeX Error: There's no line here to end.
 
@@ -1349,10 +1237,7 @@ Type  H <return>  for immediate help.
                                                   
 l.943 \newline
               
-Your command was ignored.
-Type  I <command> <return>  to replace it with another command,
-or  <return>  to continue without it.
-
+? 
 
 Underfull \hbox (badness 10000) in paragraph at lines 948--950
 
@@ -1372,10 +1257,7 @@ Type  H <return>  for immediate help.
                                                   
 l.966 \newline
               
-Your command was ignored.
-Type  I <command> <return>  to replace it with another command,
-or  <return>  to continue without it.
-
+? 
 
 ! Package inputenc Error: Unicode char \u8:  not set up for use with LaTeX.
 
@@ -1385,10 +1267,7 @@ Type  H <return>  for immediate help.
                                                   
 l.968 ...ons de connexion à la base de données 
                                                   :
-Your command was ignored.
-Type  I <command> <return>  to replace it with another command,
-or  <return>  to continue without it.
-
+? 
 
 ! LaTeX Error: There's no line here to end.
 
@@ -1398,10 +1277,7 @@ Type  H <return>  for immediate help.
                                                   
 l.982 \newline
               
-Your command was ignored.
-Type  I <command> <return>  to replace it with another command,
-or  <return>  to continue without it.
-
+? 
 [27]
 
 ! Package inputenc Error: Unicode char \u8:  not set up for use with LaTeX.
@@ -1412,10 +1288,7 @@ Type  H <return>  for immediate help.
                                                   
 l.985 Sur la passerelle 
                          :
-Your command was ignored.
-Type  I <command> <return>  to replace it with another command,
-or  <return>  to continue without it.
-
+? 
 
 ! LaTeX Error: There's no line here to end.
 
@@ -1425,10 +1298,7 @@ Type  H <return>  for immediate help.
                                                   
 l.989 \newline
               
-Your command was ignored.
-Type  I <command> <return>  to replace it with another command,
-or  <return>  to continue without it.
-
+? 
 
 ! Package inputenc Error: Unicode char \u8:  not set up for use with LaTeX.
 
@@ -1438,10 +1308,7 @@ Type  H <return>  for immediate help.
                                                   
 l.990 Sur le serveur 
                       :
-Your command was ignored.
-Type  I <command> <return>  to replace it with another command,
-or  <return>  to continue without it.
-
+? 
 
 ! LaTeX Error: There's no line here to end.
 
@@ -1451,10 +1318,7 @@ Type  H <return>  for immediate help.
                                                   
 l.994 \newline
               
-Your command was ignored.
-Type  I <command> <return>  to replace it with another command,
-or  <return>  to continue without it.
-
+? 
 
 ! Package inputenc Error: Unicode char \u8:  not set up for use with LaTeX.
 
@@ -1464,19 +1328,25 @@ Type  H <return>  for immediate help.
                                                   
 l.995 On choisit ce que l’on veut loguer 
                                             avec iptables
-Your command was ignored.
-Type  I <command> <return>  to replace it with another command,
-or  <return>  to continue without it.
-
+? 
 [28]
  9.
 [29
 
 ]
  10.
+
+Underfull \hbox (badness 10000) in paragraph at lines 1040--1051
+
+ []
+
 [30
 
-] [31] AED: lastpage setting LastPage
+]
+ 11.
+[31
+
+] [32] AED: lastpage setting LastPage
 
 ! LaTeX Error: \begin{itemize} on input line 122 ended by \end{document}.
 
@@ -1484,38 +1354,35 @@ See the LaTeX manual or LaTeX Companion for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.1127 \end{document}
+l.1141 \end{document}
                      
-Your command was ignored.
-Type  I <command> <return>  to replace it with another command,
-or  <return>  to continue without it.
-
+? 
 (./rapport.aux) )
 (\end occurred inside a group at level 1)
 
 ### semi simple group (level 1) entered at line 122 (\begingroup)
 ### bottom level 
 Here is how much of TeX's memory you used:
- 7295 strings out of 495028
- 101787 string characters out of 1181229
- 192893 words of memory out of 3000000
- 10271 multiletter control sequences out of 15000+50000
+ 7303 strings out of 495061
+ 101873 string characters out of 1182620
+ 192877 words of memory out of 3000000
+ 10268 multiletter control sequences out of 15000+50000
  15074 words of font info for 35 fonts, out of 3000000 for 9000
  28 hyphenation exceptions out of 8191
- 38i,11n,51p,625b,557s stack positions out of 5000i,500n,10000p,200000b,50000s
- </home/maxime/.texmf-var/fonts/pk/ljfour/jknappen/ec/ectt1200.
-600pk> </home/maxime/.texmf-var/fonts/pk/ljfour/jknappen/ec/ecrm1000.600pk> </h
-ome/maxime/.texmf-var/fonts/pk/ljfour/jknappen/ec/ecrm0800.600pk> </home/maxime
-/.texmf-var/fonts/pk/ljfour/jknappen/ec/ecbx1440.600pk> </home/maxime/.texmf-va
-r/fonts/pk/ljfour/jknappen/ec/ecti1200.600pk> </home/maxime/.texmf-var/fonts/pk
-/ljfour/jknappen/ec/ecbx1728.600pk> </home/maxime/.texmf-var/fonts/pk/ljfour/jk
-nappen/ec/ecbx1200.600pk> </home/maxime/.texmf-var/fonts/pk/ljfour/jknappen/ec/
-ecbx2488.600pk> </home/maxime/.texmf-var/fonts/pk/ljfour/jknappen/ec/ecrm1200.6
+ 38i,11n,51p,625b,559s stack positions out of 5000i,500n,10000p,200000b,50000s
+ </home/shinji/.texmf-var/fonts/pk/ljfour/jknappen/ec/ectt1200.
+600pk> </home/shinji/.texmf-var/fonts/pk/ljfour/jknappen/ec/ecrm1000.600pk> </h
+ome/shinji/.texmf-var/fonts/pk/ljfour/jknappen/ec/ecrm0800.600pk> </home/shinji
+/.texmf-var/fonts/pk/ljfour/jknappen/ec/ecbx1440.600pk> </home/shinji/.texmf-va
+r/fonts/pk/ljfour/jknappen/ec/ecti1200.600pk> </home/shinji/.texmf-var/fonts/pk
+/ljfour/jknappen/ec/ecbx1728.600pk> </home/shinji/.texmf-var/fonts/pk/ljfour/jk
+nappen/ec/ecbx1200.600pk> </home/shinji/.texmf-var/fonts/pk/ljfour/jknappen/ec/
+ecbx2488.600pk> </home/shinji/.texmf-var/fonts/pk/ljfour/jknappen/ec/ecrm1200.6
 00pk></usr/share/texmf-texlive/fonts/type1/public/amsfonts/cm/cmmi12.pfb></usr/
 share/texmf-texlive/fonts/type1/public/amsfonts/cm/cmmi8.pfb>
-Output written on rapport.pdf (31 pages, 666872 bytes).
+Output written on rapport.pdf (32 pages, 669542 bytes).
 PDF statistics:
- 925 PDF objects out of 1000 (max. 8388607)
- 94 named destinations out of 1000 (max. 500000)
- 375 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 937 PDF objects out of 1000 (max. 8388607)
+ 96 named destinations out of 1000 (max. 500000)
+ 383 words of extra memory for PDF output out of 10000 (max. 10000000)
 

@@ -1015,7 +1015,8 @@ fichier base/src/MakeFile
 ligne 223 :
 include\_HEADERS = linuxlist.h config-table.h ipv6.h log.h ufwibase.h packet\_par$
 security.h debug.h documentation.h jhash.h ufwi_source.h proto.$
-proto\_v3.h proto\_v4.h proto_v5.h security.h
+
+proto\_v3.h proto\_v4.h proto\_v5.h security.h
 
 Ce bug a été rapporté au support UFWI et a été corrigé récemment : 
 
@@ -1033,6 +1034,20 @@ Nufw peut être très puissant et réellement utile pour une entreprise. Une foi
 simple de l'utiliser, le seul problème réel problème étant la jeunesse du projet (très peu de documentation ont été mise en ligne par exemple).
 
 Un point particulièrement intéressant durant ce projet, fût de découvrir un bug d'installation qui nous a permit de légèrement contribuer au projet.
+
+%---------------------------------------------------------------------------------------------------------------------------------
+\chapter{webographie}
+Ci-dessous les diiferent site web utilisé pour la rédaction de se rapport :
+http://fr.wikipedia.org/wiki/NuFW\\
+http://www.unixgarden.com/index.php/misc/introduction-a-nufw\\
+http://publications.jbfavre.org/NuFW/howto20-fr-iso.pdf\\
+http://ufwi.org/\\
+http://eoleng.ac-dijon.fr/documentations/ClientScribe/co/05-Nufw.html\\
+http://home.regit.org/?s=\%C3\%A9tait\\
+http://www.openbsd.org/faq/pf/fr/authpf.html\\
+http://www.cyberoam.com/fr/firewall.html\\
+http://www.checkpoint.com/\\
+http://www.unixgarden.com/index.php/gnu-linux-magazine/presentation-de-nufw\\
 
 %---------------------------------------------------------------------------------------------------------------------------------
 \chapter{Planning}

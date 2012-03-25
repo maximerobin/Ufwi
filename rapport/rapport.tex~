@@ -871,7 +871,7 @@ Correction d'un bug : ajout d’une ligne dans le script de démarrage qui va ch
 
 nano /etc/init.d/ulogd
 \newline
-export LD_PRELOAD=/usr/lib/libmysqlclient.so.16
+export LD\_PRELOAD=/usr/lib/libmysqlclient.so.16
 \newline
 
 Configuration de ulogd : modification de son fichier de configuration
@@ -887,10 +887,15 @@ Renseigner les informations de connexion à la base de données :
 \newline
 
 paragraphe « [MYSQL] » ligne 59 :
+
 table=’’ulog’’
+
 pass=’’passulog’’
+
 user=’’ulog’’
+
 db=’’ulog’’
+
 host=’’172.20.8.2’’
 
 \newline
@@ -898,7 +903,6 @@ Configuration du serveur de BD:
 \newline
 
 Configuration IP :
-\newline
 
 ifconfig eth0 172.20.8.2/24
 \newline
@@ -915,28 +919,32 @@ Ouvrir le fichier suvant (démarche à suivre pour creer les tables de la base d
 nano /usr/share/doc/nulog/README.Debian
 \newline
 
-Connexion à la base de données et création de l’utilisateur (les deux programmes vont se connecter avec ce compte):
-\newline
+\underline{Connexion à la base de données et création de l’utilisateur} : (les deux programmes vont se connecter avec ce compte)
 
 mysql –u root –p
+
 create database ulog;
+
 create user 'ulog'@'\%' identified by 'passulog' ;
+
 grant all privileges on ulog.* to ulog;
+
 exit
 \newline
 
 Commandes de création de la base :
-\newline
 
 cd /usr/share/doc/nulog/scripts
+
 gunzip ipv4.sql.gz
+
 cat ipv4.sql | mysql –uulog –p ulog
 
 \newline
-Modification du fichier de configuration de mysql
-\newline
+Modification du fichier de configuration de mysql :
 
 nano /etc/mysql//my.cnf
+
 ligne 47
 \newline
 
@@ -946,38 +954,44 @@ bind address= ‘’172.20.8.2’’
 \newline
 
 Renommer les fichiers de configuration :
-\newline
 
 cd /etc/nulog
+
 cp default. core.conf core.conf
+
 cp default.nulog.conf nulog.conf
+
 cp default.wrapper.conf wrapper.conf
+
 \newline
 
 Renseigner les informations de connexion à la base de données :
-\newline
 
 nano core.conf
+
 host=localhost
+
 db=ulog
+
 user=ulog
+
 password=passulog
+
 table=ulog
 
 \newline
-Prise en compte des changements : redémarrage de services
+\underline{Prise en compte des changements :} redémarrage de services
+
 Sur la passerelle :
-\newline
 
 /etc/init.d/ulogd restart
 
 \newline
 Sur le serveur :
 
-\newline
 /etc/init.d/ulogd restart
 
-
+\newline
 On choisit ce que l’on veut loguer avec iptables
 
 %---------------------------------------------------------------------------------------------------------------------------------
@@ -999,11 +1013,13 @@ Il faut donc éditer le MakeFile généré et supprimé le deuxième security.h 
 
 fichier base/src/MakeFile
 ligne 223 :
-include_HEADERS = linuxlist.h config-table.h ipv6.h log.h ufwibase.h packet_par$
+include\_HEADERS = linuxlist.h config-table.h ipv6.h log.h ufwibase.h packet\_par$
 security.h debug.h documentation.h jhash.h ufwi_source.h proto.$
-proto_v3.h proto_v4.h proto_v5.h security.h
+proto\_v3.h proto\_v4.h proto_v5.h security.h
 
-Ce bug a été rapporté au support UFWI et a été corrigé récemment : http://www.ufwi.org/issues/65#change-8
+Ce bug a été rapporté au support UFWI et a été corrigé récemment : 
+
+http://www.ufwi.org/issues/65\#change-8
 
 Mais lorsqu'enfin tout les modules sont installés il est impossible de les lancer, d'autres dépendances étant manquantes.
 Nous avons donc utiliser une nouvelle iso de projet nufw qui venait d'être mis en ligne pour pouvoir enfin tester le logiciel.
@@ -1012,7 +1028,7 @@ Nous avons donc utiliser une nouvelle iso de projet nufw qui venait d'être mis 
 \subsection{Avis personnel}
 
 
-Ce projet tuteuré a tout de même été une bonne expériences, malgrès "l'echec" de l'utilisation de ce logiciel. 
+Ce projet tuteuré a tout de même été une bonne expérience, malgrès "l'échec" de l'utilisation de ce logiciel. 
 Nufw peut être très puissant et réellement utile pour une entreprise. Une fois que ce logiciel fonctionne il est assez 
 simple de l'utiliser, le seul problème réel problème étant la jeunesse du projet (très peu de documentation ont été mise en ligne par exemple).
 
@@ -1101,13 +1117,10 @@ Un point particulièrement intéressant durant ce projet, fût de découvrir un 
 	  \item Recherche des différents pare-feu par authentification
 	  \item Mise en place d'un tutoriel pour l'externalisation des logs de pare-feu avec Nulog
   \end{itemize}
-  \item Semaine 9 :
+  \item Semaine 9 -> fin du projet:
   \begin{itemize}
     \item Correction d'un problème de RAM sur la passerelle
-	  \item Étude de l'intégration d'UFWI avec d'autre logiciels d'authentification :
-	  \begin{itemize}
-      \item Kerberos
-    \end{itemize}
+    \item Résolution de différents problèmes de dépendances, correction rapport
   \end{itemize}
 \end{itemize}
 \end{document}

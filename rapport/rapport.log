@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-1.40.10 (TeX Live 2009/Debian) (format=pdflatex 2011.11.2)  25 MAR 2012 14:45
+This is pdfTeX, Version 3.1415926-1.40.10 (TeX Live 2009/Debian) (format=pdflatex 2011.11.2)  25 MAR 2012 15:13
 entering extended mode
  %&-line parsing enabled.
 **rapport.tex
@@ -1146,43 +1146,10 @@ Underfull \hbox (badness 10000) in paragraph at lines 869--871
 
  []
 
-! Missing $ inserted.
-<inserted text> 
-                $
-l.874 export LD_
-                PRELOAD=/usr/lib/libmysqlclient.so.16
-I've inserted a begin-math/end-math symbol since I think
-you left one out. Proceed, with fingers crossed.
 
-! Missing $ inserted.
-<inserted text> 
-                $
-l.876 
-      
-I've inserted a begin-math/end-math symbol since I think
-you left one out. Proceed, with fingers crossed.
+Underfull \hbox (badness 10000) in paragraph at lines 872--876
 
-! Missing } inserted.
-<inserted text> 
-                }
-l.876 
-      
-I've inserted something that you may have forgotten.
-(See the <inserted text> above.)
-With luck, this will get me unwedged. But if you
-really didn't forget anything, try typing `2' now; then
-my insertion and my current dilemma will both disappear.
-
-! Extra }, or forgotten \endgroup.
-\@par ... \@noitemerr {\@@par }\fi \else {\@@par }
-                                                  \fi 
-l.876 
-      
-I've deleted a group-closing symbol because it seems to be
-spurious, as in `$x}$'. But perhaps the } is legitimate and
-you forgot something else, as in `\hbox{$x}'. In such cases
-the way to recover is to insert both the forgotten and the
-deleted material, e.g., by typing `I$}'.
+ []
 
 
 Underfull \hbox (badness 10000) in paragraph at lines 877--879
@@ -1256,12 +1223,9 @@ Your command was ignored.
 Type  I <command> <return>  to replace it with another command,
 or  <return>  to continue without it.
 
+[26
 
-Overfull \hbox (32.92307pt too wide) in paragraph at lines 889--895
-[]\T1/cmr/m/n/12 paragraphe ^^S[MYSQL]^^T ligne 59 : table=''ulog'' pass=''pass
-ulog'' user=''ulog'' db=''ulog'' host=''172.20.8.2'' 
- []
-
+]
 
 ! LaTeX Error: There's no line here to end.
 
@@ -1269,14 +1233,14 @@ See the LaTeX manual or LaTeX Companion for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.896 \newline
+l.901 \newline
               
 Your command was ignored.
 Type  I <command> <return>  to replace it with another command,
 or  <return>  to continue without it.
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 897--899
+Underfull \hbox (badness 10000) in paragraph at lines 902--904
 
  []
 
@@ -1287,55 +1251,47 @@ See the inputenc package documentation for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.900 Configuration IP 
+l.905 Configuration IP 
                         :
 Your command was ignored.
 Type  I <command> <return>  to replace it with another command,
 or  <return>  to continue without it.
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 900--902
-
- []
-
-[26
-
-]
-
 ! Package inputenc Error: Unicode char \u8:  not set up for use with LaTeX.
 
 See the inputenc package documentation for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.903 ifconfig eth0 
+l.907 ifconfig eth0 
                      172.20.8.2/24
 Your command was ignored.
 Type  I <command> <return>  to replace it with another command,
 or  <return>  to continue without it.
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 903--905
+Underfull \hbox (badness 10000) in paragraph at lines 907--909
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 906--908
+Underfull \hbox (badness 10000) in paragraph at lines 910--912
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 909--911
+Underfull \hbox (badness 10000) in paragraph at lines 913--915
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 912--914
+Underfull \hbox (badness 10000) in paragraph at lines 916--918
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 915--917
+Underfull \hbox (badness 10000) in paragraph at lines 919--921
 
  []
 
@@ -1346,7 +1302,7 @@ See the inputenc package documentation for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.918 ...onnées et création de l’utilisateur 
+l.922 ...ées et création de l’utilisateur} : 
                                                   (les deux programmes vont ...
 
 Your command was ignored.
@@ -1354,25 +1310,20 @@ Type  I <command> <return>  to replace it with another command,
 or  <return>  to continue without it.
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 918--920
-
- []
-
-
 ! Package inputenc Error: Unicode char \u8:  not set up for use with LaTeX.
 
 See the inputenc package documentation for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.923 ...er 'ulog'@'\%' identified by 'passulog' 
+l.928 ...er 'ulog'@'\%' identified by 'passulog' 
                                                   ;
 Your command was ignored.
 Type  I <command> <return>  to replace it with another command,
 or  <return>  to continue without it.
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 921--927
+Underfull \hbox (badness 10000) in paragraph at lines 932--934
 
  []
 
@@ -1383,16 +1334,11 @@ See the inputenc package documentation for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.928 Commandes de création de la base 
+l.935 Commandes de création de la base 
                                          :
 Your command was ignored.
 Type  I <command> <return>  to replace it with another command,
 or  <return>  to continue without it.
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 928--930
-
- []
 
 
 ! LaTeX Error: There's no line here to end.
@@ -1401,26 +1347,11 @@ See the LaTeX manual or LaTeX Companion for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.935 \newline
+l.943 \newline
               
 Your command was ignored.
 Type  I <command> <return>  to replace it with another command,
 or  <return>  to continue without it.
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 936--938
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 939--942
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 945--947
-
- []
 
 
 Underfull \hbox (badness 10000) in paragraph at lines 948--950
@@ -1428,15 +1359,22 @@ Underfull \hbox (badness 10000) in paragraph at lines 948--950
  []
 
 
-Overfull \hbox (5.29512pt too wide) in paragraph at lines 951--956
-[]\T1/cmr/m/n/12 cd /etc/-nu-log cp de-fault. core.conf core.conf cp de-fault.n
-ulog.conf nu-log.conf cp de-fault.wrapper.conf
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 951--956
+Underfull \hbox (badness 10000) in paragraph at lines 953--955
 
  []
+
+
+! LaTeX Error: There's no line here to end.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.966 \newline
+              
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
 
 
 ! Package inputenc Error: Unicode char \u8:  not set up for use with LaTeX.
@@ -1445,30 +1383,26 @@ See the inputenc package documentation for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.957 ...ons de connexion à la base de données 
+l.968 ...ons de connexion à la base de données 
                                                   :
 Your command was ignored.
 Type  I <command> <return>  to replace it with another command,
 or  <return>  to continue without it.
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 957--959
-
- []
-
-
 ! LaTeX Error: There's no line here to end.
 
 See the LaTeX manual or LaTeX Companion for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.967 \newline
+l.982 \newline
               
 Your command was ignored.
 Type  I <command> <return>  to replace it with another command,
 or  <return>  to continue without it.
 
+[27]
 
 ! Package inputenc Error: Unicode char \u8:  not set up for use with LaTeX.
 
@@ -1476,25 +1410,20 @@ See the inputenc package documentation for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.969 Sur la passerelle 
+l.985 Sur la passerelle 
                          :
 Your command was ignored.
 Type  I <command> <return>  to replace it with another command,
 or  <return>  to continue without it.
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 968--971
-
- []
-
-
 ! LaTeX Error: There's no line here to end.
 
 See the LaTeX manual or LaTeX Companion for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.974 \newline
+l.989 \newline
               
 Your command was ignored.
 Type  I <command> <return>  to replace it with another command,
@@ -1507,7 +1436,7 @@ See the inputenc package documentation for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.975 Sur le serveur 
+l.990 Sur le serveur 
                       :
 Your command was ignored.
 Type  I <command> <return>  to replace it with another command,
@@ -1520,7 +1449,7 @@ See the LaTeX manual or LaTeX Companion for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.977 \newline
+l.994 \newline
               
 Your command was ignored.
 Type  I <command> <return>  to replace it with another command,
@@ -1533,42 +1462,26 @@ See the inputenc package documentation for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.981 On choisit ce que l’on veut loguer 
+l.995 On choisit ce que l’on veut loguer 
                                             avec iptables
 Your command was ignored.
 Type  I <command> <return>  to replace it with another command,
 or  <return>  to continue without it.
 
-[27]
+[28]
  9.
 ! Missing $ inserted.
 <inserted text> 
                 $
-l.1002 include_
-               HEADERS = linuxlist.h config-table.h ipv6.h log.h ufwibase.h ...
+l.1018 proto\_v3.h proto\_v4.h proto_
+                                     v5.h security.h
 I've inserted a begin-math/end-math symbol since I think
 you left one out. Proceed, with fingers crossed.
 
 ! Missing $ inserted.
 <inserted text> 
                 $
-l.1003 ....h debug.h documentation.h jhash.h ufwi_
-                                                  source.h proto.$
-I've inserted a begin-math/end-math symbol since I think
-you left one out. Proceed, with fingers crossed.
-
-! Missing $ inserted.
-<inserted text> 
-                $
-l.1004 proto_
-             v3.h proto_v4.h proto_v5.h security.h
-I've inserted a begin-math/end-math symbol since I think
-you left one out. Proceed, with fingers crossed.
-
-! Missing $ inserted.
-<inserted text> 
-                $
-l.1005 
+l.1019 
        
 I've inserted a begin-math/end-math symbol since I think
 you left one out. Proceed, with fingers crossed.
@@ -1576,7 +1489,7 @@ you left one out. Proceed, with fingers crossed.
 ! Missing } inserted.
 <inserted text> 
                 }
-l.1005 
+l.1019 
        
 I've inserted something that you may have forgotten.
 (See the <inserted text> above.)
@@ -1585,25 +1498,15 @@ really didn't forget anything, try typing `2' now; then
 my insertion and my current dilemma will both disappear.
 
 
-Overfull \hbox (99.81377pt too wide) in paragraph at lines 1000--1005
-[]\T1/cmr/m/n/12 fichier ba-se/src/-Ma-ke-File ligne 223 : include$[]\OML/cmm/m
-/it/12 EADERS \OT1/cmr/m/n/12 = \OML/cmm/m/it/12 linuxlist:hconfig \OMS/cmsy/m/
-n/12 ^^@ \OML/cmm/m/it/12 table:hipv\OT1/cmr/m/n/12 6\OML/cmm/m/it/12 :hlog:huf
-wibase:hpacket[]ar$
- []
-
-
-Overfull \hbox (16.70164pt too wide) in paragraph at lines 1000--1005
-\T1/cmr/m/n/12 se-cu-rity.h de-bug.h do-cu-men-ta-tion.h jhash.h ufwi$[]\OML/cm
-m/m/it/12 ource:hproto:$ \T1/cmr/m/n/12 proto$[]\OT1/cmr/m/n/12 3\OML/cmm/m/it/
-12 :hproto[]\OT1/cmr/m/n/12 4\OML/cmm/m/it/12 :hproto[]\OT1/cmr/m/n/12 5\OML/cm
-m/m/it/12 :hsecurity:h[]$ 
+Overfull \hbox (53.1157pt too wide) in paragraph at lines 1014--1019
+\T1/cmr/m/n/12 log.h uf-wi-base.h packet_par$\OML/cmm/m/it/12 security:hdebug:h
+documentation:hjhash:hufwi[]ource:hproto:$ \T1/cmr/m/n/12 proto_v3.h
  []
 
 ! Extra }, or forgotten \endgroup.
 \@par ... \@noitemerr {\@@par }\fi \else {\@@par }
                                                   \fi 
-l.1005 
+l.1019 
        
 I've deleted a group-closing symbol because it seems to be
 spurious, as in `$x}$'. But perhaps the } is legitimate and
@@ -1611,27 +1514,13 @@ you forgot something else, as in `\hbox{$x}'. In such cases
 the way to recover is to insert both the forgotten and the
 deleted material, e.g., by typing `I$}'.
 
-! You can't use `macro parameter character #' in horizontal mode.
-l.1006 ...cemment : http://www.ufwi.org/issues/65#
-                                                  change-8
-Sorry, but I'm not programmed to handle this case;
-I'll just pretend that you didn't ask for it.
-If you're in the wrong mode, you might be able to
-return to the right one by typing `I}' or `I$' or `I\par'.
-
-
-Overfull \hbox (43.5556pt too wide) in paragraph at lines 1006--1007
-[]\T1/cmr/m/n/12 Ce bug a �t� rap-port� au sup-port UFWI et a �t� cor-rig� r�-c
-em-ment : http ://www.ufwi.org/issues/65change-
- []
-
-[28
+[29
 
 ]
  10.
-[29
+[30
 
-] [30] AED: lastpage setting LastPage
+] [31] AED: lastpage setting LastPage
 
 ! LaTeX Error: \begin{itemize} on input line 122 ended by \end{document}.
 
@@ -1639,7 +1528,7 @@ See the LaTeX manual or LaTeX Companion for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.1113 \end{document}
+l.1129 \end{document}
                      
 Your command was ignored.
 Type  I <command> <return>  to replace it with another command,
@@ -1651,8 +1540,8 @@ or  <return>  to continue without it.
 ### semi simple group (level 1) entered at line 122 (\begingroup)
 ### bottom level 
 Here is how much of TeX's memory you used:
- 7294 strings out of 495028
- 101780 string characters out of 1181229
+ 7295 strings out of 495028
+ 101787 string characters out of 1181229
  192893 words of memory out of 3000000
  10271 multiletter control sequences out of 15000+50000
  15074 words of font info for 35 fonts, out of 3000000 for 9000
@@ -1668,11 +1557,10 @@ nappen/ec/ecbx1200.600pk> </home/maxime/.texmf-var/fonts/pk/ljfour/jknappen/ec/
 ecbx2488.600pk> </home/maxime/.texmf-var/fonts/pk/ljfour/jknappen/ec/ecrm1200.6
 00pk></usr/share/texmf-texlive/fonts/type1/public/amsfonts/cm/cmmi12.pfb></usr/
 share/texmf-texlive/fonts/type1/public/amsfonts/cm/cmmi8.pfb></usr/share/texmf-
-texlive/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/share/texmf-texlive/font
-s/type1/public/amsfonts/cm/cmsy10.pfb>
-Output written on rapport.pdf (30 pages, 685114 bytes).
+texlive/fonts/type1/public/amsfonts/cm/cmr12.pfb>
+Output written on rapport.pdf (31 pages, 674368 bytes).
 PDF statistics:
- 925 PDF objects out of 1000 (max. 8388607)
- 93 named destinations out of 1000 (max. 500000)
+ 928 PDF objects out of 1000 (max. 8388607)
+ 94 named destinations out of 1000 (max. 500000)
  375 words of extra memory for PDF output out of 10000 (max. 10000000)
 

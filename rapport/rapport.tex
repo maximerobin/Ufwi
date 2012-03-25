@@ -936,24 +936,6 @@ ESU permet de régler certains paramètres spécifiques à NuWinC.Il est, par ex
 \begin{center}
   \includegraphics[width=7cm,height=6cm]{images/nuwinc1.png}
 \end{center}
-%---------------------------------------------------------------------------------------------------------------------------------
-\chapter{Avencement du projet à mis parcours}
-Ce qui a été fait :
-\begin{itemize}
-  \item Ufwi est installé et fonctionnel.
-  \item La première partie du projet est terminer. Il reste les tests de fonctionnement à faire
-\end{itemize}
-
-
-Ce qui reste a faire :
-\begin{itemize}
-  \item Recherche des limites et des failles du logiciel
-  \item Comment gérer l'élévation de privilèges (root se connect en ssh sur un non-root, que se passe t-il ?)
-  \item Mettre en lumière les durées de vie des autorisations données.
-  \item Comment s'assurer que l'utilisateur est encore présent ?
-  \item Ufwi aide t-il pour l'authentification des utilisateurs nomades connu (commercial) ou non (intervenant exterieur) ?
-\end{itemize}
-  
 
 %---------------------------------------------------------------------------------------------------------------------------------
 \chapter{Difficulté rencontré et avis personnel}
@@ -979,5 +961,97 @@ Concernant la reprise de nufw par FSF France (ufwi), je trouve que c'est une bon
 été vraiment dommage, car ce logiciel mérite sa place dans les réseaux d 'entreprise même si il est peu connu. La encore le soucis est le 
 manque de documentation et d'aide au sujet de ce nouveau projet ufwi, (les premiers documents d'aide concerant ufwi ont été 
 mis en ligne sur le dépôt git du projet ufwi à la fin de la période de notre projet).
+
 %---------------------------------------------------------------------------------------------------------------------------------
+\chapter{Planning}
+\textbf{Maxime Robin :}
+\begin{itemize}
+  \item Semaine 4 à 8 (Du 23 janvier au 27 février) :
+  \begin{itemize}
+    \item Mise en place du dépot github.
+    \item Étude et installation du deamon ufwi-rpcd.
+    \item Commencement du rapport.
+  \end{itemize}
+  \item Semaine 9 :
+  \begin{itemize}
+    \item Étude de la durée de vie des autorisations données.
+  \end{itemize}
+  \item Semaine 10 et 11 :
+  \begin{itemize}
+    \item Installation de l'ISO de NuFW dans une machine virtual disponnible sur le site de nufw.
+    \item Mise en place sur le réseau de la nouvelle machine.
+    \item Étude des fonctions préinstallées sur la nouvelle machine préinstaller.
+  \end{itemize}
+  \item Semaine 12 :
+  \begin{itemize}
+    \item Étude des différentes fonctions du module nucetral (ufwi-rpcd).
+  \end{itemize}
+\end{itemize}
+
+\textbf{Simon Barotte :}
+\begin{itemize}
+  \item Début janvier :
+  \begin{itemize}
+    \item Etude du daemon ufwi-auth.
+    \item Installation du daemon (sans succès)
+  \end{itemize}
+  \item Mois janvier début février :
+  \begin{itemize}
+    \item Rédaction de la partie ufwi-auth du rapport
+    \item Etude des erreurs lors de la tentative d'installation du daemon
+  \end{itemize}
+  \item Mis février début mars :
+  \begin{itemize}
+    \item Etude des commandes du daemon ufwi-auth après le succès de l'installation
+  \end{itemize}
+  \item Mars :
+  \begin{itemize}
+    \item Prise en main de mon daemon (ufwi-auth)
+	  \item Mettre en place différent test et valider leur fonctionnement
+	  \item Utiliser différentes configuration en tirer les avantages et inconvénients
+	  \item Générer des certificats personnel pour nuauth	
+	  \item Test du système d'authentification
+	  \item Réaliser premier test et débogage
+  \end{itemize}
+\end{itemize}
+	
+\textbf{Valentin Frolich :} 
+\begin{itemize}
+  \item Semaine 4 à 7 :
+  \begin{itemize}
+    \item Etude du daemon Ufwi-filtred.
+	  \item Ecriture de la partie Daemon Ufwi-filtred du rapport.
+	  \item Etude des prerequis et dependance pour l'instalation de la suite Ufwi.
+  \end{itemize}
+  \item Semaine 9 :
+  \begin{itemize}
+    \item Rédaction de la partit Introduction du rapport.
+  \end{itemize}
+  \item Mars :
+  \begin{itemize}
+    \item Tester different configuration de la suite Ufwi.
+	  \item Simuler un environement test (entreprise...).
+	  \item Definir les limite, avantage, inconvénient de la suite.
+  \end{itemize}
+\end{itemize}
+
+\textbf{Cyril PIERRÉ :}
+\begin{itemize}
+  \item Semaine 4 à 8 :
+  \begin{itemize}
+    \item Mise en place d'un réseau virtualisé à l'aide de VirtualBox comprenant une passerelle	entre le réseau ASRALL (192.168.1.0/24) et le réseau interne virtuel (172.20.8.0) et d'une seconde machine avec un annuaire LDAP, un serveur MySQL et un serveur de résolution DNS (bind9)
+	  \item Étude des PyQT Managements Tools
+	  \item Installation de l'ensemble des modules d'UFWI sur la passerelle
+	  \item Recherche des différents pare-feu par authentification
+	  \item Mise en place d'un tutoriel pour l'externalisation des logs de pare-feu avec Nulog
+  \end{itemize}
+  \item Semaine 9 :
+  \begin{itemize}
+    \item Correction d'un problème de RAM sur la passerelle
+	  \item Étude de l'intégration d'UFWI avec d'autre logiciels d'authentification :
+	  \begin{itemize}
+      \item Kerberos
+    \end{itemize}
+  \end{itemize}
+\end{itemize}
 \end{document}

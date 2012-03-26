@@ -21,7 +21,7 @@
 % contenu de la page de titre
 \title{Projet tuteuré}
 \subtitle{\tiny{UFWI}}
-\author{BAROTTE Simon, FROLICH Valentin, PIERRÉ Cyril, ROBIN Maxime}
+\author{BAROTTE Simon,FROLICH Valentin, PIERRÉ Cyril, ROBIN Maxime}
 
 \begin{document}
 
@@ -38,7 +38,7 @@
 %-----page Objectif-----------
 \section{Introduction}                                                    %utilisé pour la generation du sommaire
 \begin{frame}                                                         %définit le debut de la page
-    \begin{center}{\textcolor{grisbleu}{\Large Introduction}}\end{center} %centre et colore le titre
+    \begin{center}{\textcolor{grisbleu}{\Large Objectif}}\end{center} %centre et colore le titre
     \begin{itemize}                                                   %definie une liste
 	\item Intro
 	\item Algo
@@ -50,11 +50,8 @@
     \begin{center}{\textcolor{grisbleu}{\Large Modules}}\end{center} %centre et colore le titre
     \begin{itemize}                                                   %definie une liste
 	\item Authentification
-	\newline
 	\item Filtred
-	\newline
 	\item Rcpd
-	\newline
 	\item Client
 \end{itemize}
 \end{frame}                                                           %définit la fin de la page
@@ -62,11 +59,9 @@
 	  \subsection{Authentification}
 	  \begin{frame}                                                         %définit le debut de la page
 	      \begin{center}{\textcolor{grisbleu}{\Large Authentification}}\end{center} %centre et colore le titre
-	      \begin{itemize}                                                 %definie une liste
+	      \begin{itemize}                                                   %definie une liste
 		\item Introduction
-		\newline
 		\item Configuration
-		 \newline
 		\item Fonctionnement de l'authentification
 	  \end{itemize}
 	  \end{frame} 
@@ -82,9 +77,6 @@
 	      \begin{center}{\textcolor{grisbleu}{\Large Filtred}}\end{center} %centre et colore le titre
 	      \begin{itemize}                                                   %definie une liste
 		\item Introduction
-		\newline
-		\item Fonctionnalités
-		\newline
 		\item Fichier de configuration
 	  \end{itemize}
 	  \end{frame} 
@@ -102,18 +94,15 @@
 	      \begin{center}{\textcolor{grisbleu}{\Large Client}}\end{center} %centre et colore le titre
 	      \begin{itemize}                                                   %definie une liste
 		\item Introduction
-		\newline
 		\item Différent client disponnible
-		\newline
 		\item Multi-plateformes
-		\newline
 		\begin{center}\includegraphics[width=4cm,height=3cm]{images/nuapp.png}\end{center}
 	  \end{itemize}
 	  \end{frame} 
 
 \section{Comparaison}                                                    %utilisé pour la generation du sommaire
 \begin{frame}                                                         %définit le debut de la page
-    \begin{center}{\textcolor{grisbleu}{\Large Comparaison}}\end{center} %centre et colore le titre
+    \begin{center}{\textcolor{grisbleu}{\Large Objectif}}\end{center} %centre et colore le titre
     \begin{itemize}                                                   %definie une liste
 	\item
 	\item

@@ -1,0 +1,13 @@
+\beamer@endinputifotherversion {3.07pt}
+\select@language {french}
+\beamer@sectionintoc {1}{Introduction}{3}{0}{1}
+\beamer@sectionintoc {2}{Modules}{4}{0}{2}
+\beamer@subsectionintoc {2}{1}{Authentification}{5}{0}{2}
+\beamer@subsectionintoc {2}{2}{Filtred}{7}{0}{2}
+\beamer@subsectionintoc {2}{3}{Rcpd}{8}{0}{2}
+\beamer@subsectionintoc {2}{4}{Client}{9}{0}{2}
+\beamer@sectionintoc {3}{Comparaison}{10}{0}{3}
+\beamer@sectionintoc {4}{Probl\IeC {\`e}mes et Conclusion}{11}{0}{4}
+\beamer@subsectionintoc {4}{1}{Probl\IeC {\`e}mes lors de l'installation}{12}{0}{4}
+\beamer@subsectionintoc {4}{2}{Probl\IeC {\`e}mes de configuration}{13}{0}{4}
+\beamer@subsectionintoc {4}{3}{Conclusion}{14}{0}{4}

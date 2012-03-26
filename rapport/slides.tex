@@ -1,0 +1,52 @@
+\documentclass[t,12pt]{beamer}
+
+%liste des packages utilsé
+\usepackage[T1]{fontenc}
+\usepackage[french]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{graphicx}
+\usepackage{pslatex}
+%definition d'une couleur pour les titres
+\definecolor{grisbleu}{rgb}{0,0,153}
+
+
+%definition du thème
+\useoutertheme[height=0pt,left]{sidebar}
+\usecolortheme{seahorse}
+\setbeamercolor*{titlelike}{parent=structure}
+\useinnertheme{circles}
+\setbeamertemplate{frametitle}[default][right]
+
+
+% contenu de la page de titre
+\title{Projet Youpi}
+\subtitle{\tiny{Bras mechanisé}}
+\author{Frolich Valentin}
+\date{\oldstylenums{Juin 2010}}
+
+\begin{document}
+
+%------- page de titre --------
+\frame{\titlepage}
+
+% --------- Sommaire ---------
+
+\begin{frame} 
+	\begin{center}{\Large Somaire }\end{center}
+	\tableofcontents[currentsection]       %genere un somaire automatique (avec les \section)
+\end{frame} 
+
+%-----page Objectif-----------
+\section{Objectif}                                                    %utilisé pour la generation du sommaire
+\begin{frame}                                                         %définit le debut de la page
+    \begin{center}{\textcolor{grisbleu}{\Large Objectif}}\end{center} %centre et colore le titre
+    \begin{itemize}                                                   %definie une liste
+	\item Relever la courbe de courant traversant le moteur.
+	\item Mettre au point un système de limitation de courant.	
+	\item Alimenter les 4 phases en limitant le courant.
+	\item Faire communiquer entre eux les moteurs.
+\end{itemize}
+\end{frame}                                                            %définit la fin de la page
+
+
+\end {document}

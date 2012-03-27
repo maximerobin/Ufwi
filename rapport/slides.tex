@@ -11,12 +11,19 @@
 \definecolor{grisbleu}{rgb}{0,0,153}
 
 
-%definition du thème
+%definition du thème 1
 \useoutertheme[height=0pt,left]{sidebar}
 \usecolortheme{seahorse}
 \setbeamercolor*{titlelike}{parent=structure}
 \useinnertheme{circles}
 \setbeamertemplate{frametitle}[default][right]
+
+%definition du thème 2
+%\useinnertheme[shadow=true]{rounded}
+%\useoutertheme{shadow}
+%\usecolortheme{orchid}
+%\usecolortheme{whale}
+
 
 
 % contenu de la page de titre
@@ -60,8 +67,8 @@
     \end{frame} 
 
   \subsection{Algorithme}
-    \begin{frame}{Algo}
-	    \begin{center}\includegraphics[width=8cm,height=8cm]{images/algo.jpg}\end{center}
+    \begin{frame}{Algorithme}
+	    \begin{center}\includegraphics[width=8cm,height=7cm]{images/algo.jpg}\end{center}
     \end{frame}                                                      
 
 %---------------------------------------------------------------------------------------------------  
@@ -81,42 +88,82 @@
 
 	  \subsection{Authentification}
 	  \begin{frame}{Authentification}                                                         %définit le debut de la page
-	      \begin{itemize}                                                 %definie une liste
-		\item Introduction
-		\newline
-		\item Configuration
-		 \newline
+		\begin{block}{Présentation}
+		  \begin{itemize}
+		    \item Daemon principale
+		    \item Gère toutes les authentifications	    
+	    \end{itemize}
+		\end{block}
+		
+		\begin{block}{Configuration}
+		  \begin{itemize}
+		    \item Module ldap, plaintext
+		    \item Journalisation des connexions
+		    \item Certificats		    
+	    \end{itemize}
+		\end{block}
+		
+		\begin{itemize}
 		\item Fonctionnement de l'authentification
 	  \end{itemize}
 	  \end{frame} 
 
 
 	  \begin{frame}{Authentification}                                                         %définit le debut de la page
-		  \begin{center}\includegraphics[width=5cm,height=6cm]{images/auth.png}\end{center}
+		  \begin{center}
+		    \includegraphics[width=6cm,height=7cm]{images/auth.png}
+		  \end{center}
 	  \end{frame} 
 
 	  \subsection{Filtred}
 	  \begin{frame}{Filtred}                                                         %définit le debut de la page
 	      \begin{itemize}                                                   %definie une liste
-		\item Introduction
-		\newline
-		\item Fonctionnalités
-		\newline
+		      \item Présentation
+		      \end{itemize}
+		\begin{block}{Fonctionnalités}
+			\begin{itemize}
+		    \item Filtre le trafic
+		    \item Module de surveillance
+		    \item Contribue à la surveillance réseau
+		    \item Marque chaque paquet avec un ID unique
+	    \end{itemize}
+		\end{block}
+  
+    \begin{itemize}
 		\item Fichier de configuration
 	  \end{itemize}
 	  \end{frame} 
 
 	  \subsection{Rcpd}
 	  \begin{frame}{Rcpd}                                                         %définit le debut de la page
-	      \begin{itemize}                                                   %definie une liste
-		\item
+	                                                         %definie une liste
+		\begin{block}{Présentation}
+		  \begin{itemize}
+		    \item Manager
+		    
+	    \end{itemize}
+		\end{block}
+		
+		\begin{block}{Types d'authentification}
+		\begin{itemize}
+		  \item alwaysok
+      \item alwaysno
+      \item basicdict
+      \item file
+      \item ldap
+	  \end{itemize}
+    \end{block}
+    
+    \begin{itemize}
+	    \item Composants et servies
+	    \item Tâches planifiées
 	  \end{itemize}
 	  \end{frame} 
 
 	  \subsection{Client}
 	  \begin{frame}{Client}                                                         %définit le debut de la page
 	      \begin{itemize}                                                   %definie une liste
-		\item Introduction
+		\item Présentation
 		\newline
 		\item Différent client disponnible
 		\newline
@@ -130,11 +177,17 @@
 \begin{frame}{Comparaison}                                                         %définit le debut de la page
     \begin{itemize}                                                   %definie une liste
 	\item Différentes solutions de pare feu
-\begin{center}AuthPF, NUFW, Cyberoam, CheckPoint\end{center}
+  \begin{itemize}
+    \item AuthPF
+    \item NUFW
+    \item Cyberoam
+    \item CheckPoint
+  \end{itemize}
+	\pause
 	\item Installation, mise en oeuvre
 	\item Modularité
-        \item Sécutité
-        \item Intérêts
+  \item Sécutité
+  \item Intérêts
 \end{itemize}
 \end{frame}                                                            %définit la fin de la page
 

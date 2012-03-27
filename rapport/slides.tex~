@@ -38,7 +38,7 @@
 %-----page Objectif-----------
 \section{Introduction}                                                    %utilisé pour la generation du sommaire
 \begin{frame}                                                         %définit le debut de la page
-    \begin{center}{\textcolor{grisbleu}{\Large Objectif}}\end{center} %centre et colore le titre
+    \begin{center}{\textcolor{grisbleu}{\Large Introduction}}\end{center} %centre et colore le titre
     \begin{itemize}                                                   %definie une liste
 	\item Intro
 	\item Algo

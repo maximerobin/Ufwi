@@ -6,6 +6,7 @@
 \usepackage[utf8]{inputenc}
 \usepackage{graphicx}
 \usepackage{pslatex}
+
 %definition d'une couleur pour les titres
 \definecolor{grisbleu}{rgb}{0,0,153}
 
@@ -30,25 +31,44 @@
 
 % --------- Sommaire ---------
 
-\begin{frame} 
-	\begin{center}{\Large Somaire }\end{center}
-	\tableofcontents[currentsection]       %genere un somaire automatique (avec les \section)
+\begin{frame}{Sommaire}
+	\tableofcontents[]       %genere un somaire automatique (avec les \section)
 \end{frame} 
 
 %-----page Objectif-----------
-\section{Introduction}                                                    %utilisé pour la generation du sommaire
-\begin{frame}                                                         %définit le debut de la page
-    \begin{center}{\textcolor{grisbleu}{\Large Introduction}}\end{center} %centre et colore le titre
-    \begin{itemize}                                                   %definie une liste
-	\item Intro
-	\item Algo
-\end{itemize}
-\end{frame}                                                            %définit la fin de la page
+%---------------------------------------------------------------------------------------------------
+%------------ Maxime Robin -------------------------------------------------------------------------
+%---------------------------------------------------------------------------------------------------
+\section{Introduction}  
+  \subsection{Présentation}                                            
+    \begin{frame}{Présentation}                                              
+	    \begin{block}{Historique}
+        \begin{itemize}  
+	        \item La première version publique de NuFW par EdenWall est sortie le 01 septembre 2003.
+	        \item Le 18 août 2011, liquidation de NuFW et reprise du projet par la communauté (Ufwi).
+        \end{itemize} 
+      \end{block}
+      \pause
+      \begin{block}{Présentation}
+        \begin{itemize}  
+	        \item Surveillance de l'activité réseau des serveurs.
+	        \item Paquets signés.
+	        \item Module de surveillance (logs).
+          \item Identifier les utilisateurs par une authentification unique.
+        \end{itemize} 
+      \end{block}
+    \end{frame} 
 
-\section{Modules}                                                    %utilisé pour la generation du sommaire
-\begin{frame}                                                         %définit le debut de la page
-    \begin{center}{\textcolor{grisbleu}{\Large Modules}}\end{center} %centre et colore le titre
-    \begin{itemize}                                                   %definie une liste
+  \subsection{Algorithme}
+    \begin{frame}{Algo}
+	    \begin{center}\includegraphics[width=8cm,height=8cm]{images/algo.jpg}\end{center}
+    \end{frame}                                                      
+
+%---------------------------------------------------------------------------------------------------  
+
+\section{Modules}                                                   
+\begin{frame}{Modules}
+    \begin{itemize}                                                 
 	\item Authentification
 	\newline
 	\item Filtred
@@ -57,11 +77,10 @@
 	\newline
 	\item Client
 \end{itemize}
-\end{frame}                                                           %définit la fin de la page
+\end{frame}                                                         
 
 	  \subsection{Authentification}
-	  \begin{frame}                                                         %définit le debut de la page
-	      \begin{center}{\textcolor{grisbleu}{\Large Authentification}}\end{center} %centre et colore le titre
+	  \begin{frame}{Authentification}                                                         %définit le debut de la page
 	      \begin{itemize}                                                 %definie une liste
 		\item Introduction
 		\newline
@@ -72,14 +91,12 @@
 	  \end{frame} 
 
 
-	  \begin{frame}                                                         %définit le debut de la page
-	      \begin{center}{\textcolor{grisbleu}{\Large Authentification}}\end{center} %centre et colore le titre
+	  \begin{frame}{Authentification}                                                         %définit le debut de la page
 		  \begin{center}\includegraphics[width=5cm,height=6cm]{images/auth.png}\end{center}
 	  \end{frame} 
 
 	  \subsection{Filtred}
-	  \begin{frame}                                                         %définit le debut de la page
-	      \begin{center}{\textcolor{grisbleu}{\Large Filtred}}\end{center} %centre et colore le titre
+	  \begin{frame}{Filtred}                                                         %définit le debut de la page
 	      \begin{itemize}                                                   %definie une liste
 		\item Introduction
 		\newline
@@ -90,16 +107,14 @@
 	  \end{frame} 
 
 	  \subsection{Rcpd}
-	  \begin{frame}                                                         %définit le debut de la page
-	      \begin{center}{\textcolor{grisbleu}{\Large Rcpd}}\end{center} %centre et colore le titre
+	  \begin{frame}{Rcpd}                                                         %définit le debut de la page
 	      \begin{itemize}                                                   %definie une liste
 		\item
 	  \end{itemize}
 	  \end{frame} 
 
 	  \subsection{Client}
-	  \begin{frame}                                                         %définit le debut de la page
-	      \begin{center}{\textcolor{grisbleu}{\Large Client}}\end{center} %centre et colore le titre
+	  \begin{frame}{Client}                                                         %définit le debut de la page
 	      \begin{itemize}                                                   %definie une liste
 		\item Introduction
 		\newline
@@ -112,8 +127,7 @@
 	  \end{frame} 
 
 \section{Comparaison}                                                    %utilisé pour la generation du sommaire
-\begin{frame}                                                         %définit le debut de la page
-    \begin{center}{\textcolor{grisbleu}{\Large Comparaison}}\end{center} %centre et colore le titre
+\begin{frame}{Comparaison}                                                         %définit le debut de la page
     \begin{itemize}                                                   %definie une liste
 	\item Différentes solution de pare feu
 	\item Installation, mise en oeuvre
@@ -125,8 +139,7 @@
 
 
 \section{Problèmes et Conclusion}                                                    %utilisé pour la generation du sommaire
-\begin{frame}                                                         %définit le debut de la page
-    \begin{center}{\textcolor{grisbleu}{\Large Problèmes et Conclusion}}\end{center} %centre et colore le titre
+\begin{frame}{Problèmes et Conclusion}                                                         %définit le debut de la page
     \begin{itemize}                                                   %definie une liste
 	\item Problèmes lors de l'installation
 	\item Problèmes de configuration
@@ -134,8 +147,7 @@
 \end{itemize}
 \end{frame}                                                            %définit la fin de la page
 	\subsection{Problèmes lors de l'installation}
-		\begin{frame}                                                         %définit le debut de la page
-    \begin{center}{\textcolor{grisbleu}{\Large Problèmes lors de l'installation}}\end{center} %centre et colore le titre
+		\begin{frame}{Problèmes lors de l'installation}                    %définit le debut de la page
 		\begin{itemize}
 			\item Problèmes de dépendances
 			\newline
@@ -148,8 +160,7 @@
 		\end{frame}
 
 	\subsection{Problèmes de configuration}
-		\begin{frame}                                                         %définit le debut de la page
-    \begin{center}{\textcolor{grisbleu}{\Large Problèmes de configuration}}\end{center} %centre et colore le titre
+		\begin{frame}{Problèmes de configuration}                        %définit le debut de la page
 		\begin{itemize}
 			\item Problèmes de librairies
 			\newline
@@ -160,8 +171,7 @@
 
 
 	\subsection{Conclusion}
-		\begin{frame}                                                         %définit le debut de la page
-    \begin{center}{\textcolor{grisbleu}{\Large Conclusion}}\end{center} %centre et colore le titre
+		\begin{frame}{Conclusion}                                                         %définit le debut de la page
 		\begin{itemize}
 			\item Projet Libre
 			\newline

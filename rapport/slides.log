@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-1.40.10 (TeX Live 2009/Debian) (format=pdflatex 2011.11.2)  27 MAR 2012 11:31
+This is pdfTeX, Version 3.1415926-1.40.10 (TeX Live 2009/Debian) (format=pdflatex 2011.11.2)  27 MAR 2012 12:25
 entering extended mode
  %&-line parsing enabled.
 **slides.tex
@@ -1193,7 +1193,7 @@ LaTeX Font Info:    Font shape `OMS/phv/m/n' in size <10> not available
 Here is how much of TeX's memory you used:
  15904 strings out of 495028
  290428 string characters out of 1181229
- 361738 words of memory out of 3000000
+ 361726 words of memory out of 3000000
  18623 multiletter control sequences out of 15000+50000
  26084 words of font info for 32 fonts, out of 3000000 for 9000
  28 hyphenation exceptions out of 8191
@@ -1201,7 +1201,7 @@ Here is how much of TeX's memory you used:
 {/usr/share/texmf-texlive/fonts/enc/dvips/base/8r.enc}</usr/sha
 re/texmf-texlive/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/share/texmf-te
 xlive/fonts/type1/urw/helvetic/uhvr8a.pfb>
-Output written on slides.pdf (17 pages, 345056 bytes).
+Output written on slides.pdf (17 pages, 345060 bytes).
 PDF statistics:
  768 PDF objects out of 1000 (max. 8388607)
  48 named destinations out of 1000 (max. 500000)

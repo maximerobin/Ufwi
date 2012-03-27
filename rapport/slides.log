@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-1.40.10 (TeX Live 2009/Debian) (format=pdflatex 2011.11.2)  27 MAR 2012 10:41
+This is pdfTeX, Version 3.1415926-1.40.10 (TeX Live 2009/Debian) (format=pdflatex 2011.11.2)  27 MAR 2012 10:44
 entering extended mode
  %&-line parsing enabled.
 **slides.tex
@@ -1136,7 +1136,7 @@ LaTeX Font Info:    Font shape `OMS/phv/m/n' in size <10.95> not available
 ] [4
 
 ]
-<images/algo.jpg, id=244, 487.8225pt x 354.32375pt>
+<images/algo.jpg, id=245, 487.8225pt x 354.32375pt>
 File: images/algo.jpg Graphic file (type jpg)
  <use images/algo.jpg>
 Overfull \vbox (9.6973pt too high) detected at line 65
@@ -1149,7 +1149,7 @@ Overfull \vbox (9.6973pt too high) detected at line 65
 ] [7
 
 ]
-<images/auth.png, id=363, 355.3275pt x 411.03563pt>
+<images/auth.png, id=362, 355.3275pt x 411.03563pt>
 File: images/auth.png Graphic file (type png)
  <use images/auth.png>
 [8
@@ -1159,7 +1159,7 @@ File: images/auth.png Graphic file (type png)
 ] [10
 
 ]
-<images/nuapp.png, id=480, 344.28625pt x 192.72pt>
+<images/nuapp.png, id=477, 344.28625pt x 192.72pt>
 File: images/nuapp.png Graphic file (type png)
  <use images/nuapp.png>
 [11
@@ -1186,43 +1186,19 @@ File: images/nuapp.png Graphic file (type png)
 
  (./slides.aux) ) 
 Here is how much of TeX's memory you used:
- 15882 strings out of 495028
- 289673 string characters out of 1181229
+ 15874 strings out of 495028
+ 289558 string characters out of 1181229
  361738 words of memory out of 3000000
  18595 multiletter control sequences out of 15000+50000
  24348 words of font info for 31 fonts, out of 3000000 for 9000
  28 hyphenation exceptions out of 8191
  49i,15n,61p,395b,651s stack positions out of 5000i,500n,10000p,200000b,50000s
-pdfTeX warning (dest): name{Outline0.4.3.15} has been referenc
-ed but does not exist, replaced by a fixed one
-
-pdfTeX warning (dest): name{Outline0.4.2.14} has been referenced but does not e
-xist, replaced by a fixed one
-
-pdfTeX warning (dest): name{Outline0.4.1.13} has been referenced but does not e
-xist, replaced by a fixed one
-
-pdfTeX warning (dest): name{Outline0.2.4.10} has been referenced but does not e
-xist, replaced by a fixed one
-
-pdfTeX warning (dest): name{Outline0.2.3.9} has been referenced but does not ex
-ist, replaced by a fixed one
-
-pdfTeX warning (dest): name{Outline0.2.2.8} has been referenced but does not ex
-ist, replaced by a fixed one
-
-pdfTeX warning (dest): name{Outline0.2.1.6} has been referenced but does not ex
-ist, replaced by a fixed one
-
-pdfTeX warning (dest): name{Outline0.1.2.4} has been referenced but does not ex
-ist, replaced by a fixed one
-
-{/usr/share/texmf-texlive/fonts/enc/dvips/base/8r.enc}</usr/share/texmf-texlive
-/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/share/texmf-texlive/fonts/type
-1/urw/helvetic/uhvr8a.pfb>
-Output written on slides.pdf (16 pages, 335767 bytes).
+{/usr/share/texmf-texlive/fonts/enc/dvips/base/8r.enc}</usr/sh
+are/texmf-texlive/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/share/texmf-t
+exlive/fonts/type1/urw/helvetic/uhvr8a.pfb>
+Output written on slides.pdf (16 pages, 335369 bytes).
 PDF statistics:
- 738 PDF objects out of 1000 (max. 8388607)
- 54 named destinations out of 1000 (max. 500000)
+ 729 PDF objects out of 1000 (max. 8388607)
+ 46 named destinations out of 1000 (max. 500000)
  152 words of extra memory for PDF output out of 10000 (max. 10000000)
 

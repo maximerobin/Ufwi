@@ -28,7 +28,7 @@
 
 % contenu de la page de titre
 \title{Projet tuteuré}
-\subtitle{\tiny{UFWI}}
+\subtitle{UFWI}
 \author{BAROTTE Simon, FROLICH Valentin, PIERRÉ Cyril, ROBIN Maxime}
 
 \begin{document}
@@ -68,7 +68,7 @@
 
   \subsection{Algorithme}
     \begin{frame}{Algorithme}
-	    \begin{center}\includegraphics[width=8cm,height=7cm]{images/algo.jpg}\end{center}
+	    \begin{center}\includegraphics[width=7cm,height=6.5cm]{images/algo.jpg}\end{center}
     \end{frame}                                                      
 
 %---------------------------------------------------------------------------------------------------  
@@ -111,7 +111,7 @@
 
 	  \begin{frame}{Authentification}                                                         %définit le debut de la page
 		  \begin{center}
-		    \includegraphics[width=6cm,height=7cm]{images/auth.png}
+		    \includegraphics[width=6cm,height=6.5cm]{images/auth.png}
 		  \end{center}
 	  \end{frame} 
 

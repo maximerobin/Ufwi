@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-1.40.10 (TeX Live 2009/Debian) (format=pdflatex 2011.11.2)  27 MAR 2012 12:32
+This is pdfTeX, Version 3.1415926-1.40.10 (TeX Live 2009/Debian) (format=pdflatex 2011.11.2)  28 MAR 2012 13:11
 entering extended mode
  %&-line parsing enabled.
 **slides.tex
@@ -927,20 +927,21 @@ LaTeX Font Info:    Overwriting math alphabet `\mathit' in version `bold'
 LaTeX Font Info:    Font shape `T1/phv/m/n' will be
 (Font)              scaled to size 10.79993pt on input line 456.
 )
-(/usr/share/texmf/tex/latex/beamer/base/themes/inner/beamerinnerthemerounded.st
+(/usr/share/texmf/tex/latex/beamer/base/themes/outer/beamerouterthemesidebar.st
 y
-Package: beamerinnerthemerounded 2010/06/17  (rcs-revision d02a7cf4d8ae)
+Package: beamerouterthemesidebar 2010/06/17  (rcs-revision d02a7cf4d8ae)
+\beamer@sidebarwidth=\dimen181
+\beamer@headheight=\dimen182
+LaTeX Font Info:    Font shape `T1/phv/m/n' will be
+(Font)              scaled to size 15.55188pt on input line 15.
 )
-(/usr/share/texmf/tex/latex/beamer/base/themes/outer/beamerouterthemeshadow.sty
-Package: beamerouterthemeshadow 2010/06/17  (rcs-revision d02a7cf4d8ae)
-(/usr/share/texmf/tex/latex/beamer/base/themes/outer/beamerouterthemesplit.sty
-Package: beamerouterthemesplit 2010/06/17  (rcs-revision d02a7cf4d8ae)
-))
-(/usr/share/texmf/tex/latex/beamer/base/themes/color/beamercolorthemeorchid.sty
-Package: beamercolorthemeorchid 2010/06/17  (rcs-revision d02a7cf4d8ae)
+(/usr/share/texmf/tex/latex/beamer/base/themes/color/beamercolorthemeseahorse.s
+ty
+Package: beamercolorthemeseahorse 2010/06/17  (rcs-revision d02a7cf4d8ae)
 )
-(/usr/share/texmf/tex/latex/beamer/base/themes/color/beamercolorthemewhale.sty
-Package: beamercolorthemewhale 2010/06/17  (rcs-revision d02a7cf4d8ae)
+(/usr/share/texmf/tex/latex/beamer/base/themes/inner/beamerinnerthemecircles.st
+y
+Package: beamerinnerthemecircles 2010/06/17  (rcs-revision d02a7cf4d8ae)
 ) (./slides.aux)
 \openout1 = `slides.aux'.
 
@@ -972,7 +973,7 @@ landscape: --
 twocolumn: --
 twoside: --
 asymmetric: --
-h-parts: 28.45274pt, 307.28987pt, 28.45274pt
+h-parts: 69.22636pt, 280.74263pt, 14.22636pt
 v-parts: 0.0pt, 273.14662pt, 0.0pt
 hmarginratio: --
 vmarginratio: --
@@ -987,10 +988,10 @@ driver: pdftex
 -------------------- Page layout dimensions and switches
 \paperwidth  364.19536pt
 \paperheight 273.14662pt
-\textwidth  307.28987pt
+\textwidth  280.74263pt
 \textheight 244.6939pt
-\oddsidemargin  -43.81725pt
-\evensidemargin -43.81725pt
+\oddsidemargin  -3.04362pt
+\evensidemargin -3.04362pt
 \topmargin  -72.26999pt
 \headheight 14.22636pt
 \headsep    0.0pt
@@ -1008,13 +1009,13 @@ driver: pdftex
 (/usr/share/texmf-texlive/tex/context/base/supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
 \scratchcounter=\count153
-\scratchdimen=\dimen181
+\scratchdimen=\dimen183
 \scratchbox=\box53
 \nofMPsegments=\count154
 \nofMParguments=\count155
 \everyMPshowfont=\toks43
 \MPscratchCnt=\count156
-\MPscratchDim=\dimen182
+\MPscratchDim=\dimen184
 \MPnumerator=\count157
 \everyMPtoPDFconversion=\toks44
 ) ABD: EveryShipout initializing macros
@@ -1110,29 +1111,34 @@ LaTeX Info: Redefining \up on input line 34.
 LaTeX Font Info:    Font shape `T1/phv/m/n' will be
 (Font)              scaled to size 5.39996pt on input line 34.
 LaTeX Font Info:    Font shape `T1/phv/m/n' will be
-(Font)              scaled to size 15.55188pt on input line 37.
-LaTeX Font Info:    Font shape `T1/phv/m/n' will be
 (Font)              scaled to size 7.19995pt on input line 37.
 LaTeX Font Info:    Font shape `T1/phv/m/n' will be
 (Font)              scaled to size 3.59998pt on input line 37.
  [1{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}
 
-] (./slides.toc) [2
+] (./slides.toc
+LaTeX Font Info:    Font shape `T1/phv/m/n' will be
+(Font)              scaled to size 9.85492pt on input line 3.
+) [2
 
 ]
 LaTeX Font Info:    Font shape `T1/phv/m/n' will be
 (Font)              scaled to size 12.9599pt on input line 67.
+LaTeX Font Info:    Try loading font information for OMS+phv on input line 67.
+
+(/usr/share/texmf-texlive/tex/latex/psnfss/omsphv.fd
+File: omsphv.fd 
+)
+LaTeX Font Info:    Font shape `OMS/phv/m/n' in size <10.95> not available
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 67.
  [3
 
 ] [4
 
 ]
-<images/algo.jpg, id=235, 487.8225pt x 354.32375pt>
+<images/algo.jpg, id=244, 487.8225pt x 354.32375pt>
 File: images/algo.jpg Graphic file (type jpg)
  <use images/algo.jpg>
-Overfull \vbox (2.2408pt too high) detected at line 72
- []
-
 [5
 
  <./images/algo.jpg>] [6
@@ -1140,12 +1146,9 @@ Overfull \vbox (2.2408pt too high) detected at line 72
 ] [7
 
 ]
-<images/auth.png, id=335, 355.3275pt x 411.03563pt>
+<images/auth.png, id=361, 355.3275pt x 411.03563pt>
 File: images/auth.png Graphic file (type png)
  <use images/auth.png>
-Overfull \vbox (2.23318pt too high) detected at line 116
- []
-
 [8
 
  <./images/auth.png (PNG copy)>] [9
@@ -1153,14 +1156,16 @@ Overfull \vbox (2.23318pt too high) detected at line 116
 ] [10
 
 ]
-<images/nuapp.png, id=435, 344.28625pt x 192.72pt>
+<images/nuapp.png, id=476, 344.28625pt x 192.72pt>
 File: images/nuapp.png Graphic file (type png)
  <use images/nuapp.png>
 [11
 
  <./images/nuapp.png (PNG copy)>]
 LaTeX Font Info:    Font shape `T1/phv/m/n' will be
-(Font)              scaled to size 9.85492pt on input line 192.
+(Font)              scaled to size 8.99994pt on input line 192.
+LaTeX Font Info:    Font shape `OMS/phv/m/n' in size <10> not available
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 192.
  [12
 
 ] [13
@@ -1170,8 +1175,6 @@ LaTeX Font Info:    Font shape `T1/phv/m/n' will be
 ] [15
 
 ] [16
-
-] [17
 
 ]
 \tf@nav=\write6
@@ -1183,21 +1186,21 @@ LaTeX Font Info:    Font shape `T1/phv/m/n' will be
 \tf@snm=\write8
 \openout8 = `slides.snm'.
 
-
-(./slides.aux) ) 
+ (./slides.aux) ) 
 Here is how much of TeX's memory you used:
- 15969 strings out of 495028
- 292540 string characters out of 1181229
- 368365 words of memory out of 3000000
- 18685 multiletter control sequences out of 15000+50000
- 24091 words of font info for 30 fonts, out of 3000000 for 9000
+ 15900 strings out of 495028
+ 290393 string characters out of 1181229
+ 361726 words of memory out of 3000000
+ 18621 multiletter control sequences out of 15000+50000
+ 26084 words of font info for 32 fonts, out of 3000000 for 9000
  28 hyphenation exceptions out of 8191
- 49i,19n,62p,395b,688s stack positions out of 5000i,500n,10000p,200000b,50000s
-{/usr/share/texmf-texlive/fonts/enc/dvips/base/8r.enc}</usr/sha
-re/texmf-texlive/fonts/type1/urw/helvetic/uhvr8a.pfb>
-Output written on slides.pdf (17 pages, 329462 bytes).
+ 49i,15n,61p,395b,651s stack positions out of 5000i,500n,10000p,200000b,50000s
+{/usr/share/texmf-texlive/fonts/enc/dvips/base/8r.enc}</usr/sh
+are/texmf-texlive/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/share/texmf-t
+exlive/fonts/type1/urw/helvetic/uhvr8a.pfb>
+Output written on slides.pdf (16 pages, 337021 bytes).
 PDF statistics:
- 678 PDF objects out of 1000 (max. 8388607)
- 48 named destinations out of 1000 (max. 500000)
- 212 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 729 PDF objects out of 1000 (max. 8388607)
+ 46 named destinations out of 1000 (max. 500000)
+ 152 words of extra memory for PDF output out of 10000 (max. 10000000)
 
